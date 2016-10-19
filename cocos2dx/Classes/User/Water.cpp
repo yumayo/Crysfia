@@ -30,6 +30,7 @@ namespace User
         if ( auto fia = getLayer<Fia>( ) )
         {
             log( "Water : Fia.a[%d]", fia->a );
+            fia->a = 1024;
         }
     }
 }
