@@ -22,15 +22,18 @@
     <Filter Include="src\Lib\GameHelper2dx">
       <UniqueIdentifier>{d5073669-102f-48a1-aaa2-bd01a39bbe32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\Yumayo">
+      <UniqueIdentifier>{c23a3b37-87d1-4988-823d-f66359959a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\Sample">
+      <UniqueIdentifier>{0107038d-098c-4410-8cc1-c4a3724a357b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Lib\GameHelper2dx\AudioManager.cpp">
@@ -48,17 +51,41 @@
     <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp">
       <Filter>src\Lib\EnvironmentDefaultData</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Fia.cpp">
-      <Filter>src\User</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\User\LayerBase.cpp">
       <Filter>src\User</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\SceneManager.cpp">
       <Filter>src\User</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Water.cpp">
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptReader.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextChank.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextData.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextLabels.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextString.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptTestLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Sample\Fia.cpp">
+      <Filter>src\User\Sample</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Sample\Water.cpp">
+      <Filter>src\User\Sample</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\SceneBase.cpp">
       <Filter>src\User</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Sample\SceneSample.cpp">
+      <Filter>src\User\Sample</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,9 +93,6 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\GameHelper2dx\AudioManager.h">
@@ -89,17 +113,44 @@
     <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h">
       <Filter>src\Lib\EnvironmentDefaultData</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Fia.h">
-      <Filter>src\User</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\User\LayerBase.h">
       <Filter>src\User</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\SceneManager.h">
       <Filter>src\User</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Water.h">
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptReader.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\TextChank.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\TextData.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\TextLabels.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\TextString.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\TextTypes.hpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptTestLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Sample\Fia.h">
+      <Filter>src\User\Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Sample\Water.h">
+      <Filter>src\User\Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\SceneBase.h">
       <Filter>src\User</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Sample\SceneSample.h">
+      <Filter>src\User\Sample</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
 #include "Lib/EnvironmentDefaultData/EnvironmentDefaultData.h"
+#include "User/SceneManager.h"
 
 USING_NS_CC;
 
@@ -72,11 +72,7 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
 
     register_all_packages( );
 
-    // create a scene. it's an autorelease object
-    auto scene = HelloWorldScene::createScene( );
-
-    // run
-    director->runWithScene( scene );
+    User::SceneManager::createSystemAppDelegateStart( );
 
     return true;
 }

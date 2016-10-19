@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-cocos2d::Scene* HelloWorldScene::createScene( )
+void HelloWorldScene::createScene( )
 {
     return User::SceneManager::createTitle( );
 }

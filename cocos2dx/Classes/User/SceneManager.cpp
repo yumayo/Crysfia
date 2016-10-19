@@ -1,21 +1,25 @@
 #include "SceneManager.h"
+#include "LayerBase.h"
 
-#include "Water.h"
-#include "Fia.h"
+// サンプルシーンを作成します。
+#include "Sample/SceneSample.h"
 
 USING_NS_CC;
 
 namespace User
 {
-    cocos2d::Scene* SceneManager::createTitle( )
+    void SceneManager::createSystemAppDelegateStart( )
     {
-        auto scene = Scene::create( );
-        scene->addChild( createLayer<Water>( ) );
-        scene->addChild( createLayer<Fia>( ) );
+        createSample( );
+    }
+    void SceneManager::createSample( )
+    {
+        SceneSample sample;
+        auto scene = sample.create( );
 
         childrenCallSetup( scene );
 
-        return scene;
+        Director::getInstance( )->replaceScene( scene );
     }
     void SceneManager::childrenCallSetup( cocos2d::Scene* scene )
     {
