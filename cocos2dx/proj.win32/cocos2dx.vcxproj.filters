@@ -10,6 +10,18 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Lib">
+      <UniqueIdentifier>{c44b688b-da93-4ba4-9e00-5359978352ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User">
+      <UniqueIdentifier>{f605a573-1903-4d94-93d4-3ac1fa93d18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lib\EnvironmentDefaultData">
+      <UniqueIdentifier>{32d9c34b-10dc-4e90-94bc-c83ce141373b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lib\GameHelper2dx">
+      <UniqueIdentifier>{d5073669-102f-48a1-aaa2-bd01a39bbe32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,6 +33,33 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Lib\GameHelper2dx\AudioManager.cpp">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\GameHelper2dx\Converter.cpp">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\GameHelper2dx\MathHelper.cpp">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\GameHelper2dx\SDKBOXHelper.cpp">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp">
+      <Filter>src\Lib\EnvironmentDefaultData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Fia.cpp">
+      <Filter>src\User</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\LayerBase.cpp">
+      <Filter>src\User</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\SceneManager.cpp">
+      <Filter>src\User</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Water.cpp">
+      <Filter>src\User</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -31,6 +70,36 @@
     </ClInclude>
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\GameHelper2dx\AudioManager.h">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\GameHelper2dx\Converter.h">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\GameHelper2dx\GameHelper2dx.h">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\GameHelper2dx\MathHelper.h">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\GameHelper2dx\SDKBOXHelper.h">
+      <Filter>src\Lib\GameHelper2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h">
+      <Filter>src\Lib\EnvironmentDefaultData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Fia.h">
+      <Filter>src\User</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\LayerBase.h">
+      <Filter>src\User</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\SceneManager.h">
+      <Filter>src\User</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Water.h">
+      <Filter>src\User</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
