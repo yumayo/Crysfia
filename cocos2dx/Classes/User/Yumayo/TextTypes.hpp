@@ -16,7 +16,7 @@ namespace User
     using NovelData = std::array<std::string, lineSize>;
     using RawScriptPartsData = std::vector<std::string>;
 
-    struct TagRawScriptData
+    struct TagWithNovelStringAndRawScriptPartsData
     {
         enum class Tag
         {
@@ -26,21 +26,22 @@ namespace User
             FUN,
         };
         Tag tag;
-        RawScriptPartsData data;
+        std::string novel;
+        RawScriptPartsData script;
     };
     using VariableScriptData = std::map<std::string, std::string>;
     using ArgumentList = std::vector<std::string>;
 
-    struct FunctionScript
+    struct FunctionInfo
     {
         std::string name;
         ArgumentList argumentList;
     };
-    using FunctionScriptData = std::map<std::string, FunctionScript>;
+    using FunctionScriptData = std::map<std::string, FunctionInfo>;
     struct FunctionScriptChip
     {
         std::string variable;
-        FunctionScript functionInfo;
+        FunctionInfo functionInfo;
     };
 }
 
