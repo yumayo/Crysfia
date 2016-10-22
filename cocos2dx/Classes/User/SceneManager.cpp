@@ -4,18 +4,30 @@
 // サンプルシーンを作成します。
 #include "Sample/SceneSample.h"
 
+// ユーマヨシーンを作成します。
+#include "Yumayo/SceneYumayo.h"
+
 USING_NS_CC;
 
 namespace User
 {
     void SceneManager::createSystemAppDelegateStart( )
     {
-        createSample( );
+        createYumayo( );
     }
     void SceneManager::createSample( )
     {
-        SceneSample sample;
-        auto scene = sample.create( );
+        SceneSample base;
+        auto scene = base.create( );
+
+        childrenCallSetup( scene );
+
+        Director::getInstance( )->replaceScene( scene );
+    }
+    void SceneManager::createYumayo( )
+    {
+        SceneYumayo base;
+        auto scene = base.create( );
 
         childrenCallSetup( scene );
 

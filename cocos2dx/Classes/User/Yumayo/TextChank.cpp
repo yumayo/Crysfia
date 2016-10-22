@@ -1,5 +1,7 @@
 #include "TextChank.h"
 
+#include "ScriptStaticData.h"
+
 #include <algorithm>
 
 namespace User
@@ -12,26 +14,25 @@ namespace User
     {
 
     }
-    void TextChank::insertScript( TagRawScriptData const & tagRawScriptData )
+    void TextChank::insertScript( TagWithNovelStringAndRawScriptPartsData const & tagWithNovelStringAndRawScriptPartsData )
     {
-        bufferTagRawScriptData = tagRawScriptData;
-        switch ( bufferTagRawScriptData.tag )
+        bufferTagWithNovelStringAndRawScriptPartsData = tagWithNovelStringAndRawScriptPartsData;
+        switch ( bufferTagWithNovelStringAndRawScriptPartsData.tag )
         {
-        case TagRawScriptData::Tag::NOV:
+        case TagWithNovelStringAndRawScriptPartsData::Tag::NOV:
             makeNovel( );
             break;
-        case TagRawScriptData::Tag::VAR:
+        case TagWithNovelStringAndRawScriptPartsData::Tag::VAR:
             makeVariableScript( );
             break;
-        case TagRawScriptData::Tag::FUN:
+        case TagWithNovelStringAndRawScriptPartsData::Tag::FUN:
             makeFunctionScript( );
+            callFunction( );
             break;
         default:
             return;
             break;
         }
-        bufferTagRawScriptData.tag = TagRawScriptData::Tag::NIL;
-        bufferTagRawScriptData.data.clear( );
     }
     bool TextChank::isNext( )
     {
@@ -43,21 +44,24 @@ namespace User
     }
     void TextChank::clear( )
     {
-        bufferTagRawScriptData.tag = TagRawScriptData::Tag::NIL;
-        bufferTagRawScriptData.data.clear( );
+        bufferTagWithNovelStringAndRawScriptPartsData.tag = TagWithNovelStringAndRawScriptPartsData::Tag::NIL;
+        bufferTagWithNovelStringAndRawScriptPartsData.novel.clear( );
+        bufferTagWithNovelStringAndRawScriptPartsData.script.clear( );
+
+        functionScriptChip.variable.clear( );
+        functionScriptChip.functionInfo.name.clear( );
+        functionScriptChip.functionInfo.argumentList.clear( );
 
         functionScriptData.clear( );
+
         //variableScriptData.clear( ); // 変数の初期化はしない。
+
         novelIndex = 0;
         for ( auto& obj : novelData ) obj = u8"";
     }
-    FunctionScriptData TextChank::getFunctionScript( )
-    {
-        return FunctionScriptData( );
-    }
     void TextChank::makeVariableScript( )
     {
-        auto data = bufferTagRawScriptData.data;
+        auto data = bufferTagWithNovelStringAndRawScriptPartsData.script;
 
         auto values = data;
         auto variableName = data[0]; // 生データの 配列0番目には、変数名が記載されています。
@@ -67,7 +71,7 @@ namespace User
     }
     void TextChank::makeFunctionScript( )
     {
-        auto data = bufferTagRawScriptData.data;
+        auto data = bufferTagWithNovelStringAndRawScriptPartsData.script;
 
         auto values = data;
         auto variableName = data[0]; // 生データの 配列0番目には、変数名が記載されています。
@@ -79,7 +83,7 @@ namespace User
         {
             // 関数情報を作成。
             // 関数の名前と、引数リストを保存します。
-            FunctionScript functionInfo = { functionName, ArgumentList( ) };
+            FunctionInfo functionInfo = { functionName, ArgumentList( ) };
 
             // 最終的に、関数情報を持ったマップを生成します。
             functionScriptData.insert( std::make_pair( variableName, functionInfo ) );
@@ -88,6 +92,8 @@ namespace User
         // "()"を明示的に書いてもOKなようにしています。
         else
         {
+            auto error = [ ] ( std::string const& errorString ) { throw( "variableError : " + errorString ); };
+
             // 関数の引数だけを残します。
             values.erase( values.begin( ), values.begin( ) + 4 );
             values.pop_back( );
@@ -102,25 +108,28 @@ namespace User
                 {
                     auto itr = variableScriptData.find( values[i] );
                     if ( itr != variableScriptData.cend( ) ) argumentList.emplace_back( itr->second );
-                    else throw( "指定した変数が存在しません。" );
+                    else error( "指定した変数が存在しません。" );
                 }
                 else argumentList.emplace_back( values[i] );
 
             }
             // 関数情報を作成。
             // 関数の名前と、引数リストを保存します。
-            FunctionScript functionInfo = { functionName, argumentList };
+            FunctionInfo functionInfo = { functionName, argumentList };
 
             // 最終的に、関数情報を持ったマップを生成します。
-            functionScriptData.insert( std::make_pair( variableName, functionInfo ) );
+            functionScriptChip = { variableName, functionInfo };
+            functionScriptData.insert( std::make_pair( functionScriptChip.variable, functionScriptChip.functionInfo ) );
         }
     }
     void TextChank::makeNovel( )
     {
-        auto data = bufferTagRawScriptData.data;
-
         novelIndex = std::min( novelIndex + 1U, novelData.size( ) );
 
-        novelData[novelIndex - 1] = data[0];
+        novelData[novelIndex - 1] = bufferTagWithNovelStringAndRawScriptPartsData.novel;
+    }
+    void TextChank::callFunction( )
+    {
+        ScriptStaticData::runScript( functionScriptChip );
     }
 }
