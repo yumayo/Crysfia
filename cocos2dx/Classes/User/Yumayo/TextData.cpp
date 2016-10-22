@@ -33,24 +33,7 @@ namespace User
 
     TextData::TextData( )
     {
-        auto fileUtils = FileUtils::getInstance( );
-        auto str = fileUtils->getStringFromFile( fileUtils->fullPathForFilename( "data/script.txt" ) );
 
-        size_t stringPosition = 0;
-        size_t findPosition = 0;
-        const std::string eolString = u8"\r\n";
-        const size_t eolSize = std::string( eolString ).size( );
-        while ( findPosition != std::string::npos )
-        {
-            findPosition = str.find( eolString, stringPosition );
-            tidydiness( str.substr( stringPosition, findPosition - stringPosition ) );
-            stringPosition = findPosition + eolSize;
-        }
-
-        for ( auto& line : data )
-        {
-            log( "%s", line.c_str( ) );
-        }
     }
     TextData::~TextData( )
     {
@@ -73,6 +56,29 @@ namespace User
     bool TextData::isEmpty( )
     {
         return data.empty( );
+    }
+    void TextData::makeData( std::string filePath )
+    {
+        data.clear( );
+
+        auto fileUtils = FileUtils::getInstance( );
+        auto str = fileUtils->getStringFromFile( fileUtils->fullPathForFilename( "data/" + filePath ) );
+
+        size_t stringPosition = 0;
+        size_t findPosition = 0;
+        const std::string eolString = u8"\r\n";
+        const size_t eolSize = std::string( eolString ).size( );
+        while ( findPosition != std::string::npos )
+        {
+            findPosition = str.find( eolString, stringPosition );
+            tidydiness( str.substr( stringPosition, findPosition - stringPosition ) );
+            stringPosition = findPosition + eolSize;
+        }
+
+        for ( auto& line : data )
+        {
+            log( "%s", line.c_str( ) );
+        }
     }
     void TextData::tidydiness( std::string lineString )
     {

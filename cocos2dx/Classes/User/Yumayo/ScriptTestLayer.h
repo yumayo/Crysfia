@@ -20,10 +20,12 @@ namespace User
         virtual void setup( )override;
         virtual void cleanup( )override;
     public:
+        void textUpdate( );
         void windowDefineUpdate( );
         void update( float delta )override;
     private:
         cocos2d::EventListenerMouse* mouseEvent;
+        cocos2d::EventListenerKeyboard* keyEvent;
         std::vector<cocos2d::Sprite*> sprities = std::vector<cocos2d::Sprite*>( 5 );
         cocos2d::Vec2 mousePosition;
         cocos2d::Vec2 origin;

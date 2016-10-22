@@ -1,12 +1,14 @@
 #include "TextChank.h"
 
 #include "ScriptStaticData.h"
+#include "ScriptSystem.h"
 
 #include <algorithm>
 
 namespace User
 {
     TextChank::TextChank( )
+        : novelIndex( ScriptSystem::novelIndex )
     {
 
     }
@@ -57,6 +59,7 @@ namespace User
         //variableScriptData.clear( ); // 変数の初期化はしない。
 
         novelIndex = 0;
+
         for ( auto& obj : novelData ) obj = u8"";
     }
     void TextChank::makeVariableScript( )
@@ -86,7 +89,8 @@ namespace User
             FunctionInfo functionInfo = { functionName, ArgumentList( ) };
 
             // 最終的に、関数情報を持ったマップを生成します。
-            functionScriptData.insert( std::make_pair( variableName, functionInfo ) );
+            functionScriptChip = { variableName, functionInfo };
+            functionScriptData.insert( std::make_pair( functionScriptChip.variable, functionScriptChip.functionInfo ) );
         }
         // 引数ありの場合
         // "()"を明示的に書いてもOKなようにしています。
@@ -130,6 +134,6 @@ namespace User
     }
     void TextChank::callFunction( )
     {
-        ScriptStaticData::runScript( functionScriptChip );
+        ScriptStaticData::run( functionScriptChip );
     }
 }

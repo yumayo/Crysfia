@@ -10,7 +10,9 @@ namespace User
 {
     enum class Tag
     {
-        TextString = 1003
+        Novel = 1001,
+        Name = 1002,
+        Human = 1003,
     };
     constexpr uint32_t lineSize = 3U;
     using NovelData = std::array<std::string, lineSize>;

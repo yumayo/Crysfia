@@ -90,6 +90,27 @@
     <ClCompile Include="..\Classes\User\Yumayo\TextScriptReader.cpp">
       <Filter>src\User\Yumayo</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptBase.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptStaticData.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptSystem.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptName.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\NameLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\HumanLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptHuman.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -156,6 +177,27 @@
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Yumayo\TextScriptReader.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptBase.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptStaticData.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptSystem.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptName.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\NameLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\HumanLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptHuman.h">
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
   </ItemGroup>
