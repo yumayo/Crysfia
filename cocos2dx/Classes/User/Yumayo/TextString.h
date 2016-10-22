@@ -14,7 +14,6 @@ namespace User
         TextString( );
         ~TextString( );
     public:
-        void releace( );
         // 一文字ずつ表示をするときのアクションを設定します。
         // この関数を呼ぶとアクションがスタートします。
         void actionStart( );

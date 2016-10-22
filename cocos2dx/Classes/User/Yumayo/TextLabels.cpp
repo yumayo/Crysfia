@@ -16,10 +16,6 @@ namespace User
     {
         isReadOuted = false;
     }
-    void TextLabels::releace( )
-    {
-        for ( auto& obj : textStrings ) obj.releace( );
-    }
     void TextLabels::setStrings( NovelData const & strings, cocos2d::Vec2 position )
     {
         auto& ds = textStrings;

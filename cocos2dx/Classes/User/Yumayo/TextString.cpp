@@ -10,18 +10,10 @@ namespace User
 
     TextString::TextString( )
     {
-        text = u8"";
-        label = Label::createWithTTF( text, u8"fonts/F910MinchoW3.otf", 36.0F );
-        label->setTextColor( Color4B::WHITE );
-        label->setTag( (int)Tag::TextString );
-        label->retain( );
+        
     }
     TextString::~TextString( )
     {
-    }
-    void TextString::releace( )
-    {
-        label->release( );
     }
     void TextString::actionStart( )
     {
@@ -65,18 +57,18 @@ namespace User
             auto oneString = label->getLetter( i );
             if ( oneString )
             {
-                oneString->stopActionByTag( (int)Tag::TextString );
+                oneString->stopActionByTag( i );
                 oneString->setVisible( true );
             }
         }
     }
     void TextString::layerPasting( cocos2d::Layer * layer )
     {
-        layer->addChild( label, 1000 );
+        layer->addChild( label );
     }
     void TextString::layerPeelOff( cocos2d::Layer * layer )
     {
-        layer->removeChildByTag( (int)Tag::TextString );
+        layer->removeChildByTag( (int)Tag::Novel );
     }
     void TextString::setReadOutSpeed( float $readOutSpeed )
     {
@@ -85,11 +77,13 @@ namespace User
     void TextString::setLabelString( std::string const & text )
     {
         this->text = text;
-        label->setString( this->text );
+        label = Label::createWithTTF( text, u8"fonts/F910MinchoW3.otf", 36.0F );
+        label->setTextColor( Color4B::WHITE );
+        label->setTag( (int)Tag::Novel );
         for ( int i = 0; i < label->getStringLength( ); i++ )
         {
             auto oneString = label->getLetter( i );
-            if ( oneString ) oneString->setVisible( false ); 
+            if ( oneString ) oneString->setVisible( false );
         }
     }
     void TextString::setDrawPosition( cocos2d::Vec2 position )

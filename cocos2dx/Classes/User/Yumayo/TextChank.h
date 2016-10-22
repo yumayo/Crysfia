@@ -24,7 +24,7 @@ namespace User
         FunctionScriptChip functionScriptChip;
         FunctionScriptData functionScriptData;
         VariableScriptData variableScriptData;
-        size_t novelIndex = 0;
+        size_t& novelIndex;
         NovelData novelData;
     private:
         TagWithNovelStringAndRawScriptPartsData bufferTagWithNovelStringAndRawScriptPartsData;

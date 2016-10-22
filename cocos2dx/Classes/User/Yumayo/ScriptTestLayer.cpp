@@ -8,10 +8,19 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        // アップデートを呼ぶため。
+        setName( typeid( *this ).name( ) );
+
         this->scheduleUpdate( );
 
-        windowDefineUpdate( );
+        keyEvent = EventListenerKeyboard::create( );
+        keyEvent->onKeyPressed = [ this ] ( EventKeyboard::KeyCode code, Event* event )
+        {
+            if ( code == EventKeyboard::KeyCode::KEY_F5 )
+            {
+                setup( );
+            }
+        };
+        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
 
         mouseEvent = EventListenerMouse::create( );
         mouseEvent->onMouseMove = [ this ] ( EventMouse* event )
@@ -25,16 +34,7 @@ namespace User
             {
                 if ( textLabels.getIsReadOuted( ) )
                 {
-                    textChank.clear( );
-                    textLabels.clear( );
-                    textLabels.layerPeelOff( this );
-                    while ( !textChank.isNext( ) && !textData.isEmpty( ) )
-                    {
-                        textChank.insertScript( textReader.createTagRawScriptPartsData( textData.getLineMoved( ) ) );
-                    }
-                    auto size = Size( origin + visibleSize );
-                    textLabels.setStrings( textChank.getNovelData( ), Vec2( size.width * 0.5 - size.width * 0.7 / 2, size.height * 0.2 ) );
-                    textLabels.layerPasting( this );
+                    textUpdate( );
                 }
                 else
                 {
@@ -44,6 +44,20 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
 
+        return true;
+    }
+    void ScriptTestLayer::setup( )
+    {
+        windowDefineUpdate( );
+        textData.makeData( "script.txt" );
+        textUpdate( );
+    }
+    void ScriptTestLayer::cleanup( )
+    {
+        this->getEventDispatcher( )->removeEventListener( mouseEvent );
+    }
+    void ScriptTestLayer::textUpdate( )
+    {
         textChank.clear( );
         textLabels.clear( );
         textLabels.layerPeelOff( this );
@@ -54,15 +68,6 @@ namespace User
         auto size = Size( origin + visibleSize );
         textLabels.setStrings( textChank.getNovelData( ), Vec2( size.width * 0.5 - size.width * 0.7 / 2, size.height * 0.2 ) );
         textLabels.layerPasting( this );
-
-        return true;
-    }
-    void ScriptTestLayer::setup( )
-    {
-    }
-    void ScriptTestLayer::cleanup( )
-    {
-        this->getEventDispatcher( )->removeEventListener( mouseEvent );
     }
     void ScriptTestLayer::windowDefineUpdate( )
     {

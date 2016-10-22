@@ -4,22 +4,24 @@
 # include "cocos2d.h"
 
 # include "TextTypes.hpp"
-# include "ScriptInstruction.h"
+# include "ScriptBase.h"
 
 # include <map>
 # include <string>
+# include <memory>
 
 namespace User
 {
     class ScriptStaticData
     {
     public:
-        ScriptStaticData( );
+        ScriptStaticData( cocos2d::Scene* scene );
         ~ScriptStaticData( );
     public:
-        static void runScript( FunctionScriptChip const& functionScriptChip );
+        static void run( FunctionScriptChip const& functionScriptChip );
     private:
-        static std::map<std::string, ScriptInstruction> data;
+        static cocos2d::Scene* scene;
+        static std::map<std::string, std::shared_ptr<ScriptBase>> data;
     };
 }
 

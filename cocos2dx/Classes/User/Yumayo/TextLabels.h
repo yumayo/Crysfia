@@ -13,7 +13,6 @@ namespace User
         ~TextLabels( );
     public:
         void clear( );
-        void releace( );
         void setStrings( NovelData const& strings, cocos2d::Vec2 position );
         // ÉåÉCÉÑÅ[Ç…ì\ÇËïtÇØ
         void layerPasting( cocos2d::Layer* layer );
