@@ -1,16 +1,16 @@
 #include "TextString.h"
 
 #include "TextTypes.hpp"
+#include "OptionalValues.h"
 
 USING_NS_CC;
 
 namespace User
 {
-    float TextString::readOutSpeed = 0.1F;
-
-    TextString::TextString( )
+    TextString::TextString( cocos2d::Layer* layer )
+        : layer( layer )
     {
-        
+
     }
     TextString::~TextString( )
     {
@@ -43,9 +43,9 @@ namespace User
         auto oneString = label->getLetter( stringIndex );
         if ( oneString )
         {
-            oneString->runAction( Sequence::create( DelayTime::create( readOutSpeed * stringIndex ),
+            oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * stringIndex ),
                                                     Show::create( ),
-                                                    DelayTime::create( readOutSpeed ),
+                                                    DelayTime::create( OptionalValues::readOutSpeed ),
                                                     CallFunc::create( [ this ] { actionCallfunc( ); } ),
                                                     nullptr ) )->setTag( stringIndex ); // action‚É‚Í‰½•¶Žš–Ú‚©‚Ìî•ñ‚ð“ü‚ê‚Ä‚¨‚«‚Ü‚·B
         }
@@ -62,22 +62,18 @@ namespace User
             }
         }
     }
-    void TextString::layerPasting( cocos2d::Layer * layer )
+    void TextString::layerPasting( )
     {
         layer->addChild( label );
     }
-    void TextString::layerPeelOff( cocos2d::Layer * layer )
+    void TextString::layerPeelOff( )
     {
         layer->removeChildByTag( (int)Tag::Novel );
-    }
-    void TextString::setReadOutSpeed( float $readOutSpeed )
-    {
-        readOutSpeed = $readOutSpeed;
     }
     void TextString::setLabelString( std::string const & text )
     {
         this->text = text;
-        label = Label::createWithTTF( text, u8"fonts/F910MinchoW3.otf", 36.0F );
+        label = Label::createWithTTF( text, u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
         label->setTextColor( Color4B::WHITE );
         label->setTag( (int)Tag::Novel );
         for ( int i = 0; i < label->getStringLength( ); i++ )
@@ -85,12 +81,23 @@ namespace User
             auto oneString = label->getLetter( i );
             if ( oneString ) oneString->setVisible( false );
         }
+
+        auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
+        auto contentWidth = label->getContentSize( ).width;
+        if ( visibleWidth * 0.9 <= contentWidth )
+        {
+            label->setScaleX( ( visibleWidth * 0.9 ) / contentWidth );
+        }
     }
     void TextString::setDrawPosition( cocos2d::Vec2 position )
     {
-        auto size = label->getContentSize( );
+        float width;
+        auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
+        auto contentSize = label->getContentSize( );
+        if ( visibleWidth * 0.9 <= contentSize.width ) width = visibleWidth * 0.9 * 0.5;
+        else width = contentSize.width * 0.5;
 
-        label->setPosition( position + Vec2( size.width / 2, 0 ) );
+        label->setPosition( position + Vec2( width, -contentSize.height ) );
     }
     void TextString::setActionStart( size_t $stringLength )
     {
@@ -99,7 +106,7 @@ namespace User
             auto oneString = label->getLetter( i );
             if ( oneString )
             {
-                oneString->runAction( Sequence::create( DelayTime::create( readOutSpeed * i ),
+                oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * i ),
                                                         Show::create( ),
                                                         nullptr ) )->setTag( i );
             }

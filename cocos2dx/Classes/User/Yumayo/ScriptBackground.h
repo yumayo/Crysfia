@@ -1,5 +1,5 @@
-# ifndef __ScriptName__
-# define __ScriptName__
+# ifndef __ScriptBackground__
+# define __ScriptBackground__
 
 # include "cocos2d.h"
 
@@ -7,11 +7,11 @@
 
 namespace User
 {
-    class ScriptName : public ScriptBase
+    class ScriptBackground : public ScriptBase
     {
     public:
-        ScriptName( cocos2d::Layer* layer, std::string characterName, std::string fontPath );
-        ~ScriptName( );
+        ScriptBackground( cocos2d::Layer* layer, std::string textureName );
+        ~ScriptBackground( );
     public:
         void in( ArgumentList const& args );
         void out( ArgumentList const& args );
@@ -19,14 +19,12 @@ namespace User
         void fadeout( ArgumentList const& args );
         void slidein( ArgumentList const& args );
         void slideout( ArgumentList const& args );
+        void crossfade( ArgumentList const& args );
     private:
-        cocos2d::Label* create( );
+        cocos2d::Sprite* create( );
     private:
-        std::string characterName;
-        std::string fontPath;
-        cocos2d::Vec2 position;
-        float slideSize;
+        cocos2d::Texture2D* texture;
     };
 }
 
-# endif // __ScriptName__
+# endif // __ScriptBackground__

@@ -6,7 +6,8 @@ namespace User
 {
     size_t ScriptSystem::novelIndex = 0;
 
-    ScriptSystem::ScriptSystem( )
+    ScriptSystem::ScriptSystem( cocos2d::Layer* layer )
+        : ScriptBase( layer )
     {
         funcs.insert( std::make_pair( u8"l", [ this ] ( ArgumentList const& args ) { line( args ); } ) );
     }

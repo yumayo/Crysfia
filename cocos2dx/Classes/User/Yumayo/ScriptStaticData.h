@@ -15,13 +15,11 @@ namespace User
     class ScriptStaticData
     {
     public:
-        ScriptStaticData( cocos2d::Scene* scene );
-        ~ScriptStaticData( );
-    public:
         static void run( FunctionScriptChip const& functionScriptChip );
+        static void addData( std::pair<std::string, std::unique_ptr<ScriptBase>>&& pairData );
     private:
         static cocos2d::Scene* scene;
-        static std::map<std::string, std::shared_ptr<ScriptBase>> data;
+        static std::map<std::string, std::unique_ptr<ScriptBase>> data;
     };
 }
 

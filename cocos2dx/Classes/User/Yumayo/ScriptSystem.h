@@ -10,7 +10,7 @@ namespace User
     class ScriptSystem : public ScriptBase
     {
     public:
-        ScriptSystem( );
+        ScriptSystem( cocos2d::Layer* layer );
         ~ScriptSystem( );
     public:
         void line( ArgumentList const& args );

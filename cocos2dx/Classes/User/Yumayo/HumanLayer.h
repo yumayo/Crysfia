@@ -14,6 +14,8 @@ namespace User
         bool init( ) override;
         void setup( ) override;
     public:
+    private:
+        static void addTexture( std::string texturePath );
     };
 }
 

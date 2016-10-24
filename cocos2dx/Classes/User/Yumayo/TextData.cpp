@@ -62,7 +62,7 @@ namespace User
         data.clear( );
 
         auto fileUtils = FileUtils::getInstance( );
-        auto str = fileUtils->getStringFromFile( fileUtils->fullPathForFilename( "data/" + filePath ) );
+        auto str = fileUtils->getStringFromFile( fileUtils->fullPathForFilename( "res/data/" + filePath ) );
 
         size_t stringPosition = 0;
         size_t findPosition = 0;

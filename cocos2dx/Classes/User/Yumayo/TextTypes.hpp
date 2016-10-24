@@ -10,9 +10,13 @@ namespace User
 {
     enum class Tag
     {
-        Novel = 1001,
-        Name = 1002,
-        Human = 1003,
+        Null = 0,
+        Start = 1000,
+        System,
+        Background,
+        Human,
+        Name,
+        Novel,
     };
     constexpr uint32_t lineSize = 3U;
     using NovelData = std::array<std::string, lineSize>;
