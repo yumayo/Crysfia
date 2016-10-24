@@ -14,7 +14,8 @@ namespace User
         funcs.insert( std::make_pair( u8"fadeout", [ this ] ( ArgumentList const& args ) { fadeout( args ); } ) );
         funcs.insert( std::make_pair( u8"slidein", [ this ] ( ArgumentList const& args ) { slidein( args ); } ) );
         funcs.insert( std::make_pair( u8"slideout", [ this ] ( ArgumentList const& args ) { slideout( args ); } ) );
-        funcs.insert( std::make_pair( u8"crossfade", [ this ] ( ArgumentList const& args ) { crossfade( args ); } ) );
+        funcs.insert( std::make_pair( u8"circlein", [ this ] ( ArgumentList const& args ) { circlein( args ); } ) );
+        funcs.insert( std::make_pair( u8"circleout", [ this ] ( ArgumentList const& args ) { circleout( args ); } ) );
     }
     ScriptBackground::~ScriptBackground( )
     {
@@ -66,7 +67,7 @@ namespace User
             node->runAction( Sequence::create( fadeWithSlide, remove, nullptr ) );
         }
     }
-    void ScriptBackground::crossfade( ArgumentList const & args )
+    void ScriptBackground::circlein( ArgumentList const & args )
     {
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
@@ -78,8 +79,34 @@ namespace User
         sprite->setScale( targetSize.height / size.height, targetSize.height / size.height );
 
         auto clipSprite = Sprite::create( "res/texture/mask.png" );
+        clipSprite->setTag( (int)Tag::Background );
         clipSprite->setScale( 0.0 );
         clipSprite->runAction( ScaleTo::create( 2.0, 1.0 ) );
+        clipSprite->setPosition( origin + visibleSize / 2 );
+
+        auto clipping = ClippingNode::create( );
+        clipping->setStencil( clipSprite );
+        clipping->setInverted( false );
+        clipping->setAlphaThreshold( 0.0 );
+        clipping->addChild( sprite );
+
+        layer->addChild( clipping );
+    }
+    void ScriptBackground::circleout( ArgumentList const & args )
+    {
+        auto origin = Director::getInstance( )->getVisibleOrigin( );
+        auto visibleSize = Director::getInstance( )->getVisibleSize( );
+
+        auto sprite = Sprite::createWithTexture( texture );
+        sprite->setPosition( origin + visibleSize / 2 );
+        auto size = sprite->getContentSize( );
+        auto targetSize = Size( visibleSize );
+        sprite->setScale( targetSize.height / size.height, targetSize.height / size.height );
+
+        auto clipSprite = Sprite::create( "res/texture/mask.png" );
+        clipSprite->setTag( (int)Tag::Background );
+        clipSprite->setScale( 1.0 );
+        clipSprite->runAction( ScaleTo::create( 2.0, -1.0 ) );
         clipSprite->setPosition( origin + visibleSize / 2 );
 
         auto clipping = ClippingNode::create( );

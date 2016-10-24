@@ -24,7 +24,11 @@ namespace User
         keyEvent = EventListenerKeyboard::create( );
         keyEvent->onKeyPressed = [ this ] ( EventKeyboard::KeyCode code, Event* event )
         {
-            if ( code == EventKeyboard::KeyCode::KEY_F5 ) setup( );
+            if ( code == EventKeyboard::KeyCode::KEY_F5 )
+            {
+                textData.makeData( "scenario1.txt" );
+                textUpdate( );
+            }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
 
@@ -43,7 +47,17 @@ namespace User
     }
     void NovelLayer::setup( )
     {
-        textData.makeData( "script.txt" );
+        auto origin = Director::getInstance( )->getVisibleOrigin( );
+        auto visibleSize = Director::getInstance( )->getVisibleSize( );
+        Rect rect = Rect( origin.x, origin.y, visibleSize.width, OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::lineSpaceSize );
+        Sprite* square = Sprite::create( );
+        square->setColor( Color3B( 0, 0, 0 ) );
+        square->setOpacity( 128 );
+        square->setTextureRect( rect );
+        square->setPosition( rect.origin + rect.size / 2 );
+        this->addChild( square );
+
+        textData.makeData( "scenario1.txt" );
         textUpdate( );
     }
     void NovelLayer::textUpdate( )

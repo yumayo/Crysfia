@@ -19,7 +19,8 @@ namespace User
         void fadeout( ArgumentList const& args );
         void slidein( ArgumentList const& args );
         void slideout( ArgumentList const& args );
-        void crossfade( ArgumentList const& args );
+        void circlein( ArgumentList const& args );
+        void circleout( ArgumentList const& args );
     private:
         cocos2d::Sprite* create( );
     private:

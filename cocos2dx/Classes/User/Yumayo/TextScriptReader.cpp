@@ -15,7 +15,7 @@ namespace User
     {
 
     }
-    TagWithNovelStringAndRawScriptPartsData TextScriptReader::createTagRawScriptPartsData( std::string const& lineRawData )
+    TagWithNovelStringAndRawScriptPartsData TextScriptReader::createTagRawScriptPartsData( std::string const& lineRawData, std::string const& line )
     {
         // 文字列の先頭に"@"がある場合はスクリプト
         if ( lineRawData[0] == '@' )
@@ -68,9 +68,13 @@ namespace User
         {
             std::vector<Syntax> syntaxs;
             syntaxs.push_back( { find( u8":" ), findString, findPosition } );
+            syntaxs.push_back( { find( u8"：" ), findString, findPosition } );
             syntaxs.push_back( { find( u8"(" ), findString, findPosition } );
+            syntaxs.push_back( { find( u8"（" ), findString, findPosition } );
             syntaxs.push_back( { find( u8")" ), findString, findPosition } );
+            syntaxs.push_back( { find( u8"）" ), findString, findPosition } );
             syntaxs.push_back( { find( u8"," ), findString, findPosition } );
+            syntaxs.push_back( { find( u8"、" ), findString, findPosition } );
 
             auto findSyntaxItr = std::min_element( syntaxs.begin( ), syntaxs.end( ), [ ] ( Syntax& a, Syntax& b )
             {
@@ -110,7 +114,9 @@ namespace User
     }
     void TextScriptReader::syntaxCheck( RawScriptPartsData const & rawScriptPartsData )
     {
-        auto error = [ ] ( std::string const& errorString ) { throw( "syntaxError : " + errorString ); };
+        std::string str;
+        for ( auto& obj : rawScriptPartsData ) str += obj;
+        auto error = [ & ] ( std::string const& errorString ) { throw( "syntaxError : [" + errorString + "][" + str + "]" ); };
         auto isAllAlphabet = [ & ] ( std::string const& string )
         {
             return std::all_of( string.cbegin( ), string.cend( ), isalpha );

@@ -21,8 +21,8 @@ namespace User
         scene->addChild( createLayer<SystemLayer>( ), (int)Tag::System );
         scene->addChild( createLayer<BackgroundLayer>( ), (int)Tag::Background );
         scene->addChild( createLayer<HumanLayer>( ), (int)Tag::Human );
-        scene->addChild( createLayer<NameLayer>( ), (int)Tag::Name );
         scene->addChild( createLayer<NovelLayer>( ), (int)Tag::Novel );
+        scene->addChild( createLayer<NameLayer>( ), (int)Tag::Name );
         return scene;
     }
 }

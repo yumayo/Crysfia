@@ -12,7 +12,7 @@ namespace User
         TextScriptReader( );
         ~TextScriptReader( );
     public:
-        TagWithNovelStringAndRawScriptPartsData createTagRawScriptPartsData( std::string const& lineRawData );
+        TagWithNovelStringAndRawScriptPartsData createTagRawScriptPartsData( std::string const& lineRawData, std::string const& line );
     private:
         void makeNovelData( );
         void makeTagRawScriptData( );

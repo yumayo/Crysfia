@@ -15,12 +15,18 @@ namespace User
         System,
         Background,
         Human,
-        Name,
         Novel,
+        Name,
     };
     constexpr uint32_t lineSize = 3U;
     using NovelData = std::array<std::string, lineSize>;
-    using RawScriptPartsData = std::vector<std::string>;
+    using stringArray = std::vector<std::string>;
+
+    struct RawScriptPartsData
+    {
+        std::string line;
+        stringArray data;
+    };
 
     struct TagWithNovelStringAndRawScriptPartsData
     {
@@ -36,7 +42,7 @@ namespace User
         RawScriptPartsData script;
     };
     using VariableScriptData = std::map<std::string, std::string>;
-    using ArgumentList = std::vector<std::string>;
+    using ArgumentList = stringArray;
 
     struct FunctionInfo
     {
