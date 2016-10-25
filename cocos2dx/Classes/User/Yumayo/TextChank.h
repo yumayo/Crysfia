@@ -11,7 +11,7 @@ namespace User
         TextChank( );
         ~TextChank( );
     public:
-        void insertScript( TagWithNovelStringAndRawScriptPartsData const& tagWithNovelStringAndRawScriptPartsData );
+        void insertScript( TagWithData const& tagWithData );
         bool isNext( );
         NovelData getNovelData( );
         void clear( );
@@ -27,7 +27,7 @@ namespace User
         size_t& novelIndex;
         NovelData novelData;
     private:
-        TagWithNovelStringAndRawScriptPartsData bufferTagWithNovelStringAndRawScriptPartsData;
+        TagWithData tagWithData;
     };
 }
 

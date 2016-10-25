@@ -19,7 +19,7 @@ namespace User
         void actionStart( );
         // 一文字ずつ表示をするときのアクションを設定します。
         // この関数を呼ぶとコールバック関数を設定し、アクションがスタートします。
-        void actionAndCallfuncStart( std::function<void( )> const& $actionCallfunc );
+        void actionAndCallfuncStart( std::function<void( )> const& actionCallfunc );
         // アクションを強制的に終わらせます。
         void actionStop( );
         // レイヤーに貼り付け
@@ -32,7 +32,7 @@ namespace User
     private:
         // 一文字ずつ表示をするときのアクションを設定します。
         // 引数 : 文字列の長さ。
-        void setActionStart( size_t $stringLength );
+        void setActionStart( size_t stringLength );
     private:
         cocos2d::Layer* layer; // 文字列を貼るレイヤーを持ってきます。
         cocos2d::Label* label; // 文字列を一行描画するため。

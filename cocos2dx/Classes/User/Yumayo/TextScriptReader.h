@@ -12,20 +12,23 @@ namespace User
         TextScriptReader( );
         ~TextScriptReader( );
     public:
-        TagWithNovelStringAndRawScriptPartsData createTagRawScriptPartsData( std::string const& lineRawData, std::string const& line );
+        TagWithData createTagRawScriptPartsData( DebugWithLineData const& debugWithLineData );
     private:
         void makeNovelData( );
         void makeTagRawScriptData( );
     private:
         // 文法チェック
-        static void syntaxCheck( RawScriptPartsData const& rawScriptPartsData );
+        void syntaxCheck( StringArray const& scriptParts );
         // 全てのバッファーを空にして必要なデータだけを渡します。
-        TagWithNovelStringAndRawScriptPartsData getCleanedData( );
+        TagWithData getCleanedData( );
         void cleanUp( );
     private:
-        std::string rawLineData;
-        RawScriptPartsData rawScriptPartsData;
-        TagWithNovelStringAndRawScriptPartsData tagWithNovelStringAndRawScriptPartsData;
+        ScriptDebugData debugData;
+
+        std::string lineData;
+        StringArray scriptParts;
+
+        TagWithData tagWithData;
     };
 }
 

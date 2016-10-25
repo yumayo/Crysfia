@@ -15,19 +15,21 @@ namespace User
     {
 
     }
-    TagWithNovelStringAndRawScriptPartsData TextScriptReader::createTagRawScriptPartsData( std::string const& lineRawData, std::string const& line )
+    TagWithData TextScriptReader::createTagRawScriptPartsData( DebugWithLineData const& debugWithLineData )
     {
         // 文字列の先頭に"@"がある場合はスクリプト
-        if ( lineRawData[0] == '@' )
+        if ( debugWithLineData.lineData[0] == '@' )
         {
             // 先頭の"@"の後ろのデータを渡します。
-            this->rawLineData = lineRawData.substr( std::string( u8"@" ).size( ) );
+            this->lineData = debugWithLineData.lineData.substr( std::string( u8"@" ).size( ) );
+            this->debugData = debugWithLineData.debugData;
             makeTagRawScriptData( );
         }
         // そうでない場合はノベルデータです。
         else
         {
-            this->rawLineData = lineRawData;
+            this->lineData = debugWithLineData.lineData;
+            this->debugData = debugWithLineData.debugData;
             makeNovelData( );
         }
 
@@ -35,11 +37,13 @@ namespace User
     }
     void TextScriptReader::makeNovelData( )
     {
-        tagWithNovelStringAndRawScriptPartsData = { TagWithNovelStringAndRawScriptPartsData::Tag::NOV, rawLineData, RawScriptPartsData( ) };
+        tagWithData = { TagWithData::Tag::NOV, debugData, StringArray( ), lineData };
     }
     void TextScriptReader::makeTagRawScriptData( )
     {
-        auto scriptLine = rawLineData;
+        scriptParts.clear( );
+
+        auto scriptLine = lineData;
         spaceErase( scriptLine );
 
         size_t findPosition = 0;
@@ -54,7 +58,7 @@ namespace User
         auto partsAdd = [ & ] ( size_t findPosition )
         {
             auto str = scriptLine.substr( 0, findPosition );
-            if ( str != u8"" ) rawScriptPartsData.emplace_back( str );
+            if ( str != u8"" ) scriptParts.emplace_back( str );
         };
 
         struct Syntax
@@ -68,13 +72,9 @@ namespace User
         {
             std::vector<Syntax> syntaxs;
             syntaxs.push_back( { find( u8":" ), findString, findPosition } );
-            syntaxs.push_back( { find( u8"：" ), findString, findPosition } );
             syntaxs.push_back( { find( u8"(" ), findString, findPosition } );
-            syntaxs.push_back( { find( u8"（" ), findString, findPosition } );
             syntaxs.push_back( { find( u8")" ), findString, findPosition } );
-            syntaxs.push_back( { find( u8"）" ), findString, findPosition } );
             syntaxs.push_back( { find( u8"," ), findString, findPosition } );
-            syntaxs.push_back( { find( u8"、" ), findString, findPosition } );
 
             auto findSyntaxItr = std::min_element( syntaxs.begin( ), syntaxs.end( ), [ ] ( Syntax& a, Syntax& b )
             {
@@ -85,7 +85,7 @@ namespace User
             if ( findSyntaxItr->isFind )
             {
                 partsAdd( findSyntaxItr->position );
-                rawScriptPartsData.emplace_back( findSyntaxItr->partsString );
+                scriptParts.emplace_back( findSyntaxItr->partsString );
                 scriptLine = scriptLine.substr( findSyntaxItr->position + std::string( findSyntaxItr->partsString ).size( ) );
 
                 disassembly( );
@@ -99,24 +99,22 @@ namespace User
 
         disassembly( );
 
-        syntaxCheck( rawScriptPartsData );
+        syntaxCheck( scriptParts );
 
         // 変数名のところに"$"マークがあれば新しい変数として作成出来ます。
-        if ( rawScriptPartsData[0].find( u8"$" ) != std::string::npos )
+        if ( scriptParts[0].find( u8"$" ) != std::string::npos )
         {
-            tagWithNovelStringAndRawScriptPartsData = { TagWithNovelStringAndRawScriptPartsData::Tag::VAR, u8"", rawScriptPartsData };
+            tagWithData = { TagWithData::Tag::VAR, debugData, scriptParts, u8"" };
         }
         // 違うなら、関数呼び出しになります。
         else
         {
-            tagWithNovelStringAndRawScriptPartsData = { TagWithNovelStringAndRawScriptPartsData::Tag::FUN, u8"", rawScriptPartsData };
+            tagWithData = { TagWithData::Tag::FUN, debugData, scriptParts, u8"" };
         }
     }
-    void TextScriptReader::syntaxCheck( RawScriptPartsData const & rawScriptPartsData )
+    void TextScriptReader::syntaxCheck( StringArray const & scriptParts )
     {
-        std::string str;
-        for ( auto& obj : rawScriptPartsData ) str += obj;
-        auto error = [ & ] ( std::string const& errorString ) { throw( "syntaxError : [" + errorString + "][" + str + "]" ); };
+        auto error = [ &, this ] ( std::string const& errorString ) { throw( "[syntaxError : " + errorString + "][ file : " + debugData.fileName + "][line : " + std::to_string( debugData.lineNumber ) + "]" ); };
         auto isAllAlphabet = [ & ] ( std::string const& string )
         {
             return std::all_of( string.cbegin( ), string.cend( ), isalpha );
@@ -129,47 +127,47 @@ namespace User
             return true;
         };
 
-        auto& raw = rawScriptPartsData;
+        auto& parts = scriptParts;
 
-        TagWithNovelStringAndRawScriptPartsData::Tag tag;
+        TagWithData::Tag tag;
 
-        if ( raw.size( ) < 3U ) error( "最低限 [@ NAME : RUN] の形で記入してください。" );
+        if ( parts.size( ) < 3U ) error( "最低限 [@ NAME : RUN] の形で記入してください。" );
 
-        if ( raw[1] != u8":" ) error( "ペア表現に誤りがあります。" );
+        if ( parts[1] != u8":" ) error( "ペア表現に誤りがあります。" );
 
-        if ( raw[0].find( u8"$" ) != std::string::npos ) tag = TagWithNovelStringAndRawScriptPartsData::Tag::VAR;
-        else tag = TagWithNovelStringAndRawScriptPartsData::Tag::FUN;
+        if ( parts[0].find( u8"$" ) != std::string::npos ) tag = TagWithData::Tag::VAR;
+        else tag = TagWithData::Tag::FUN;
 
         switch ( tag )
         {
-        case User::TagWithNovelStringAndRawScriptPartsData::Tag::VAR:
+        case User::TagWithData::Tag::VAR:
             do
             {
-                if ( 3U < raw.size( ) ) error( "変数の実体は一つでないといけません。" );
-                if ( !isValue( raw[2] ) ) error( "変数宣言に対する数字が不正な値です。" );
+                if ( 3U < parts.size( ) ) error( "変数の実体は一つでないといけません。" );
+                if ( !isValue( parts[2] ) ) error( "変数宣言に対する数字が不正な値です。" );
             } while ( false );
             break;
-        case User::TagWithNovelStringAndRawScriptPartsData::Tag::FUN:
+        case User::TagWithData::Tag::FUN:
             do
             {
-                if ( 3U < raw.size( ) )
+                if ( 3U < parts.size( ) )
                 {
-                    if ( raw[3] != u8"(" ) error( "関数の引数構文が間違っています。" );
-                    if ( raw.back( ) != u8")" ) error( "関数の引数リストの最後に \")\" がありません。" );
+                    if ( parts[3] != u8"(" ) error( "関数の引数構文が間違っています。" );
+                    if ( parts.back( ) != u8")" ) error( "関数の引数リストの最後に \")\" がありません。" );
 
-                    for ( size_t i = 4; i < raw.size( ) - 1; ++i )
+                    for ( size_t i = 4; i < parts.size( ) - 1; ++i )
                     {
                         if ( ( i & 0x1 ) == 0x1 ) // 奇数
                         {
-                            if ( raw[i] != u8"," ) error( "関数の引数リストが正常ではありません。" );
+                            if ( parts[i] != u8"," ) error( "関数の引数リストが正常ではありません。" );
                         }
                         else // 偶数
                         {
                             // 全てがアルファベットであるか、数字として有効ならOKです。
-                            if ( !isAllAlphabet( raw[i] ) && !isValue( raw[i] ) )
+                            if ( !isAllAlphabet( parts[i] ) && !isValue( parts[i] ) )
                             {
                                 // 変数でなかったらエラーを飛ばします。
-                                if ( raw[i].find( u8"$" ) == std::string::npos ) error( "関数の引数が不正な値です。" );
+                                if ( parts[i].find( u8"$" ) == std::string::npos ) error( "関数の引数が不正な値です。" );
                             }
                         }
                     }
@@ -180,20 +178,23 @@ namespace User
             break;
         }
     }
-    TagWithNovelStringAndRawScriptPartsData TextScriptReader::getCleanedData( )
+    TagWithData TextScriptReader::getCleanedData( )
     {
-        auto script = tagWithNovelStringAndRawScriptPartsData;
+        auto script = tagWithData;
         cleanUp( );
         return script;
     }
     void TextScriptReader::cleanUp( )
     {
-        rawLineData.clear( );
+        lineData.clear( );
 
-        rawScriptPartsData.clear( );
+        debugData.fileName.clear( );
+        debugData.lineNumber = 0;
 
-        tagWithNovelStringAndRawScriptPartsData.tag = TagWithNovelStringAndRawScriptPartsData::Tag::NIL;
-        tagWithNovelStringAndRawScriptPartsData.novel.clear( );
-        tagWithNovelStringAndRawScriptPartsData.script.clear( );
+        tagWithData.tag = TagWithData::Tag::NIL;
+        tagWithData.debugData.fileName.clear( );
+        tagWithData.debugData.lineNumber = 0;
+        tagWithData.novel.clear( );
+        tagWithData.scriptParts.clear( );
     }
 }

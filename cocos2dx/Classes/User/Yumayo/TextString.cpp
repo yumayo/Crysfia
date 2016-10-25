@@ -19,16 +19,16 @@ namespace User
     {
         setActionStart( label->getStringLength( ) );
     }
-    void TextString::actionAndCallfuncStart( std::function<void( )> const & $actionCallfunc )
+    void TextString::actionAndCallfuncStart( std::function<void( )> const & actionCallfunc )
     {
         // コールバック関数を登録。
-        actionCallfunc = $actionCallfunc;
+        this->actionCallfunc = actionCallfunc;
 
          // 例外処理
          // 空行だった場合文字列自体がないためその次の行が存在していても、コールバック呼び出しができず表示できないため。
         if ( text == u8"" )
         {
-            actionCallfunc( );
+            this->actionCallfunc( );
             return;
         }
 
@@ -46,7 +46,7 @@ namespace User
             oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * stringIndex ),
                                                     Show::create( ),
                                                     DelayTime::create( OptionalValues::readOutSpeed ),
-                                                    CallFunc::create( [ this ] { actionCallfunc( ); } ),
+                                                    CallFunc::create( [ this ] { this->actionCallfunc( ); } ),
                                                     nullptr ) )->setTag( stringIndex ); // actionには何文字目かの情報を入れておきます。
         }
     }
@@ -99,9 +99,9 @@ namespace User
 
         label->setPosition( position + Vec2( width, -contentSize.height ) );
     }
-    void TextString::setActionStart( size_t $stringLength )
+    void TextString::setActionStart( size_t stringLength )
     {
-        for ( int i = 0; i < $stringLength; i++ )
+        for ( int i = 0; i < stringLength; i++ )
         {
             auto oneString = label->getLetter( i );
             if ( oneString )

@@ -20,15 +20,21 @@ namespace User
     };
     constexpr uint32_t lineSize = 3U;
     using NovelData = std::array<std::string, lineSize>;
-    using stringArray = std::vector<std::string>;
+    using StringArray = std::vector<std::string>;
 
-    struct RawScriptPartsData
+    struct ScriptDebugData
     {
-        std::string line;
-        stringArray data;
+        size_t lineNumber;
+        std::string fileName;
     };
 
-    struct TagWithNovelStringAndRawScriptPartsData
+    struct DebugWithLineData
+    {
+        ScriptDebugData debugData;
+        std::string lineData;
+    };
+
+    struct TagWithData
     {
         enum class Tag
         {
@@ -38,11 +44,12 @@ namespace User
             FUN,
         };
         Tag tag;
+        ScriptDebugData debugData;
+        StringArray scriptParts;
         std::string novel;
-        RawScriptPartsData script;
     };
     using VariableScriptData = std::map<std::string, std::string>;
-    using ArgumentList = stringArray;
+    using ArgumentList = StringArray;
 
     struct FunctionInfo
     {
