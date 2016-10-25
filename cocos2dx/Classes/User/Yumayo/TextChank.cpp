@@ -1,12 +1,14 @@
 #include "TextChank.h"
 
 #include "ScriptStaticData.h"
+#include "ScriptSystem.h"
 
 #include <algorithm>
 
 namespace User
 {
     TextChank::TextChank( )
+        : novelIndex( ScriptSystem::novelIndex )
     {
 
     }
@@ -14,18 +16,18 @@ namespace User
     {
 
     }
-    void TextChank::insertScript( TagWithNovelStringAndRawScriptPartsData const & tagWithNovelStringAndRawScriptPartsData )
+    void TextChank::insertScript( TagWithData const& tagWithData )
     {
-        bufferTagWithNovelStringAndRawScriptPartsData = tagWithNovelStringAndRawScriptPartsData;
-        switch ( bufferTagWithNovelStringAndRawScriptPartsData.tag )
+        this->tagWithData = tagWithData;
+        switch ( tagWithData.tag )
         {
-        case TagWithNovelStringAndRawScriptPartsData::Tag::NOV:
+        case TagWithData::Tag::NOV:
             makeNovel( );
             break;
-        case TagWithNovelStringAndRawScriptPartsData::Tag::VAR:
+        case TagWithData::Tag::VAR:
             makeVariableScript( );
             break;
-        case TagWithNovelStringAndRawScriptPartsData::Tag::FUN:
+        case TagWithData::Tag::FUN:
             makeFunctionScript( );
             callFunction( );
             break;
@@ -44,9 +46,11 @@ namespace User
     }
     void TextChank::clear( )
     {
-        bufferTagWithNovelStringAndRawScriptPartsData.tag = TagWithNovelStringAndRawScriptPartsData::Tag::NIL;
-        bufferTagWithNovelStringAndRawScriptPartsData.novel.clear( );
-        bufferTagWithNovelStringAndRawScriptPartsData.script.clear( );
+        tagWithData.tag = TagWithData::Tag::NIL;
+        tagWithData.debugData.fileName.clear( );
+        tagWithData.debugData.lineNumber = 0;
+        tagWithData.novel.clear( );
+        tagWithData.scriptParts.clear( );
 
         functionScriptChip.variable.clear( );
         functionScriptChip.functionInfo.name.clear( );
@@ -57,11 +61,12 @@ namespace User
         //variableScriptData.clear( ); // 変数の初期化はしない。
 
         novelIndex = 0;
+
         for ( auto& obj : novelData ) obj = u8"";
     }
     void TextChank::makeVariableScript( )
     {
-        auto data = bufferTagWithNovelStringAndRawScriptPartsData.script;
+        auto data = tagWithData.scriptParts;
 
         auto values = data;
         auto variableName = data[0]; // 生データの 配列0番目には、変数名が記載されています。
@@ -71,7 +76,7 @@ namespace User
     }
     void TextChank::makeFunctionScript( )
     {
-        auto data = bufferTagWithNovelStringAndRawScriptPartsData.script;
+        auto data = tagWithData.scriptParts;
 
         auto values = data;
         auto variableName = data[0]; // 生データの 配列0番目には、変数名が記載されています。
@@ -86,7 +91,8 @@ namespace User
             FunctionInfo functionInfo = { functionName, ArgumentList( ) };
 
             // 最終的に、関数情報を持ったマップを生成します。
-            functionScriptData.insert( std::make_pair( variableName, functionInfo ) );
+            functionScriptChip = { variableName, functionInfo };
+            functionScriptData.insert( std::make_pair( functionScriptChip.variable, functionScriptChip.functionInfo ) );
         }
         // 引数ありの場合
         // "()"を明示的に書いてもOKなようにしています。
@@ -126,10 +132,10 @@ namespace User
     {
         novelIndex = std::min( novelIndex + 1U, novelData.size( ) );
 
-        novelData[novelIndex - 1] = bufferTagWithNovelStringAndRawScriptPartsData.novel;
+        novelData[novelIndex - 1] = tagWithData.novel;
     }
     void TextChank::callFunction( )
     {
-        ScriptStaticData::runScript( functionScriptChip );
+        ScriptStaticData::run( functionScriptChip );
     }
 }

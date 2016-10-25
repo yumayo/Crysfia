@@ -11,7 +11,7 @@ namespace User
         TextChank( );
         ~TextChank( );
     public:
-        void insertScript( TagWithNovelStringAndRawScriptPartsData const& tagWithNovelStringAndRawScriptPartsData );
+        void insertScript( TagWithData const& tagWithData );
         bool isNext( );
         NovelData getNovelData( );
         void clear( );
@@ -24,10 +24,10 @@ namespace User
         FunctionScriptChip functionScriptChip;
         FunctionScriptData functionScriptData;
         VariableScriptData variableScriptData;
-        size_t novelIndex = 0;
+        size_t& novelIndex;
         NovelData novelData;
     private:
-        TagWithNovelStringAndRawScriptPartsData bufferTagWithNovelStringAndRawScriptPartsData;
+        TagWithData tagWithData;
     };
 }
 

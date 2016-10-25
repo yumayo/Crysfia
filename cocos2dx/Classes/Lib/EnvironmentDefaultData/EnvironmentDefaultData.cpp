@@ -7,10 +7,10 @@ namespace Lib
     EnvironmentDefaultData * EnvironmentDefaultData::mInstans = nullptr;
     EnvironmentDefaultData::EnvironmentDefaultData( )
     {
-        designResolutionSize = cocos2d::Size( 1280, 720 );
-        smallResolutionSize = cocos2d::Size( 480, 320 );
-        mediumResolutionSize = cocos2d::Size( 1024, 768 );
-        largeResolutionSize = cocos2d::Size( 2048, 1536 );
+        designResolutionSize = cocos2d::Size( 540, 960 );
+        smallResolutionSize = cocos2d::Size( 270, 480 );
+        mediumResolutionSize = cocos2d::Size( 720, 1280 );
+        largeResolutionSize = cocos2d::Size( 1152, 2048 );
         gameName = std::string( "Crysfia" );
     }
     EnvironmentDefaultData::~EnvironmentDefaultData( )
