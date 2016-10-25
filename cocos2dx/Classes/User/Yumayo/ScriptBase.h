@@ -15,11 +15,13 @@ namespace User
     {
     public:
         ScriptBase( );
+        ScriptBase( cocos2d::Layer* layer );
         ~ScriptBase( );
     public:
         void run( FunctionInfo const& functionInfo );
     protected:
-        std::map<std::string, std::function<void( ArgumentList const& )>> functionData;
+        std::map<std::string, std::function<void( ArgumentList const& )>> funcs;
+        cocos2d::Layer* layer = nullptr;
     };
 }
 

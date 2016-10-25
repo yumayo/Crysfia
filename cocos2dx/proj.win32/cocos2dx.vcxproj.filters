@@ -69,9 +69,6 @@
     <ClCompile Include="..\Classes\User\Yumayo\TextString.cpp">
       <Filter>src\User\Yumayo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Yumayo\ScriptTestLayer.cpp">
-      <Filter>src\User\Yumayo</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\User\Sample\Fia.cpp">
       <Filter>src\User\Sample</Filter>
     </ClCompile>
@@ -88,6 +85,42 @@
       <Filter>src\User\Yumayo</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Yumayo\TextScriptReader.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptBase.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptStaticData.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptSystem.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptName.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\NameLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\HumanLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptHuman.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\NovelLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\SystemLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\OptionalValues.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptBackground.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\BackgroundLayer.cpp">
       <Filter>src\User\Yumayo</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,9 +170,6 @@
     <ClInclude Include="..\Classes\User\Yumayo\TextTypes.hpp">
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptTestLayer.h">
-      <Filter>src\User\Yumayo</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\User\Sample\Fia.h">
       <Filter>src\User\Sample</Filter>
     </ClInclude>
@@ -156,6 +186,43 @@
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Yumayo\TextScriptReader.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptBase.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptStaticData.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptSystem.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptName.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\NameLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\HumanLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptHuman.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptTypes.hpp" />
+    <ClInclude Include="..\Classes\User\Yumayo\NovelLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\SystemLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\OptionalValues.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptBackground.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\BackgroundLayer.h">
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
   </ItemGroup>

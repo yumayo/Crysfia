@@ -1,42 +1,34 @@
 #include "TextString.h"
 
 #include "TextTypes.hpp"
+#include "OptionalValues.h"
 
 USING_NS_CC;
 
 namespace User
 {
-    float TextString::readOutSpeed = 0.1F;
-
-    TextString::TextString( )
+    TextString::TextString( cocos2d::Layer* layer )
+        : layer( layer )
     {
-        text = u8"";
-        label = Label::createWithTTF( text, u8"fonts/F910MinchoW3.otf", 36.0F );
-        label->setTextColor( Color4B::WHITE );
-        label->setTag( (int)Tag::TextString );
-        label->retain( );
+
     }
     TextString::~TextString( )
     {
-    }
-    void TextString::releace( )
-    {
-        label->release( );
     }
     void TextString::actionStart( )
     {
         setActionStart( label->getStringLength( ) );
     }
-    void TextString::actionAndCallfuncStart( std::function<void( )> const & $actionCallfunc )
+    void TextString::actionAndCallfuncStart( std::function<void( )> const & actionCallfunc )
     {
         // コールバック関数を登録。
-        actionCallfunc = $actionCallfunc;
+        this->actionCallfunc = actionCallfunc;
 
          // 例外処理
          // 空行だった場合文字列自体がないためその次の行が存在していても、コールバック呼び出しができず表示できないため。
         if ( text == u8"" )
         {
-            actionCallfunc( );
+            this->actionCallfunc( );
             return;
         }
 
@@ -51,10 +43,10 @@ namespace User
         auto oneString = label->getLetter( stringIndex );
         if ( oneString )
         {
-            oneString->runAction( Sequence::create( DelayTime::create( readOutSpeed * stringIndex ),
+            oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * stringIndex ),
                                                     Show::create( ),
-                                                    DelayTime::create( readOutSpeed ),
-                                                    CallFunc::create( [ this ] { actionCallfunc( ); } ),
+                                                    DelayTime::create( OptionalValues::readOutSpeed ),
+                                                    CallFunc::create( [ this ] { this->actionCallfunc( ); } ),
                                                     nullptr ) )->setTag( stringIndex ); // actionには何文字目かの情報を入れておきます。
         }
     }
@@ -65,47 +57,56 @@ namespace User
             auto oneString = label->getLetter( i );
             if ( oneString )
             {
-                oneString->stopActionByTag( (int)Tag::TextString );
+                oneString->stopActionByTag( i );
                 oneString->setVisible( true );
             }
         }
     }
-    void TextString::layerPasting( cocos2d::Layer * layer )
+    void TextString::layerPasting( )
     {
-        layer->addChild( label, 1000 );
+        layer->addChild( label );
     }
-    void TextString::layerPeelOff( cocos2d::Layer * layer )
+    void TextString::layerPeelOff( )
     {
-        layer->removeChildByTag( (int)Tag::TextString );
-    }
-    void TextString::setReadOutSpeed( float $readOutSpeed )
-    {
-        readOutSpeed = $readOutSpeed;
+        layer->removeChildByTag( (int)Tag::Novel );
     }
     void TextString::setLabelString( std::string const & text )
     {
         this->text = text;
-        label->setString( this->text );
+        label = Label::createWithTTF( text, u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
+        label->setTextColor( Color4B::WHITE );
+        label->setTag( (int)Tag::Novel );
         for ( int i = 0; i < label->getStringLength( ); i++ )
         {
             auto oneString = label->getLetter( i );
-            if ( oneString ) oneString->setVisible( false ); 
+            if ( oneString ) oneString->setVisible( false );
+        }
+
+        auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
+        auto contentWidth = label->getContentSize( ).width;
+        if ( visibleWidth * 0.9 <= contentWidth )
+        {
+            label->setScaleX( ( visibleWidth * 0.9 ) / contentWidth );
         }
     }
     void TextString::setDrawPosition( cocos2d::Vec2 position )
     {
-        auto size = label->getContentSize( );
+        float width;
+        auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
+        auto contentSize = label->getContentSize( );
+        if ( visibleWidth * 0.9 <= contentSize.width ) width = visibleWidth * 0.9 * 0.5;
+        else width = contentSize.width * 0.5;
 
-        label->setPosition( position + Vec2( size.width / 2, 0 ) );
+        label->setPosition( position + Vec2( width, -contentSize.height ) );
     }
-    void TextString::setActionStart( size_t $stringLength )
+    void TextString::setActionStart( size_t stringLength )
     {
-        for ( int i = 0; i < $stringLength; i++ )
+        for ( int i = 0; i < stringLength; i++ )
         {
             auto oneString = label->getLetter( i );
             if ( oneString )
             {
-                oneString->runAction( Sequence::create( DelayTime::create( readOutSpeed * i ),
+                oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * i ),
                                                         Show::create( ),
                                                         nullptr ) )->setTag( i );
             }

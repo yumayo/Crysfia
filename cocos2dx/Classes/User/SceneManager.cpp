@@ -42,6 +42,10 @@ namespace User
             {
                 childLayer->setup( );
             }
+            else
+            {
+                log( "dynamic_cast is failed : Layer[%s]", child->getName( ).c_str( ) );
+            }
         }
     }
 }
