@@ -37,7 +37,6 @@ namespace User
         cocos2d::Layer* layer; // 文字列を貼るレイヤーを持ってきます。
         cocos2d::Label* label; // 文字列を一行描画するため。
         std::string text; // 描画する文字列。
-        std::function<void( )> actionCallfunc;
     };
 }
 

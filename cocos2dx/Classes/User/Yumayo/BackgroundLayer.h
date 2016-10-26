@@ -13,9 +13,6 @@ namespace User
         ~BackgroundLayer( );
         bool init( ) override;
         void setup( ) override;
-    public:
-    private:
-        static void addTexture( std::string texturePath );
     };
 }
 

@@ -6,12 +6,12 @@ namespace User
 {
     std::map<std::string, std::unique_ptr<ScriptBase>> ScriptStaticData::data;
 
-    void ScriptStaticData::run( FunctionScriptChip const& functionScriptChip )
+    void ScriptStaticData::run( FunctionScript const& functionScript )
     {
-        auto itr = data.find( functionScriptChip.variable );
+        auto itr = data.find( functionScript.variable );
         if ( itr != data.cend( ) )
         {
-            itr->second->run( functionScriptChip.functionInfo );
+            itr->second->run( functionScript.functionInfo );
         }
     }
     void ScriptStaticData::addData( std::pair<std::string, std::unique_ptr<ScriptBase>>&& pairData )

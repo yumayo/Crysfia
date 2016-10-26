@@ -17,7 +17,7 @@ namespace User
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         position = origin + Vec2( visibleSize.width * 0.0,
                                   OptionalValues::stringViewSize.y + ( OptionalValues::fontSize + OptionalValues::lineSpaceSize ) * 2 );
-        slideSize = visibleSize.width * 0.2;
+        slideSize = visibleSize.width * 0.1;
 
         funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
         funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
