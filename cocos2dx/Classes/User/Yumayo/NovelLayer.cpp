@@ -2,6 +2,8 @@
 
 #include "OptionalValues.h"
 
+#include "SelectLayer.h"
+
 USING_NS_CC;
 
 namespace User
@@ -21,7 +23,7 @@ namespace User
 
         setName( typeid( *this ).name( ) );
 
-        keyEvent = EventListenerKeyboard::create( );
+        auto keyEvent = EventListenerKeyboard::create( );
         keyEvent->onKeyPressed = [ this ] ( EventKeyboard::KeyCode code, Event* event )
         {
             if ( code == EventKeyboard::KeyCode::KEY_F5 )
@@ -32,7 +34,7 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
 
-        mouseEvent = EventListenerMouse::create( );
+        auto mouseEvent = EventListenerMouse::create( );
         mouseEvent->onMouseDown = [ this ] ( EventMouse* event )
         {
             if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
@@ -60,13 +62,20 @@ namespace User
         textData.makeData( "scenario1.txt" );
         textUpdate( );
     }
+    void NovelLayer::setNextChild( std::string const & name )
+    {
+        auto selectLayer = this->getLayer<SelectLayer>( );
+        selectLayer->removeAllChildren( );
+
+        textData.setNextChild( name );
+    }
     void NovelLayer::textUpdate( )
     {
         textChank.clear( );
         textLabels.clear( );
         while ( !textChank.isNext( ) && !textData.isEmpty( ) )
         {
-            textChank.insertScript( textReader.createTagRawScriptPartsData( textData.getLineMoved( ) ) );
+            textChank.insertScript( textReader.createTagWithData( textData.getLineMoved( ) ) );
         }
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );

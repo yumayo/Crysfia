@@ -27,5 +27,6 @@ namespace User
     }
     void SystemLayer::setup( )
     {
+        ScriptStaticData::run( { u8"sys", u8"SETUP" } );
     }
 }

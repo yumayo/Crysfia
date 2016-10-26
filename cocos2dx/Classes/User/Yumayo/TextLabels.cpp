@@ -31,7 +31,7 @@ namespace User
             ds[i].setDrawPosition( Vec2( position.x, position.y - ( OptionalValues::fontSize + OptionalValues::lineSpaceSize ) * i ) );
         }
 
-        ds[0].actionAndCallfuncStart( [ this ] { TextLabels::line1CallBack( ); } );
+        ds[0].actionAndCallfuncStart( [ & ] { ds[1].actionAndCallfuncStart( [ & ] { ds[2].actionAndCallfuncStart( [ this ] { isReadOuted = true; } ); } ); } );
 
         for ( auto& ds : textStrings ) ds.layerPasting( );
     }
@@ -43,17 +43,5 @@ namespace User
     bool TextLabels::getIsReadOuted( )
     {
         return isReadOuted;
-    }
-    void TextLabels::line1CallBack( )
-    {
-        textStrings[1].actionAndCallfuncStart( [ this ] { TextLabels::line2CallBack( ); } );
-    }
-    void TextLabels::line2CallBack( )
-    {
-        textStrings[2].actionAndCallfuncStart( [ this ] { TextLabels::line3CallBack( ); } );
-    }
-    void TextLabels::line3CallBack( )
-    {
-        isReadOuted = true;
     }
 }

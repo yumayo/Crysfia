@@ -1,18 +1,18 @@
-#include "HumanLayer.h"
+#include "SelectLayer.h"
 
 USING_NS_CC;
 
 namespace User
 {
-    HumanLayer::HumanLayer( )
+    SelectLayer::SelectLayer( )
     {
 
     }
-    HumanLayer::~HumanLayer( )
+    SelectLayer::~SelectLayer( )
     {
 
     }
-    bool HumanLayer::init( )
+    bool SelectLayer::init( )
     {
         if ( !Layer::init( ) ) return false;
 
@@ -20,7 +20,7 @@ namespace User
 
         return true;
     }
-    void HumanLayer::setup( )
+    void SelectLayer::setup( )
     {
 
     }

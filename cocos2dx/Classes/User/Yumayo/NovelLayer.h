@@ -19,10 +19,9 @@ namespace User
         bool init( ) override;
         void setup( ) override;
     public:
+        void setNextChild( std::string const& name );
         void textUpdate( );
     private:
-        cocos2d::EventListenerMouse* mouseEvent;
-        cocos2d::EventListenerKeyboard* keyEvent;
         TextData textData;
         TextScriptReader textReader;
         TextChank textChank;

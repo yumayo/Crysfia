@@ -6,8 +6,10 @@ namespace User
 {
     ScriptHuman::ScriptHuman( cocos2d::Layer* layer, std::string textureName )
         : ScriptBase( layer )
-        , texture( Director::getInstance( )->getTextureCache( )->getTextureForKey( "res/texture/" + textureName ) )
     {
+        Director::getInstance( )->getTextureCache( )->addImage( "res/texture/" + textureName );
+        texture = Director::getInstance( )->getTextureCache( )->getTextureForKey( "res/texture/" + textureName );
+
         funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
         funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
         funcs.insert( std::make_pair( u8"fadein", [ this ] ( ArgumentList const& args ) { fadein( args ); } ) );

@@ -123,6 +123,15 @@
     <ClCompile Include="..\Classes\User\Yumayo\BackgroundLayer.cpp">
       <Filter>src\User\Yumayo</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextScriptAnalysis.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\SelectLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\ModalLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -223,6 +232,15 @@
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Yumayo\BackgroundLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\TextScriptAnalysis.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\SelectLayer.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\ModalLayer.h">
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
   </ItemGroup>

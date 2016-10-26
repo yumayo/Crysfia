@@ -20,10 +20,6 @@ namespace User
         void actionStop( );
         bool getIsReadOuted( );
     private:
-        void line1CallBack( );
-        void line2CallBack( );
-        void line3CallBack( );
-    private:
         cocos2d::Layer* layer;
         std::array<TextString, lineSize> textStrings;
         bool isReadOuted = false;
