@@ -22,8 +22,11 @@ namespace User
 
         setName( typeid( *this ).name( ) );
 
-        ScriptStaticData::addData( std::make_pair( u8"クロエ名前", std::make_unique<ScriptName>( this, u8"クロエ", u8"F910MinchoW3.otf" ) ) );
-        ScriptStaticData::addData( std::make_pair( u8"アレン名前", std::make_unique<ScriptName>( this, u8"アレン", u8"F910MinchoW3.otf" ) ) );
+        ScriptStaticData::addData( std::make_pair( u8"名前クロエ", std::make_unique<ScriptName>( this, u8"クロエ", u8"F910MinchoW3.otf" ) ) );
+        ScriptStaticData::addData( std::make_pair( u8"名前アレン", std::make_unique<ScriptName>( this, u8"アレン", u8"F910MinchoW3.otf" ) ) );
+        ScriptStaticData::addData( std::make_pair( u8"名前ピエロの少年", std::make_unique<ScriptName>( this, u8"ピエロの少年", u8"F910MinchoW3.otf" ) ) );
+        ScriptStaticData::addData( std::make_pair( u8"名前八百屋", std::make_unique<ScriptName>( this, u8"八百屋", u8"F910MinchoW3.otf" ) ) );
+        ScriptStaticData::addData( std::make_pair( u8"名前パン屋", std::make_unique<ScriptName>( this, u8"パン屋", u8"F910MinchoW3.otf" ) ) );
 
         return true;
     }

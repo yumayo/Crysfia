@@ -155,21 +155,9 @@ namespace User
                     if ( parts[3] != u8"(" ) error( "関数の引数構文が間違っています。" );
                     if ( parts.back( ) != u8")" ) error( "関数の引数リストの最後に \")\" がありません。" );
 
-                    for ( size_t i = 4; i < parts.size( ) - 1; ++i )
+                    for ( size_t i = 5; i < parts.size( ) - 1; i += 2 )
                     {
-                        if ( ( i & 0x1 ) == 0x1 ) // 奇数
-                        {
-                            if ( parts[i] != u8"," ) error( "関数の引数リストが正常ではありません。" );
-                        }
-                        else // 偶数
-                        {
-                            // 全てがアルファベットであるか、数字として有効ならOKです。
-                            if ( !isAllAlphabet( parts[i] ) && !isValue( parts[i] ) )
-                            {
-                                // 変数でなかったらエラーを飛ばします。
-                                if ( parts[i].find( u8"$" ) == std::string::npos ) error( "関数の引数が不正な値です。" );
-                            }
-                        }
+                        if ( parts[i] != u8"," ) error( "関数の引数リストが正常ではありません。" );
                     }
                 }
             } while ( false );
