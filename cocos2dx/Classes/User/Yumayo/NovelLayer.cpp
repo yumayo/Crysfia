@@ -23,6 +23,8 @@ namespace User
 
         setName( typeid( *this ).name( ) );
 
+        scheduleUpdate( );
+
         auto keyEvent = EventListenerKeyboard::create( );
         keyEvent->onKeyPressed = [ this ] ( EventKeyboard::KeyCode code, Event* event )
         {
@@ -30,6 +32,18 @@ namespace User
             {
                 textData.makeData( "scenario1.txt" );
                 textUpdate( );
+            }
+            if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
+            {
+                isReadingProceed = true;
+            }
+        };
+
+        keyEvent->onKeyReleased = [ this ] ( EventKeyboard::KeyCode code, Event* event )
+        {
+            if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
+            {
+                isReadingProceed = false;
             }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
@@ -62,15 +76,29 @@ namespace User
         textData.makeData( "scenario1.txt" );
         textUpdate( );
     }
+    void NovelLayer::update( float delta )
+    {
+        if ( isReadingProceed )
+        {
+            textUpdate( );
+        }
+    }
     void NovelLayer::setNextChild( std::string const & name )
     {
         auto selectLayer = this->getLayer<SelectLayer>( );
+
+        switchIsNextText( );
+
         selectLayer->removeAllChildren( );
 
         textData.setNextChild( name );
+
+        textUpdate( );
     }
     void NovelLayer::textUpdate( )
     {
+        if ( !isNextText ) return;
+
         textChank.clear( );
         textLabels.clear( );
         while ( !textChank.isNext( ) && !textData.isEmpty( ) )

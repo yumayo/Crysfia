@@ -13,6 +13,7 @@
 @sys:name(名前八百屋)
 @sys:name(名前パン屋)
 @sys:name(名前ピエロの少年)
+@sys:name(名前女性)
 @sys:human(クロエの立ち絵怒り)
 @sys:human(クロエの立ち絵普通)
 @sys:human(クロエの立ち絵喜び)

@@ -14,8 +14,6 @@ namespace User
         funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
         funcs.insert( std::make_pair( u8"fadein", [ this ] ( ArgumentList const& args ) { fadein( args ); } ) );
         funcs.insert( std::make_pair( u8"fadeout", [ this ] ( ArgumentList const& args ) { fadeout( args ); } ) );
-        funcs.insert( std::make_pair( u8"slidein", [ this ] ( ArgumentList const& args ) { slidein( args ); } ) );
-        funcs.insert( std::make_pair( u8"slideout", [ this ] ( ArgumentList const& args ) { slideout( args ); } ) );
         funcs.insert( std::make_pair( u8"circlein", [ this ] ( ArgumentList const& args ) { circlein( args ); } ) );
         funcs.insert( std::make_pair( u8"circleout", [ this ] ( ArgumentList const& args ) { circleout( args ); } ) );
     }
@@ -46,27 +44,6 @@ namespace User
             auto fade = FadeOut::create( 1.0 );
             auto remove = RemoveSelf::create( );
             node->runAction( Sequence::create( fade, remove, nullptr ) );
-        }
-    }
-    void ScriptBackground::slidein( ArgumentList const & args )
-    {
-        auto sprite = create( );
-        sprite->setOpacity( 0 );
-
-        auto fade = FadeIn::create( 0.1 );
-        auto slide = EaseExponentialOut::create( MoveBy::create( 0.3, Vec2( 100.0F, 0.0F ) ) );
-        auto fadeWithSlide = Spawn::create( fade, slide, nullptr );
-        sprite->runAction( Spawn::create( fadeWithSlide, nullptr ) );
-    }
-    void ScriptBackground::slideout( ArgumentList const & args )
-    {
-        if ( auto node = layer->getChildByTag( (int)Tag::Background ) )
-        {
-            auto fade = FadeOut::create( 0.1 );
-            auto slide = EaseExponentialOut::create( MoveBy::create( 0.3, Vec2( 100.0F, 0.0F ) ) );
-            auto fadeWithSlide = Spawn::create( fade, slide, nullptr );
-            auto remove = RemoveSelf::create( );
-            node->runAction( Sequence::create( fadeWithSlide, remove, nullptr ) );
         }
     }
     void ScriptBackground::circlein( ArgumentList const & args )

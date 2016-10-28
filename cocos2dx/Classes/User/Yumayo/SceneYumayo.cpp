@@ -27,7 +27,6 @@ namespace User
         scene->addChild( createLayer<NovelLayer>( ), (int)Tag::Novel );
         scene->addChild( createLayer<NameLayer>( ), (int)Tag::Name );
         scene->addChild( createLayer<SelectLayer>( ), (int)Tag::Select );
-        scene->addChild( createLayer<ModalLayer>( ), (int)Tag::Modal );
         return scene;
     }
 }

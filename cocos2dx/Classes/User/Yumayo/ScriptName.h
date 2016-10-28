@@ -15,10 +15,6 @@ namespace User
     public:
         void in( ArgumentList const& args );
         void out( ArgumentList const& args );
-        void fadein( ArgumentList const& args );
-        void fadeout( ArgumentList const& args );
-        void slidein( ArgumentList const& args );
-        void slideout( ArgumentList const& args );
     private:
         cocos2d::Label* create( );
     private:

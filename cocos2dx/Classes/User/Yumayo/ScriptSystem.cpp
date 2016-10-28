@@ -53,25 +53,27 @@ namespace User
     }
     void ScriptSystem::select( ArgumentList const & args )
     {
-        auto novel = dynamic_cast<NovelLayer*>( novelLayer );
+        l( );
 
-        //画面サイズを取得
+        auto novel = dynamic_cast<NovelLayer*>( novelLayer );
+        novel->switchIsNextText( );
+
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
-        size_t size = args.size( );
-        auto y = visibleSize.height * 0.1;
-
-        for ( size_t i = 0; i < size; ++i )
+        //ボタンを2つ作成
+        std::vector<MenuItemLabel*> buttons;
+        buttons.resize( args.size( ) );
+        for ( size_t i = 0; i < buttons.size( ); ++i )
         {
             auto label = Label::createWithTTF( args[i], u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
-            auto button = MenuItemLabel::create( label, [ = ] ( Ref* pSender ) { novel->setNextChild( args[i] ); } );
-
-            auto menu = Menu::create( button, nullptr );
-
-            auto height = visibleSize.height - ( OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::fontSize );
-            menu->setPosition( Vec2( visibleSize.width * 0.5, height - i * y ) );
-            selectLayer->addChild( menu );
+            buttons[i] = MenuItemLabel::create( label, [ = ] ( Ref* pSender ) { novel->setNextChild( args[i] ); } );
         }
+
+        //2つのボタン間の隙間を50に、縦並びにして画面中央に配置
+        Menu* menu = Menu::create( buttons[0], buttons[1], nullptr );
+        menu->setPosition( Vec2( visibleSize.width * 0.5F, visibleSize.height * 0.5F ) );
+        menu->alignItemsVerticallyWithPadding( OptionalValues::fontSize );
+        selectLayer->addChild( menu );
     }
     void ScriptSystem::name( ArgumentList const & args )
     {

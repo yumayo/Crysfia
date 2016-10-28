@@ -29,6 +29,7 @@ namespace User
         // s‚Ìæ“ª‚É‹ó”’‚ª‚ ‚Á‚½ê‡‚Í‹l‚ß‚Ü‚·B
         size_t findPosition;
         if ( ( findPosition = lineString.find_first_not_of( u8" " ) ) != std::string::npos ) lineString = lineString.substr( findPosition );
+        else lineString = u8"";
     }
 
     TextData::TextData( )
