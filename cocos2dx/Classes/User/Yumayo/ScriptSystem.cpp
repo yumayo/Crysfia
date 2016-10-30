@@ -27,6 +27,7 @@ namespace User
 
         funcs.insert( std::make_pair( u8"l", [ this ] ( ArgumentList const& args ) { l( ); } ) );
         funcs.insert( std::make_pair( u8"select", [ this ] ( ArgumentList const& args ) { select( args ); } ) );
+        funcs.insert( std::make_pair( u8"stop", [ this ] ( ArgumentList const& args ) { stop( args ); } ) );
 
         funcs.insert( std::make_pair( u8"bgm", [ this ] ( ArgumentList const& args ) { bgm( args ); } ) );
         funcs.insert( std::make_pair( u8"se", [ this ] ( ArgumentList const& args ) { se( args ); } ) );
@@ -74,6 +75,10 @@ namespace User
         menu->setPosition( Vec2( visibleSize.width * 0.5F, visibleSize.height * 0.5F ) );
         menu->alignItemsVerticallyWithPadding( OptionalValues::fontSize );
         selectLayer->addChild( menu );
+    }
+    void ScriptSystem::stop( ArgumentList const & args )
+    {
+
     }
     void ScriptSystem::name( ArgumentList const & args )
     {

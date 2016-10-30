@@ -21,6 +21,7 @@ namespace User
         void l( );
         // 選択肢の表示
         void select( ArgumentList const& args );
+        void stop( ArgumentList const& args );
     public: // 変数の登録に使います。
         void name( ArgumentList const& args );
         void background( ArgumentList const& args );

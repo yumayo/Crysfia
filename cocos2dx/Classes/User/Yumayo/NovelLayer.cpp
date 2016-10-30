@@ -35,7 +35,7 @@ namespace User
             }
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
-                isReadingProceed = true;
+                switchIsReadingProceed( );
             }
         };
 
@@ -43,7 +43,7 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
-                isReadingProceed = false;
+                switchIsReadingProceed( );
             }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
@@ -53,8 +53,19 @@ namespace User
         {
             if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
             {
-                if ( textLabels.getIsReadOuted( ) ) textUpdate( );
-                else textLabels.actionStop( );
+                // テキストをすでに読み込んでいる場合
+                if ( textLabels.getIsReadOuted( ) )
+                {
+                    switchIsSystemRead( );
+                    textUpdate( );
+                }
+                // テキストを読み込み途中の場合
+                else
+                {
+                    // これで、読み込みが完了するまで処理を飛ばす。
+                    switchIsSystemRead( );
+                    textLabels.actionStop( );
+                }
             }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
