@@ -10,6 +10,9 @@ namespace User
     public:
         static void createSystemAppDelegateStart( );
         static void createSample( );
+        static void createYumayo( );
+        static void createIslandMap( );
+        static void createBreeding( );
     private:
         static void childrenCallSetup( cocos2d::Scene* scene );
     };

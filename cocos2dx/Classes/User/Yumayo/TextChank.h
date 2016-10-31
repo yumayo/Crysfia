@@ -2,6 +2,7 @@
 # define __TextChank__
 
 # include "TextTypes.hpp"
+# include "TextScriptAnalysis.h"
 
 namespace User
 {
@@ -11,22 +12,21 @@ namespace User
         TextChank( );
         ~TextChank( );
     public:
-        void insertScript( TagRawScriptData const& tagRawScriptData );
-        bool isNext( );
+        void insertScript( TagWithData const& tagWithData );
+        bool isReadFinished( );
         NovelData getNovelData( );
         void clear( );
-        FunctionScriptData getFunctionScript( );
     private:
-        void makeVariableScript( );
-        void makeFunctionScript( );
-        void makeNovel( );
+        void pushVariable( );
+        void pushFunction( );
+        void pushNovel( );
     private:
         FunctionScriptData functionScriptData;
         VariableScriptData variableScriptData;
-        size_t novelIndex = 0;
         NovelData novelData;
+        size_t& novelIndex;
     private:
-        TagRawScriptData bufferTagRawScriptData;
+        TextScriptAnalysis scriptAnalysis;
     };
 }
 
