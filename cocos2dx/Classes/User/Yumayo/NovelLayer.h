@@ -21,15 +21,25 @@ namespace User
         void update( float delta )override;
     public:
         void setNextChild( std::string const& name );
-        void textUpdate( );
+
+        void textUpdate( float delta );
+        // スクリプトから一行分読み込む
+        void textPartyUpdate( );
+        // テキストデータを空にする。
+        void textClear( );
+        // 読み込んだテキストデータをノベルレイヤーに貼り付ける。
+        void textPasting( );
+        // 読み込みが停止されるまで読み込むかのスイッチ
         void switchIsSystemRead( ) { isSystemRead = !isSystemRead; }
-        void switchIsNextText( ) { isNextText = !isNextText; }
+        // 選択肢でシナリオの読み込み停止機能のスイッチ
+        void switchIsSelectStopping( ) { isSelectStopping = !isSelectStopping; }
+        // 高速に読み飛ばす機能のスイッチ
         void switchIsReadingProceed( ) { isReadingProceed = !isReadingProceed; }
         void setDelayTime( double delayTime ) { this->delayTime = delayTime; }
     private:
         double delayTime = 0.0F; // delayTimeが残っている場合
-        bool isSystemRead = false; // sys:lか3行を読み込むまで飛ばすか。
-        bool isNextText = true; // 選択肢などで読み込みを停止するかどうか。
+        bool isSystemRead = true; 
+        bool isSelectStopping = true; // 選択肢などで読み込みを停止するかどうか。
         bool isReadingProceed = false; // 高速に読み飛ばすかどうか。
         TextData textData;
         TextScriptReader textReader;

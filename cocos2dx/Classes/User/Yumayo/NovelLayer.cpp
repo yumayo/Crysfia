@@ -31,10 +31,10 @@ namespace User
             if ( code == EventKeyboard::KeyCode::KEY_F5 )
             {
                 textData.makeData( "scenario1.txt" );
-                textUpdate( );
             }
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
+                // 左側のCTRLキーが押されたら高速読み込みを開始する。
                 switchIsReadingProceed( );
             }
         };
@@ -43,6 +43,7 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
+                // 左側のCTRLが話されたら高速読み込みを停止する。
                 switchIsReadingProceed( );
             }
         };
@@ -53,18 +54,39 @@ namespace User
         {
             if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
             {
-                // テキストをすでに読み込んでいる場合
+                //　テキストのアニメーションが終わっている場合
                 if ( textLabels.getIsReadOuted( ) )
                 {
+                    // テキストの中身を消します。
+                    textClear( );
+                    // 読み込みを開始します。
                     switchIsSystemRead( );
-                    textUpdate( );
                 }
-                // テキストを読み込み途中の場合
+                // テキストのアニメーションが終わっていない場合
                 else
                 {
-                    // これで、読み込みが完了するまで処理を飛ばす。
-                    switchIsSystemRead( );
-                    textLabels.actionStop( );
+                    // テキストの中身を消します。
+                    textClear( );
+
+                    while ( delayTime == 0.0 )
+                    {
+                        // テキストを読み始めます。
+                        textPartyUpdate( );
+
+                        // 読み込み終了なら
+                        if ( textChank.isReadFinished( ) )
+                        {
+                            // テキストデータを貼り付けて。
+                            textPasting( );
+                            // システム読み込みを停止。
+                            switchIsSystemRead( );
+
+                            break;
+                        }
+
+                        // ディレイは完全に無視します。
+                        delayTime = 0.0;
+                    }
                 }
             }
         };
@@ -85,37 +107,73 @@ namespace User
         this->addChild( square );
 
         textData.makeData( "scenario1.txt" );
-        textUpdate( );
+        textUpdate( 0.0F );
     }
     void NovelLayer::update( float delta )
     {
+        // 高速読み込みが可能なら文字を1フレームに1回読み続ける。
         if ( isReadingProceed )
         {
-            textUpdate( );
+            textUpdate( delta );
+        }
+
+        // 読み込み
+        if ( isSystemRead )
+        {
+            textUpdate( delta );
         }
     }
     void NovelLayer::setNextChild( std::string const & name )
     {
         auto selectLayer = this->getLayer<SelectLayer>( );
 
-        switchIsNextText( );
-
+        // 選択肢のレイヤーを削除
         selectLayer->removeAllChildren( );
 
+        // 次に読み込むシナリオデータを指定。
         textData.setNextChild( name );
 
-        textUpdate( );
+        switchIsSelectStopping( );
     }
-    void NovelLayer::textUpdate( )
+    void NovelLayer::textUpdate( float delta )
     {
-        if ( !isNextText ) return;
+        while ( delayTime == 0.0 )
+        {
+            // テキストを読み始めます。
+            textPartyUpdate( );
 
-        textChank.clear( );
-        textLabels.clear( );
-        while ( !textChank.isNext( ) && !textData.isEmpty( ) )
+            // 読み込み終了なら
+            if ( textChank.isReadFinished( ) )
+            {
+                // テキストデータを貼り付けて。
+                textPasting( );
+                // システム読み込みを停止。
+                switchIsSystemRead( );
+
+                break;
+            }
+
+            delayTime = std::max( delayTime - delta, 0.0 );
+        }
+    }
+    void NovelLayer::textPartyUpdate( )
+    {
+        if ( !textChank.isReadFinished( ) && !textData.isEmpty( ) )
         {
             textChank.insertScript( textReader.createTagWithData( textData.getLineMoved( ) ) );
         }
+    }
+    void NovelLayer::textClear( )
+    {
+        // 読み込みを無効にしているなら早期リターンします。
+        if ( !isSelectStopping ) return;
+
+        textChank.clear( );
+        textLabels.clear( );
+    }
+    void NovelLayer::textPasting( )
+    {
+        // テキストデータを読み込み終わったらラベルに貼り付ける。
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         textLabels.setStrings( textChank.getNovelData( ),

@@ -57,7 +57,7 @@ namespace User
         l( );
 
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
-        novel->switchIsNextText( );
+        novel->switchIsSelectStopping( );
 
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
@@ -67,14 +67,42 @@ namespace User
         for ( size_t i = 0; i < buttons.size( ); ++i )
         {
             auto label = Label::createWithTTF( args[i], u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
-            buttons[i] = MenuItemLabel::create( label, [ = ] ( Ref* pSender ) { novel->setNextChild( args[i] ); } );
+            buttons[i] = MenuItemLabel::create( label, [ = ] ( Ref* pSender )
+            {
+                novel->setNextChild( args[i] );
+                // テキストの中身を消します。
+                novel->textClear( );
+                // 読み込みを開始します。
+                novel->switchIsSystemRead( );
+            } );
         }
 
         //2つのボタン間の隙間を50に、縦並びにして画面中央に配置
-        Menu* menu = Menu::create( buttons[0], buttons[1], nullptr );
-        menu->setPosition( Vec2( visibleSize.width * 0.5F, visibleSize.height * 0.5F ) );
-        menu->alignItemsVerticallyWithPadding( OptionalValues::fontSize );
-        selectLayer->addChild( menu );
+        Menu* menu = nullptr;
+        switch ( buttons.size( ) )
+        {
+        case 2:
+            menu = Menu::create( buttons[0], buttons[1], nullptr );
+            break;
+        case 3:
+            menu = Menu::create( buttons[0], buttons[1], buttons[2], nullptr );
+            break;
+        case 4:
+            menu = Menu::create( buttons[0], buttons[1], buttons[2], buttons[3], nullptr );
+            break;
+        case 5:
+            menu = Menu::create( buttons[0], buttons[1], buttons[2], buttons[3], buttons[4], nullptr );
+            break;
+        default:
+            break;
+        }
+        
+        if ( menu )
+        {
+            menu->setPosition( Vec2( visibleSize.width * 0.5F, visibleSize.height * 0.5F ) );
+            menu->alignItemsVerticallyWithPadding( OptionalValues::fontSize );
+            selectLayer->addChild( menu );
+        }
     }
     void ScriptSystem::stop( ArgumentList const & args )
     {

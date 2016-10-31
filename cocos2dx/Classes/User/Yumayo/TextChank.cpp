@@ -36,7 +36,7 @@ namespace User
             break;
         }
     }
-    bool TextChank::isNext( )
+    bool TextChank::isReadFinished( )
     {
         return novelIndex == novelData.size( );
     }
