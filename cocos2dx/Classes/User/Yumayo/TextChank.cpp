@@ -1,12 +1,14 @@
-#include "TextChank.h"
+ï»¿#include "TextChank.h"
 
 #include "ScriptStaticData.h"
+#include "ScriptSystem.h"
 
 #include <algorithm>
 
 namespace User
 {
     TextChank::TextChank( )
+        : novelIndex( ScriptSystem::novelIndex )
     {
 
     }
@@ -14,20 +16,20 @@ namespace User
     {
 
     }
-    void TextChank::insertScript( TagWithNovelStringAndRawScriptPartsData const & tagWithNovelStringAndRawScriptPartsData )
+    void TextChank::insertScript( TagWithData const& tagWithData )
     {
-        bufferTagWithNovelStringAndRawScriptPartsData = tagWithNovelStringAndRawScriptPartsData;
-        switch ( bufferTagWithNovelStringAndRawScriptPartsData.tag )
+        scriptAnalysis.makeScript( tagWithData );
+
+        switch ( scriptAnalysis.getTag( ) )
         {
-        case TagWithNovelStringAndRawScriptPartsData::Tag::NOV:
-            makeNovel( );
+        case TagWithData::Tag::NOV:
+            pushNovel( );
             break;
-        case TagWithNovelStringAndRawScriptPartsData::Tag::VAR:
-            makeVariableScript( );
+        case TagWithData::Tag::VAR:
+            pushVariable( );
             break;
-        case TagWithNovelStringAndRawScriptPartsData::Tag::FUN:
-            makeFunctionScript( );
-            callFunction( );
+        case TagWithData::Tag::FUN:
+            pushFunction( );
             break;
         default:
             return;
@@ -44,92 +46,56 @@ namespace User
     }
     void TextChank::clear( )
     {
-        bufferTagWithNovelStringAndRawScriptPartsData.tag = TagWithNovelStringAndRawScriptPartsData::Tag::NIL;
-        bufferTagWithNovelStringAndRawScriptPartsData.novel.clear( );
-        bufferTagWithNovelStringAndRawScriptPartsData.script.clear( );
+        scriptAnalysis.clear( );
 
-        functionScriptChip.variable.clear( );
-        functionScriptChip.functionInfo.name.clear( );
-        functionScriptChip.functionInfo.argumentList.clear( );
-
-        functionScriptData.clear( );
-
-        //variableScriptData.clear( ); // •Ï”‚Ì‰Šú‰»‚Í‚µ‚È‚¢B
-
+        // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã‚’ã‚‚ã¨ã«æˆ»ã—ã¾ã™ã€‚
         novelIndex = 0;
+
+        // é–¢æ•°å±¥æ­´ã‚„ã€å¤‰æ•°ã¯åˆæœŸåŒ–ã—ã¾ã›ã‚“ã€‚
+        //functionScriptData.clear( );
+        //variableScriptData.clear( );
+
+        // ãƒãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã¯åˆæœŸåŒ–ã—ã¾ã™ã€‚
         for ( auto& obj : novelData ) obj = u8"";
     }
-    void TextChank::makeVariableScript( )
+    void TextChank::pushVariable( )
     {
-        auto data = bufferTagWithNovelStringAndRawScriptPartsData.script;
-
-        auto values = data;
-        auto variableName = data[0]; // ¶ƒf[ƒ^‚Ì ”z—ñ0”Ô–Ú‚É‚ÍA•Ï”–¼‚ª‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
-        auto currentStatusName = data[2]; // ¶ƒf[ƒ^‚Ì ”z—ñ2”Ô–Ú‚É‚ÍA‚»‚Ì•Ï”‚ÌÀ‘Ì‚ª‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
-
-        variableScriptData.insert( std::make_pair( variableName, currentStatusName ) );
+        auto data = scriptAnalysis.getVariableScript( );
+        variableScriptData.insert( std::make_pair( data.variable, data.currentStatus ) );
     }
-    void TextChank::makeFunctionScript( )
+    void TextChank::pushFunction( )
     {
-        auto data = bufferTagWithNovelStringAndRawScriptPartsData.script;
+        auto error = [ this ] ( std::string const& errorString )
+        { 
+            auto& debugData = scriptAnalysis.getTagWithData( ).debugData;
+            std::string str;
+            str += "[variableError : " + errorString + "]";
+            str += "[file:" + debugData.fileName + "]";
+            str += "[line:" + std::to_string( debugData.lineNumber ) + "]";
+            throw( str );
+        };
 
-        auto values = data;
-        auto variableName = data[0]; // ¶ƒf[ƒ^‚Ì ”z—ñ0”Ô–Ú‚É‚ÍA•Ï”–¼‚ª‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
-        auto functionName = data[2]; // ¶ƒf[ƒ^‚Ì ”z—ñ2”Ô–Ú‚É‚ÍAŠÖ”–¼‚ª‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
+        auto data = scriptAnalysis.getFunctionScript( );
 
-        // ˆø”‚È‚µ‚Ìê‡
-        // •¶–@ãŠÖ”‚Ì"()"‚ğÈ—ª‚Å‚«‚é‚æ‚¤‚É‚µ‚Ä‚¢‚é‚Ì‚ÅB
-        if ( values.size( ) == 3U )
+        for ( auto& arg : data.functionInfo.argumentList )
         {
-            // ŠÖ”î•ñ‚ğì¬B
-            // ŠÖ”‚Ì–¼‘O‚ÆAˆø”ƒŠƒXƒg‚ğ•Û‘¶‚µ‚Ü‚·B
-            FunctionInfo functionInfo = { functionName, ArgumentList( ) };
-
-            // ÅI“I‚ÉAŠÖ”î•ñ‚ğ‚Á‚½ƒ}ƒbƒv‚ğ¶¬‚µ‚Ü‚·B
-            functionScriptData.insert( std::make_pair( variableName, functionInfo ) );
-        }
-        // ˆø”‚ ‚è‚Ìê‡
-        // "()"‚ğ–¾¦“I‚É‘‚¢‚Ä‚àOK‚È‚æ‚¤‚É‚µ‚Ä‚¢‚Ü‚·B
-        else
-        {
-            auto error = [ ] ( std::string const& errorString ) { throw( "variableError : " + errorString ); };
-
-            // ŠÖ”‚Ìˆø”‚¾‚¯‚ğc‚µ‚Ü‚·B
-            values.erase( values.begin( ), values.begin( ) + 4 );
-            values.pop_back( );
-
-            // ˆø”ƒŠƒXƒg‚ğì¬‚µ‚Ü‚·B
-            ArgumentList argumentList;
-            // 2‚Â”ò‚Î‚µ‚È‚Ì‚ÍAŠÔ‚É","‚ª‚ ‚é‚½‚ßB
-            // ‚Ù‚ñ‚Æ‚¤‚É•K—v‚È‚Ì‚ÍA‹ô””Ô‚É‚ ‚éˆø”‚Ì‚İ‚Å‚·B
-            for ( size_t i = 0; i < values.size( ); i += 2 )
+            if ( arg.find( u8"$" ) != std::string::npos )
             {
-                if ( values[i].find( u8"$" ) != std::string::npos )
-                {
-                    auto itr = variableScriptData.find( values[i] );
-                    if ( itr != variableScriptData.cend( ) ) argumentList.emplace_back( itr->second );
-                    else error( "w’è‚µ‚½•Ï”‚ª‘¶İ‚µ‚Ü‚¹‚ñB" );
-                }
-                else argumentList.emplace_back( values[i] );
-
+                auto itr = variableScriptData.find( arg );
+                if ( itr != variableScriptData.cend( ) ) arg = itr->second;
+                else error( "æŒ‡å®šã—ãŸå¤‰æ•°ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚" );
             }
-            // ŠÖ”î•ñ‚ğì¬B
-            // ŠÖ”‚Ì–¼‘O‚ÆAˆø”ƒŠƒXƒg‚ğ•Û‘¶‚µ‚Ü‚·B
-            FunctionInfo functionInfo = { functionName, argumentList };
-
-            // ÅI“I‚ÉAŠÖ”î•ñ‚ğ‚Á‚½ƒ}ƒbƒv‚ğ¶¬‚µ‚Ü‚·B
-            functionScriptChip = { variableName, functionInfo };
-            functionScriptData.insert( std::make_pair( functionScriptChip.variable, functionScriptChip.functionInfo ) );
         }
+
+        // ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å¤‰æ•°ã¨ä¸€è‡´ã™ã‚‹é–¢æ•°ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
+        ScriptStaticData::run( data );
+
+        functionScriptData.insert( std::make_pair( data.variable, data.functionInfo ) );
     }
-    void TextChank::makeNovel( )
+    void TextChank::pushNovel( )
     {
         novelIndex = std::min( novelIndex + 1U, novelData.size( ) );
 
-        novelData[novelIndex - 1] = bufferTagWithNovelStringAndRawScriptPartsData.novel;
-    }
-    void TextChank::callFunction( )
-    {
-        ScriptStaticData::runScript( functionScriptChip );
+        novelData[novelIndex - 1] = scriptAnalysis.getNovelScript( ).novel;
     }
 }

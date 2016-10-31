@@ -5,18 +5,52 @@
 # include <string>
 # include <vector>
 # include <map>
+# include <deque>
+# include <memory>
 
 namespace User
 {
     enum class Tag
     {
-        TextString = 1003
+        Null = 0,
+        Start = 1000,
+        System,
+        Background,
+        Human,
+        Novel,
+        Name,
+        Select,
+        Modal,
     };
     constexpr uint32_t lineSize = 3U;
     using NovelData = std::array<std::string, lineSize>;
-    using RawScriptPartsData = std::vector<std::string>;
+    using StringArray = std::vector<std::string>;
 
-    struct TagWithNovelStringAndRawScriptPartsData
+    struct ScriptDebugData
+    {
+        size_t lineNumber;
+        std::string fileName;
+    };
+
+    struct DebugWithLineData
+    {
+        ScriptDebugData debugData;
+        std::string lineData;
+    };
+
+    using DequeScriptChunk = std::deque<DebugWithLineData>;
+
+    class TextChankData
+    {
+    public:
+        TextChankData( ) { }
+        TextChankData( TextChankData* pointer ) : parentPointer( pointer ) { }
+        TextChankData* parentPointer = nullptr;
+        std::map<std::string, TextChankData> children;
+        DequeScriptChunk data;
+    };
+
+    struct TagWithData
     {
         enum class Tag
         {
@@ -26,23 +60,36 @@ namespace User
             FUN,
         };
         Tag tag;
+        ScriptDebugData debugData;
+        StringArray scriptParts;
         std::string novel;
-        RawScriptPartsData script;
     };
-    using VariableScriptData = std::map<std::string, std::string>;
-    using ArgumentList = std::vector<std::string>;
+
+    using ArgumentList = StringArray;
 
     struct FunctionInfo
     {
         std::string name;
         ArgumentList argumentList;
     };
-    using FunctionScriptData = std::map<std::string, FunctionInfo>;
-    struct FunctionScriptChip
+
+    struct NovelScript
+    {
+        std::string novel;
+    };
+    struct VariableScript
+    {
+        std::string variable;
+        std::string currentStatus;
+    };
+    struct FunctionScript
     {
         std::string variable;
         FunctionInfo functionInfo;
     };
+
+    using VariableScriptData = std::map<std::string, std::string>;
+    using FunctionScriptData = std::map<std::string, FunctionInfo>;
 }
 
 # endif // __TextTypes__

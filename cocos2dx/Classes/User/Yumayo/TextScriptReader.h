@@ -7,25 +7,24 @@ namespace User
 {
     class TextScriptReader
     {
-        friend class TextData;
     public:
-        TextScriptReader( );
-        ~TextScriptReader( );
-    public:
-        TagWithNovelStringAndRawScriptPartsData createTagRawScriptPartsData( std::string const& lineRawData );
+        TagWithData createTagWithData( DebugWithLineData const& debugWithLineData );
     private:
         void makeNovelData( );
-        void makeTagRawScriptData( );
     private:
+        void makeScriptData( );
         // 文法チェック
-        static void syntaxCheck( RawScriptPartsData const& rawScriptPartsData );
+        void syntaxCheck( StringArray const& scriptParts );
+    private:
         // 全てのバッファーを空にして必要なデータだけを渡します。
-        TagWithNovelStringAndRawScriptPartsData getCleanedData( );
+        TagWithData getCleanedData( );
         void cleanUp( );
     private:
-        std::string rawLineData;
-        RawScriptPartsData rawScriptPartsData;
-        TagWithNovelStringAndRawScriptPartsData tagWithNovelStringAndRawScriptPartsData;
+        // もらってきたデータをもとに、スクリプトデータや、ノベルデータ、デバッグデータを詰めた構造体を作ります。
+        TagWithData tagWithData;
+    private:
+        // もらってきたデータを一時的に保存します。
+        DebugWithLineData debugWithLineData;
     };
 }
 
