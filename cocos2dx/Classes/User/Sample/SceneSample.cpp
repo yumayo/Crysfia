@@ -1,7 +1,7 @@
 #include "SceneSample.h"
 
-#include "Water.h"
-#include "Fia.h"
+#include "LayerWater.h"
+#include "LayerFia.h"
 
 USING_NS_CC;
 
@@ -10,8 +10,8 @@ namespace User
     cocos2d::Scene * SceneSample::create( )
     {
         auto scene = Scene::create( );
-        scene->addChild( createLayer<Water>( ) );
-        scene->addChild( createLayer<Fia>( ) );
+        scene->addChild( createLayer<LayerWater>( ) );
+        scene->addChild( createLayer<LayerFia>( ) );
         return scene;
     }
 }

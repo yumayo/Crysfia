@@ -7,7 +7,7 @@ namespace Lib
     EnvironmentDefaultData * EnvironmentDefaultData::mInstans = nullptr;
     EnvironmentDefaultData::EnvironmentDefaultData( )
     {
-        designResolutionSize = cocos2d::Size( 540, 960 );
+        designResolutionSize = cocos2d::Size( 720, 1280 );
         smallResolutionSize = cocos2d::Size( 270, 480 );
         mediumResolutionSize = cocos2d::Size( 720, 1280 );
         largeResolutionSize = cocos2d::Size( 1152, 2048 );

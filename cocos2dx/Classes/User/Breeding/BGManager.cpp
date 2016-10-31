@@ -6,7 +6,7 @@ namespace User
 	bool BGManager::init()
 	{
 		auto size = Vec2(720, 1280);
-		auto background = Sprite::create("Image/bg.jpg");
+		auto background = Sprite::create("res/Image/bg.jpg");
 		background->setPosition(size/2);
 		background->setScale(2.6f);
 		this->addChild(background);
