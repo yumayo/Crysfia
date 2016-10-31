@@ -11,6 +11,7 @@
 @sys:background(背景黒)
 @sys:background(背景市場)
 @sys:background(背景噴水広場)
+@sys:background(背景遊園地)
 
 // 名前を追加したい場合
 // @sys:name(変数名)

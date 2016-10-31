@@ -65,28 +65,30 @@ namespace User
                 // テキストのアニメーションが終わっていない場合
                 else
                 {
-                    // テキストの中身を消します。
-                    textClear( );
-
-                    while ( delayTime == 0.0 )
+                    if ( isSystemRead )
                     {
-                        // テキストを読み始めます。
-                        textPartyUpdate( );
-
-                        // 読み込み終了なら
-                        if ( textChank.isReadFinished( ) )
+                        while ( delayTime == 0.0 )
                         {
-                            // テキストデータを貼り付けて。
-                            textPasting( );
-                            // システム読み込みを停止。
-                            switchIsSystemRead( );
+                            // テキストを読み始めます。
+                            textPartyUpdate( );
 
-                            break;
+                            // 読み込み終了なら
+                            if ( textChank.isReadFinished( ) )
+                            {
+                                // テキストデータを貼り付けて。
+                                textPasting( );
+                                // システム読み込みを停止。
+                                switchIsSystemRead( );
+
+                                break;
+                            }
+
+                            // ディレイは完全に無視します。
+                            delayTime = 0.0;
                         }
-
-                        // ディレイは完全に無視します。
-                        delayTime = 0.0;
                     }
+
+                    textLabels.actionStop( );
                 }
             }
         };
