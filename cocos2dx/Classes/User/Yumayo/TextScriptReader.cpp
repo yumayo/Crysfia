@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <algorithm>
+#include <sstream>
 
 namespace User
 {
@@ -97,14 +98,6 @@ namespace User
     }
     void TextScriptReader::syntaxCheck( StringArray const & scriptParts )
     {
-        auto error = [ &, this ] ( std::string const& errorString ) 
-        { 
-            std::string str;
-            str += "[syntaxError : " + errorString + "]";
-            str += "[file:" + debugWithLineData.debugData.fileName + "]";
-            str += "[line : " + std::to_string( debugWithLineData.debugData.lineNumber ) + "]";
-            throw( str );
-        };
         auto isAllAlphabet = [ & ] ( std::string const& string )
         {
             return std::all_of( string.cbegin( ), string.cend( ), isalpha );
@@ -121,9 +114,9 @@ namespace User
 
         TagWithData::Tag tag;
 
-        if ( parts.size( ) < 3U ) error( "最低限 [@ NAME : RUN] の形で記入してください。" );
+        if ( parts.size( ) < 3U ) errorSStream( "最低限 [@ NAME : RUN] の形で記入してください。", debugWithLineData.debugData );
 
-        if ( parts[1] != u8":" ) error( "ペア表現に誤りがあります。" );
+        if ( parts[1] != u8":" ) errorSStream( "ペア表現に誤りがあります。", debugWithLineData.debugData );
 
         if ( parts[0].find( u8"$" ) != std::string::npos ) tag = TagWithData::Tag::VAR;
         else tag = TagWithData::Tag::FUN;
@@ -131,18 +124,18 @@ namespace User
         switch ( tag )
         {
         case User::TagWithData::Tag::VAR:
-            if ( 3U != parts.size( ) ) error( "変数の実体は一つでないといけません。" );
-            if ( !isValue( parts[2] ) ) error( "変数宣言に対する数字が不正な値です。" );
+            if ( 3U != parts.size( ) ) errorSStream( "変数の実体は一つでないといけません。", debugWithLineData.debugData );
+            if ( !isValue( parts[2] ) ) errorSStream( "変数宣言に対する数字が不正な値です。", debugWithLineData.debugData );
             break;
         case User::TagWithData::Tag::FUN:
             if ( 3U < parts.size( ) )
             {
-                if ( parts[3] != u8"(" ) error( "関数の引数構文が間違っています。" );
-                if ( parts.back( ) != u8")" ) error( "関数の引数リストの最後に \")\" がありません。" );
+                if ( parts[3] != u8"(" ) errorSStream( "関数の引数構文が間違っています。", debugWithLineData.debugData );
+                if ( parts.back( ) != u8")" ) errorSStream( "関数の引数リストの最後に \")\" がありません。", debugWithLineData.debugData );
 
                 for ( size_t i = 5; i < parts.size( ) - 1; i += 2 )
                 {
-                    if ( parts[i] != u8"," ) error( "関数の引数リストが正常ではありません。" );
+                    if ( parts[i] != u8"," ) errorSStream( "関数の引数リストが正常ではありません。", debugWithLineData.debugData );
                 }
             }
             break;

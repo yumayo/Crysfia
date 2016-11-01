@@ -4,6 +4,7 @@
 #include "ScriptSystem.h"
 
 #include <algorithm>
+#include <sstream>
 
 namespace User
 {
@@ -65,16 +66,6 @@ namespace User
     }
     void TextChank::pushFunction( )
     {
-        auto error = [ this ] ( std::string const& errorString )
-        { 
-            auto& debugData = scriptAnalysis.getTagWithData( ).debugData;
-            std::string str;
-            str += "[variableError : " + errorString + "]";
-            str += "[file:" + debugData.fileName + "]";
-            str += "[line:" + std::to_string( debugData.lineNumber ) + "]";
-            throw( str );
-        };
-
         auto data = scriptAnalysis.getFunctionScript( );
 
         for ( auto& arg : data.functionInfo.argumentList )
@@ -83,7 +74,7 @@ namespace User
             {
                 auto itr = variableScriptData.find( arg );
                 if ( itr != variableScriptData.cend( ) ) arg = itr->second;
-                else error( "指定した変数が存在しません。" );
+                else errorSStream( "指定した変数が存在しません。", scriptAnalysis.getTagWithData( ).debugData );
             }
         }
 

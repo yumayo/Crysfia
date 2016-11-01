@@ -5,6 +5,8 @@
 #include "TextScriptReader.h"
 #include "TextScriptAnalysis.h"
 
+#include <sstream>
+
 USING_NS_CC;
 
 namespace User
@@ -98,16 +100,6 @@ namespace User
     }
     void TextData::setNextChild( std::string const & selectName )
     {
-        auto error = [ &, this ] ( std::string const& errorString )
-        {
-            auto& debugData = work->data.back( ).debugData;
-            std::string str;
-            str += "[variableError : " + errorString + "]";
-            str += "[file:" + debugData.fileName + "]";
-            str += "[line:" + std::to_string( debugData.lineNumber ) + "]";
-            throw( str );
-        };
-
         auto itr = work->children.find( selectName );
         if ( itr != work->children.cend( ) )
         {
@@ -115,7 +107,7 @@ namespace User
         }
         else
         {
-            error( "選択肢の対応先が見つかりません。" );
+            errorSStream( "選択肢の対応先が見つかりません。", work->data.back( ).debugData );
         }
     }
     void TextData::tidydiness( std::string lineString, size_t lineNumber )
@@ -165,16 +157,6 @@ namespace User
         TextScriptAnalysis scriptAnalysis;
         scriptAnalysis.makeScript( scriptReader.createTagWithData( debugWithLineData ) );
 
-        auto error = [ &, this ] ( std::string const& errorString )
-        {
-            auto& debugData = scriptAnalysis.getTagWithData( ).debugData;
-            std::string str;
-            str += "[variableError : " + errorString + "]";
-            str += "[file:" + debugData.fileName + "]";
-            str += "[line:" + std::to_string( debugData.lineNumber ) + "]";
-            throw( str );
-        };
-
         try
         {
             if ( scriptAnalysis.getTag( ) == TagWithData::Tag::FUN )
@@ -202,7 +184,7 @@ namespace User
         }
         catch ( char const* errorString )
         {
-            error( errorString );
+            errorSStream( errorString, scriptAnalysis.getTagWithData( ).debugData );
         }
 
         return false;

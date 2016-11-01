@@ -19,7 +19,7 @@ namespace User
 {
     void SceneManager::createSystemAppDelegateStart( )
     {
-        createBreeding( );
+        createYumayo( );
     }
     void SceneManager::createSample( )
     {

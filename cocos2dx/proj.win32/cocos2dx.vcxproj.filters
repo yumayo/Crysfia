@@ -159,6 +159,9 @@
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
       <Filter>src\User\Breeding</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextTypes.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -239,7 +242,6 @@
     <ClInclude Include="..\Classes\User\Yumayo\ScriptHuman.h">
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptTypes.hpp" />
     <ClInclude Include="..\Classes\User\Yumayo\NovelLayer.h">
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
