@@ -30,7 +30,14 @@ namespace User
             pushVariable( );
             break;
         case TagWithData::Tag::FUN:
-            pushFunction( );
+            try
+            {
+                pushFunction( );
+            }
+            catch ( char const* str )
+            {
+
+            }
             break;
         default:
             return;

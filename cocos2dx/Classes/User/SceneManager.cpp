@@ -7,6 +7,8 @@
 // ユーマヨシーンを作成します。
 #include "Yumayo/SceneYumayo.h"
 
+#include "Yumayo/OptionalValues.h"
+
 // 島マップシーンを作成します。
 #include "IslandMap/SceneIslandMap.h"
 
@@ -19,7 +21,9 @@ namespace User
 {
     void SceneManager::createSystemAppDelegateStart( )
     {
-        createYumayo( );
+        OptionalValues::setup( );
+
+        createIslandMap( );
     }
     void SceneManager::createSample( )
     {

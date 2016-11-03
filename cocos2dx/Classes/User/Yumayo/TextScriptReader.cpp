@@ -83,7 +83,14 @@ namespace User
 
         disassembly( );
 
-        syntaxCheck( scriptParts );
+        try
+        {
+            syntaxCheck( scriptParts );
+        }
+        catch ( char const* str )
+        {
+
+        }
 
         // 変数名のところに"$"マークがあれば新しい変数として作成出来ます。
         if ( scriptParts[0].find( u8"$" ) != std::string::npos )

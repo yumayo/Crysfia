@@ -11,10 +11,13 @@ namespace User
         CREATE_FUNC( LayerIsland );
         LayerIsland( );
         ~LayerIsland( );
-        //LayerColor * createBlockLayer( const char *strlabel, Color3B fontColor, Color4B backColor );
+        cocos2d::Label* LayerIsland::createLabel( std::string const& text );
         bool init( ) override;
         void setup( ) override;
         void update( float delta ) override;
+    private:
+        bool initBackground( );
+        bool initIslandMap( );
     };
 }
 

@@ -107,7 +107,14 @@ namespace User
         }
         else
         {
-            errorSStream( "選択肢の対応先が見つかりません。", work->data.back( ).debugData );
+            try
+            {
+                errorSStream( "選択肢の対応先が見つかりません。", work->data.back( ).debugData );
+            }
+            catch ( char const* str )
+            {
+
+            }
         }
     }
     void TextData::tidydiness( std::string lineString, size_t lineNumber )
@@ -141,8 +148,16 @@ namespace User
             }
 
             lineData.lineData = scriptString;
-            // スクリプトデータの中にプリプロセス命令が合った場合に割り込み処理をします。
-            if ( !isPreprocess( lineData ) ) work->data.emplace_back( lineData );
+
+            try
+            {
+                // スクリプトデータの中にプリプロセス命令が合った場合に割り込み処理をします。
+                if ( !isPreprocess( lineData ) ) work->data.emplace_back( lineData );
+            }
+            catch ( char const* str )
+            {
+
+            }
         }
         // ノベルデータだけの場合
         else if ( commentErased != u8"" )
@@ -184,6 +199,7 @@ namespace User
         }
         catch ( char const* errorString )
         {
+            // ここのエラーは上層の関数でtry処理しています。
             errorSStream( errorString, scriptAnalysis.getTagWithData( ).debugData );
         }
 
