@@ -11,6 +11,8 @@ namespace User
             return false;
         }
 
+        auto touch = EventListenerTouchOneByOne::create( );
+
         auto multi = EventListenerTouchAllAtOnce::create( );
         multi->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
@@ -28,11 +30,13 @@ namespace User
         {
 
         };
+        mouse->checkAvailable( );
 
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( multi, this );
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( key, this );
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouse, this );
         this->getEventDispatcher( )->setPriority( mouse, -1 );
+        this->getEventDispatcher( )->setEnabled( false );
 
         return true;
     }

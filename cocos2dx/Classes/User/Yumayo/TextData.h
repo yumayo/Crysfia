@@ -32,8 +32,12 @@ namespace User
         void beginland( ArgumentList const& args );
         void endland( ArgumentList const& args );
     private:
+        // makeされたときのファイル名を保存しておきます。
         std::string fileName;
+        // ここに、読み込んできたファイルの中身が展開されます。
         TextChankData chunk;
+        // 今実行しているデータを指します。
+        // チャンクデータは階層構造になっているのでカレントディレクトリを保持します。
         TextChankData* work;
     };
 }

@@ -10,16 +10,12 @@
 #include "SelectLayer.h"
 #include "ModalLayer.h"
 
-#include "OptionalValues.h"
-
 USING_NS_CC;
 
 namespace User
 {
     cocos2d::Scene * SceneYumayo::create( )
     {
-        OptionalValues::setup( );
-
         auto scene = Scene::create( );
         scene->addChild( createLayer<SystemLayer>( ), (int)Tag::System );
         scene->addChild( createLayer<BackgroundLayer>( ), (int)Tag::Background );
@@ -27,7 +23,6 @@ namespace User
         scene->addChild( createLayer<NovelLayer>( ), (int)Tag::Novel );
         scene->addChild( createLayer<NameLayer>( ), (int)Tag::Name );
         scene->addChild( createLayer<SelectLayer>( ), (int)Tag::Select );
-        scene->addChild( createLayer<ModalLayer>( ), (int)Tag::Modal );
         return scene;
     }
 }

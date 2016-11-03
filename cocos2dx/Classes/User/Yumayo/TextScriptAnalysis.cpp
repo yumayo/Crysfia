@@ -56,7 +56,7 @@ namespace User
         auto functionName = tagWithData.scriptParts[2]; // 生データの 配列2番目には、関数名が記載されています。
 
         // 引数なしの場合
-        // 文法上関数の"()"を省略できるようにしているので。
+        // 文法上関数の引数がない場合は"()"を省略できるようにしているので。
         if ( tagWithData.scriptParts.size( ) == 3U )
         {
             // 関数情報を作成。
@@ -69,8 +69,6 @@ namespace User
         // "()"を明示的に書いてもOKなようにしています。
         else
         {
-            auto error = [ ] ( std::string const& errorString ) { throw( "variableError : " + errorString ); };
-
             // 関数の引数だけを残します。
             auto values = tagWithData.scriptParts; // [var][:][name][(][hoge][,][huga]...[)]
             values.erase( values.begin( ), values.begin( ) + 4 ); // [hoge][,][huga]...[)]

@@ -4,15 +4,26 @@
 //===================================================================
 @sys:bgm(ＢＧＭ娯楽の島)
 @sys:se(ＳＥガヤ)
+
+// 背景を追加したい場合
+// @sys:background(変数名)
 @sys:background(背景娯楽の島)
 @sys:background(背景黒)
 @sys:background(背景市場)
 @sys:background(背景噴水広場)
+@sys:background(背景遊園地)
+
+// 名前を追加したい場合
+// @sys:name(変数名)
 @sys:name(名前アレン)
 @sys:name(名前クロエ)
 @sys:name(名前八百屋)
 @sys:name(名前パン屋)
 @sys:name(名前ピエロの少年)
+@sys:name(名前女性)
+
+// 人物画像を追加したい場合
+// @sys:human(変数名)
 @sys:human(クロエの立ち絵怒り)
 @sys:human(クロエの立ち絵普通)
 @sys:human(クロエの立ち絵喜び)

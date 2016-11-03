@@ -27,6 +27,7 @@ namespace User
 
         funcs.insert( std::make_pair( u8"l", [ this ] ( ArgumentList const& args ) { l( ); } ) );
         funcs.insert( std::make_pair( u8"select", [ this ] ( ArgumentList const& args ) { select( args ); } ) );
+        funcs.insert( std::make_pair( u8"stop", [ this ] ( ArgumentList const& args ) { stop( args ); } ) );
 
         funcs.insert( std::make_pair( u8"bgm", [ this ] ( ArgumentList const& args ) { bgm( args ); } ) );
         funcs.insert( std::make_pair( u8"se", [ this ] ( ArgumentList const& args ) { se( args ); } ) );
@@ -53,24 +54,49 @@ namespace User
     }
     void ScriptSystem::select( ArgumentList const & args )
     {
-        auto novel = dynamic_cast<NovelLayer*>( novelLayer );
+        // 選択肢が挿入されたら、改行扱いとします。
+        l( );
 
-        //画面サイズを取得
+        auto novel = dynamic_cast<NovelLayer*>( novelLayer );
+        novel->switchIsStopping( );
+
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
-        size_t size = args.size( );
-        auto y = visibleSize.height * 0.1;
-
-        for ( size_t i = 0; i < size; ++i )
+        //ボタンを2つ作成
+        Vector<MenuItem*> buttons;
+        for ( size_t i = 0; i < args.size( ); ++i )
         {
             auto label = Label::createWithTTF( args[i], u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
-            auto button = MenuItemLabel::create( label, [ = ] ( Ref* pSender ) { novel->setNextChild( args[i] ); } );
+            auto item = MenuItemLabel::create( label, [ = ] ( Ref* pSender )
+            {
+                novel->setNextChild( args[i] );
+                novel->textUpdate( );
+            } );
+            buttons.pushBack( item );
+        }
 
-            auto menu = Menu::create( button, nullptr );
+        auto menu = Menu::createWithArray( buttons );
 
-            auto height = visibleSize.height - ( OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::fontSize );
-            menu->setPosition( Vec2( visibleSize.width * 0.5, height - i * y ) );
+        if ( menu )
+        {
+            menu->setPosition( Vec2( visibleSize.width * 0.5F, visibleSize.height * 0.5F ) );
+            menu->alignItemsVerticallyWithPadding( OptionalValues::fontSize );
             selectLayer->addChild( menu );
+        }
+    }
+    void ScriptSystem::stop( ArgumentList const & args )
+    {
+        auto novel = dynamic_cast<NovelLayer*>( novelLayer );
+        switch ( args.size( ) )
+        {
+        case 0:
+            novel->setDelayTime( 1.0 );
+            break;
+        case 1:
+            novel->setDelayTime( std::stod( args[0] ) );
+            break;
+        default:
+            break;
         }
     }
     void ScriptSystem::name( ArgumentList const & args )
