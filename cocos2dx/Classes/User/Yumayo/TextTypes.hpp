@@ -88,6 +88,8 @@ namespace User
         FunctionInfo functionInfo;
     };
 
+    void errorSStream( std::string const& error, ScriptDebugData const& debugData );
+
     using VariableScriptData = std::map<std::string, std::string>;
     using FunctionScriptData = std::map<std::string, FunctionInfo>;
 }

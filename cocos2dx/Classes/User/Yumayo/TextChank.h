@@ -13,7 +13,7 @@ namespace User
         ~TextChank( );
     public:
         void insertScript( TagWithData const& tagWithData );
-        bool isNext( );
+        bool isReadFinished( );
         NovelData getNovelData( );
         void clear( );
     private:

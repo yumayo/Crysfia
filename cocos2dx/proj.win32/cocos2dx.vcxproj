@@ -150,10 +150,17 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Lib\GameHelper2dx\Converter.cpp" />
     <ClCompile Include="..\Classes\Lib\GameHelper2dx\MathHelper.cpp" />
     <ClCompile Include="..\Classes\Lib\GameHelper2dx\SDKBOXHelper.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\FrameLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\Home.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\Test.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp" />
+    <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp" />
+    <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp" />
     <ClCompile Include="..\Classes\User\LayerBase.cpp" />
-    <ClCompile Include="..\Classes\User\Sample\Fia.cpp" />
+    <ClCompile Include="..\Classes\User\Sample\LayerFia.cpp" />
     <ClCompile Include="..\Classes\User\Sample\SceneSample.cpp" />
-    <ClCompile Include="..\Classes\User\Sample\Water.cpp" />
+    <ClCompile Include="..\Classes\User\Sample\LayerWater.cpp" />
     <ClCompile Include="..\Classes\User\SceneBase.cpp" />
     <ClCompile Include="..\Classes\User\SceneManager.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\BackgroundLayer.cpp" />
@@ -177,6 +184,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Yumayo\TextData.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextLabels.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextString.cpp" />
+    <ClCompile Include="..\Classes\User\Yumayo\TextTypes.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,10 +195,17 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Lib\GameHelper2dx\GameHelper2dx.h" />
     <ClInclude Include="..\Classes\Lib\GameHelper2dx\MathHelper.h" />
     <ClInclude Include="..\Classes\Lib\GameHelper2dx\SDKBOXHelper.h" />
+    <ClInclude Include="..\Classes\User\Breeding\BGManager.h" />
+    <ClInclude Include="..\Classes\User\Breeding\FrameLayer.h" />
+    <ClInclude Include="..\Classes\User\Breeding\Home.h" />
+    <ClInclude Include="..\Classes\User\Breeding\Test.h" />
+    <ClInclude Include="..\Classes\User\Breeding\UIManager.h" />
+    <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h" />
+    <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h" />
     <ClInclude Include="..\Classes\User\LayerBase.h" />
-    <ClInclude Include="..\Classes\User\Sample\Fia.h" />
+    <ClInclude Include="..\Classes\User\Sample\LayerFia.h" />
     <ClInclude Include="..\Classes\User\Sample\SceneSample.h" />
-    <ClInclude Include="..\Classes\User\Sample\Water.h" />
+    <ClInclude Include="..\Classes\User\Sample\LayerWater.h" />
     <ClInclude Include="..\Classes\User\SceneBase.h" />
     <ClInclude Include="..\Classes\User\SceneManager.h" />
     <ClInclude Include="..\Classes\User\Yumayo\BackgroundLayer.h" />
@@ -206,7 +221,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Yumayo\ScriptName.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ScriptStaticData.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ScriptSystem.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptTypes.hpp" />
     <ClInclude Include="..\Classes\User\Yumayo\SelectLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\SystemLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\TextScriptAnalysis.h" />

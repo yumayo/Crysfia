@@ -54,7 +54,7 @@ namespace User
             if ( oneString )
             {
                 oneString->stopActionByTag( i );
-                oneString->setOpacity( 256 );
+                oneString->setOpacity( 255 );
             }
         }
     }

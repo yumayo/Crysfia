@@ -7,13 +7,23 @@
 // ユーマヨシーンを作成します。
 #include "Yumayo/SceneYumayo.h"
 
+#include "Yumayo/OptionalValues.h"
+
+// 島マップシーンを作成します。
+#include "IslandMap/SceneIslandMap.h"
+
+// 小松さんのシーンを作成します。
+#include "Breeding/Home.h"
+
 USING_NS_CC;
 
 namespace User
 {
     void SceneManager::createSystemAppDelegateStart( )
     {
-        createYumayo( );
+        OptionalValues::setup( );
+
+        createIslandMap( );
     }
     void SceneManager::createSample( )
     {
@@ -27,6 +37,24 @@ namespace User
     void SceneManager::createYumayo( )
     {
         SceneYumayo base;
+        auto scene = base.create( );
+
+        childrenCallSetup( scene );
+
+        Director::getInstance( )->replaceScene( scene );
+    }
+    void SceneManager::createIslandMap( )
+    {
+        SceneIslandMap base;
+        auto scene = base.create( );
+
+        childrenCallSetup( scene );
+
+        Director::getInstance( )->replaceScene( scene );
+    }
+    void SceneManager::createBreeding( )
+    {
+        Home base;
         auto scene = base.create( );
 
         childrenCallSetup( scene );
