@@ -5,13 +5,12 @@ namespace User
 {
 	bool BGManager::init()
 	{
-
-		auto size = Director::getInstance()->getVisibleSize();
-		auto background = Sprite::create("res/texture/背景市場.png");
+		auto size = Vec2(720, 1280);
+		auto background = Sprite::create("res/Image/bg.jpg");
 		background->setPosition(size/2);
-		background->setScale(0.65);
+		background->setScale(2.6f);
 		this->addChild(background);
-		
+
 		return true;
 	}
 }

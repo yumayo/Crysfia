@@ -4,47 +4,53 @@
 # include "cocos2d.h"
 #include "../LayerBase.h"
 #include "ui/CocosGUI.h"
-#include "User/Breeding/VariousStatus.h"
 
 namespace User
 {
-	class UIManager : public LayerBase
-	{
+    class UIManager : public LayerBase
+    {
 	private:
+
+		//描画順用ステータス
+		enum zOder
+		{
+			Menu = 1,
+			Option,
+
+		};
+		
+		//メニューステータス
+		enum MenuType
+		{
+			STORY,
+			FOOD,
+			CLOTHES,
+			CLEANING,
+			DIARY,
+			
+			MAX
+		};
 
 		bool isOpen;
 		void update(float dt);
-		bool init();
 
 	public:
 
 		CREATE_FUNC(UIManager);
-		UIManager();
-		~UIManager();
+		UIManager( );
+        ~UIManager( );
+		bool init();
 
-	private:
-
-		std::string buttonTexts[MenuType::MAX] = {
-			"STO\n RY",
-			"BREE\nDING",
-			"DIA\n RY",
-			"OPT\nION"
-		};
-
-		cocos2d::ui::ListView*	menuWindow;
-		cocos2d::ui::ListView*	optionWindow;
-		cocos2d::ui::Button*	swicthWindow;
-		cocos2d::ui::Button*	optionIcon;
-
+		cocos2d::ui::ListView* menuWindow;
+		cocos2d::ui::ListView* optionWindow;
+		cocos2d::ui::Button* swicthWindow;
+		cocos2d::ui::Button* optionIcon;
 		std::vector<cocos2d::ui::Button*> menuButtons;
-		std::vector<cocos2d::ui::Slider*> sliderBers;
-		std::vector<cocos2d::Label*>	  optionLabels;
 		
-		void touchEvent(Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
+		void createOptionIcon();
 		void createMenuWindow();
 		void setOptionWindow();
-		void setDiaryWindow();
-	};
+    };
 }
 
 # endif // __UIControl__
