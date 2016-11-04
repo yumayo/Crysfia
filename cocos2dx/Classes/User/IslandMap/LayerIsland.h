@@ -11,7 +11,7 @@ namespace User
         CREATE_FUNC( LayerIsland );
         LayerIsland( );
         ~LayerIsland( );
-        cocos2d::Label* LayerIsland::createLabel( std::string const& text );
+        cocos2d::Label* createLabel( std::string const& text );
         bool init( ) override;
         void setup( ) override;
         void update( float delta ) override;

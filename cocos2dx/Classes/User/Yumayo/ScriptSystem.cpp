@@ -54,7 +54,7 @@ namespace User
     }
     void ScriptSystem::select( ArgumentList const & args )
     {
-        // ‘I‘ğˆ‚ª‘}“ü‚³‚ê‚½‚çA‰üsˆµ‚¢‚Æ‚µ‚Ü‚·B
+        // Ã«IÃ«ï£¿Ã©Ã Ã‡â„¢Ã«}Ã¬Â¸Ã‡â‰¥Ã‡ÃÃ‡Î©Ã‡ÃÃ…AÃ¢Â¸Ã§sÃ ÂµÃ‡Â¢Ã‡âˆ†Ã‡ÂµÃ‡â€¹Ã‡âˆ‘Ã…B
         l( );
 
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
@@ -62,7 +62,7 @@ namespace User
 
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
-        //ƒ{ƒ^ƒ“‚ğ2‚Âì¬
+        //Ã‰{Ã‰^Ã‰Ã¬Ã‡ï£¿2Ã‡Â¬Ã§ÃÃªÂ¨
         Vector<MenuItem*> buttons;
         for ( size_t i = 0; i < args.size( ); ++i )
         {
@@ -106,11 +106,11 @@ namespace User
         {
             str = args[0];
             std::string humanName = str;
-            auto pos = str.find( u8"–¼‘O" );
-            if ( pos != std::string::npos ) humanName = str.substr( pos + std::string( u8"–¼‘O" ).size( ) );
+            auto pos = str.find( u8"åå‰" );
+            if ( pos != std::string::npos ) humanName = str.substr( pos + std::string( u8"åå‰" ).size( ) );
 
-            auto script = std::make_unique<ScriptName>( nameLayer, humanName, u8"F910MinchoW3.otf" );
-            ScriptStaticData::addData( std::make_pair( str, std::move( script ) ) );
+            auto script = new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" );
+            ScriptStaticData::addData( std::make_pair( str, std::unique_ptr<ScriptBase>( script ) ) );
         }
     }
     void ScriptSystem::background( ArgumentList const & args )
@@ -119,7 +119,8 @@ namespace User
         if ( 1 == args.size( ) )
         {
             str = args[0];
-            ScriptStaticData::addData( std::make_pair( str, std::make_unique<ScriptBackground>( backgroundLayer, str + u8".png" ) ) );
+            auto script = new ScriptBackground( backgroundLayer, str + u8".png" );
+            ScriptStaticData::addData( std::make_pair( str, std::unique_ptr<ScriptBase>( script ) ) );
         }
     }
     void ScriptSystem::bgm( ArgumentList const & args )
@@ -136,7 +137,9 @@ namespace User
         if ( 1 == args.size( ) )
         {
             str = args[0];
-            ScriptStaticData::addData( std::make_pair( str, std::make_unique<ScriptBackground>( humanLayer, str + u8".png" ) ) );
+            
+            auto script = new ScriptBackground(humanLayer, str + u8".png");
+            ScriptStaticData::addData( std::make_pair( str, std::unique_ptr<ScriptBase>( script ) ) );
         }
     }
 }

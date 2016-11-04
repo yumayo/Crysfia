@@ -18,8 +18,8 @@ namespace User
     {
 
     }
-    //ƒuƒƒbƒNƒIƒuƒWƒFƒNƒgì¬  
-    Label* LayerIsland::createLabel( std::string const& text )
+    //Ã‰uÃ‰Ã§Ã‰bÃ‰NÃ‰IÃ‰uÃ‰WÃ‰FÃ‰NÃ‰gÃ§ÃÃªÂ¨  
+    cocos2d::Label* LayerIsland::createLabel( std::string const& text )
     {
         Label* label = Label::createWithTTF( text, u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
         label->setColor( Color3B( 0xFF, 0xFF, 0xFF ) );
@@ -54,7 +54,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        auto sprite = Sprite::create( u8"res/texture/”wŒiŽsê.png" );
+        auto sprite = Sprite::create( u8"res/texture/èƒŒæ™¯å¸‚å ´.png" );
         sprite->setPosition( origin + Vec2( visibleSize.width / 2,
                                             visibleSize.height / 2 ) );
 
@@ -98,20 +98,20 @@ namespace User
         Menu *menu = Menu::createWithArray( menuItems );
         this->addChild( menu );*/
 
-        //ƒ{ƒ^ƒ“‚ð‰¡‚É®“Ú‚·‚é  
+        //Ã‰{Ã‰^Ã‰Ã¬Ã‡ï£¿Ã¢Â°Ã‡â€¦ÃªÃ†Ã¬â„Ã‡âˆ‘Ã‡Ãˆ  
         //menu->alignItemsHorizontallyWithPadding( 0 );
 
-        //ƒ{ƒ^ƒ“‚ðc‚É®“Ú‚·‚é  
+        //Ã‰{Ã‰^Ã‰Ã¬Ã‡ï£¿Ã¨cÃ‡â€¦ÃªÃ†Ã¬â„Ã‡âˆ‘Ã‡Ãˆ  
         //menu->alignItemsVerticallyWithPadding( 0 );
 
-        //‚’¼•ûŒü‚É•À‚×‚é
+        //ÃªÃ‡Ã­ÂºÃ¯ËšÃ¥Â¸Ã‡â€¦Ã¯Â¿Ã‡â—ŠÃ‡Ãˆ
         //menu->alignItemsVertically( );
 
-        //…•½•ûŒü‚É•À‚×‚é
+        //ÃªÃ–Ã¯Î©Ã¯ËšÃ¥Â¸Ã‡â€¦Ã¯Â¿Ã‡â—ŠÃ‡Ãˆ
         //menu->alignItemsHorizontally();  
 
-        //‰¡‚É‰½ŒÂ•À‚×‚é‚©‚ðŽw’è‚·‚éB
-        //”z—ñ‚Ì”Žš‚Ì‡Œv”‚ÆAƒŒƒCƒ„[‚ÌŽq‹Ÿ‚Ì”‚ªˆê’v‚µ‚Ä‚¢‚È‚¢‚ÆƒGƒ‰[‚É‚È‚éB
+        //Ã¢Â°Ã‡â€¦Ã¢Î©Ã¥Â¬Ã¯Â¿Ã‡â—ŠÃ‡ÃˆÃ‡Â©Ã‡ï£¿Ã©wÃ­Ã‹Ã‡âˆ‘Ã‡ÃˆÃ…B
+        //Ã®zÃ³Ã’Ã‡ÃƒÃªÃ®Ã©Ã¶Ã‡ÃƒÃ§Ã¡Ã¥vÃªÃ®Ã‡âˆ†Ã…AÃ‰Ã¥Ã‰CÃ‰Ã‘Ã…[Ã‡ÃƒÃ©qÃ£Ã¼Ã‡ÃƒÃªÃ®Ã‡â„¢Ã ÃÃ­vÃ‡ÂµÃ‡Æ’Ã‡Â¢Ã‡Â»Ã‡Â¢Ã‡âˆ†Ã‰GÃ‰Ã¢Ã…[Ã‡â€¦Ã‡Â»Ã‡ÃˆÃ…B
         //menu->alignItemsInColumns( 4, 2, 2, 4 );
 
         return true;
