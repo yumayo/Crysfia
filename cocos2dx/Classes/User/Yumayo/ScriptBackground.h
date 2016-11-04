@@ -17,8 +17,6 @@ namespace User
         void out( ArgumentList const& args );
         void fadein( ArgumentList const& args );
         void fadeout( ArgumentList const& args );
-        void slidein( ArgumentList const& args );
-        void slideout( ArgumentList const& args );
         void circlein( ArgumentList const& args );
         void circleout( ArgumentList const& args );
     private:

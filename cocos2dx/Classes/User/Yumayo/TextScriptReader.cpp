@@ -4,46 +4,30 @@
 
 #include <functional>
 #include <algorithm>
+#include <sstream>
 
 namespace User
 {
-    TextScriptReader::TextScriptReader( )
+    TagWithData TextScriptReader::createTagWithData( DebugWithLineData const& debugWithLineData )
     {
+        this->debugWithLineData = debugWithLineData;
 
-    }
-    TextScriptReader::~TextScriptReader( )
-    {
-
-    }
-    TagWithData TextScriptReader::createTagRawScriptPartsData( DebugWithLineData const& debugWithLineData )
-    {
         // 文字列の先頭に"@"がある場合はスクリプト
-        if ( debugWithLineData.lineData[0] == '@' )
-        {
-            // 先頭の"@"の後ろのデータを渡します。
-            this->lineData = debugWithLineData.lineData.substr( std::string( u8"@" ).size( ) );
-            this->debugData = debugWithLineData.debugData;
-            makeTagRawScriptData( );
-        }
+        if ( debugWithLineData.lineData[0] == '@' ) makeScriptData( );
         // そうでない場合はノベルデータです。
-        else
-        {
-            this->lineData = debugWithLineData.lineData;
-            this->debugData = debugWithLineData.debugData;
-            makeNovelData( );
-        }
+        else makeNovelData( );
 
         return getCleanedData( );
     }
     void TextScriptReader::makeNovelData( )
     {
-        tagWithData = { TagWithData::Tag::NOV, debugData, StringArray( ), lineData };
+        tagWithData = { TagWithData::Tag::NOV, debugWithLineData.debugData, StringArray( ), debugWithLineData.lineData };
     }
-    void TextScriptReader::makeTagRawScriptData( )
+    void TextScriptReader::makeScriptData( )
     {
-        scriptParts.clear( );
+        StringArray scriptParts;
 
-        auto scriptLine = lineData;
+        auto scriptLine = debugWithLineData.lineData.substr( std::string( u8"@" ).size( ) );
         spaceErase( scriptLine );
 
         size_t findPosition = 0;
@@ -99,22 +83,28 @@ namespace User
 
         disassembly( );
 
-        syntaxCheck( scriptParts );
+        try
+        {
+            syntaxCheck( scriptParts );
+        }
+        catch ( char const* str )
+        {
+
+        }
 
         // 変数名のところに"$"マークがあれば新しい変数として作成出来ます。
         if ( scriptParts[0].find( u8"$" ) != std::string::npos )
         {
-            tagWithData = { TagWithData::Tag::VAR, debugData, scriptParts, u8"" };
+            tagWithData = { TagWithData::Tag::VAR, debugWithLineData.debugData, scriptParts, u8"" };
         }
         // 違うなら、関数呼び出しになります。
         else
         {
-            tagWithData = { TagWithData::Tag::FUN, debugData, scriptParts, u8"" };
+            tagWithData = { TagWithData::Tag::FUN, debugWithLineData.debugData, scriptParts, u8"" };
         }
     }
     void TextScriptReader::syntaxCheck( StringArray const & scriptParts )
     {
-        auto error = [ &, this ] ( std::string const& errorString ) { throw( "[syntaxError : " + errorString + "][ file : " + debugData.fileName + "][line : " + std::to_string( debugData.lineNumber ) + "]" ); };
         auto isAllAlphabet = [ & ] ( std::string const& string )
         {
             return std::all_of( string.cbegin( ), string.cend( ), isalpha );
@@ -123,7 +113,7 @@ namespace User
         {
             double value;
             try { value = std::stod( string ); }
-            catch ( const std::logic_error& e ) { return false; }
+            catch ( ... ) { return false; }
             return true;
         };
 
@@ -131,9 +121,9 @@ namespace User
 
         TagWithData::Tag tag;
 
-        if ( parts.size( ) < 3U ) error( "最低限 [@ NAME : RUN] の形で記入してください。" );
+        if ( parts.size( ) < 3U ) errorSStream( "最低限 [@ NAME : RUN] の形で記入してください。", debugWithLineData.debugData );
 
-        if ( parts[1] != u8":" ) error( "ペア表現に誤りがあります。" );
+        if ( parts[1] != u8":" ) errorSStream( "ペア表現に誤りがあります。", debugWithLineData.debugData );
 
         if ( parts[0].find( u8"$" ) != std::string::npos ) tag = TagWithData::Tag::VAR;
         else tag = TagWithData::Tag::FUN;
@@ -141,38 +131,20 @@ namespace User
         switch ( tag )
         {
         case User::TagWithData::Tag::VAR:
-            do
-            {
-                if ( 3U < parts.size( ) ) error( "変数の実体は一つでないといけません。" );
-                if ( !isValue( parts[2] ) ) error( "変数宣言に対する数字が不正な値です。" );
-            } while ( false );
+            if ( 3U != parts.size( ) ) errorSStream( "変数の実体は一つでないといけません。", debugWithLineData.debugData );
+            if ( !isValue( parts[2] ) ) errorSStream( "変数宣言に対する数字が不正な値です。", debugWithLineData.debugData );
             break;
         case User::TagWithData::Tag::FUN:
-            do
+            if ( 3U < parts.size( ) )
             {
-                if ( 3U < parts.size( ) )
-                {
-                    if ( parts[3] != u8"(" ) error( "関数の引数構文が間違っています。" );
-                    if ( parts.back( ) != u8")" ) error( "関数の引数リストの最後に \")\" がありません。" );
+                if ( parts[3] != u8"(" ) errorSStream( "関数の引数構文が間違っています。", debugWithLineData.debugData );
+                if ( parts.back( ) != u8")" ) errorSStream( "関数の引数リストの最後に \")\" がありません。", debugWithLineData.debugData );
 
-                    for ( size_t i = 4; i < parts.size( ) - 1; ++i )
-                    {
-                        if ( ( i & 0x1 ) == 0x1 ) // 奇数
-                        {
-                            if ( parts[i] != u8"," ) error( "関数の引数リストが正常ではありません。" );
-                        }
-                        else // 偶数
-                        {
-                            // 全てがアルファベットであるか、数字として有効ならOKです。
-                            if ( !isAllAlphabet( parts[i] ) && !isValue( parts[i] ) )
-                            {
-                                // 変数でなかったらエラーを飛ばします。
-                                if ( parts[i].find( u8"$" ) == std::string::npos ) error( "関数の引数が不正な値です。" );
-                            }
-                        }
-                    }
+                for ( size_t i = 5; i < parts.size( ) - 1; i += 2 )
+                {
+                    if ( parts[i] != u8"," ) errorSStream( "関数の引数リストが正常ではありません。", debugWithLineData.debugData );
                 }
-            } while ( false );
+            }
             break;
         default:
             break;
@@ -186,10 +158,9 @@ namespace User
     }
     void TextScriptReader::cleanUp( )
     {
-        lineData.clear( );
-
-        debugData.fileName.clear( );
-        debugData.lineNumber = 0;
+        debugWithLineData.lineData.clear( );
+        debugWithLineData.debugData.fileName.clear( );
+        debugWithLineData.debugData.lineNumber = 0;
 
         tagWithData.tag = TagWithData::Tag::NIL;
         tagWithData.debugData.fileName.clear( );

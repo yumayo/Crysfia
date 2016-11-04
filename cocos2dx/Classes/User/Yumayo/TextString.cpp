@@ -21,14 +21,11 @@ namespace User
     }
     void TextString::actionAndCallfuncStart( std::function<void( )> const & actionCallfunc )
     {
-        // コールバック関数を登録。
-        this->actionCallfunc = actionCallfunc;
-
          // 例外処理
          // 空行だった場合文字列自体がないためその次の行が存在していても、コールバック呼び出しができず表示できないため。
         if ( text == u8"" )
         {
-            this->actionCallfunc( );
+            actionCallfunc( );
             return;
         }
 
@@ -44,9 +41,8 @@ namespace User
         if ( oneString )
         {
             oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * stringIndex ),
-                                                    Show::create( ),
-                                                    DelayTime::create( OptionalValues::readOutSpeed ),
-                                                    CallFunc::create( [ this ] { this->actionCallfunc( ); } ),
+                                                    FadeIn::create( OptionalValues::readOutSpeed ),
+                                                    CallFunc::create( [ = ] { actionCallfunc( ); } ),
                                                     nullptr ) )->setTag( stringIndex ); // actionには何文字目かの情報を入れておきます。
         }
     }
@@ -58,7 +54,7 @@ namespace User
             if ( oneString )
             {
                 oneString->stopActionByTag( i );
-                oneString->setVisible( true );
+                oneString->setOpacity( 255 );
             }
         }
     }
@@ -79,7 +75,7 @@ namespace User
         for ( int i = 0; i < label->getStringLength( ); i++ )
         {
             auto oneString = label->getLetter( i );
-            if ( oneString ) oneString->setVisible( false );
+            if ( oneString ) oneString->setOpacity( 0 );
         }
 
         auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
@@ -107,7 +103,7 @@ namespace User
             if ( oneString )
             {
                 oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * i ),
-                                                        Show::create( ),
+                                                        FadeIn::create( OptionalValues::readOutSpeed ),
                                                         nullptr ) )->setTag( i );
             }
         }

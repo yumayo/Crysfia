@@ -15,7 +15,7 @@ namespace User
     class ScriptStaticData
     {
     public:
-        static void run( FunctionScriptChip const& functionScriptChip );
+        static void run( FunctionScript const& functionScript );
         static void addData( std::pair<std::string, std::unique_ptr<ScriptBase>>&& pairData );
     private:
         static cocos2d::Scene* scene;

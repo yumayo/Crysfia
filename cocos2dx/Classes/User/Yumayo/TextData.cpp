@@ -3,6 +3,9 @@
 #include "cocos2d.h"
 
 #include "TextScriptReader.h"
+#include "TextScriptAnalysis.h"
+
+#include <sstream>
 
 USING_NS_CC;
 
@@ -10,7 +13,6 @@ namespace User
 {
     void spaceErase( std::string & lineString )
     {
-        // 全角と半角の文字を探す。
         const std::string spaceString = u8" ";
         for ( size_t eraseStr = lineString.find_first_of( spaceString ); eraseStr != std::string::npos; eraseStr = lineString.find_first_of( spaceString ) )
         {
@@ -29,6 +31,7 @@ namespace User
         // 行の先頭に空白があった場合は詰めます。
         size_t findPosition;
         if ( ( findPosition = lineString.find_first_not_of( u8" " ) ) != std::string::npos ) lineString = lineString.substr( findPosition );
+        else lineString = u8"";
     }
 
     TextData::TextData( )
@@ -42,33 +45,44 @@ namespace User
     DebugWithLineData TextData::getLineMoved( )
     {
         DebugWithLineData ret;
-        if ( data.empty( ) )
+        if ( work->data.empty( ) )
         {
-            return DebugWithLineData( );
+            if ( work->parentPointer )
+            {
+                work = work->parentPointer;
+                ret = work->data.front( );
+                work->data.pop_front( );
+            }
         }
         else
         {
-            ret = data.front( );
-            data.pop_front( );
+            ret = work->data.front( );
+            work->data.pop_front( );
         }
         return ret;
     }
     bool TextData::isEmpty( )
     {
-        return data.empty( );
+        return !work->parentPointer && work->children.empty( ) && work->data.empty( );
+    }
+    void TextData::clear( )
+    {
+        chunk.children.clear( );
+        chunk.data.clear( );
+        chunk.parentPointer = nullptr;
     }
     void TextData::makeData( std::string fileName )
     {
-        data.clear( );
-
+        clear( );
         this->fileName = fileName;
+        work = &chunk;
 
         auto fileUtils = FileUtils::getInstance( );
         auto str = fileUtils->getStringFromFile( fileUtils->fullPathForFilename( "res/data/" + fileName ) );
 
         size_t stringPosition = 0;
         size_t findPosition = 0;
-        size_t lineNumber = 0;
+        size_t lineNumber = 1; // 普通のテキストエディタでは行番号は「1」から始まるので。
         const std::string eolString = u8"\r\n";
         const size_t eolSize = std::string( eolString ).size( );
         while ( findPosition != std::string::npos )
@@ -79,48 +93,138 @@ namespace User
             lineNumber += 1;
         }
 
-        for ( auto& line : data )
+        for ( auto& line : work->data )
         {
             log( "%s", line.lineData.c_str( ) );
         }
     }
+    void TextData::setNextChild( std::string const & selectName )
+    {
+        auto itr = work->children.find( selectName );
+        if ( itr != work->children.cend( ) )
+        {
+            work = &itr->second;
+        }
+        else
+        {
+            try
+            {
+                errorSStream( "選択肢の対応先が見つかりません。", work->data.back( ).debugData );
+            }
+            catch ( char const* str )
+            {
+
+            }
+        }
+    }
     void TextData::tidydiness( std::string lineString, size_t lineNumber )
     {
+        ScriptDebugData debugData;
+        debugData.fileName = fileName;
+        debugData.lineNumber = lineNumber;
+
         auto commentErased = lineString;
         commentErase( commentErased );
         alignFirst( commentErased );
 
         auto scriptPosition = commentErased.find( u8"@", 0 );
 
-        ScriptDebugData debugData;
-        debugData.fileName = fileName;
-        debugData.lineNumber = lineNumber;
+        // スクリプトデータを作ります。
+        DebugWithLineData lineData;
+        // デバッグデータはノベルデータとスクリプトデータで共通なので、先に詰め込みます。
+        lineData.debugData = debugData;
 
-        // ノベルデータとスクリプトデータが混在している場合
+        // スクリプトデータが見つかった場合。
         if ( scriptPosition != std::string::npos )
         {
             auto novelString = commentErased.substr( 0, scriptPosition );
             auto scriptString = commentErased.substr( scriptPosition );
-            
+
+            // ノベルデータが含まれている場合
             if ( novelString != u8"" )
             {
-                DebugWithLineData temp;
-                temp.debugData = debugData;
-                temp.lineData = novelString;
-                data.push_back( temp );
+                lineData.lineData = novelString;
+                work->data.emplace_back( lineData );
             }
-            DebugWithLineData temp;
-            temp.debugData = debugData;
-            temp.lineData = scriptString;
-            data.push_back( temp );
+
+            lineData.lineData = scriptString;
+
+            try
+            {
+                // スクリプトデータの中にプリプロセス命令が合った場合に割り込み処理をします。
+                if ( !isPreprocess( lineData ) ) work->data.emplace_back( lineData );
+            }
+            catch ( char const* str )
+            {
+
+            }
         }
         // ノベルデータだけの場合
         else if ( commentErased != u8"" )
         {
-            DebugWithLineData temp;
-            temp.debugData = debugData;
-            temp.lineData = commentErased;
-            data.push_back( temp );
+            lineData.lineData = commentErased;
+            work->data.emplace_back( lineData );
         }
+    }
+    bool TextData::isPreprocess( DebugWithLineData const & debugWithLineData )
+    {
+        TextScriptReader scriptReader;
+        TextScriptAnalysis scriptAnalysis;
+        scriptAnalysis.makeScript( scriptReader.createTagWithData( debugWithLineData ) );
+
+        try
+        {
+            if ( scriptAnalysis.getTag( ) == TagWithData::Tag::FUN )
+            {
+                auto& func = scriptAnalysis.getFunctionScript( );
+                if ( func.variable == u8"sys" )
+                {
+                    if ( func.functionInfo.name == u8"import" )
+                    {
+                        import( func.functionInfo.argumentList );
+                        return true;
+                    }
+                    else if ( func.functionInfo.name == u8"beginland" )
+                    {
+                        beginland( func.functionInfo.argumentList );
+                        return true;
+                    }
+                    else if ( func.functionInfo.name == u8"endland" )
+                    {
+                        endland( func.functionInfo.argumentList );
+                        return true;
+                    }
+                }
+            }
+        }
+        catch ( char const* errorString )
+        {
+            // ここのエラーは上層の関数でtry処理しています。
+            errorSStream( errorString, scriptAnalysis.getTagWithData( ).debugData );
+        }
+
+        return false;
+    }
+    void TextData::import( ArgumentList const& args )
+    {
+        if ( args.size( ) != 1 ) throw( "importのファイルは一つでないといけません。" );
+
+        TextData textData;
+        textData.makeData( args[0] );
+        work->data.insert( work->data.cend( ), textData.work->data.cbegin( ), textData.work->data.cend( ) );
+        work->children.insert( textData.work->children.cbegin( ), textData.work->children.cend( ) );
+    }
+    void TextData::beginland( ArgumentList const& args )
+    {
+        if ( args.size( ) != 1 ) throw( "beginlandのタグは一つでないといけません。" );
+
+        work->children.insert( std::make_pair( args[0], TextChankData( work ) ) );
+        work = &work->children[args[0]];
+    }
+    void TextData::endland( ArgumentList const& args )
+    {
+        if ( !work->parentPointer ) throw( "endlandに対応するbeginlandが見つかりませんでした。" );
+
+        work = work->parentPointer;
     }
 }
