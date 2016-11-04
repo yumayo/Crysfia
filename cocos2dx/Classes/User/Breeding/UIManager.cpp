@@ -28,14 +28,12 @@ namespace User
 
 	void UIManager::createMenuWindow()
 	{
-		Size size = Size(720, 1280);
-
 		Vec2 origin = Director::getInstance()->getVisibleOrigin();
 		Vec2 winSize = Director::getInstance()->getWinSize();
 
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(620, 10));
-		layout->setContentSize(Size(size.width, 150));
+		layout->setContentSize(Size(winSize.x, 150));
 		auto layoutSize = layout->getContentSize();
 
 #if _DEBUG //デバッグ時、layoutを黒くする
