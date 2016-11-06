@@ -21,7 +21,8 @@ namespace User
 
         setName( typeid( *this ).name( ) );
 
-        ScriptStaticData::addData( std::make_pair( u8"sys", std::make_unique<ScriptSystem>( this ) ) );
+        auto script = new ScriptSystem( this );
+        ScriptStaticData::addData( std::make_pair( u8"sys", std::unique_ptr<ScriptBase>(script) ) );
 
         return true;
     }
