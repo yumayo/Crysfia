@@ -46,7 +46,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/ƒ~ƒjƒ}ƒbƒv.png" );
+        background = Sprite::create( u8"res/texture/ãƒŸãƒ‹ãƒžãƒƒãƒ—.png" );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
