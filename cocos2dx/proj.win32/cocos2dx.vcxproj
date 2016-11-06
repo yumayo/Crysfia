@@ -152,7 +152,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\Test.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp" />
-    <ClCompile Include="..\Classes\User\CiryMap\LayerCity1.cpp" />
+    <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp" />
@@ -167,7 +167,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\BackgroundLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\HumanLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\ModalLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\NameLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\NovelLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\OptionalValues.cpp" />
@@ -177,8 +176,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Yumayo\ScriptHuman.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\ScriptName.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\ScriptStaticData.cpp" />
+    <ClCompile Include="..\Classes\User\Yumayo\ScriptStill.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\ScriptSystem.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\SelectLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Yumayo\StillLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\SystemLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextScriptAnalysis.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextScriptReader.cpp" />
@@ -199,7 +200,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Breeding\Test.h" />
     <ClInclude Include="..\Classes\User\Breeding\UIManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h" />
-    <ClInclude Include="..\Classes\User\CiryMap\LayerCity1.h" />
+    <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h" />
     <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h" />
     <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h" />
     <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h" />
@@ -214,7 +215,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h" />
     <ClInclude Include="..\Classes\User\Yumayo\BackgroundLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\HumanLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ModalLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\NameLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\NovelLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\OptionalValues.h" />
@@ -224,8 +224,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Yumayo\ScriptHuman.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ScriptName.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ScriptStaticData.h" />
+    <ClInclude Include="..\Classes\User\Yumayo\ScriptStill.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ScriptSystem.h" />
     <ClInclude Include="..\Classes\User\Yumayo\SelectLayer.h" />
+    <ClInclude Include="..\Classes\User\Yumayo\StillLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\SystemLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\TextScriptAnalysis.h" />
     <ClInclude Include="..\Classes\User\Yumayo\TextScriptReader.h" />

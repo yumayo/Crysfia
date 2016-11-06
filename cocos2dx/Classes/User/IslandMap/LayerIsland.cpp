@@ -94,7 +94,12 @@ namespace User
         createButton( 788, 312 );
 
         for ( auto& button : buttons )
-            endedCallBack( button, [ ] { SceneManager::createCiryMap( ); } );
+            endedCallBack( button, [ this ] 
+        { 
+            if ( isSelectNovel ) return;
+            isSelectNovel = true;
+            SceneManager::createCiryMap( u8"ミニマップ.png" );
+        } );
     }
     void LayerIsland::initListener( )
     {

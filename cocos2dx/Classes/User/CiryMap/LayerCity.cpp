@@ -1,4 +1,4 @@
-#include "LayerCity1.h"
+#include "LayerCity.h"
 
 #include "../SceneManager.h"
 
@@ -11,13 +11,14 @@ USING_NS_CC;
 
 namespace User
 {
-    LayerCity1::LayerCity1( )
+    LayerCity::LayerCity( std::string const& backgroundPath )
+        : backgroundPath( backgroundPath )
     {
     }
-    LayerCity1::~LayerCity1( )
+    LayerCity::~LayerCity( )
     {
     }
-    bool LayerCity1::init( )
+    bool LayerCity::init( )
     {
         if ( !Layer::init( ) ) return false;
 
@@ -33,20 +34,20 @@ namespace User
 
         return true;
     }
-    void LayerCity1::setup( )
+    void LayerCity::setup( )
     {
 
     }
-    void LayerCity1::update( float delta )
+    void LayerCity::update( float delta )
     {
 
     }
-    void LayerCity1::initBackground( )
+    void LayerCity::initBackground( )
     {
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/ミニマップ.png" );
+        background = Sprite::create( u8"res/texture/" + backgroundPath );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
@@ -57,7 +58,7 @@ namespace User
 
         this->addChild( background );
     }
-    void LayerCity1::initCountry( )
+    void LayerCity::initCountry( )
     {
         auto s = background->getContentSize( );
 
@@ -92,9 +93,14 @@ namespace User
         createButton( 374, 248 );
 
         for ( auto& button : buttons )
-            endedCallBack( button, [ ] { SceneManager::createNovel( u8"scenario1.txt" ); } );
+            endedCallBack( button, [ this ] 
+        { 
+            if ( isSelectCity ) return;
+            isSelectCity = true;
+            SceneManager::createNovel( u8"scenario1.txt" );
+        } );
     }
-    void LayerCity1::initListener( )
+    void LayerCity::initListener( )
     {
         auto listener = EventListenerTouchAllAtOnce::create( );
         listener->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
@@ -122,7 +128,7 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
     }
-    cocos2d::ui::Button* LayerCity1::createDebugButton( )
+    cocos2d::ui::Button* LayerCity::createDebugButton( )
     {
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );

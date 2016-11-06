@@ -21,6 +21,7 @@ namespace User
         void initCountry( );
         void initListener( );
     private:
+        bool isSelectNovel = false;
         bool isDebug = false;
         cocos2d::ui::Button* createDebugButton( );
     private:

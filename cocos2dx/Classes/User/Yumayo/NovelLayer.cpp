@@ -4,6 +4,8 @@
 
 #include "SelectLayer.h"
 
+#include "../SceneManager.h"
+
 USING_NS_CC;
 
 namespace User
@@ -11,6 +13,9 @@ namespace User
     NovelLayer::NovelLayer( std::string const & novelPath )
         : textLabels( this )
         , novelPath( novelPath )
+        , readProceed( false )
+        , systemRead( true )
+        , systemStop( false )
     {
     }
     NovelLayer::~NovelLayer( )
@@ -35,7 +40,7 @@ namespace User
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
                 // 左側のCTRLキーが押されたら高速読み込みを開始する。
-                switchIsReadingProceed( );
+                readProceed.on( );
             }
         };
 
@@ -43,8 +48,8 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
-                // 左側のCTRLが話されたら高速読み込みを停止する。
-                switchIsReadingProceed( );
+                // 左側のCTRLが離されたら高速読み込みを停止する。
+                readProceed.off( );
             }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
@@ -96,10 +101,20 @@ namespace User
 
         // テキストの読み込み。
         // delayが0である限り、テキストを読み込み続けます。
-        if ( isSystemRead ) textRead( );
+        if ( systemRead ) textRead( );
+    }
+    void NovelLayer::on( )
+    {
+        this->setVisible( true );
+    }
+    void NovelLayer::off( )
+    {
+        this->setVisible( false );
     }
     void NovelLayer::setNextChild( std::string const & name )
     {
+        systemStop.off( );
+
         auto selectLayer = this->getLayer<SelectLayer>( );
 
         // 選択肢のレイヤーを削除
@@ -107,15 +122,21 @@ namespace User
 
         // 次に読み込むシナリオデータを指定。
         textData.setNextChild( name );
-
-        switchIsStopping( );
     }
     void NovelLayer::textRead( )
     {
         while ( delayTime == 0.0 )
         {
             // テキストを読み始めます。
-            textPartyRead( );
+            try
+            {
+                textPartyRead( );
+            }
+            catch ( std::string const& str )
+            {
+                SceneManager::createIslandMap( );
+                break;
+            }
 
             // 読み込み終了なら
             if ( textChank.isReadFinished( ) )
@@ -123,7 +144,7 @@ namespace User
                 // テキストデータを貼り付けて。
                 textPasting( );
                 // システム読み込みを停止。
-                switchIsSystemRead( );
+                systemRead.off( );
 
                 break;
             }
@@ -134,6 +155,10 @@ namespace User
         if ( !textChank.isReadFinished( ) && !textData.isEmpty( ) )
         {
             textChank.insertScript( textReader.createTagWithData( textData.getLineMoved( ) ) );
+        }
+        else
+        {
+            throw( std::string( "全てのノベルデータを読み上げた。" ) );
         }
     }
     void NovelLayer::textClear( )
@@ -154,7 +179,7 @@ namespace User
     void NovelLayer::readingProceedUpdate( )
     {
         // 高速読み込みが可能なら文字を1フレームに1回読み続ける。
-        if ( isReadingProceed )
+        if ( readProceed )
         {
             // 高速読み込みではdelayは無視します。
             delayTime = 0.0F;
@@ -176,18 +201,18 @@ namespace User
     void NovelLayer::textNextRead( )
     {
         // 新しくテキストを読み込んで良い場合。
-        if ( !isStopping )
+        if ( !systemStop )
         {
             // テキストの中身を消します。
             textClear( );
-            // 読み込みを開始します。
-            switchIsSystemRead( );
+            // 読み込みを開始の合図を出します。
+            systemRead.on( );
         }
     }
     // テキストのアニメーションが終わっていない場合
     void NovelLayer::textActionStop( )
     {
-        if ( isSystemRead )
+        if ( systemRead )
         {
             textRead( );
         }

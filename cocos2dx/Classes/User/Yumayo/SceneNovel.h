@@ -10,11 +10,7 @@ namespace User
     class SceneNovel : public SceneBase
     {
     public:
-        SceneNovel( std::string const& novelPath );
-    public:
-        cocos2d::Scene* create( ) override;
-    private:
-        std::string novelPath;
+        static cocos2d::Scene* create( std::string const& novelPath );
     };
 }
 

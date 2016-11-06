@@ -10,6 +10,21 @@
 
 namespace User
 {
+    class SwitchBoolean
+    {
+    public:
+        SwitchBoolean( ) : frag( false ) { }
+        SwitchBoolean( bool frag ) : frag( frag ) { }
+    public:
+        void on( ) { frag = true; }
+        void off( ) { frag = false; }
+    public:
+        operator bool( ) { return frag; }
+        bool operator!( ) { return !frag; }
+    private:
+        bool frag;
+    };
+
     class NovelLayer : public LayerBase
     {
     public:
@@ -20,19 +35,19 @@ namespace User
         void setup( ) override;
         void update( float delta )override;
     public:
+        void on( );
+        void off( );
+    public:
         void setNextChild( std::string const& name );
         void setDelayTime( double delayTime ) { this->delayTime = delayTime; }
         // 選択肢でシナリオの読み込み停止機能のスイッチ
-        void switchIsStopping( ) { isStopping = !isStopping; }
+        SwitchBoolean systemStop;
         void textUpdate( );
     private:
         std::string novelPath;
         double delayTime = 0.0F; // delayTimeが残っている場合
         // 読み込み機能を停止するかどうか。
         // テキストを読み込み途中の場合はtrueになります。
-        bool isSystemRead = true;
-        bool isStopping = false; // 選択肢などで読み込みを停止するかどうか。
-        bool isReadingProceed = false; // 高速に読み飛ばすかどうか。
         void readingProceedUpdate( );
         void textNextRead( );
         void textActionStop( );
@@ -45,9 +60,9 @@ namespace User
         // 読み込んだテキストデータをノベルレイヤーに貼り付ける。
         void textPasting( );
         // 読み込みが停止されるまで読み込むかのスイッチ
-        void switchIsSystemRead( ) { isSystemRead = !isSystemRead; }
+        SwitchBoolean systemRead;
         // 高速に読み飛ばす機能のスイッチ
-        void switchIsReadingProceed( ) { isReadingProceed = !isReadingProceed; }
+        SwitchBoolean readProceed;
         TextData textData;
         TextScriptReader textReader;
         TextChank textChank;
