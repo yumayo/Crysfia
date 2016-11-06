@@ -1,21 +1,20 @@
-# ifndef __TextChank__
-# define __TextChank__
+# ifndef __TextChunk__
+# define __TextChunk__
 
 # include "TextTypes.hpp"
 # include "TextScriptAnalysis.h"
 
 namespace User
 {
-    class TextChank
+    class TextChunk
     {
     public:
-        TextChank( );
-        ~TextChank( );
+        TextChunk( );
+        ~TextChunk( );
     public:
         void insertScript( TagWithData const& tagWithData );
         bool isReadFinished( );
-        NovelData getNovelData( );
-        void clear( );
+        NovelData const& getNovelData( );
     private:
         void pushVariable( );
         void pushFunction( );
@@ -30,4 +29,4 @@ namespace User
     };
 }
 
-# endif // __TextChank__
+# endif // __TextChunk__

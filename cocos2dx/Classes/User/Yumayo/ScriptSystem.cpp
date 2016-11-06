@@ -92,12 +92,11 @@ namespace User
             buttons.pushBack( item );
         }
 
-        auto menu = Menu::createWithArray( buttons );
-
-        if ( menu )
+        if ( auto menu = Menu::createWithArray( buttons ) )
         {
             menu->setPosition( origin + visibleSize * 0.5F );
             menu->alignItemsVerticallyWithPadding( OptionalValues::fontSize );
+            menu->setName( u8"select" );
             selectLayer->addChild( menu );
         }
     }
@@ -130,13 +129,13 @@ namespace User
             auto script = new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" );
             ScriptStaticData::addData( std::make_pair( variable, std::unique_ptr<ScriptBase>( script ) ) );
         }
-            break;
+        break;
         case 2:
         {
             auto script = new ScriptName( nameLayer, args[1], u8"F910MinchoW3.otf" );
             ScriptStaticData::addData( std::make_pair( args[0], std::unique_ptr<ScriptBase>( script ) ) );
         }
-            break;
+        break;
         default:
             break;
         }

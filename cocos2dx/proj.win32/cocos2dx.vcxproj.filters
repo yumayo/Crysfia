@@ -57,9 +57,6 @@
     <ClCompile Include="..\Classes\User\SceneManager.cpp">
       <Filter>src\User</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Yumayo\TextChank.cpp">
-      <Filter>src\User\Yumayo</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\User\Yumayo\TextData.cpp">
       <Filter>src\User\Yumayo</Filter>
     </ClCompile>
@@ -177,6 +174,12 @@
     <ClCompile Include="..\Classes\User\Yumayo\ScriptStill.cpp">
       <Filter>src\User\Yumayo</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextChunkManager.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextChunk.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -193,9 +196,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\SceneManager.h">
       <Filter>src\User</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Yumayo\TextChank.h">
-      <Filter>src\User\Yumayo</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Yumayo\TextData.h">
       <Filter>src\User\Yumayo</Filter>
@@ -315,6 +315,12 @@
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Yumayo\ScriptStill.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\TextChunkManager.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\TextChunk.h">
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
   </ItemGroup>

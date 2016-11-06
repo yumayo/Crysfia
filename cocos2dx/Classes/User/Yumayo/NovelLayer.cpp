@@ -35,7 +35,7 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_F5 )
             {
-                textData.makeData( novelPath );
+                //textData.makeData( novelPath );
             }
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
@@ -88,12 +88,24 @@ namespace User
         square->setPosition( rect.origin + rect.size / 2 );
         this->addChild( square );
 
-        textData.makeData( novelPath );
-        textRead( );
+        textChunkManager.readEndCallBack = [ this ]
+        {
+            // テキストデータを貼り付けて。
+            textPasting( );
+            // システム読み込みを停止。
+            systemRead.off( );
+        };
+        textChunkManager.novelEndCallBack = [ this ]
+        {
+            SceneManager::createIslandMap( );
+        };
+
+        textChunkManager.make( novelPath );
+        textChunkManager.textRead( );
     }
     void NovelLayer::update( float delta )
     {
-        delayTime = std::max( delayTime - delta, 0.0 );
+        textChunkManager.updateDelay( delta );
 
         // 高速読み込みのアップデート
         // キーボードの左側のCTRLを押している間だけ高速読み込み機能がONになります。
@@ -101,10 +113,11 @@ namespace User
 
         // テキストの読み込み。
         // delayが0である限り、テキストを読み込み続けます。
-        if ( systemRead ) textRead( );
+        if ( systemRead ) textChunkManager.textRead( );
     }
     void NovelLayer::on( )
     {
+        auto selectLayer = this->getLayer<SelectLayer>( );
         this->setVisible( true );
     }
     void NovelLayer::off( )
@@ -118,52 +131,18 @@ namespace User
         auto selectLayer = this->getLayer<SelectLayer>( );
 
         // 選択肢のレイヤーを削除
-        selectLayer->removeAllChildren( );
+        if ( auto ptr = dynamic_cast<Menu*>( selectLayer->getChildByName( u8"select" ) ) )
+        {
+            ptr->setEnabled( false );
+            ptr->runAction( Sequence::create( FadeOut::create( 0.3 ), RemoveSelf::create( ), nullptr ) );
+        }
 
         // 次に読み込むシナリオデータを指定。
-        textData.setNextChild( name );
-    }
-    void NovelLayer::textRead( )
-    {
-        while ( delayTime == 0.0 )
-        {
-            // テキストを読み始めます。
-            try
-            {
-                textPartyRead( );
-            }
-            catch ( std::string const& str )
-            {
-                SceneManager::createIslandMap( );
-                break;
-            }
-
-            // 読み込み終了なら
-            if ( textChank.isReadFinished( ) )
-            {
-                // テキストデータを貼り付けて。
-                textPasting( );
-                // システム読み込みを停止。
-                systemRead.off( );
-
-                break;
-            }
-        }
-    }
-    void NovelLayer::textPartyRead( )
-    {
-        if ( !textChank.isReadFinished( ) && !textData.isEmpty( ) )
-        {
-            textChank.insertScript( textReader.createTagWithData( textData.getLineMoved( ) ) );
-        }
-        else
-        {
-            throw( std::string( "全てのノベルデータを読み上げた。" ) );
-        }
+        textChunkManager.select( name );
     }
     void NovelLayer::textClear( )
     {
-        textChank.clear( );
+        textChunkManager.gotoNext( );
         textLabels.clear( );
     }
     void NovelLayer::textPasting( )
@@ -171,7 +150,7 @@ namespace User
         // テキストデータを読み込み終わったらラベルに貼り付ける。
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        textLabels.setStrings( textChank.getNovelData( ),
+        textLabels.setStrings( textChunkManager.getNovelData( ),
                                origin +
                                Vec2( ( visibleSize.width - OptionalValues::stringViewSize.x ) * 0.5F,
                                      OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::lineSpaceSize ) );
@@ -182,7 +161,7 @@ namespace User
         if ( readProceed )
         {
             // 高速読み込みではdelayは無視します。
-            delayTime = 0.0F;
+            textChunkManager.setDelayTime( 0.0F );
             textUpdate( );
         }
     }
@@ -214,7 +193,9 @@ namespace User
     {
         if ( systemRead )
         {
-            textRead( );
+            // ディレイをスキップします。
+            textChunkManager.setDelayTime( 0.0F );
+            textChunkManager.textRead( );
         }
 
         textLabels.actionStop( );

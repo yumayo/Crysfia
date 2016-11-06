@@ -3,10 +3,8 @@
 
 # include "../LayerBase.h"
 
-# include "TextData.h"
 # include "TextLabels.h"
-# include "TextScriptReader.h"
-# include "TextChank.h"
+# include "TextChunkManager.h"
 
 namespace User
 {
@@ -39,22 +37,17 @@ namespace User
         void off( );
     public:
         void setNextChild( std::string const& name );
-        void setDelayTime( double delayTime ) { this->delayTime = delayTime; }
+        void setDelayTime( double delayTime ) { textChunkManager.setDelayTime( delayTime ); }
         // 選択肢でシナリオの読み込み停止機能のスイッチ
         SwitchBoolean systemStop;
         void textUpdate( );
     private:
         std::string novelPath;
-        double delayTime = 0.0F; // delayTimeが残っている場合
         // 読み込み機能を停止するかどうか。
         // テキストを読み込み途中の場合はtrueになります。
         void readingProceedUpdate( );
         void textNextRead( );
         void textActionStop( );
-        // delayが0であるかぎり、sys:lかテキストが全て埋まるまで読み込みます。
-        void textRead( );
-        // スクリプトから一行分読み込む
-        void textPartyRead( );
         // テキストデータを空にする。
         void textClear( );
         // 読み込んだテキストデータをノベルレイヤーに貼り付ける。
@@ -63,10 +56,9 @@ namespace User
         SwitchBoolean systemRead;
         // 高速に読み飛ばす機能のスイッチ
         SwitchBoolean readProceed;
-        TextData textData;
-        TextScriptReader textReader;
-        TextChank textChank;
+
         TextLabels textLabels;
+        TextChunkManager textChunkManager;
     };
 }
 

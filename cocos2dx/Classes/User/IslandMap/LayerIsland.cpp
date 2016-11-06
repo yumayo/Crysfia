@@ -61,45 +61,38 @@ namespace User
     {
         auto s = background->getContentSize( );
 
-        std::vector<ui::Button*> buttons;
-        auto createButton = [ & ] ( float x, float y )
+        auto layout = ui::Layout::create( );
+        background->addChild( layout );
+
+        auto createButton = [ & ] ( float x, float y, std::string const& novel )
         {
             auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
             x *= scale; y *= scale;
 
-            buttons.emplace_back( ui::Button::create( u8"res/Image/WindowBase/WinBase_91.png" ) );
-            background->addChild( buttons.back( ) );
-            buttons.back( )->setPosition( Vec2( x, s.height - y ) );
+            auto button = ui::Button::create( u8"res/Image/WindowBase/WinBase_91.png" );
+            layout->addChild( button );
+
+            button->setPosition( Vec2( x, s.height - y ) );
             auto tar = Size( 64, 64 );
-            auto con = buttons.back( )->getContentSize( );
+            auto con = button->getContentSize( );
             auto sca = tar.height / con.height;
-            buttons.back( )->setScale( sca, sca );
-        };
-        auto endedCallBack = [ & ] ( ui::Button* button, std::function<void( )> call )
-        {
-            button->addTouchEventListener( [ this, call ] ( Ref* pSender, ui::Widget::TouchEventType type )
+            button->setScale( sca, sca );
+            button->addTouchEventListener( [ this, layout, novel ] ( Ref* pSender, ui::Widget::TouchEventType type )
             {
                 if ( type == ui::Widget::TouchEventType::ENDED )
                 {
-                    call( );
+                    layout->setEnabled( false );
+                    SceneManager::createCiryMap( novel );
                 }
             } );
         };
 
-        createButton( 206, 510 );
-        createButton( 314, 374 );
-        createButton( 567, 482 );
-        createButton( 618, 366 );
-        createButton( 803, 582 );
-        createButton( 788, 312 );
-
-        for ( auto& button : buttons )
-            endedCallBack( button, [ this ] 
-        { 
-            if ( isSelectNovel ) return;
-            isSelectNovel = true;
-            SceneManager::createCiryMap( u8"ミニマップ.png" );
-        } );
+        createButton( 206, 510, u8"ミニマップ.png" );
+        createButton( 314, 374, u8"ミニマップ.png" );
+        createButton( 567, 482, u8"ミニマップ.png" );
+        createButton( 618, 366, u8"ミニマップ.png" );
+        createButton( 803, 582, u8"ミニマップ.png" );
+        createButton( 788, 312, u8"ミニマップ.png" );
     }
     void LayerIsland::initListener( )
     {

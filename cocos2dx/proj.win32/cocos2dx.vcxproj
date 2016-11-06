@@ -181,9 +181,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Yumayo\SelectLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\StillLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\SystemLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Yumayo\TextChunkManager.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextScriptAnalysis.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextScriptReader.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextChank.cpp" />
+    <ClCompile Include="..\Classes\User\Yumayo\TextChunk.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextData.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextLabels.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\TextString.cpp" />
@@ -229,9 +230,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Yumayo\SelectLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\StillLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\SystemLayer.h" />
+    <ClInclude Include="..\Classes\User\Yumayo\TextChunkManager.h" />
     <ClInclude Include="..\Classes\User\Yumayo\TextScriptAnalysis.h" />
     <ClInclude Include="..\Classes\User\Yumayo\TextScriptReader.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextChank.h" />
+    <ClInclude Include="..\Classes\User\Yumayo\TextChunk.h" />
     <ClInclude Include="..\Classes\User\Yumayo\TextData.h" />
     <ClInclude Include="..\Classes\User\Yumayo\TextLabels.h" />
     <ClInclude Include="..\Classes\User\Yumayo\TextString.h" />
