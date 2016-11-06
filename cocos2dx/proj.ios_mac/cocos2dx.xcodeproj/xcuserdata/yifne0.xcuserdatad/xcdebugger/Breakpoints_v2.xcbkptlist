@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/User/Yumayo/ScriptBackground.cpp"
-            timestampString = "500101006.964975"
+            timestampString = "500101432.42721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "ScriptBackground::create( )"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/User/Yumayo/ScriptBackground.cpp"
-            timestampString = "500101006.964975"
+            timestampString = "500101432.42721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
             landmarkName = "ScriptBackground::in( ArgumentList const&amp; args )"
             landmarkType = "7">
          </BreakpointContent>
@@ -448,22 +448,6 @@
             startingLineNumber = "89"
             endingLineNumber = "89"
             landmarkName = "TextChank::pushFunction( )"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/User/Yumayo/ScriptBackground.cpp"
-            timestampString = "500100997.051234"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "13"
-            endingLineNumber = "13"
-            landmarkName = "ScriptBackground::ScriptBackground( cocos2d::Layer* layer, std::string textureName )"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

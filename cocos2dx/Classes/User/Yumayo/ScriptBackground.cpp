@@ -7,11 +7,9 @@ namespace User
     ScriptBackground::ScriptBackground( cocos2d::Layer* layer, std::string textureName )
         : ScriptBase( layer )
     {
-        Director::getInstance( )->getTextureCache( )->addImage( u8"res/texture/" + textureName );
-        texture = Director::getInstance( )->getTextureCache( )->getTextureForKey( u8"res/texture/" + textureName );
-        if(!texture)
-            int a = 0;
-        
+        Director::getInstance( )->getTextureCache( )->addImage( "res/texture/" + textureName );
+        texture = Director::getInstance( )->getTextureCache( )->getTextureForKey( "res/texture/" + textureName );
+
         funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
         funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
         funcs.insert( std::make_pair( u8"fadein", [ this ] ( ArgumentList const& args ) { fadein( args ); } ) );
