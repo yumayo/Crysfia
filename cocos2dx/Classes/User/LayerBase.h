@@ -5,6 +5,26 @@
 
 # include <string>
 
+// 可変長配列に対応したcreate関数を作ります。
+// 中身はCREATE_FUNCと同じです。
+#define CREATE_ARGS_FUNC(__TYPE__) \
+template <class... Args> \
+static __TYPE__* create(Args... args) \
+{ \
+    __TYPE__ *pRet = new(std::nothrow) __TYPE__(args...); \
+    if (pRet && pRet->init()) \
+    { \
+        pRet->autorelease(); \
+        return pRet; \
+    } \
+    else \
+    { \
+        delete pRet; \
+        pRet = nullptr; \
+        return nullptr; \
+    } \
+}
+
 namespace User
 {
     class LayerBase : public cocos2d::Layer

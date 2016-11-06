@@ -6,10 +6,8 @@ namespace User
 {
     ScriptBackground::ScriptBackground( cocos2d::Layer* layer, std::string textureName )
         : ScriptBase( layer )
+        , textureName( textureName )
     {
-        Director::getInstance( )->getTextureCache( )->addImage( "res/texture/" + textureName );
-        texture = Director::getInstance( )->getTextureCache( )->getTextureForKey( "res/texture/" + textureName );
-
         funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
         funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
         funcs.insert( std::make_pair( u8"fadein", [ this ] ( ArgumentList const& args ) { fadein( args ); } ) );
@@ -51,7 +49,7 @@ namespace User
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
-        auto sprite = Sprite::createWithTexture( texture );
+        auto sprite = Sprite::create( "res/texture/" + textureName );
         sprite->setPosition( origin + visibleSize / 2 );
         auto size = sprite->getContentSize( );
         auto targetSize = Size( visibleSize );
@@ -76,7 +74,7 @@ namespace User
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
-        auto sprite = Sprite::createWithTexture( texture );
+        auto sprite = Sprite::create( "res/texture/" + textureName );
         sprite->setPosition( origin + visibleSize / 2 );
         auto size = sprite->getContentSize( );
         auto targetSize = Size( visibleSize );
@@ -102,7 +100,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        auto sprite = Sprite::createWithTexture( texture );
+        auto sprite = Sprite::create( "res/texture/" + textureName );
         sprite->setTag( (int)Tag::Background );
         sprite->setPosition( origin + Vec2( visibleSize.width / 2,
                                             visibleSize.height / 2 ) );

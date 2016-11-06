@@ -7,11 +7,14 @@
 // サンプルシーンを作成します。
 #include "Sample/SceneSample.h"
 
-// ユーマヨシーンを作成します。
-#include "Yumayo/SceneYumayo.h"
+// ユーマヨのノベルシーンを作成します。
+#include "Yumayo/SceneNovel.h"
 
 // 島マップシーンを作成します。
 #include "IslandMap/SceneIslandMap.h"
+
+// 街マップシーンを作成します。
+#include "CiryMap/SceneCityMap.h"
 
 // 小松さんのホームシーンを作成します。
 #include "Breeding/SceneBreeding.h"
@@ -37,13 +40,17 @@ namespace User
     {
         create<SceneSample>( );
     }
-    void SceneManager::createYumayo( )
+    void SceneManager::createNovel( std::string const& novelPath )
     {
-        create<SceneYumayo>( );
+        create<SceneNovel>( novelPath );
     }
     void SceneManager::createIslandMap( )
     {
         create<SceneIslandMap>( );
+    }
+    void SceneManager::createCiryMap( )
+    {
+        create<SceneCityMap>( );
     }
     void SceneManager::createBreeding( )
     {

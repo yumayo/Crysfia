@@ -8,10 +8,10 @@ USING_NS_CC;
 
 namespace User
 {
-    NovelLayer::NovelLayer( )
+    NovelLayer::NovelLayer( std::string const & novelPath )
         : textLabels( this )
+        , novelPath( novelPath )
     {
-
     }
     NovelLayer::~NovelLayer( )
     {
@@ -30,7 +30,7 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_F5 )
             {
-                textData.makeData( u8"scenario1.txt" );
+                textData.makeData( novelPath );
             }
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
@@ -49,15 +49,25 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
 
-        auto mouseEvent = EventListenerMouse::create( );
-        mouseEvent->onMouseDown = [ this ] ( EventMouse* event )
+        auto multiTouchEvent = EventListenerTouchAllAtOnce::create( );
+        multiTouchEvent->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
-            if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
+            for ( auto& touch : touches )
             {
                 textUpdate( );
             }
         };
-        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
+        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( multiTouchEvent, this );
+
+        //auto mouseEvent = EventListenerMouse::create( );
+        //mouseEvent->onMouseDown = [ this ] ( EventMouse* event )
+        //{
+        //    if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
+        //    {
+        //        textUpdate( );
+        //    }
+        //};
+        //this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
 
         return true;
     }
@@ -73,7 +83,7 @@ namespace User
         square->setPosition( rect.origin + rect.size / 2 );
         this->addChild( square );
 
-        textData.makeData( u8"scenario1.txt" );
+        textData.makeData( novelPath );
         textRead( );
     }
     void NovelLayer::update( float delta )

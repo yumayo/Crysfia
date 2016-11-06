@@ -1,5 +1,5 @@
-# ifndef __SceneYumayo__
-# define __SceneYumayo__
+# ifndef __SceneCityMap__
+# define __SceneCityMap__
 
 # include "cocos2d.h"
 
@@ -7,11 +7,11 @@
 
 namespace User
 {
-    class SceneYumayo : public SceneBase
+    class SceneCityMap : public SceneBase
     {
     public:
         cocos2d::Scene* create( ) override;
     };
 }
 
-# endif // __SceneYumayo__
+# endif // __SceneCityMap__

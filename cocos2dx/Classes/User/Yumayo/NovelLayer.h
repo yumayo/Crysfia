@@ -13,8 +13,8 @@ namespace User
     class NovelLayer : public LayerBase
     {
     public:
-        CREATE_FUNC( NovelLayer );
-        NovelLayer( );
+        CREATE_ARGS_FUNC( NovelLayer );
+        NovelLayer( std::string const& novelPath );
         ~NovelLayer( );
         bool init( ) override;
         void setup( ) override;
@@ -26,6 +26,7 @@ namespace User
         void switchIsStopping( ) { isStopping = !isStopping; }
         void textUpdate( );
     private:
+        std::string novelPath;
         double delayTime = 0.0F; // delayTimeが残っている場合
         // 読み込み機能を停止するかどうか。
         // テキストを読み込み途中の場合はtrueになります。

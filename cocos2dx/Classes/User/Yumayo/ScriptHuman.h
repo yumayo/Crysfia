@@ -19,8 +19,7 @@ namespace User
         void fadeout( ArgumentList const& args );
     private:
         cocos2d::Sprite* create( );
-    private:
-        cocos2d::Texture2D* texture;
+        std::string textureName;
     };
 }
 

@@ -152,6 +152,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\Test.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp" />
+    <ClCompile Include="..\Classes\User\CiryMap\LayerCity1.cpp" />
+    <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp" />
     <ClCompile Include="..\Classes\User\LayerBase.cpp" />
@@ -169,7 +171,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Yumayo\NameLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\NovelLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\OptionalValues.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\SceneYumayo.cpp" />
+    <ClCompile Include="..\Classes\User\Yumayo\SceneNovel.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\ScriptBackground.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\ScriptBase.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\ScriptHuman.cpp" />
@@ -197,6 +199,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Breeding\Test.h" />
     <ClInclude Include="..\Classes\User\Breeding\UIManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h" />
+    <ClInclude Include="..\Classes\User\CiryMap\LayerCity1.h" />
+    <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h" />
     <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h" />
     <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h" />
     <ClInclude Include="..\Classes\User\LayerBase.h" />
@@ -214,7 +218,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Yumayo\NameLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\NovelLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\OptionalValues.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\SceneYumayo.h" />
+    <ClInclude Include="..\Classes\User\Yumayo\SceneNovel.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ScriptBackground.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ScriptBase.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ScriptHuman.h" />

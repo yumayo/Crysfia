@@ -37,6 +37,9 @@
     <Filter Include="src\User\Title">
       <UniqueIdentifier>{bc3f022b-5f47-42e0-a90e-1d614cb6a429}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\CityMap">
+      <UniqueIdentifier>{99bf9389-b0a6-4180-a0eb-7d328ca822c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,9 +74,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\User\Sample\SceneSample.cpp">
       <Filter>src\User\Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Yumayo\SceneYumayo.cpp">
-      <Filter>src\User\Yumayo</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Yumayo\TextScriptReader.cpp">
       <Filter>src\User\Yumayo</Filter>
@@ -165,6 +165,15 @@
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
       <Filter>src\User\Breeding</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\LayerCity1.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\SceneNovel.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -202,9 +211,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Sample\SceneSample.h">
       <Filter>src\User\Sample</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Yumayo\SceneYumayo.h">
-      <Filter>src\User\Yumayo</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Yumayo\TextScriptReader.h">
       <Filter>src\User\Yumayo</Filter>
@@ -295,6 +301,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
       <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h">
+      <Filter>src\User\CityMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\LayerCity1.h">
+      <Filter>src\User\CityMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\SceneNovel.h">
+      <Filter>src\User\Yumayo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

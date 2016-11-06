@@ -108,8 +108,8 @@ namespace User
         {
             str = args[0];
             std::string humanName = str;
-            auto pos = str.find( u8"åå‰" );
-            if ( pos != std::string::npos ) humanName = str.substr( pos + std::string( u8"åå‰" ).size( ) );
+            auto pos = str.find( u8"–¼‘O" );
+            if ( pos != std::string::npos ) humanName = str.substr( pos + std::string( u8"–¼‘O" ).size( ) );
 
             auto script = new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" );
             ScriptStaticData::addData( std::make_pair( str, std::unique_ptr<ScriptBase>( script ) ) );

@@ -3,6 +3,8 @@
 
 # include "cocos2d.h"
 
+# include <string>
+
 namespace User
 {
     class SceneManager
@@ -12,19 +14,20 @@ namespace User
     public:
         static void createSample( );
         static void createTitle( );
-        static void createYumayo( );
+        static void createNovel( std::string const& novelPath );
         static void createIslandMap( );
+        static void createCiryMap( );
         static void createBreeding( );
     private:
         static void childrenCallSetup( cocos2d::Scene* scene );
-        template <typename Ty>
-        static void create( );
+        template <class Ty, class... Args>
+        static void create( Args... args );
     };
 
-    template<class Ty>
-    inline void SceneManager::create( )
+    template<class Ty, class... Args>
+    inline void SceneManager::create( Args... args )
     {
-        Ty base;
+        Ty base( args... );
         auto scene = base.create( );
 
         childrenCallSetup( scene );
