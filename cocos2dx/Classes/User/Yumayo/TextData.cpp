@@ -78,7 +78,8 @@ namespace User
         work = &chunk;
 
         auto fileUtils = FileUtils::getInstance( );
-        auto str = fileUtils->getStringFromFile( fileUtils->fullPathForFilename( "res/data/" + fileName ) );
+        auto fullPath = fileUtils->fullPathForFilename( u8"res/data/" + fileName );
+        auto str = fileUtils->getStringFromFile( fullPath );
 
         size_t stringPosition = 0;
         size_t findPosition = 0;
