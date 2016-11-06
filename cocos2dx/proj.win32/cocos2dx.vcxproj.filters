@@ -19,9 +19,6 @@
     <Filter Include="src\Lib\EnvironmentDefaultData">
       <UniqueIdentifier>{32d9c34b-10dc-4e90-94bc-c83ce141373b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Lib\GameHelper2dx">
-      <UniqueIdentifier>{d5073669-102f-48a1-aaa2-bd01a39bbe32}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\User\Yumayo">
       <UniqueIdentifier>{c23a3b37-87d1-4988-823d-f66359959a5b}</UniqueIdentifier>
     </Filter>
@@ -34,6 +31,12 @@
     <Filter Include="src\User\IslandMap">
       <UniqueIdentifier>{b63b7304-8921-4ddf-b49c-24a797ef818c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\TouchiEvent">
+      <UniqueIdentifier>{19723a56-a2a9-4103-83d0-6deadc45e2fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\Title">
+      <UniqueIdentifier>{bc3f022b-5f47-42e0-a90e-1d614cb6a429}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,18 +44,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Lib\GameHelper2dx\AudioManager.cpp">
-      <Filter>src\Lib\GameHelper2dx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Lib\GameHelper2dx\Converter.cpp">
-      <Filter>src\Lib\GameHelper2dx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Lib\GameHelper2dx\MathHelper.cpp">
-      <Filter>src\Lib\GameHelper2dx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Lib\GameHelper2dx\SDKBOXHelper.cpp">
-      <Filter>src\Lib\GameHelper2dx</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp">
       <Filter>src\Lib\EnvironmentDefaultData</Filter>
@@ -144,6 +135,18 @@
     <ClCompile Include="..\Classes\User\Sample\LayerFia.cpp">
       <Filter>src\User\Sample</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\TextTypes.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp">
+      <Filter>src\User\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Title\TitleManager.cpp">
+      <Filter>src\User\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp">
+      <Filter>src\User\TouchiEvent</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
       <Filter>src\User\Breeding</Filter>
     </ClCompile>
@@ -153,14 +156,14 @@
     <ClCompile Include="..\Classes\User\Breeding\Home.cpp">
       <Filter>src\User\Breeding</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\User\Breeding\Test.cpp">
       <Filter>src\User\Breeding</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
       <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Yumayo\TextTypes.cpp">
-      <Filter>src\User\Yumayo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,21 +172,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\AudioManager.h">
-      <Filter>src\Lib\GameHelper2dx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\Converter.h">
-      <Filter>src\Lib\GameHelper2dx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\GameHelper2dx.h">
-      <Filter>src\Lib\GameHelper2dx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\MathHelper.h">
-      <Filter>src\Lib\GameHelper2dx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\SDKBOXHelper.h">
-      <Filter>src\Lib\GameHelper2dx</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h">
       <Filter>src\Lib\EnvironmentDefaultData</Filter>
@@ -278,6 +266,15 @@
     <ClInclude Include="..\Classes\User\Sample\LayerFia.h">
       <Filter>src\User\Sample</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\User\Title\SceneTitle.h">
+      <Filter>src\User\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Title\TitleManager.h">
+      <Filter>src\User\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h">
+      <Filter>src\User\TouchiEvent</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
       <Filter>src\User\Breeding</Filter>
     </ClInclude>
@@ -287,10 +284,16 @@
     <ClInclude Include="..\Classes\User\Breeding\Home.h">
       <Filter>src\User\Breeding</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\User\Breeding\Test.h">
       <Filter>src\User\Breeding</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
       <Filter>src\User\Breeding</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,6 +14,8 @@
 #include "ScriptBackground.h"
 #include "ScriptName.h"
 
+#include "ui/CocosGUI.h"
+
 USING_NS_CC;
 
 namespace User
@@ -60,9 +62,9 @@ namespace User
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
         novel->switchIsStopping( );
 
+        auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
-        //ƒ{ƒ^ƒ“‚ğ2‚Âì¬
         Vector<MenuItem*> buttons;
         for ( size_t i = 0; i < args.size( ); ++i )
         {
@@ -79,7 +81,7 @@ namespace User
 
         if ( menu )
         {
-            menu->setPosition( Vec2( visibleSize.width * 0.5F, visibleSize.height * 0.5F ) );
+            menu->setPosition( origin + visibleSize * 0.5F );
             menu->alignItemsVerticallyWithPadding( OptionalValues::fontSize );
             selectLayer->addChild( menu );
         }

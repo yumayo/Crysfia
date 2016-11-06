@@ -1,19 +1,23 @@
 #include "SceneManager.h"
 #include "LayerBase.h"
 
+// scenarioに使われる変数のサイズなどの初期化。
+#include "Yumayo/OptionalValues.h"
+
 // サンプルシーンを作成します。
 #include "Sample/SceneSample.h"
 
 // ユーマヨシーンを作成します。
 #include "Yumayo/SceneYumayo.h"
 
-#include "Yumayo/OptionalValues.h"
-
 // 島マップシーンを作成します。
 #include "IslandMap/SceneIslandMap.h"
 
-// 小松さんのシーンを作成します。
-#include "Breeding/Home.h"
+// 小松さんのホームシーンを作成します。
+#include "Breeding/SceneBreeding.h"
+
+// 小松さんのタイトルシーンを追加します。
+#include "Title/SceneTitle.h"
 
 USING_NS_CC;
 
@@ -25,41 +29,25 @@ namespace User
 
         createIslandMap( );
     }
+    void SceneManager::createTitle( )
+    {
+        create<SceneTitle>( );
+    }
     void SceneManager::createSample( )
     {
-        SceneSample base;
-        auto scene = base.create( );
-
-        childrenCallSetup( scene );
-
-        Director::getInstance( )->replaceScene( scene );
+        create<SceneSample>( );
     }
     void SceneManager::createYumayo( )
     {
-        SceneYumayo base;
-        auto scene = base.create( );
-
-        childrenCallSetup( scene );
-
-        Director::getInstance( )->replaceScene( scene );
+        create<SceneYumayo>( );
     }
     void SceneManager::createIslandMap( )
     {
-        SceneIslandMap base;
-        auto scene = base.create( );
-
-        childrenCallSetup( scene );
-
-        Director::getInstance( )->replaceScene( scene );
+        create<SceneIslandMap>( );
     }
     void SceneManager::createBreeding( )
     {
-        Home base;
-        auto scene = base.create( );
-
-        childrenCallSetup( scene );
-
-        Director::getInstance( )->replaceScene( scene );
+        create<SceneBreeding>( );
     }
     void SceneManager::childrenCallSetup( cocos2d::Scene* scene )
     {

@@ -146,13 +146,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp" />
-    <ClCompile Include="..\Classes\Lib\GameHelper2dx\AudioManager.cpp" />
-    <ClCompile Include="..\Classes\Lib\GameHelper2dx\Converter.cpp" />
-    <ClCompile Include="..\Classes\Lib\GameHelper2dx\MathHelper.cpp" />
-    <ClCompile Include="..\Classes\Lib\GameHelper2dx\SDKBOXHelper.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\FrameLayer.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\Home.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\Test.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp" />
@@ -163,6 +160,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Sample\LayerWater.cpp" />
     <ClCompile Include="..\Classes\User\SceneBase.cpp" />
     <ClCompile Include="..\Classes\User\SceneManager.cpp" />
+    <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp" />
+    <ClCompile Include="..\Classes\User\Title\TitleManager.cpp" />
+    <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\BackgroundLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\HumanLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\ModalLayer.cpp" />
@@ -190,16 +190,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h" />
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\AudioManager.h" />
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\Converter.h" />
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\GameHelper2dx.h" />
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\MathHelper.h" />
-    <ClInclude Include="..\Classes\Lib\GameHelper2dx\SDKBOXHelper.h" />
     <ClInclude Include="..\Classes\User\Breeding\BGManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\FrameLayer.h" />
     <ClInclude Include="..\Classes\User\Breeding\Home.h" />
+    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h" />
     <ClInclude Include="..\Classes\User\Breeding\Test.h" />
     <ClInclude Include="..\Classes\User\Breeding\UIManager.h" />
+    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h" />
     <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h" />
     <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h" />
     <ClInclude Include="..\Classes\User\LayerBase.h" />
@@ -208,6 +205,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Sample\LayerWater.h" />
     <ClInclude Include="..\Classes\User\SceneBase.h" />
     <ClInclude Include="..\Classes\User\SceneManager.h" />
+    <ClInclude Include="..\Classes\User\Title\SceneTitle.h" />
+    <ClInclude Include="..\Classes\User\Title\TitleManager.h" />
+    <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h" />
     <ClInclude Include="..\Classes\User\Yumayo\BackgroundLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\HumanLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\ModalLayer.h" />
