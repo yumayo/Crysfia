@@ -38,22 +38,91 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
     auto glview = director->getOpenGLView( );
     if ( !glview ) {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect( env->gameName, cocos2d::Rect( 0, 0, env->designResolutionSize.width, env->designResolutionSize.height ) );
+        glview = GLViewImpl::createWithRect( env->gameName, cocos2d::Rect( 0, 0, 1080, 1920 ) );
     #else
         glview = GLViewImpl::create( env->gameName );
     #endif
         director->setOpenGLView( glview );
     }
 
+#ifdef _DEBUG
     // turn on display FPS
     director->setDisplayStats( true );
+#endif // _DEBUG
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval( 1.0f / 60 );
 
     // Set the design resolution
     glview->setDesignResolutionSize( env->designResolutionSize.width, env->designResolutionSize.height, ResolutionPolicy::SHOW_ALL );
+
     auto frameSize = glview->getFrameSize( );
+
+    auto aspectRatio = frameSize.width / frameSize.height;
+
+    const float AR_1_2 = 1.0F / 2.0F;
+    const float AR_9_16 = 9.0F / 16.0F;
+    const float AR_10_16 = 10.0F / 16.0F;
+    const float AR_2_3 = 2.0F / 3.0F;
+    const float AR_3_4 = 3.0F / 4.0F;
+    const float AR_1_1 = 1.0F / 1.0F;
+    const float AR_4_3 = 4.0F / 3.0F;
+    const float AR_3_2 = 3.0F / 2.0F;
+    const float AR_16_10 = 16.0F / 10.0F;
+    const float AR_16_9 = 16.0F / 9.0F;
+    const float AR_2_1 = 2.0F / 1.0F;
+
+    std::string ar;
+
+    if ( aspectRatio <= AR_1_2 )
+    {
+        ar = u8"AR_1_2";
+    }
+    else if ( aspectRatio <= AR_9_16 )
+    {
+        ar = u8"AR_9_16";
+    }
+    else if ( aspectRatio <= AR_10_16 )
+    {
+        ar = u8"AR_10_16";
+    }
+    else if ( aspectRatio <= AR_2_3 )
+    {
+        ar = u8"AR_2_3";
+    }
+    else if ( aspectRatio <= AR_3_4 )
+    {
+        ar = u8"AR_3_4";
+    }
+    else if ( aspectRatio <= AR_1_1 )
+    {
+        ar = u8"AR_1_1";
+    }
+    else if ( aspectRatio <= AR_4_3 )
+    {
+        ar = u8"AR_4_3";
+    }
+    else if ( aspectRatio <= AR_3_2 )
+    {
+        ar = u8"AR_3_2";
+    }
+    else if ( aspectRatio <= AR_16_10 )
+    {
+        ar = u8"AR_16_10";
+    }
+    else if ( aspectRatio <= AR_16_9 )
+    {
+        ar = u8"AR_16_9";
+    }
+    else if ( aspectRatio <= AR_2_1 )
+    {
+        ar = u8"AR_2_1";
+    }
+    else
+    {
+        ar = u8"none";
+    }
+
     // if the frame's height is larger than the height of medium size.
     if ( frameSize.height > env->mediumResolutionSize.height )
     {
@@ -69,6 +138,8 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
     {
         director->setContentScaleFactor( MIN( env->smallResolutionSize.height / env->designResolutionSize.height, env->smallResolutionSize.width / env->designResolutionSize.width ) );
     }
+
+    auto scaleFactor = director->getContentScaleFactor( );
 
     register_all_packages( );
 
