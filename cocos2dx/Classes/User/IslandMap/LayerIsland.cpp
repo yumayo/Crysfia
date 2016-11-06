@@ -46,7 +46,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/�S�̃}�b�v.png" );
+        background = Sprite::create( u8"res/texture/全体マップ.png" );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
@@ -64,7 +64,7 @@ namespace User
         std::vector<ui::Button*> buttons;
         auto createButton = [ & ] ( float x, float y )
         {
-            // �X�P�[���t�@�N�^�[�����������Ă���̂ŁA�����ł������܂��B
+            // ÉXÉPÅ[ÉãÉtÉ@ÉNÉ^Å[Ç™à´Ç≥ÇÇµÇƒÇ¢ÇÈÇÃÇ≈ÅAÇªÇÍÇë≈Çøè¡ÇµÇ‹Ç∑ÅB
             auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
             x *= scale; y *= scale;
 

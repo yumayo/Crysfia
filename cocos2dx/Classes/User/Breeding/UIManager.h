@@ -4,7 +4,7 @@
 # include "cocos2d.h"
 #include "../LayerBase.h"
 #include "ui/CocosGUI.h"
-#include "User/Breeding/VariousStatus.h"
+#include "VariousStatus.h"
 
 namespace User
 {

@@ -30,7 +30,7 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_F5 )
             {
-                textData.makeData( "scenario1.txt" );
+                textData.makeData( u8"scenario1.txt" );
             }
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
@@ -73,7 +73,7 @@ namespace User
         square->setPosition( rect.origin + rect.size / 2 );
         this->addChild( square );
 
-        textData.makeData( "scenario1.txt" );
+        textData.makeData( u8"scenario1.txt" );
         textRead( );
     }
     void NovelLayer::update( float delta )
