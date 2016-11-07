@@ -86,8 +86,8 @@ namespace User
             auto label = Label::createWithTTF( args[i], u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
             auto item = MenuItemLabel::create( label, [ = ] ( Ref* pSender )
             {
-                novel->setNextChild( args[i] );
-                novel->textUpdate( );
+                novel->select( args[i] );
+                novel->click( );
             } );
             buttons.pushBack( item );
         }

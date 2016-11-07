@@ -36,17 +36,19 @@ namespace User
         void on( );
         void off( );
     public:
-        void setNextChild( std::string const& name );
+        void select( std::string const& name );
         void setDelayTime( double delayTime ) { textChunkManager.setDelayTime( delayTime ); }
         // 選択肢でシナリオの読み込み停止機能のスイッチ
         SwitchBoolean systemStop;
-        void textUpdate( );
+        void click( );
+        TextChunkManager& getTextChunkManager( ) { return textChunkManager; }
     private:
         std::string novelPath;
         // 読み込み機能を停止するかどうか。
         // テキストを読み込み途中の場合はtrueになります。
         void readingProceedUpdate( );
-        void textNextRead( );
+        void makeLoadingFeatureOn( );
+        void readNextNovel( );
         void textActionStop( );
         // テキストデータを空にする。
         void textClear( );
@@ -56,7 +58,6 @@ namespace User
         SwitchBoolean systemRead;
         // 高速に読み飛ばす機能のスイッチ
         SwitchBoolean readProceed;
-
         TextLabels textLabels;
         TextChunkManager textChunkManager;
     };

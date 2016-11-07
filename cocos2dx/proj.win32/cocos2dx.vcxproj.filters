@@ -180,6 +180,9 @@
     <ClCompile Include="..\Classes\User\Yumayo\TextChunk.cpp">
       <Filter>src\User\Yumayo</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Yumayo\BackLogLayer.cpp">
+      <Filter>src\User\Yumayo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -321,6 +324,9 @@
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Yumayo\TextChunk.h">
+      <Filter>src\User\Yumayo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Yumayo\BackLogLayer.h">
       <Filter>src\User\Yumayo</Filter>
     </ClInclude>
   </ItemGroup>

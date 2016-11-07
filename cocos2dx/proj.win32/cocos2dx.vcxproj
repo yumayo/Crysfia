@@ -166,6 +166,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Title\TitleManager.cpp" />
     <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\BackgroundLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Yumayo\BackLogLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\HumanLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\NameLayer.cpp" />
     <ClCompile Include="..\Classes\User\Yumayo\NovelLayer.cpp" />
@@ -215,6 +216,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Title\TitleManager.h" />
     <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h" />
     <ClInclude Include="..\Classes\User\Yumayo\BackgroundLayer.h" />
+    <ClInclude Include="..\Classes\User\Yumayo\BackLogLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\HumanLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\NameLayer.h" />
     <ClInclude Include="..\Classes\User\Yumayo\NovelLayer.h" />

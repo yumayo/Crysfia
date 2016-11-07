@@ -43,7 +43,6 @@ namespace User
                 readProceed.on( );
             }
         };
-
         keyEvent->onKeyReleased = [ this ] ( EventKeyboard::KeyCode code, Event* event )
         {
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
@@ -59,7 +58,7 @@ namespace User
         {
             for ( auto& touch : touches )
             {
-                textUpdate( );
+                click( );
             }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( multiTouchEvent, this );
@@ -113,7 +112,7 @@ namespace User
 
         // テキストの読み込み。
         // delayが0である限り、テキストを読み込み続けます。
-        if ( systemRead ) textChunkManager.textRead( );
+        readNextNovel( );
     }
     void NovelLayer::on( )
     {
@@ -124,7 +123,7 @@ namespace User
     {
         this->setVisible( false );
     }
-    void NovelLayer::setNextChild( std::string const & name )
+    void NovelLayer::select( std::string const & name )
     {
         systemStop.off( );
 
@@ -162,14 +161,14 @@ namespace User
         {
             // 高速読み込みではdelayは無視します。
             textChunkManager.setDelayTime( 0.0F );
-            textUpdate( );
+            click( );
         }
     }
-    void NovelLayer::textUpdate( )
+    void NovelLayer::click( )
     {
         if ( textLabels.getIsReadOuted( ) )
         {
-            textNextRead( );
+            makeLoadingFeatureOn( );
         }
         else
         {
@@ -177,7 +176,7 @@ namespace User
         }
     }
     //　テキストのアニメーションが終わっている場合
-    void NovelLayer::textNextRead( )
+    void NovelLayer::makeLoadingFeatureOn( )
     {
         // 新しくテキストを読み込んで良い場合。
         if ( !systemStop )
@@ -188,15 +187,18 @@ namespace User
             systemRead.on( );
         }
     }
-    // テキストのアニメーションが終わっていない場合
-    void NovelLayer::textActionStop( )
+    void NovelLayer::readNextNovel( )
     {
         if ( systemRead )
         {
-            // ディレイをスキップします。
-            textChunkManager.setDelayTime( 0.0F );
             textChunkManager.textRead( );
         }
+    }
+    // テキストのアニメーションが終わっていない場合
+    void NovelLayer::textActionStop( )
+    {
+        textChunkManager.setDelayTime( 0.0F );
+        readNextNovel( );
 
         textLabels.actionStop( );
     }

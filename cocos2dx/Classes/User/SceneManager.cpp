@@ -30,7 +30,7 @@ namespace User
     {
         OptionalValues::setup( );
 
-        createIslandMap( );
+        createBreeding( );
     }
     void SceneManager::createTitle( )
     {
