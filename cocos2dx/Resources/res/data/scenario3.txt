@@ -5,6 +5,7 @@
 @sys:name(名前アレン)
 @sys:name(名前クロエ)
 @sys:name(名前女性)
+@sys:name(名前八百屋)
 @sys:name(名前パン屋)
 @sys:name(名前ピエロの少年)
 @sys:background(背景娯楽の島)

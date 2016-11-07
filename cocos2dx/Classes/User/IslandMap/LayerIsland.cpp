@@ -47,7 +47,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/‘S‘Ìƒ}ƒbƒv.png" );
+        background = Sprite::create( u8"res/texture/å…¨ä½“ãƒžãƒƒãƒ—.png" );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
@@ -88,12 +88,12 @@ namespace User
             } );
         };
 
-        createButton( 206, 510, u8"ƒ~ƒjƒ}ƒbƒv.png" );
-        createButton( 314, 374, u8"ƒ~ƒjƒ}ƒbƒv.png" );
-        createButton( 567, 482, u8"ƒ~ƒjƒ}ƒbƒv.png" );
-        createButton( 618, 366, u8"ƒ~ƒjƒ}ƒbƒv.png" );
-        createButton( 803, 582, u8"ƒ~ƒjƒ}ƒbƒv.png" );
-        createButton( 788, 312, u8"ƒ~ƒjƒ}ƒbƒv.png" );
+        createButton( 206, 510, u8"ãƒŸãƒ‹ãƒžãƒƒãƒ—.png" );
+        createButton( 314, 374, u8"ãƒŸãƒ‹ãƒžãƒƒãƒ—.png" );
+        createButton( 567, 482, u8"ãƒŸãƒ‹ãƒžãƒƒãƒ—.png" );
+        createButton( 618, 366, u8"ãƒŸãƒ‹ãƒžãƒƒãƒ—.png" );
+        createButton( 803, 582, u8"ãƒŸãƒ‹ãƒžãƒƒãƒ—.png" );
+        createButton( 788, 312, u8"ãƒŸãƒ‹ãƒžãƒƒãƒ—.png" );
     }
     void LayerIsland::initListener( )
     {
