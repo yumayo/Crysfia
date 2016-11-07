@@ -123,8 +123,8 @@ namespace User
         {
             std::string variable = args[0];
             std::string humanName = variable;
-            auto pos = variable.find( u8"–¼‘O" );
-            if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"–¼‘O" ).size( ) );
+            auto pos = variable.find( u8"åå‰" );
+            if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"åå‰" ).size( ) );
 
             auto script = new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" );
             ScriptStaticData::addData( std::make_pair( variable, std::unique_ptr<ScriptBase>( script ) ) );
