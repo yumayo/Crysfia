@@ -38,8 +38,7 @@ namespace User
                 auto layout = ui::Layout::create( );
                 this->addChild( layout );
                 layout->setName( u8"layout" );
-                auto layoutSize = visibleSize;
-                layout->setContentSize( layoutSize );
+                layout->setContentSize( visibleSize );
 
                 auto closeButton = ui::Button::create( u8"res/Image/WindowBase/WinBase_18.png" );
                 layout->addChild( closeButton );
@@ -64,32 +63,49 @@ namespace User
                                                                  64 / contentScale, 64 / contentScale ) );
                 layout->addChild( menuImage );
                 menuImage->setContentSize( Size( visibleSize.width * 0.9, visibleSize.height * 0.7 ) );
-                menuImage->setPosition( origin + Size( visibleSize.width * 0.5, visibleSize.height * 0.5 + visibleSize.height *0.15 ) );
+                menuImage->setPosition( origin + Size( visibleSize.width * 0.5, visibleSize.height * 0.5 + visibleSize.height * 0.15 ) );
+                auto menuImageSize = menuImage->getContentSize( );
 
-                auto list = ui::ListView::create( );
-                menuImage->addChild( list );
-                list->setContentSize( Size( visibleSize.width * 0.9, visibleSize.height * 0.7 ) );
+                auto listView = ui::ListView::create( );
+                menuImage->addChild( listView );
+                listView->setContentSize( Size( menuImageSize.width, menuImageSize.height ) );
+                auto listViewSize = listView->getContentSize( );
 
                 auto chunk = novelLayer->getTextChunkManager( ).getTextChunk( );
 
                 for ( auto& novel : chunk )
                 {
-                    std::string log;
+                    auto chunkLayout = ui::Layout::create( );
+                    listView->addChild( chunkLayout );
+                    chunkLayout->setContentSize( Size( listViewSize.width, OptionalValues::stringViewSize.y * 0.9 ) );
+                    auto chunkLayoutSize = chunkLayout->getContentSize( );
+
+                    size_t index = 0;
                     for ( auto& text : novel.getNovelData( ) )
                     {
-                        log += text;
+                        auto novelLayout = ui::Layout::create( );
+                        chunkLayout->addChild( novelLayout );
+                        novelLayout->setContentSize( Size( chunkLayoutSize.width * 0.9, OptionalValues::fontSize * 0.9 + OptionalValues::lineSpaceSize * 0.9 ) );
+                        auto novelLayoutSize = novelLayout->getContentSize( );
+                        novelLayout->setPosition( Vec2( novelLayoutSize.width * 0.05, 0 ) );
+
+                        auto label = Label::createWithTTF( text, u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize * 0.9 );
+                        novelLayout->addChild( label );
+
+                        auto contentWidth = label->getContentSize( ).width;
+                        if ( novelLayoutSize.width <= contentWidth )
+                        {
+                            label->setScaleX( novelLayoutSize.width / contentWidth );
+                        }
+
+                        float width;
+                        auto contentSize = label->getContentSize( );
+                        if ( novelLayoutSize.width <= contentSize.width ) width = novelLayoutSize.width * 0.5;
+                        else width = contentSize.width * 0.5;
+
+                        label->setPosition( Vec2( width, -contentSize.height - novelLayoutSize.height * index ) );
+                        index++;
                     }
-
-                    auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
-
-                    auto button = ui::Button::create( u8"res/Image/WindowBase/WinBase_91.png" );
-
-                    auto tar = OptionalValues::stringViewSize;
-                    auto con = button->getContentSize( );
-                    button->setTitleFontName( u8"res/fonts/meiryo.ttc" );
-                    button->setTitleFontSize( OptionalValues::fontSize );
-                    button->setTitleText( log );
-                    list->addChild( button );
                 }
             }
         };
