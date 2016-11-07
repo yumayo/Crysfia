@@ -1,4 +1,3 @@
-
 #include "LayerCity.h"
 
 #include "../SceneManager.h"
@@ -66,12 +65,12 @@ namespace User
         auto layout = ui::Layout::create( );
         background->addChild( layout );
 
-        auto createButton = [ & ] ( float x, float y, std::string const& novel )
+        auto createButton = [ & ] ( float x, float y, std::string const& name, std::string const& novel )
         {
             auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
             x *= scale; y *= scale;
 
-            auto button = ui::Button::create( u8"res/Image/WindowBase/WinBase_91.png" );
+            auto button = ui::Button::create( name );
             layout->addChild( button );
 
             button->setPosition( Vec2( x, s.height - y ) );
@@ -89,10 +88,10 @@ namespace User
             } );
         };
 
-        createButton( 155, 384, u8"scenario1.txt" );
-        createButton( 167, 201, u8"scenario1.txt" );
-        createButton( 342, 102, u8"scenario1.txt" );
-        createButton( 374, 248, u8"scenario1.txt" );
+        createButton( 155, 384, u8"res/Image/WindowBase/WinBase_91.png", u8"scenario1.txt" );
+        createButton( 167, 201, u8"res/Image/WindowBase/WinBase_89.png", u8"scenario2.txt" );
+        createButton( 342, 102, u8"res/Image/WindowBase/WinBase_90.png", u8"scenario3.txt" );
+        createButton( 374, 248, u8"res/Image/WindowBase/WinBase_91.png", u8"scenario1.txt" );
     }
     void LayerCity::initListener( )
     {

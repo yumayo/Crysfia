@@ -52,6 +52,10 @@ namespace User
     {
         return work->getNovelData( );
     }
+    std::vector<TextChunk> const & TextChunkManager::getTextChunk( )
+    {
+        return textChunk;
+    }
     void TextChunkManager::updateDelay( float delta )
     {
         delayTime = std::max( delayTime - delta, 0.0 );
