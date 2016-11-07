@@ -1,4 +1,5 @@
-#include "LayerCity1.h"
+
+#include "LayerCity.h"
 
 #include "../SceneManager.h"
 
@@ -11,13 +12,14 @@ USING_NS_CC;
 
 namespace User
 {
-    LayerCity1::LayerCity1( )
+    LayerCity::LayerCity( std::string const& backgroundPath )
+        : backgroundPath( backgroundPath )
     {
     }
-    LayerCity1::~LayerCity1( )
+    LayerCity::~LayerCity( )
     {
     }
-    bool LayerCity1::init( )
+    bool LayerCity::init( )
     {
         if ( !Layer::init( ) ) return false;
 
@@ -33,20 +35,20 @@ namespace User
 
         return true;
     }
-    void LayerCity1::setup( )
+    void LayerCity::setup( )
     {
 
     }
-    void LayerCity1::update( float delta )
+    void LayerCity::update( float delta )
     {
 
     }
-    void LayerCity1::initBackground( )
+    void LayerCity::initBackground( )
     {
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/ミニマップ.png" );
+        background = Sprite::create( u8"res/texture/" + backgroundPath );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
@@ -57,44 +59,42 @@ namespace User
 
         this->addChild( background );
     }
-    void LayerCity1::initCountry( )
+    void LayerCity::initCountry( )
     {
         auto s = background->getContentSize( );
 
-        std::vector<ui::Button*> buttons;
-        auto createButton = [ & ] ( float x, float y )
+        auto layout = ui::Layout::create( );
+        background->addChild( layout );
+
+        auto createButton = [ & ] ( float x, float y, std::string const& novel )
         {
             auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
             x *= scale; y *= scale;
 
-            buttons.emplace_back( ui::Button::create( u8"res/Image/WindowBase/WinBase_91.png" ) );
-            background->addChild( buttons.back( ) );
-            buttons.back( )->setPosition( Vec2( x, s.height - y ) );
+            auto button = ui::Button::create( u8"res/Image/WindowBase/WinBase_91.png" );
+            layout->addChild( button );
+
+            button->setPosition( Vec2( x, s.height - y ) );
             auto tar = Size( 64, 64 );
-            auto con = buttons.back( )->getContentSize( );
+            auto con = button->getContentSize( );
             auto sca = tar.height / con.height;
-            buttons.back( )->setScale( sca, sca );
-        };
-        auto endedCallBack = [ & ] ( ui::Button* button, std::function<void( )> call )
-        {
-            button->addTouchEventListener( [ this, call ] ( Ref* pSender, ui::Widget::TouchEventType type )
+            button->setScale( sca, sca );
+            button->addTouchEventListener( [ this, layout, novel ] ( Ref* pSender, ui::Widget::TouchEventType type )
             {
                 if ( type == ui::Widget::TouchEventType::ENDED )
                 {
-                    call( );
+                    layout->setEnabled( false );
+                    SceneManager::createNovel( novel );
                 }
             } );
         };
 
-        createButton( 155, 384 );
-        createButton( 167, 201 );
-        createButton( 342, 102 );
-        createButton( 374, 248 );
-
-        for ( auto& button : buttons )
-            endedCallBack( button, [ ] { SceneManager::createNovel( u8"scenario1.txt" ); } );
+        createButton( 155, 384, u8"scenario1.txt" );
+        createButton( 167, 201, u8"scenario1.txt" );
+        createButton( 342, 102, u8"scenario1.txt" );
+        createButton( 374, 248, u8"scenario1.txt" );
     }
-    void LayerCity1::initListener( )
+    void LayerCity::initListener( )
     {
         auto listener = EventListenerTouchAllAtOnce::create( );
         listener->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
@@ -122,7 +122,7 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
     }
-    cocos2d::ui::Button* LayerCity1::createDebugButton( )
+    cocos2d::ui::Button* LayerCity::createDebugButton( )
     {
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );

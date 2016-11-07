@@ -36,7 +36,9 @@ namespace User
 
     TextData::TextData( )
     {
-
+        preprocess.insert( std::make_pair( u8"import", std::bind( &TextData::import, this, std::placeholders::_1 ) ) );
+        preprocess.insert( std::make_pair( u8"beginland", std::bind( &TextData::beginland, this, std::placeholders::_1 ) ) );
+        preprocess.insert( std::make_pair( u8"endland", std::bind( &TextData::endland, this, std::placeholders::_1 ) ) );
     }
     TextData::~TextData( )
     {
@@ -63,7 +65,9 @@ namespace User
     }
     bool TextData::isEmpty( )
     {
-        return !work->parentPointer && work->children.empty( ) && work->data.empty( );
+        // 子供は関係ないです。
+        // 選択肢では必ず捨てられる選択があるので。
+        return !work->parentPointer && /*work->children.empty( ) &&*/ work->data.empty( );
     }
     void TextData::clear( )
     {
@@ -180,19 +184,10 @@ namespace User
                 auto& func = scriptAnalysis.getFunctionScript( );
                 if ( func.variable == u8"sys" )
                 {
-                    if ( func.functionInfo.name == u8"import" )
+                    auto itr = preprocess.find( func.functionInfo.name );
+                    if ( itr != preprocess.cend( ) )
                     {
-                        import( func.functionInfo.argumentList );
-                        return true;
-                    }
-                    else if ( func.functionInfo.name == u8"beginland" )
-                    {
-                        beginland( func.functionInfo.argumentList );
-                        return true;
-                    }
-                    else if ( func.functionInfo.name == u8"endland" )
-                    {
-                        endland( func.functionInfo.argumentList );
+                        itr->second( func.functionInfo.argumentList );
                         return true;
                     }
                 }

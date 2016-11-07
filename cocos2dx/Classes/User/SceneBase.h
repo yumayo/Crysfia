@@ -8,7 +8,7 @@ namespace User
     class SceneBase
     {
     public:
-        virtual cocos2d::Scene* create( ) = 0;
+        virtual cocos2d::Scene* create( ) { return nullptr; };
     protected:
         template<class LayerClass>
         static cocos2d::Layer* createLayer( );

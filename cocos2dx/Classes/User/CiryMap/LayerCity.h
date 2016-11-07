@@ -1,5 +1,5 @@
-# ifndef __LayerCity1__
-# define __LayerCity1__
+# ifndef __LayerCity__
+# define __LayerCity__
 
 # include "../LayerBase.h"
 
@@ -7,12 +7,12 @@
 
 namespace User
 {
-    class LayerCity1 : public LayerBase
+    class LayerCity : public LayerBase
     {
     public:
-        CREATE_FUNC( LayerCity1 );
-        LayerCity1( );
-        ~LayerCity1( );
+        CREATE_ARGS_FUNC( LayerCity );
+        LayerCity( std::string const& backgroundPath );
+        ~LayerCity( );
         bool init( ) override;
         void setup( ) override;
         void update( float delta ) override;
@@ -29,7 +29,9 @@ namespace User
         cocos2d::Vec2 translate;
         cocos2d::Size targetSize;
         cocos2d::Sprite* background;
+    private:
+        std::string backgroundPath;
     };
 }
 
-# endif // __LayerCity1__
+# endif // __LayerCity__

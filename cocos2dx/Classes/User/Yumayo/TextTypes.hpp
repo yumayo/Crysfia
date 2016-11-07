@@ -16,11 +16,11 @@ namespace User
         Start = 1000,
         System,
         Background,
+        Still,
         Human,
         Novel,
         Name,
         Select,
-        Modal,
     };
     constexpr uint32_t lineSize = 3U;
     using NovelData = std::array<std::string, lineSize>;

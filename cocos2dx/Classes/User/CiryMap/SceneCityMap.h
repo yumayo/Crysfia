@@ -10,7 +10,7 @@ namespace User
     class SceneCityMap : public SceneBase
     {
     public:
-        cocos2d::Scene* create( ) override;
+        static cocos2d::Scene* create( std::string const& backgroundPath );
     };
 }
 

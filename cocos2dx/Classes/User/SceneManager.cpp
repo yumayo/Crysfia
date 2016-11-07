@@ -48,9 +48,9 @@ namespace User
     {
         create<SceneIslandMap>( );
     }
-    void SceneManager::createCiryMap( )
+    void SceneManager::createCiryMap( std::string const& backgroundPath )
     {
-        create<SceneCityMap>( );
+        create<SceneCityMap>( backgroundPath );
     }
     void SceneManager::createBreeding( )
     {

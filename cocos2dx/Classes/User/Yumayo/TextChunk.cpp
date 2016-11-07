@@ -1,4 +1,4 @@
-﻿#include "TextChank.h"
+﻿#include "TextChunk.h"
 
 #include "ScriptStaticData.h"
 #include "ScriptSystem.h"
@@ -8,16 +8,16 @@
 
 namespace User
 {
-    TextChank::TextChank( )
+    TextChunk::TextChunk( )
         : novelIndex( ScriptSystem::novelIndex )
     {
-
+        novelIndex = 0;
     }
-    TextChank::~TextChank( )
+    TextChunk::~TextChunk( )
     {
 
     }
-    void TextChank::insertScript( TagWithData const& tagWithData )
+    void TextChunk::insertScript( TagWithData const& tagWithData )
     {
         scriptAnalysis.makeScript( tagWithData );
 
@@ -44,34 +44,20 @@ namespace User
             break;
         }
     }
-    bool TextChank::isReadFinished( )
+    bool TextChunk::isReadFinished( )
     {
         return novelIndex == novelData.size( );
     }
-    NovelData TextChank::getNovelData( )
+    NovelData const& TextChunk::getNovelData( )
     {
         return novelData;
     }
-    void TextChank::clear( )
-    {
-        scriptAnalysis.clear( );
-
-        // インデックス番号をもとに戻します。
-        novelIndex = 0;
-
-        // 関数履歴や、変数は初期化しません。
-        //functionScriptData.clear( );
-        //variableScriptData.clear( );
-
-        // ノベルデータは初期化します。
-        for ( auto& obj : novelData ) obj = u8"";
-    }
-    void TextChank::pushVariable( )
+    void TextChunk::pushVariable( )
     {
         auto data = scriptAnalysis.getVariableScript( );
         variableScriptData.insert( std::make_pair( data.variable, data.currentStatus ) );
     }
-    void TextChank::pushFunction( )
+    void TextChunk::pushFunction( )
     {
         auto data = scriptAnalysis.getFunctionScript( );
 
@@ -90,7 +76,7 @@ namespace User
 
         functionScriptData.insert( std::make_pair( data.variable, data.functionInfo ) );
     }
-    void TextChank::pushNovel( )
+    void TextChunk::pushNovel( )
     {
         novelIndex = std::min( novelIndex + 1U, novelData.size( ) );
 
