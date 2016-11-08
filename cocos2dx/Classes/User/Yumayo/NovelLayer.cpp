@@ -54,42 +54,7 @@ namespace User
         {
             if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
             {
-                //　テキストのアニメーションが終わっている場合
-                if ( textLabels.getIsReadOuted( ) )
-                {
-                    // テキストの中身を消します。
-                    textClear( );
-                    // 読み込みを開始します。
-                    switchIsSystemRead( );
-                }
-                // テキストのアニメーションが終わっていない場合
-                else
-                {
-                    if ( isSystemRead )
-                    {
-                        while ( delayTime == 0.0 )
-                        {
-                            // テキストを読み始めます。
-                            textPartyUpdate( );
-
-                            // 読み込み終了なら
-                            if ( textChank.isReadFinished( ) )
-                            {
-                                // テキストデータを貼り付けて。
-                                textPasting( );
-                                // システム読み込みを停止。
-                                switchIsSystemRead( );
-
-                                break;
-                            }
-
-                            // ディレイは完全に無視します。
-                            delayTime = 0.0;
-                        }
-                    }
-
-                    textLabels.actionStop( );
-                }
+                textUpdate( );
             }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
@@ -109,21 +74,19 @@ namespace User
         this->addChild( square );
 
         textData.makeData( "scenario1.txt" );
-        textUpdate( 0.0F );
+        textRead( );
     }
     void NovelLayer::update( float delta )
     {
-        // 高速読み込みが可能なら文字を1フレームに1回読み続ける。
-        if ( isReadingProceed )
-        {
-            textUpdate( delta );
-        }
+        delayTime = std::max( delayTime - delta, 0.0 );
 
-        // 読み込み
-        if ( isSystemRead )
-        {
-            textUpdate( delta );
-        }
+        // 高速読み込みのアップデート
+        // キーボードの左側のCTRLを押している間だけ高速読み込み機能がONになります。
+        readingProceedUpdate( );
+
+        // テキストの読み込み。
+        // delayが0である限り、テキストを読み込み続けます。
+        if ( isSystemRead ) textRead( );
     }
     void NovelLayer::setNextChild( std::string const & name )
     {
@@ -135,14 +98,14 @@ namespace User
         // 次に読み込むシナリオデータを指定。
         textData.setNextChild( name );
 
-        switchIsSelectStopping( );
+        switchIsStopping( );
     }
-    void NovelLayer::textUpdate( float delta )
+    void NovelLayer::textRead( )
     {
         while ( delayTime == 0.0 )
         {
             // テキストを読み始めます。
-            textPartyUpdate( );
+            textPartyRead( );
 
             // 読み込み終了なら
             if ( textChank.isReadFinished( ) )
@@ -154,11 +117,9 @@ namespace User
 
                 break;
             }
-
-            delayTime = std::max( delayTime - delta, 0.0 );
         }
     }
-    void NovelLayer::textPartyUpdate( )
+    void NovelLayer::textPartyRead( )
     {
         if ( !textChank.isReadFinished( ) && !textData.isEmpty( ) )
         {
@@ -167,9 +128,6 @@ namespace User
     }
     void NovelLayer::textClear( )
     {
-        // 読み込みを無効にしているなら早期リターンします。
-        if ( !isSelectStopping ) return;
-
         textChank.clear( );
         textLabels.clear( );
     }
@@ -182,5 +140,48 @@ namespace User
                                origin +
                                Vec2( ( visibleSize.width - OptionalValues::stringViewSize.x ) * 0.5F,
                                      OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::lineSpaceSize ) );
+    }
+    void NovelLayer::readingProceedUpdate( )
+    {
+        // 高速読み込みが可能なら文字を1フレームに1回読み続ける。
+        if ( isReadingProceed )
+        {
+            // 高速読み込みではdelayは無視します。
+            delayTime = 0.0F;
+            textUpdate( );
+        }
+    }
+    void NovelLayer::textUpdate( )
+    {
+        if ( textLabels.getIsReadOuted( ) )
+        {
+            textNextRead( );
+        }
+        else
+        {
+            textActionStop( );
+        }
+    }
+    //　テキストのアニメーションが終わっている場合
+    void NovelLayer::textNextRead( )
+    {
+        // 新しくテキストを読み込んで良い場合。
+        if ( !isStopping )
+        {
+            // テキストの中身を消します。
+            textClear( );
+            // 読み込みを開始します。
+            switchIsSystemRead( );
+        }
+    }
+    // テキストのアニメーションが終わっていない場合
+    void NovelLayer::textActionStop( )
+    {
+        if ( isSystemRead )
+        {
+            textRead( );
+        }
+
+        textLabels.actionStop( );
     }
 }

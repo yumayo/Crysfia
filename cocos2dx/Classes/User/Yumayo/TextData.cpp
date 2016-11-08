@@ -5,6 +5,8 @@
 #include "TextScriptReader.h"
 #include "TextScriptAnalysis.h"
 
+#include <sstream>
+
 USING_NS_CC;
 
 namespace User
@@ -98,16 +100,6 @@ namespace User
     }
     void TextData::setNextChild( std::string const & selectName )
     {
-        auto error = [ &, this ] ( std::string const& errorString )
-        {
-            auto& debugData = work->data.back( ).debugData;
-            std::string str;
-            str += "[variableError : " + errorString + "]";
-            str += "[file:" + debugData.fileName + "]";
-            str += "[line:" + std::to_string( debugData.lineNumber ) + "]";
-            throw( str );
-        };
-
         auto itr = work->children.find( selectName );
         if ( itr != work->children.cend( ) )
         {
@@ -115,7 +107,14 @@ namespace User
         }
         else
         {
-            error( "選択肢の対応先が見つかりません。" );
+            try
+            {
+                errorSStream( "選択肢の対応先が見つかりません。", work->data.back( ).debugData );
+            }
+            catch ( char const* str )
+            {
+
+            }
         }
     }
     void TextData::tidydiness( std::string lineString, size_t lineNumber )
@@ -149,8 +148,16 @@ namespace User
             }
 
             lineData.lineData = scriptString;
-            // スクリプトデータの中にプリプロセス命令が合った場合に割り込み処理をします。
-            if ( !isPreprocess( lineData ) ) work->data.emplace_back( lineData );
+
+            try
+            {
+                // スクリプトデータの中にプリプロセス命令が合った場合に割り込み処理をします。
+                if ( !isPreprocess( lineData ) ) work->data.emplace_back( lineData );
+            }
+            catch ( char const* str )
+            {
+
+            }
         }
         // ノベルデータだけの場合
         else if ( commentErased != u8"" )
@@ -164,16 +171,6 @@ namespace User
         TextScriptReader scriptReader;
         TextScriptAnalysis scriptAnalysis;
         scriptAnalysis.makeScript( scriptReader.createTagWithData( debugWithLineData ) );
-
-        auto error = [ &, this ] ( std::string const& errorString )
-        {
-            auto& debugData = scriptAnalysis.getTagWithData( ).debugData;
-            std::string str;
-            str += "[variableError : " + errorString + "]";
-            str += "[file:" + debugData.fileName + "]";
-            str += "[line:" + std::to_string( debugData.lineNumber ) + "]";
-            throw( str );
-        };
 
         try
         {
@@ -202,7 +199,8 @@ namespace User
         }
         catch ( char const* errorString )
         {
-            error( errorString );
+            // ここのエラーは上層の関数でtry処理しています。
+            errorSStream( errorString, scriptAnalysis.getTagWithData( ).debugData );
         }
 
         return false;
