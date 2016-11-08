@@ -5,7 +5,7 @@
 
 # include "ScriptBase.h"
 
-# include "NovelLayer.h"
+# include "TextTypes.hpp"
 
 namespace User
 {
@@ -28,16 +28,16 @@ namespace User
         void bgm( ArgumentList const& args );
         void se( ArgumentList const& args );
         void human( ArgumentList const& args );
+        void still( ArgumentList const& args );
     public:
         cocos2d::Layer* nameLayer = nullptr;
         cocos2d::Layer* humanLayer = nullptr;
         cocos2d::Layer* backgroundLayer = nullptr;
         cocos2d::Layer* selectLayer = nullptr;
         cocos2d::Layer* novelLayer = nullptr;
+        cocos2d::Layer* stillLayer = nullptr;
 
         static size_t novelIndex;
-    private:
-        ArgumentList selectArgs;
     };
 }
 

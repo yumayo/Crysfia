@@ -4,14 +4,19 @@
 
 #include "SelectLayer.h"
 
+#include "../SceneManager.h"
+
 USING_NS_CC;
 
 namespace User
 {
-    NovelLayer::NovelLayer( )
+    NovelLayer::NovelLayer( std::string const & novelPath )
         : textLabels( this )
+        , novelPath( novelPath )
+        , readProceed( false )
+        , systemRead( true )
+        , systemStop( false )
     {
-
     }
     NovelLayer::~NovelLayer( )
     {
@@ -30,34 +35,43 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_F5 )
             {
-                textData.makeData( "scenario1.txt" );
+                //textData.makeData( novelPath );
             }
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
                 // 左側のCTRLキーが押されたら高速読み込みを開始する。
-                switchIsReadingProceed( );
+                readProceed.on( );
             }
         };
-
         keyEvent->onKeyReleased = [ this ] ( EventKeyboard::KeyCode code, Event* event )
         {
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
-                // 左側のCTRLが話されたら高速読み込みを停止する。
-                switchIsReadingProceed( );
+                // 左側のCTRLが離されたら高速読み込みを停止する。
+                readProceed.off( );
             }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
 
-        auto mouseEvent = EventListenerMouse::create( );
-        mouseEvent->onMouseDown = [ this ] ( EventMouse* event )
+        auto multiTouchEvent = EventListenerTouchAllAtOnce::create( );
+        multiTouchEvent->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
-            if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
+            for ( auto& touch : touches )
             {
-                textUpdate( );
+                click( );
             }
         };
-        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
+        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( multiTouchEvent, this );
+
+        //auto mouseEvent = EventListenerMouse::create( );
+        //mouseEvent->onMouseDown = [ this ] ( EventMouse* event )
+        //{
+        //    if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
+        //    {
+        //        textUpdate( );
+        //    }
+        //};
+        //this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
 
         return true;
     }
@@ -73,12 +87,24 @@ namespace User
         square->setPosition( rect.origin + rect.size / 2 );
         this->addChild( square );
 
-        textData.makeData( "scenario1.txt" );
-        textRead( );
+        textChunkManager.readEndCallBack = [ this ]
+        {
+            // テキストデータを貼り付けて。
+            textPasting( );
+            // システム読み込みを停止。
+            systemRead.off( );
+        };
+        textChunkManager.novelEndCallBack = [ this ]
+        {
+            SceneManager::createIslandMap( );
+        };
+
+        textChunkManager.make( novelPath );
+        textChunkManager.textRead( );
     }
     void NovelLayer::update( float delta )
     {
-        delayTime = std::max( delayTime - delta, 0.0 );
+        textChunkManager.updateDelay( delta );
 
         // 高速読み込みのアップデート
         // キーボードの左側のCTRLを押している間だけ高速読み込み機能がONになります。
@@ -86,49 +112,36 @@ namespace User
 
         // テキストの読み込み。
         // delayが0である限り、テキストを読み込み続けます。
-        if ( isSystemRead ) textRead( );
+        readNextNovel( );
     }
-    void NovelLayer::setNextChild( std::string const & name )
+    void NovelLayer::on( )
     {
+        auto selectLayer = this->getLayer<SelectLayer>( );
+        this->setVisible( true );
+    }
+    void NovelLayer::off( )
+    {
+        this->setVisible( false );
+    }
+    void NovelLayer::select( std::string const & name )
+    {
+        systemStop.off( );
+
         auto selectLayer = this->getLayer<SelectLayer>( );
 
         // 選択肢のレイヤーを削除
-        selectLayer->removeAllChildren( );
+        if ( auto ptr = dynamic_cast<Menu*>( selectLayer->getChildByName( u8"select" ) ) )
+        {
+            ptr->setEnabled( false );
+            ptr->runAction( Sequence::create( FadeOut::create( 0.3 ), RemoveSelf::create( ), nullptr ) );
+        }
 
         // 次に読み込むシナリオデータを指定。
-        textData.setNextChild( name );
-
-        switchIsStopping( );
-    }
-    void NovelLayer::textRead( )
-    {
-        while ( delayTime == 0.0 )
-        {
-            // テキストを読み始めます。
-            textPartyRead( );
-
-            // 読み込み終了なら
-            if ( textChank.isReadFinished( ) )
-            {
-                // テキストデータを貼り付けて。
-                textPasting( );
-                // システム読み込みを停止。
-                switchIsSystemRead( );
-
-                break;
-            }
-        }
-    }
-    void NovelLayer::textPartyRead( )
-    {
-        if ( !textChank.isReadFinished( ) && !textData.isEmpty( ) )
-        {
-            textChank.insertScript( textReader.createTagWithData( textData.getLineMoved( ) ) );
-        }
+        textChunkManager.select( name );
     }
     void NovelLayer::textClear( )
     {
-        textChank.clear( );
+        textChunkManager.gotoNext( );
         textLabels.clear( );
     }
     void NovelLayer::textPasting( )
@@ -136,7 +149,7 @@ namespace User
         // テキストデータを読み込み終わったらラベルに貼り付ける。
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        textLabels.setStrings( textChank.getNovelData( ),
+        textLabels.setStrings( textChunkManager.getNovelData( ),
                                origin +
                                Vec2( ( visibleSize.width - OptionalValues::stringViewSize.x ) * 0.5F,
                                      OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::lineSpaceSize ) );
@@ -144,18 +157,18 @@ namespace User
     void NovelLayer::readingProceedUpdate( )
     {
         // 高速読み込みが可能なら文字を1フレームに1回読み続ける。
-        if ( isReadingProceed )
+        if ( readProceed )
         {
             // 高速読み込みではdelayは無視します。
-            delayTime = 0.0F;
-            textUpdate( );
+            textChunkManager.setDelayTime( 0.0F );
+            click( );
         }
     }
-    void NovelLayer::textUpdate( )
+    void NovelLayer::click( )
     {
         if ( textLabels.getIsReadOuted( ) )
         {
-            textNextRead( );
+            makeLoadingFeatureOn( );
         }
         else
         {
@@ -163,24 +176,29 @@ namespace User
         }
     }
     //　テキストのアニメーションが終わっている場合
-    void NovelLayer::textNextRead( )
+    void NovelLayer::makeLoadingFeatureOn( )
     {
         // 新しくテキストを読み込んで良い場合。
-        if ( !isStopping )
+        if ( !systemStop )
         {
             // テキストの中身を消します。
             textClear( );
-            // 読み込みを開始します。
-            switchIsSystemRead( );
+            // 読み込みを開始の合図を出します。
+            systemRead.on( );
+        }
+    }
+    void NovelLayer::readNextNovel( )
+    {
+        if ( systemRead )
+        {
+            textChunkManager.textRead( );
         }
     }
     // テキストのアニメーションが終わっていない場合
     void NovelLayer::textActionStop( )
     {
-        if ( isSystemRead )
-        {
-            textRead( );
-        }
+        textChunkManager.setDelayTime( 0.0F );
+        readNextNovel( );
 
         textLabels.actionStop( );
     }

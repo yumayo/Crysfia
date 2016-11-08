@@ -35,4 +35,12 @@ namespace User
         square->setPosition( rect.origin + rect.size / 2 );
         this->addChild( square );
     }
+    void NameLayer::on( )
+    {
+        this->setVisible( true );
+    }
+    void NameLayer::off( )
+    {
+        this->setVisible( false );
+    }
 }

@@ -3,19 +3,48 @@
 
 # include "cocos2d.h"
 
+# include <string>
+
 namespace User
 {
     class SceneManager
     {
     public:
         static void createSystemAppDelegateStart( );
+    public:
         static void createSample( );
-        static void createYumayo( );
+        static void createTitle( );
+        static void createNovel( std::string const& novelPath );
         static void createIslandMap( );
+        static void createCiryMap( std::string const& backgroundPath );
         static void createBreeding( );
     private:
         static void childrenCallSetup( cocos2d::Scene* scene );
+        template <class Ty>
+        static void create( );
+        template <class Ty, class... Args>
+        static void create( Args... args );
     };
+
+    template<class Ty>
+    inline void SceneManager::create( )
+    {
+        Ty base;
+        auto scene = base.create( );
+
+        childrenCallSetup( scene );
+
+        cocos2d::Director::getInstance( )->replaceScene( scene );
+    }
+    template<class Ty, class... Args>
+    inline void SceneManager::create( Args... args )
+    {
+        auto scene = Ty::create( args... );
+
+        childrenCallSetup( scene );
+
+        cocos2d::Director::getInstance( )->replaceScene( scene );
+    }
 }
 
 # endif // __SceneManager__

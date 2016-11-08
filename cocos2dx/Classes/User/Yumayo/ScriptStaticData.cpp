@@ -6,6 +6,10 @@ namespace User
 {
     std::map<std::string, std::unique_ptr<ScriptBase>> ScriptStaticData::data;
 
+    void ScriptStaticData::setup( )
+    {
+        data.clear( );
+    }
     void ScriptStaticData::run( FunctionScript const& functionScript )
     {
         auto itr = data.find( functionScript.variable );

@@ -14,13 +14,14 @@ namespace User
     {
         Null = 0,
         Start = 1000,
-        System,
         Background,
+        Still,
         Human,
         Novel,
         Name,
         Select,
-        Modal,
+        BackLog,
+        System,
     };
     constexpr uint32_t lineSize = 3U;
     using NovelData = std::array<std::string, lineSize>;

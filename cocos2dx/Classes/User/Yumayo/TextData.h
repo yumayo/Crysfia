@@ -2,6 +2,9 @@
 # define __TextData__
 
 # include <deque>
+# include <map>
+# include <functional>
+# include <string>
 # include "TextTypes.hpp"
 
 namespace User
@@ -39,6 +42,9 @@ namespace User
         // 今実行しているデータを指します。
         // チャンクデータは階層構造になっているのでカレントディレクトリを保持します。
         TextChankData* work;
+    private:
+        // プリプロセスで実行される関数を保存しておきます。
+        std::map<std::string, std::function<void( ArgumentList const& )>> preprocess;
     };
 }
 
