@@ -69,7 +69,7 @@ namespace User
     void TextString::setLabelString( std::string const & text )
     {
         this->text = text;
-        label = Label::createWithTTF( text, u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
+        label = Label::createWithTTF( text, OptionalValues::fontName, OptionalValues::fontSize );
         label->setTextColor( Color4B::WHITE );
         label->setTag( (int)Tag::Novel );
         for ( int i = 0; i < label->getStringLength( ); i++ )

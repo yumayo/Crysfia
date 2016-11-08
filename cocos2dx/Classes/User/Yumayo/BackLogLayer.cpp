@@ -89,7 +89,7 @@ namespace User
                         auto novelLayoutSize = novelLayout->getContentSize( );
                         novelLayout->setPosition( Vec2( novelLayoutSize.width * 0.05, 0 ) );
 
-                        auto label = Label::createWithTTF( text, u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize * 0.9 );
+                        auto label = Label::createWithTTF( text, OptionalValues::fontName, OptionalValues::fontSize * 0.9 );
                         novelLayout->addChild( label );
 
                         auto contentWidth = label->getContentSize( ).width;

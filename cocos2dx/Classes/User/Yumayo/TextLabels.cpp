@@ -28,7 +28,7 @@ namespace User
         for ( size_t i = 0, size = ds.size( ); i < size; ++i )
         {
             ds[i].setLabelString( strings[i] );
-            ds[i].setDrawPosition( Vec2( position.x, position.y - ( OptionalValues::fontSize + OptionalValues::lineSpaceSize ) * i ) );
+            ds[i].setDrawPosition( Vec2( position.x, position.y - OptionalValues::lineViewSize * i ) );
         }
 
         ds[0].actionAndCallfuncStart( [ & ] { ds[1].actionAndCallfuncStart( [ & ] { ds[2].actionAndCallfuncStart( [ this ] { isReadOuted = true; } ); } ); } );

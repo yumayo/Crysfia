@@ -28,6 +28,8 @@ namespace User
     void ScriptHuman::fadein( ArgumentList const & args )
     {
         auto sprite = create( );
+        if ( !sprite ) return;
+
         sprite->setOpacity( 0 );
 
         auto fade = FadeIn::create( 1.0 );
@@ -48,7 +50,9 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        auto sprite = Sprite::create( "res/texture/" + textureName );
+        auto sprite = Sprite::create( "res/texture/novel/" + textureName );
+        if ( !sprite ) return nullptr;
+
         sprite->setTag( (int)Tag::Human );
         sprite->setPosition( origin + Vec2( visibleSize.width / 2,
                                             visibleSize.height / 2 ) );

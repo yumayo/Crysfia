@@ -13,8 +13,11 @@ namespace User
         static int stringSize;
         static float lineSpaceSize;
         static float fontSize;
+        static float lineViewSize;
         static cocos2d::Vec2 stringViewSize;
+        static cocos2d::Vec2 messageViewSize;
         static float readOutSpeed;
+        static std::string fontName;
     };
 }
 

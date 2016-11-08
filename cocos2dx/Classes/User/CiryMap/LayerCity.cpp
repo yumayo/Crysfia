@@ -14,6 +14,7 @@ namespace User
     LayerCity::LayerCity( std::string const& backgroundPath )
         : backgroundPath( backgroundPath )
     {
+
     }
     LayerCity::~LayerCity( )
     {
@@ -47,7 +48,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/" + backgroundPath );
+        background = Sprite::create( u8"res/texture/system/" + backgroundPath );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
@@ -111,8 +112,12 @@ namespace User
             for ( auto& obj : touches )
             {
                 auto movedPos = background->getPosition( ) - translate + obj->getDelta( );
-                movedPos.clamp( clearance * -1, clearance );
-                background->setPosition( movedPos + translate );
+                if ( clearance.width * -1 < clearance.width &&
+                     clearance.height * -1 < clearance.height )
+                {
+                    movedPos.clamp( clearance * -1, clearance );
+                    background->setPosition( movedPos + translate );
+                }
             }
         };
         listener->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )

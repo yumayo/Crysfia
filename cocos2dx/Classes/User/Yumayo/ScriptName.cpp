@@ -15,8 +15,7 @@ namespace User
     {
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
-        position = origin + Vec2( visibleSize.width * 0.0,
-                                  OptionalValues::stringViewSize.y + ( OptionalValues::fontSize + OptionalValues::lineSpaceSize ) * 2 );
+        position = origin + Vec2( 0, OptionalValues::lineViewSize + OptionalValues::stringViewSize.y + OptionalValues::lineViewSize );
         slideSize = visibleSize.width * 0.1;
 
         funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
@@ -29,6 +28,8 @@ namespace User
     void ScriptName::in( ArgumentList const& args )
     {
         auto label = create( );
+        if ( !label ) return;
+
         label->setOpacity( 0 );
 
         auto fade = FadeIn::create( 0.1 );
@@ -52,8 +53,10 @@ namespace User
         layer->removeChildByTag( (int)Tag::Name );
 
         auto label = Label::createWithTTF( characterName, "res/fonts/" + fontPath, OptionalValues::fontSize );
+        if ( !label ) return nullptr;
+
         label->setTag( (int)Tag::Name );
-        label->setPosition( position.x + slideSize, position.y - label->getContentSize( ).height );
+        label->setPosition( position + Vec2( slideSize, -label->getContentSize( ).height ) );
         layer->addChild( label );
 
         return label;

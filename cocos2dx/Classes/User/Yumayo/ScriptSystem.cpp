@@ -83,7 +83,7 @@ namespace User
         Vector<MenuItem*> buttons;
         for ( size_t i = 0; i < args.size( ); ++i )
         {
-            auto label = Label::createWithTTF( args[i], u8"res/fonts/F910MinchoW3.otf", OptionalValues::fontSize );
+            auto label = Label::createWithTTF( args[i], OptionalValues::fontName, OptionalValues::fontSize );
             auto item = MenuItemLabel::create( label, [ = ] ( Ref* pSender )
             {
                 novel->select( args[i] );
@@ -123,8 +123,8 @@ namespace User
         {
             std::string variable = args[0];
             std::string humanName = variable;
-            auto pos = variable.find( u8"åå‰" );
-            if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"åå‰" ).size( ) );
+            auto pos = variable.find( u8"–¼‘O" );
+            if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"–¼‘O" ).size( ) );
 
             auto script = new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" );
             ScriptStaticData::addData( std::make_pair( variable, std::unique_ptr<ScriptBase>( script ) ) );
