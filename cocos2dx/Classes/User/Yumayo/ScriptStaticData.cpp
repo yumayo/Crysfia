@@ -4,22 +4,18 @@ USING_NS_CC;
 
 namespace User
 {
-    std::map<std::string, ScriptInstruction> ScriptStaticData::data;
+    std::map<std::string, std::unique_ptr<ScriptBase>> ScriptStaticData::data;
 
-    ScriptStaticData::ScriptStaticData( )
+    void ScriptStaticData::run( FunctionScript const& functionScript )
     {
-
-    }
-    ScriptStaticData::~ScriptStaticData( )
-    {
-
-    }
-    void ScriptStaticData::runScript( FunctionScriptChip const& functionScriptChip )
-    {
-        auto itr = data.find( functionScriptChip.variable );
+        auto itr = data.find( functionScript.variable );
         if ( itr != data.cend( ) )
         {
-            itr->second.run( functionScriptChip.functionInfo );
+            itr->second->run( functionScript.functionInfo );
         }
+    }
+    void ScriptStaticData::addData( std::pair<std::string, std::unique_ptr<ScriptBase>>&& pairData )
+    {
+        data.insert( std::move( pairData ) );
     }
 }
