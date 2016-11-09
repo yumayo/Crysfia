@@ -22,6 +22,8 @@
 // 小松さんのタイトルシーンを追加します。
 #include "Title/SceneTitle.h"
 
+#include "SceneTy/SceneTy.h"
+
 USING_NS_CC;
 
 namespace User
@@ -30,7 +32,7 @@ namespace User
     {
         OptionalValues::setup( );
 
-        createIslandMap( );
+        create<SceneTy>( );
     }
     void SceneManager::createTitle( )
     {

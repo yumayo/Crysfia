@@ -1,6 +1,9 @@
 #include "AppDelegate.h"
 #include "Lib/EnvironmentDefaultData/EnvironmentDefaultData.h"
 #include "User/SceneManager.h"
+#include "Live2d.h"
+
+using namespace live2d;
 
 USING_NS_CC;
 
@@ -10,6 +13,7 @@ AppDelegate::AppDelegate( )
 
 AppDelegate::~AppDelegate( )
 {
+    Live2D::dispose( );
 }
 
 // if you want a different context, modify the value of glContextAttrs
@@ -38,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
     auto glview = director->getOpenGLView( );
     if ( !glview ) {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect( env->gameName, cocos2d::Rect( 0, 0, 1080, 1920 ) );
+        glview = GLViewImpl::createWithRect( env->gameName, cocos2d::Rect( 0, 0, 540, 960 ) );
     #else
         glview = GLViewImpl::create( env->gameName );
     #endif
@@ -142,6 +146,8 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
     auto scaleFactor = director->getContentScaleFactor( );
 
     register_all_packages( );
+
+    Live2D::init( );
 
     User::SceneManager::createSystemAppDelegateStart( );
 

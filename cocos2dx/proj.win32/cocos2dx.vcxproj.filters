@@ -40,6 +40,9 @@
     <Filter Include="src\User\CityMap">
       <UniqueIdentifier>{99bf9389-b0a6-4180-a0eb-7d328ca822c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\SceneTy">
+      <UniqueIdentifier>{a8a02592-12cf-441b-8ef4-6f4e6a3f9d5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -188,6 +191,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\SceneTy\LayerTy.cpp">
+      <Filter>src\User\SceneTy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\SceneTy\SceneTy.cpp">
+      <Filter>src\User\SceneTy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\SceneTy\SampleLive2DSprite.cpp">
+      <Filter>src\User\SceneTy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +352,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\SceneTy\LayerTy.h">
+      <Filter>src\User\SceneTy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\SceneTy\SceneTy.h">
+      <Filter>src\User\SceneTy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\SceneTy\SampleLive2DSprite.h">
+      <Filter>src\User\SceneTy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
