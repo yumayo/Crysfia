@@ -113,8 +113,8 @@ namespace User
             for ( auto& obj : touches )
             {
                 auto movedPos = background->getPosition( ) - translate + obj->getDelta( );
-                if ( clearance.width * -1 < clearance.width &&
-                     clearance.height * -1 < clearance.height )
+                if ( clearance.width * -1 <= clearance.width &&
+                     clearance.height * -1 <= clearance.height )
                 {
                     movedPos.clamp( clearance * -1, clearance );
                     background->setPosition( movedPos + translate );
