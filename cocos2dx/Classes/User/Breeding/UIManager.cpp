@@ -1,208 +1,269 @@
 #include "UIManager.h"
 #include "Test.h"
+#include "BGManager.h"
 #include "../SceneManager.h"
+#include "cocos2d/external/json/rapidjson.h"
+#include "cocos2d/external/json/document.h"
 
 USING_NS_CC;
 
 namespace User
 {
-    UIManager::UIManager( ) :
-        menuWindow( nullptr ),
-        swicthWindow( nullptr ),
-        optionIcon( nullptr ),
-        isOpen( false )
-    {
-    }
+	UIManager::UIManager() :
+		menuWindow(nullptr),
+		swicthWindow(nullptr),
+		optionIcon(nullptr),
+		isOpen(false)
+	{
+		bgManager = BGManager::create();
+	}
 
-    UIManager::~UIManager( ) {}
+	UIManager::~UIManager() {}
 
-    bool UIManager::init( )
-    {
-        if ( !Layer::init( ) ) { return false; }
+	bool UIManager::init()
+	{
+		if (!Layer::init()) { return false; }
 
-        auto winSize = Director::getInstance( )->getWinSize( );
-        auto size = Size( 720, 1280 );
+		
+		this->addChild(bgManager, (int)zOder::BACKGROUND, (int)LayerType::BACGROUND);
+		createMaineMenuWindow();
+		createSubMenuWindow();
+		//this->scheduleUpdate();	update()関数を使うときはコメントアウトを外す
+		return true;
+	}
 
-        createMenuWindow( );
-        createOptionIcon( );
-        //this->scheduleUpdate();	update()関数を使うときはコメントアウトを外す
-        return true;
-    }
+	void UIManager::createMaineMenuWindow()
+	{
+		Vec2 winSize = Director::getInstance()->getVisibleSize();
+		Vec2 origin = Director::getInstance()->getVisibleOrigin();
+		Vec2 pos = Director::getInstance()->getVisibleSize() / Director::getInstance()->getContentScaleFactor();
 
-    void UIManager::createMenuWindow( )
-    {
-        Size size = Size( 720, 1280 );
+		auto layout = ui::Layout::create();
+		layout->setPosition(Vec2(pos.x * 0, pos.y * 0.f));
+		layout->setContentSize(Size(winSize.x, 150));
 
-        Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
-        Vec2 winSize = Director::getInstance( )->getWinSize( );
+		//メニューの背景
+		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_88.png",
+			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
+				120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
+			Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
+				64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
+		menuImage->setPosition(layout->getContentSize().width / 2, layout->getContentSize().height * 0.5f);
+		menuImage->setContentSize(layout->getContentSize());
+		layout->addChild(menuImage);
+		Vec2 menuLayout = layout->getContentSize();
 
-        auto layout = ui::Layout::create( );
-        layout->setPosition( Vec2( 620, 10 ) );
-        layout->setContentSize( Size( size.width, 150 ) );
-        auto layoutSize = layout->getContentSize( );
+		//jsonファイルの読み込み
+		auto fileUtils = FileUtils::getInstance();
+		auto path = fileUtils->getStringFromFile("jsonFile/mainMenuUI.json");
+		rapidjson::Document doc;
 
-    #if _DEBUG //デバッグ時、layoutを黒くする
-        auto bg = LayerColor::create( Color4B::BLACK, layoutSize.width, layoutSize.height );
-        bg->setOpacity( 128 );
-        layout->addChild( bg );
-    #endif //_DEBUG
+		//jsonファイルをパース
+		doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
 
-            //メニューの背景
-        auto menuImage = ui::Scale9Sprite::create( "res/Image/WindowBase/WinBase_88.png",
-                                                   Rect( 0 / CC_CONTENT_SCALE_FACTOR( ), 0 / CC_CONTENT_SCALE_FACTOR( ),
-                                                         120 / CC_CONTENT_SCALE_FACTOR( ), 120 / CC_CONTENT_SCALE_FACTOR( ) ),
-                                                   Rect( 32 / CC_CONTENT_SCALE_FACTOR( ), 32 / CC_CONTENT_SCALE_FACTOR( ),
-                                                         64 / CC_CONTENT_SCALE_FACTOR( ), 64 / CC_CONTENT_SCALE_FACTOR( ) ) );
-        menuImage->setPosition( layoutSize / 2 );
-        menuImage->setContentSize( layout->getContentSize( ) );
-        layout->addChild( menuImage );
+		if (!doc.HasParseError())
+		{
+			const rapidjson::Value& buttonsData = doc["Button"];
+			for (rapidjson::SizeType i = 0; i < buttonsData.Size(); i++)
+			{
+				menuButtons.push_back(ui::Button::create(buttonsData[i]["res"].GetString()));
+				menuButtons[i]->setTitleText(buttonsData[i]["name"].GetString());
+				menuButtons[i]->setTitleFontSize(42);
+				menuButtons[i]->setTitleColor(Color3B::WHITE);
 
-        //メニューウィンドウの開閉用ボタン
-        swicthWindow = ui::Button::create( "res/Image/WindowBase/WinBase_1.png" );
-        swicthWindow->setScaleX( 0.25f );
-        swicthWindow->setScaleY( 0.5f );
-        swicthWindow->setPosition( Vec2( 60, layoutSize.height / 2 ) );
-        layout->addChild( swicthWindow );
+				float x = buttonsData[i]["pos"]["x"].GetDouble();
+				float y = buttonsData[i]["pos"]["y"].GetDouble();
+
+				menuButtons[i]->setPosition(Vec2(menuLayout.x * x, menuLayout.y * y));
+				layout->addChild(menuButtons[i], 1, i);
+
+				menuButtons[i]->addTouchEventListener(CC_CALLBACK_2(UIManager::touchEventOfMainMenu, this));
+			}
+		}
+		this->addChild(layout, (int)zOder::SUB_MENU, (int)LayerType::MAIN_MENU);
+	}
+
+	//育成メニューの処理
+	void UIManager::createSubMenuWindow()
+	{
+		Vec2 winSize = Director::getInstance()->getVisibleSize();
+		Vec2 origin = Director::getInstance()->getVisibleOrigin();
+		Vec2 pos = Director::getInstance()->getVisibleSize() / Director::getInstance()->getContentScaleFactor();
+
+		auto layout = ui::Layout::create();
+		layout->setPosition(Vec2(pos.x, pos.y * 0));
+		layout->setContentSize(Size(winSize.x, 150));
+
+		//メニューの背景
+		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_88.png",
+			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
+				120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
+			Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
+				64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
+		menuImage->setPosition(layout->getContentSize().width / 2, layout->getContentSize().height * 0.5f);
+		menuImage->setContentSize(layout->getContentSize());
+		layout->addChild(menuImage);
+		Vec2 menuLayout = layout->getContentSize();
+
+		//jsonファイルの読み込み
+		auto fileUtils = FileUtils::getInstance();
+		auto path = fileUtils->getStringFromFile("jsonFile/subMenuUI.json");
+		rapidjson::Document doc;
+
+		//jsonファイルをパース
+		doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
+
+		if (!doc.HasParseError())
+		{
+			const rapidjson::Value& buttonsData = doc["Button"];
+			for (rapidjson::SizeType i = (int)SubButtonType::BACK; i < buttonsData.Size(); i++)
+			{
+				subButtons.push_back(ui::Button::create(buttonsData[i]["res"].GetString()));
+				subButtons[i]->setTitleText(buttonsData[i]["name"].GetString());
+				subButtons[i]->setTitleFontSize(42);
+				subButtons[i]->setTitleColor(Color3B::WHITE);
+
+				float x = buttonsData[i]["pos"]["x"].GetDouble();
+				float y = buttonsData[i]["pos"]["y"].GetDouble();
+
+				subButtons[i]->setPosition(Vec2(menuLayout.x * x, menuLayout.y * y));
+				layout->addChild(subButtons[i], 1, i + (int)SubButtonType::BACK);
+
+				subButtons[i]->addTouchEventListener(CC_CALLBACK_2(UIManager::touchEventOfSubMenu, this));
+			}
+		}
+
+		this->addChild(layout, (int)zOder::SUB_MENU, (int)LayerType::SUB_MENU);
+	}
+
+	//各メニューボタンの処理
+	/**************************************************
+	TODO:
+	残りの各ボタンの処理を書く。終わったら下のリストを消す
+	ストーリー
+	お世話、
+	日記
+	設定
+	***************************************************/
+	void UIManager::touchEventOfMainMenu(Ref * pSender, ui::Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN: break;
+		case ui::Widget::TouchEventType::ENDED:
+
+			if (pSender == menuButtons[(int)ButtonType::STORY]) { SceneManager::createIslandMap(); }
+			if (pSender == menuButtons[(int)ButtonType::BREEDING]) { changeToSubWindow(); }
+			if (pSender == menuButtons[(int)ButtonType::OPTION]) { setOptionWindow(); }
+			if (pSender == menuButtons[(int)ButtonType::DIARY]) {}
+
+		default:
+			break;
+		}
+	}
+
+	void UIManager::touchEventOfSubMenu(Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN: break;
+			//case ui::Widget::TouchEventType::CANCELED: break;
+		case ui::Widget::TouchEventType::ENDED:
+
+			log("Backボタンが押されました\n");
+			if (pSender == subButtons[(int)SubButtonType::BACK]) {
+				changeToMainWindow();
+			}
+			if (pSender == subButtons[(int)SubButtonType::MEAL]) {}
+			if (pSender == subButtons[(int)SubButtonType::CLOTHES]) {}
+			if (pSender == subButtons[(int)SubButtonType::CLEANING]) {}
 
 
-        for ( int i = 0; i < MenuType::MAX; i++ )
-        {
-            menuButtons.push_back( ui::Button::create( "res/Image/WindowBase/WinBase_24.png" ) );
-            menuButtons[i]->setScale( 0.5 );
-            menuButtons[i]->setPosition( Vec2( 120 * ( i + 1.3f ), layoutSize.height / 2 ) );
-            layout->addChild( menuButtons[i] );
+		default:
+			break;
+		}
+	}
 
-        }
-        // 先頭ボタンを押すと、次のシーンに飛びます。
-        menuButtons.front( )->addTouchEventListener( [ & ] ( Ref* pSender, ui::Widget::TouchEventType type )
-        {
-            if ( type == ui::Widget::TouchEventType::ENDED )
-            {
-                SceneManager::createIslandMap( );
-            }
-        } );
+	//育成メニューからメインメニューへ戻す関数です
+	void UIManager::changeToMainWindow()
+	{
+		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
+		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
+		swapWindow(s, m);
 
-        this->addChild( layout, 0, Menu );
+		bgManager->changeBackGround( (int)BGType::MAIN_MENU, (int)BGType::BREEDING_MENU);
+	}
 
-        /**************************************
-                    各ボタンUIの処理
-        ***************************************/
+	//メインメニューからサブメニューへ変更する関数です
+	void UIManager::changeToSubWindow()
+	{
+		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
+		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
+		swapWindow(m, s);
 
-        //メニュー開閉用ボタン
-        swicthWindow->addTouchEventListener( [ & ] ( Ref *pSender, ui::Widget::TouchEventType type ) {
-            if ( type == ui::Widget::TouchEventType::ENDED )
-            {
-                auto m = getChildByTag( Menu );
-                isOpen = !isOpen;
-                if ( !isOpen ) {
-                    auto action = MoveBy::create( 0.2f, Vec2( 620, 0 ) );
-                    m->runAction( action );
-                }
-                else if ( isOpen ) {
-                    auto action = MoveBy::create( 0.2f, Vec2( -620, 0 ) );
-                    m->runAction( action );
-                }
-            }
-        } );
+		bgManager->changeBackGround((int)BGType::BREEDING_MENU, (int)BGType::MAIN_MENU);
+	}
 
-        /* ---TODO---
-            残りの各ボタンの処理を書く。終わったら下のリストを消す
-            ストーリー、
-            食事、
-            着替え、
-            掃除、
-            日記
-        */
+	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです
+	//TODO:Pos指定、移動時間の指定、遅延時間の指定をできるようにする。
+	void UIManager::swapWindow(Node * moveOutObj, Node * moveInObj)
+	{
+		auto size = Director::getInstance()->getVisibleSize();
+		auto moveOut = MoveBy::create(0.3f, Vec2(size.width, 0));
+		moveOutObj->runAction(moveOut);
 
-        //オプションウィンドウ
-        auto button = ui::Button::create( "res/Image/option_icon.png" );
-        button->setScale( 0.5f );
-        button->setPosition( Vec2( 50, -50 ) );
-        layout->addChild( button );
+		auto moveIn = MoveBy::create(0.3f, Vec2(-size.width, 0));
+		auto delay = DelayTime::create(0.5f);
+		moveInObj->runAction(Sequence::create(delay, moveIn, nullptr));
+	}
 
-    }
+	//オプションウィンドウの生成
+	//TODO:Pos指定、Size指定、画像指定をできるようにする。
+	void UIManager::setOptionWindow()
+	{
+		Size winSize = Size(Director::getInstance()->getVisibleSize().width + 80,
+		Director::getInstance()->getVisibleSize().height);
+		Size contentWinSize = Size(500, 600);
 
-    //オプションウィンドウの生成
-    void UIManager::setOptionWindow( )
-    {
-        Size winSize = Size( 800, 1280 );
-        Size contentWinSize = Size( 500, 600 );
+		auto list = ui::ListView::create();
+		list->setContentSize(winSize);
+		this->addChild(list, (int)zOder::OPTION, (int)LayerType::OPTION);
 
-        auto list = ui::ListView::create( );
-        list->setContentSize( winSize );
-        this->addChild( list, 0, Option );
+		auto layout = ui::Layout::create();
+		layout->setContentSize(list->getContentSize());
+		list->addChild(layout);
+		auto layoutSize = layout->getContentSize();
 
-        auto layout = ui::Layout::create( );
-        layout->setContentSize( winSize );
-        list->addChild( layout );
+		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_59.png",
+			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
+				120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
+			Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
+				64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
 
-        auto layoutSize = layout->getContentSize( );
+		//オプションウィンドウの位置。修正した値
+		auto winPos = Vec2(list->getContentSize().width / 2 - 40, list->getContentSize().height / 2);
+		menuImage->setPosition(winPos);
+		menuImage->setContentSize(contentWinSize);
+		layout->addChild(menuImage);
 
-    #if _DEBUG
-        auto bg = LayerColor::create( Color4B::WHITE, layout->getContentSize( ).width, layout->getContentSize( ).height );
-        bg->setOpacity( 128 );
-        layout->addChild( bg );
-    #endif //_DEBUG
+		//CloseButton（仮置き）
+		auto closeButton = ui::Button::create("res/Image/WindowBase/WinBase_18.png");
+		closeButton->setTitleFontSize(48);
+		closeButton->setTitleText("CLO\n SE");
+		closeButton->setScaleX(0.7f);
+		closeButton->setScaleY(0.6f);
+		closeButton->setPosition(Vec2(winPos.x, winPos.y - 200));
+		layout->addChild(closeButton);
 
-        auto menuImage = ui::Scale9Sprite::create( "res/Image/WindowBase/WinBase_59.png",
-                                                   Rect( 0 / CC_CONTENT_SCALE_FACTOR( ), 0 / CC_CONTENT_SCALE_FACTOR( ),
-                                                         120 / CC_CONTENT_SCALE_FACTOR( ), 120 / CC_CONTENT_SCALE_FACTOR( ) ),
-                                                   Rect( 32 / CC_CONTENT_SCALE_FACTOR( ), 32 / CC_CONTENT_SCALE_FACTOR( ),
-                                                         64 / CC_CONTENT_SCALE_FACTOR( ), 64 / CC_CONTENT_SCALE_FACTOR( ) ) );
-
-                                                 //オプションウィンドウの位置。修正した値
-        auto winPos = Vec2( list->getContentSize( ).width / 2 - 40, list->getContentSize( ).height / 2 );
-        menuImage->setPosition( winPos );
-        menuImage->setContentSize( contentWinSize );
-        layout->addChild( menuImage );
-
-        //CloseButton（仮置き）
-        auto closeButton = ui::Button::create( "res/Image/WindowBase/WinBase_18.png" );
-        closeButton->setTitleFontSize( 60 );
-        closeButton->setTitleText( "CLOSE" );
-        closeButton->setScaleX( 0.6f );
-        closeButton->setScaleY( 0.5f );
-        closeButton->setPosition( Vec2( winPos.x, winPos.y - 200 ) );
-        layout->addChild( closeButton );
-
-        //CloseButtonの処理
-        //ボタンを押したときにLayerに追加されているOptionタグを持つ子ノードを取得しLayerから外している
-        closeButton->addTouchEventListener( [ & ] ( Ref* pSender, ui::Widget::TouchEventType type ) {
-            auto option = this->getChildByTag( Option );
-            if ( type == ui::Widget::TouchEventType::ENDED )
-            {
-                this->removeChild( option );
-            }
-        } );
-    }
-
-    //TIPS: UIのListViewやLayoutの原点位置はSpriteなど中央ではなく左下になっている
-
-    void UIManager::createOptionIcon( )
-    {
-        Size winSize = Size( 800, 1280 );
-
-        auto iconSize = Size( 100, 100 );
-        auto layout = ui::Layout::create( );
-        layout->setPosition( Vec2( 25, 1150 ) );
-        layout->setContentSize( iconSize );
-        this->addChild( layout );
-
-        auto optionButton = ui::Button::create( "res/Image/option_icon.png" );
-        optionButton->setPosition( layout->getContentSize( ) / 2 );
-        optionButton->setScale( 0.5 );
-        layout->addChild( optionButton );
-        int a = 0;
-        optionButton->addTouchEventListener( [ & ] ( Ref* pSender, ui::Widget::TouchEventType type ) {
-            if ( type == ui::Widget::TouchEventType::ENDED )
-            {
-                setOptionWindow( );
-            }
-        } );
-    }
-
-    void UIManager::update( float dt )
-    {
-    }
+		//CloseButtonの処理
+		//ボタンを押したときにLayerに追加されているOptionタグを持つ子ノードを取得しLayerから外している
+		closeButton->addTouchEventListener([&](Ref* pSender, ui::Widget::TouchEventType type) {
+			auto option = this->getChildByTag((int)LayerType::OPTION);
+			if (type == ui::Widget::TouchEventType::ENDED)
+			{
+				this->removeChild(option);
+			}
+		});
+	}
 
 }

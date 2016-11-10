@@ -1,0 +1,46 @@
+{
+  "Button": 
+  [
+    {
+      "name": "物語",
+      "res": "res/Image/WindowBase/WinBase_24.png",
+      "pos": 
+      {
+        "x": 0.125,
+        "y": 0.5
+      }
+    },
+    {
+      "name": "育成",
+      "res": "res/Image/WindowBase/WinBase_24.png",
+      "pos": 
+      {
+        "x": 0.375,
+        "y": 0.5
+      }
+    },
+    {
+      "name": "日記",
+      "res": "res/Image/WindowBase/WinBase_24.png",
+      "pos": 
+      {
+        "x": 0.625,
+        "y": 0.5
+      }
+    },
+    {
+      "name": "設定",
+      "res": "res/Image/WindowBase/WinBase_24.png",
+      "pos": 
+      {
+        "x": 0.875,
+        "y": 0.5
+      }
+    }
+  ]
+
+
+
+
+  
+}
