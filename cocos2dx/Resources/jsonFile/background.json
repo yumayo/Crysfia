@@ -1,0 +1,34 @@
+{
+  "backgrounds": 
+  [
+    {
+      "res": "res/texture/背景市場.png",
+      "alpha": 255,
+      "pos": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+
+    {
+      "res": "res/texture/背景噴水広場.png",
+      "alpha": 0,
+      "pos": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+
+    {
+      "res": "bg.png",
+      "alpha": 0,
+      "pos": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+
+  ]
+
+
+}
