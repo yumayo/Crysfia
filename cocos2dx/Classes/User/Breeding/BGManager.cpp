@@ -1,6 +1,7 @@
 #include "BGManager.h"
 #include "cocos2d/external/json/rapidjson.h"
 #include "cocos2d/external/json/document.h"
+
 USING_NS_CC;
 
 namespace User
