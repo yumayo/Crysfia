@@ -2,8 +2,10 @@
   "backgrounds": 
   [
     {
+      "name": "メインページ",
       "res": "res/texture/背景市場.png",
       "alpha": 255,
+      "scale": 1,
       "pos": {
         "x": 0.5,
         "y": 0.5
@@ -11,8 +13,10 @@
     },
 
     {
+      "name": "育成",
       "res": "res/texture/背景噴水広場.png",
       "alpha": 0,
+      "scale": 0.7,
       "pos": {
         "x": 0.5,
         "y": 0.5
@@ -20,8 +24,10 @@
     },
 
     {
-      "res": "bg.png",
+      "name": "日記メニュー",
+      "res": "res/texture/background_diary.png",
       "alpha": 0,
+      "scale": 2,
       "pos": {
         "x": 0.5,
         "y": 0.5

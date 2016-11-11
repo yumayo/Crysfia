@@ -10,10 +10,17 @@ USING_NS_CC;
 namespace User
 {
 	UIManager::UIManager() :
+		winSize(Director::getInstance()->getVisibleSize()),
+		origin(Director::getInstance()->getVisibleOrigin()),
+		pos(Director::getInstance()->getVisibleSize() / Director::getInstance()->getContentScaleFactor()),
 		menuWindow(nullptr),
 		swicthWindow(nullptr),
 		optionIcon(nullptr),
-		isOpen(false)
+		isOpen(false),
+		menuButtons(std::vector<ui::Button*>()),
+		subButtons(std::vector<ui::Button*>()),
+		sliderBers(std::vector<ui::Slider*>()),
+		optionLabels(std::vector<Label*>())
 	{
 		bgManager = BGManager::create();
 	}
@@ -23,21 +30,16 @@ namespace User
 	bool UIManager::init()
 	{
 		if (!Layer::init()) { return false; }
-
 		
 		this->addChild(bgManager, (int)zOder::BACKGROUND, (int)LayerType::BACGROUND);
-		createMaineMenuWindow();
+		createDiaryWindow();
 		createSubMenuWindow();
-		//this->scheduleUpdate();	update()関数を使うときはコメントアウトを外す
+		createMainMenuWindow();
 		return true;
 	}
 
-	void UIManager::createMaineMenuWindow()
+	void UIManager::createMainMenuWindow()
 	{
-		Vec2 winSize = Director::getInstance()->getVisibleSize();
-		Vec2 origin = Director::getInstance()->getVisibleOrigin();
-		Vec2 pos = Director::getInstance()->getVisibleSize() / Director::getInstance()->getContentScaleFactor();
-
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x * 0, pos.y * 0.f));
 		layout->setContentSize(Size(winSize.x, 150));
@@ -55,7 +57,7 @@ namespace User
 
 		//jsonファイルの読み込み
 		auto fileUtils = FileUtils::getInstance();
-		auto path = fileUtils->getStringFromFile("jsonFile/mainMenuUI.json");
+		auto path = fileUtils->getStringFromFile("res/json/mainMenuUI.json");
 		rapidjson::Document doc;
 
 		//jsonファイルをパース
@@ -86,10 +88,6 @@ namespace User
 	//育成メニューの処理
 	void UIManager::createSubMenuWindow()
 	{
-		Vec2 winSize = Director::getInstance()->getVisibleSize();
-		Vec2 origin = Director::getInstance()->getVisibleOrigin();
-		Vec2 pos = Director::getInstance()->getVisibleSize() / Director::getInstance()->getContentScaleFactor();
-
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x, pos.y * 0));
 		layout->setContentSize(Size(winSize.x, 150));
@@ -107,7 +105,7 @@ namespace User
 
 		//jsonファイルの読み込み
 		auto fileUtils = FileUtils::getInstance();
-		auto path = fileUtils->getStringFromFile("jsonFile/subMenuUI.json");
+		auto path = fileUtils->getStringFromFile("res/json/subMenuUI.json");
 		rapidjson::Document doc;
 
 		//jsonファイルをパース
@@ -136,12 +134,20 @@ namespace User
 		this->addChild(layout, (int)zOder::SUB_MENU, (int)LayerType::SUB_MENU);
 	}
 
+	void UIManager::createDiaryWindow()
+	{
+		auto layout = ui::Layout::create();
+		layout->setPosition(Vec2(pos.x, pos.y * 0));
+		layout->setContentSize(Size(winSize.x, 150));
+
+		
+		this->addChild(layout, (int)zOder::DIARY_MENU, (int)LayerType::DIARY_MENU);
+	}
+
 	//各メニューボタンの処理
 	/**************************************************
 	TODO:
-	残りの各ボタンの処理を書く。終わったら下のリストを消す
-	ストーリー
-	お世話、
+	残りの各ボタン移行の処理を書く。終わったら下のリストを消す
 	日記
 	設定
 	***************************************************/
@@ -155,7 +161,7 @@ namespace User
 			if (pSender == menuButtons[(int)ButtonType::STORY]) { SceneManager::createIslandMap(); }
 			if (pSender == menuButtons[(int)ButtonType::BREEDING]) { changeToSubWindow(); }
 			if (pSender == menuButtons[(int)ButtonType::OPTION]) { setOptionWindow(); }
-			if (pSender == menuButtons[(int)ButtonType::DIARY]) {}
+			if (pSender == menuButtons[(int)ButtonType::DIARY]) { changeToDiaryWindow(); }
 
 		default:
 			break;
@@ -167,18 +173,12 @@ namespace User
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN: break;
-			//case ui::Widget::TouchEventType::CANCELED: break;
+		case ui::Widget::TouchEventType::CANCELED: break;
 		case ui::Widget::TouchEventType::ENDED:
-
-			log("Backボタンが押されました\n");
-			if (pSender == subButtons[(int)SubButtonType::BACK]) {
-				changeToMainWindow();
-			}
-			if (pSender == subButtons[(int)SubButtonType::MEAL]) {}
-			if (pSender == subButtons[(int)SubButtonType::CLOTHES]) {}
-			if (pSender == subButtons[(int)SubButtonType::CLEANING]) {}
-
-
+			if (pSender == subButtons[(int)SubButtonType::BACK]) { changeToMainWindow(); }
+			if (pSender == subButtons[(int)SubButtonType::MEAL]) { }
+			if (pSender == subButtons[(int)SubButtonType::CLOTHES]) { }
+			if (pSender == subButtons[(int)SubButtonType::CLEANING]) { }
 		default:
 			break;
 		}
@@ -189,8 +189,10 @@ namespace User
 	{
 		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
 		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
+		
+		//auto 
+		
 		swapWindow(s, m);
-
 		bgManager->changeBackGround( (int)BGType::MAIN_MENU, (int)BGType::BREEDING_MENU);
 	}
 
@@ -202,6 +204,14 @@ namespace User
 		swapWindow(m, s);
 
 		bgManager->changeBackGround((int)BGType::BREEDING_MENU, (int)BGType::MAIN_MENU);
+	}
+
+	void UIManager::changeToDiaryWindow()
+	{
+		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
+		auto d = this->getChildByTag((int)LayerType::DIARY_MENU);
+		swapWindow(m,d);
+		bgManager->changeBackGround((int)BGType::DIARY_MENU, (int)BGType::MAIN_MENU);
 	}
 
 	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです
@@ -265,5 +275,4 @@ namespace User
 			}
 		});
 	}
-
 }

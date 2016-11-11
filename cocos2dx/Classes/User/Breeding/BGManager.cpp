@@ -5,9 +5,9 @@ USING_NS_CC;
 
 namespace User
 {
-	BGManager::BGManager()
+	BGManager::BGManager():
+		backgrounds(std::vector<Sprite*>())
 	{
-
 	}
 	BGManager::~BGManager()
 	{
@@ -15,16 +15,11 @@ namespace User
 
 	bool BGManager::init()
 	{
-
 		auto size = Director::getInstance()->getVisibleSize();
-
-		auto sprite = Sprite::create("res/texture/背景市場.png");
-		sprite->setPosition(size / 2);
-		//addChild(sprite);
 
 		//jsonファイルの読み込み
 		auto fileUtils = FileUtils::getInstance();
-		auto path = fileUtils->getStringFromFile("jsonFile/background.json");
+		auto path = fileUtils->getStringFromFile("res/json/background.json");
 		rapidjson::Document doc;
 
 		//jsonファイルをパース5
@@ -38,13 +33,12 @@ namespace User
 				float x = backgroundData[i]["pos"]["x"].GetDouble();
 				float y = backgroundData[i]["pos"]["y"].GetDouble();
 				backgrounds[i]->setPosition(size / 2);
+				backgrounds[i]->setScale(backgroundData[i]["scale"].GetDouble());
 				backgrounds[i]->setOpacity(backgroundData[i]["alpha"].GetInt());
 				this->addChild(backgrounds[i], -i, i);
 			}
 		}
-
-		
-
+	
 		return true;
 	}
 
@@ -53,6 +47,4 @@ namespace User
 		backgrounds[changeBG]->runAction(FadeOut::create(1));
 		backgrounds[targetBG]->runAction(FadeIn::create(1));
 	}
-
-
 }
