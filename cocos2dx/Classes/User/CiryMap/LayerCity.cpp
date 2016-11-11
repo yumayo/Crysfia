@@ -2,7 +2,7 @@
 
 #include "../SceneManager.h"
 
-#include "../Yumayo/OptionalValues.h"
+#include "../Novel/OptionalValues.h"
 
 #include <vector>
 #include <functional>

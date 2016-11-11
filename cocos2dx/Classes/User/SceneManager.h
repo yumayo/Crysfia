@@ -12,7 +12,6 @@ namespace User
     public:
         static void createSystemAppDelegateStart( );
     public:
-        static void createSample( );
         static void createTitle( );
         static void createNovel( std::string const& novelPath );
         static void createIslandMap( );

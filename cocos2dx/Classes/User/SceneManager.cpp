@@ -2,13 +2,10 @@
 #include "LayerBase.h"
 
 // scenarioに使われる変数のサイズなどの初期化。
-#include "Yumayo/OptionalValues.h"
-
-// サンプルシーンを作成します。
-#include "Sample/SceneSample.h"
+#include "Novel/OptionalValues.h"
 
 // ユーマヨのノベルシーンを作成します。
-#include "Yumayo/SceneNovel.h"
+#include "Novel/SceneNovel.h"
 
 // 島マップシーンを作成します。
 #include "IslandMap/SceneIslandMap.h"
@@ -22,8 +19,6 @@
 // 小松さんのタイトルシーンを追加します。
 #include "Title/SceneTitle.h"
 
-#include "SceneTy/SceneTy.h"
-
 USING_NS_CC;
 
 namespace User
@@ -32,15 +27,11 @@ namespace User
     {
         OptionalValues::setup( );
 
-        create<SceneTy>( );
+        createIslandMap( );
     }
     void SceneManager::createTitle( )
     {
         create<SceneTitle>( );
-    }
-    void SceneManager::createSample( )
-    {
-        create<SceneSample>( );
     }
     void SceneManager::createNovel( std::string const& novelPath )
     {
