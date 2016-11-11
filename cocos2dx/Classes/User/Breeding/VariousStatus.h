@@ -5,6 +5,7 @@ enum class zOder {
 	BACKGROUND =  0,
 	MAIN_MENU,
 	SUB_MENU,
+	DIARY_MENU,
 	OPTION,
 };
 
@@ -43,6 +44,7 @@ enum class SubButtonType
 enum class BGType {
 	MAIN_MENU = 0,
 	BREEDING_MENU,
+	DIARY_MENU,
 
 	MAX
 };

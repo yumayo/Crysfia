@@ -14,8 +14,11 @@ namespace User
 	private:
 
 		bool isOpen;
-		//void update(float dt);
 		bool init();
+
+		CC_SYNTHESIZE_READONLY(cocos2d::Vec2, winSize, WinSize);
+		CC_SYNTHESIZE_READONLY(cocos2d::Vec2, origin, Origin);
+		CC_SYNTHESIZE_READONLY(cocos2d::Vec2, pos, Pos);
 
 	public:
 
@@ -40,11 +43,12 @@ namespace User
 
 		void changeToMainWindow();
 		void changeToSubWindow();
-
+		void changeToDiaryWindow();
 		void swapWindow(Node* moveOutObj, Node* moveInObj);
 
-		void createMaineMenuWindow();
+		void createMainMenuWindow();
 		void createSubMenuWindow();
+		void createDiaryWindow();
 		void setOptionWindow();
 	};
 }
