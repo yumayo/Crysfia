@@ -81,7 +81,9 @@ LAppLive2DManager::LAppLive2DManager( )
     }
 #endif
 
+
     Live2DFramework::setPlatformManager( new PlatformManager( ) );
+    createModel( MODEL_HARU_DIR, MODEL_HARU );
 }
 
 
@@ -102,7 +104,6 @@ void LAppLive2DManager::releaseModel( )
 void LAppLive2DManager::reinit( )
 {
     live2d::DrawParam_OpenGLES2::reloadShader( );
-    changeScene( sceneIndex );
 }
 #endif
 
@@ -155,6 +156,6 @@ void LAppLive2DManager::onUpdate( )
 void LAppLive2DManager::createModel( std::string dirPath, std::string jsonPath )
 {
     releaseModel( );
-    auto model = new LAppModel( );
+    model = new LAppModel( );
     model->load( dirPath.c_str( ), jsonPath.c_str( ) );
 }

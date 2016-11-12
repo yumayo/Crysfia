@@ -26,8 +26,6 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-
-        createIslandMap( );
     }
     void SceneManager::createTitle( )
     {
@@ -41,7 +39,7 @@ namespace User
     {
         create<SceneIslandMap>( );
     }
-    void SceneManager::createCiryMap( std::string const& backgroundPath )
+    void SceneManager::createCityMap( std::string const& backgroundPath )
     {
         create<SceneCityMap>( backgroundPath );
     }

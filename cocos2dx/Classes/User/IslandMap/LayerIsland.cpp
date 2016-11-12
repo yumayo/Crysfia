@@ -5,6 +5,8 @@
 
 #include "../Novel/OptionalValues.h"
 
+#include "../Live2d/LAppView.h"
+
 #include <vector>
 #include <functional>
 
@@ -83,7 +85,7 @@ namespace User
                 if ( type == ui::Widget::TouchEventType::ENDED )
                 {
                     layout->setEnabled( false );
-                    SceneManager::createCiryMap( novel );
+                    SceneManager::createCityMap( novel );
                 }
             } );
         };

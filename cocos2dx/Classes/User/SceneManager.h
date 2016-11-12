@@ -15,7 +15,7 @@ namespace User
         static void createTitle( );
         static void createNovel( std::string const& novelPath );
         static void createIslandMap( );
-        static void createCiryMap( std::string const& backgroundPath );
+        static void createCityMap( std::string const& backgroundPath );
         static void createBreeding( );
     private:
         static void childrenCallSetup( cocos2d::Scene* scene );
