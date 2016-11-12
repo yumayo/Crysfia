@@ -207,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
             endingLineNumber = "115"
-            landmarkName = "ScriptSystem::name( ArgumentList const &amp; args )"
+            landmarkName = "ScriptSystem::stop( ArgumentList const &amp; args )"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -335,7 +335,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "46"
             endingLineNumber = "46"
-            landmarkName = "ScriptSystem::SETUP( )"
+            landmarkName = "ScriptSystem::ScriptSystem( cocos2d::Layer* layer )"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -351,7 +351,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
             endingLineNumber = "120"
-            landmarkName = "ScriptSystem::background( ArgumentList const &amp; args )"
+            landmarkName = "ScriptSystem::name( ArgumentList const &amp; args )"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

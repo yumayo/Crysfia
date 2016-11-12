@@ -2,13 +2,10 @@
 #include "LayerBase.h"
 
 // scenarioに使われる変数のサイズなどの初期化。
-#include "Yumayo/OptionalValues.h"
-
-// サンプルシーンを作成します。
-#include "Sample/SceneSample.h"
+#include "Novel/OptionalValues.h"
 
 // ユーマヨのノベルシーンを作成します。
-#include "Yumayo/SceneNovel.h"
+#include "Novel/SceneNovel.h"
 
 // 島マップシーンを作成します。
 #include "IslandMap/SceneIslandMap.h"
@@ -18,6 +15,8 @@
 
 // 小松さんのホームシーンを作成します。
 #include "Breeding/SceneBreeding.h"
+#include "Breeding/SceneCreaning.h"
+#include "Breeding/SceneCloset.h"
 
 // 小松さんのタイトルシーンを追加します。
 #include "Title/SceneTitle.h"
@@ -30,15 +29,11 @@ namespace User
     {
         OptionalValues::setup( );
 
-        createIslandMap( );
+		createBreeding();
     }
     void SceneManager::createTitle( )
     {
         create<SceneTitle>( );
-    }
-    void SceneManager::createSample( )
-    {
-        create<SceneSample>( );
     }
     void SceneManager::createNovel( std::string const& novelPath )
     {
@@ -48,7 +43,7 @@ namespace User
     {
         create<SceneIslandMap>( );
     }
-    void SceneManager::createCiryMap( std::string const& backgroundPath )
+    void SceneManager::createCityMap( std::string const& backgroundPath )
     {
         create<SceneCityMap>( backgroundPath );
     }
@@ -56,6 +51,16 @@ namespace User
     {
         create<SceneBreeding>( );
     }
+	void SceneManager::createCreaning()
+	{
+		create<SceneCreaning>();
+	}
+
+	void SceneManager::createCloset()
+	{
+		create<SceneCloset>();
+	}
+
     void SceneManager::childrenCallSetup( cocos2d::Scene* scene )
     {
         auto children = scene->getChildren( );

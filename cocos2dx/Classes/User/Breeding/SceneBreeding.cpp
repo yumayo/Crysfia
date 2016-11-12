@@ -1,7 +1,7 @@
 #include "SceneBreeding.h"
-#include "FrameLayer.h"
 #include "UIManager.h"
 #include "BGManager.h"
+#include "Test.h"
 USING_NS_CC;
 
 namespace User
@@ -11,8 +11,8 @@ namespace User
 		auto scene = Scene::create();
 
 		scene->addChild(createLayer<UIManager>(),UI);
-		scene->addChild(createLayer<BGManager>(), BACKGROUND);
-
+		//scene->addChild(createLayer<BGManager>());
+		//scene->addChild(createLayer<Test>(), BACKGROUND);
 		return scene;
 	}
 }

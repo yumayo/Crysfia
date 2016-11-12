@@ -64,6 +64,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\live2d\include;..\live2d\framework;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
@@ -72,7 +73,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;L2D_TARGET_WIN_GL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -84,9 +85,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END);live2d_opengl.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);..\live2d\lib\windows\x86\140\Debug</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -113,7 +114,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\include;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -157,39 +158,57 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp" />
     <ClCompile Include="..\Classes\User\LayerBase.cpp" />
-    <ClCompile Include="..\Classes\User\Sample\LayerFia.cpp" />
-    <ClCompile Include="..\Classes\User\Sample\SceneSample.cpp" />
-    <ClCompile Include="..\Classes\User\Sample\LayerWater.cpp" />
+    <ClCompile Include="..\Classes\User\Live2d\LAppLive2DManager.cpp" />
+    <ClCompile Include="..\Classes\User\Live2d\LAppModel.cpp" />
+    <ClCompile Include="..\Classes\User\Live2d\LAppTextureDesc.cpp" />
+    <ClCompile Include="..\Classes\User\Live2d\LAppView.cpp" />
+    <ClCompile Include="..\Classes\User\Live2d\PlatformManager.cpp" />
+    <ClCompile Include="..\Classes\User\Live2d\TouchManager.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\BackgroundLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\BackLogLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\HumanLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ModalLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\NameLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\NovelLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\OptionalValues.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\SceneNovel.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptBackground.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptBase.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptHuman.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptInstruction.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptLive2d.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptName.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptStaticData.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptStill.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptSystem.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\SelectLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\StillLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\SystemLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\TextChunk.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\TextChunkManager.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\TextData.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\TextLabels.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\TextScriptAnalysis.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\TextScriptReader.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\TextString.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\TextTypes.cpp" />
     <ClCompile Include="..\Classes\User\SceneBase.cpp" />
     <ClCompile Include="..\Classes\User\SceneManager.cpp" />
     <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp" />
     <ClCompile Include="..\Classes\User\Title\TitleManager.cpp" />
     <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\BackgroundLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\BackLogLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\HumanLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\NameLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\NovelLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\OptionalValues.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\SceneNovel.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\ScriptBackground.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\ScriptBase.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\ScriptHuman.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\ScriptName.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\ScriptStaticData.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\ScriptStill.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\ScriptSystem.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\SelectLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\StillLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\SystemLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextChunkManager.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextScriptAnalysis.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextScriptReader.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextChunk.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextData.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextLabels.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextString.cpp" />
-    <ClCompile Include="..\Classes\User\Yumayo\TextTypes.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DBaseModel.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DExpressionMotion.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DEyeBlink.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DMatrix44.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DModelMatrix.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DMotionManager.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DPhysics.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DPose.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DTargetPoint.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DTextureDesc.cpp" />
+    <ClCompile Include="..\live2d\framework\L2DViewMatrix.cpp" />
+    <ClCompile Include="..\live2d\framework\Live2DFramework.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -207,39 +226,63 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h" />
     <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h" />
     <ClInclude Include="..\Classes\User\LayerBase.h" />
-    <ClInclude Include="..\Classes\User\Sample\LayerFia.h" />
-    <ClInclude Include="..\Classes\User\Sample\SceneSample.h" />
-    <ClInclude Include="..\Classes\User\Sample\LayerWater.h" />
+    <ClInclude Include="..\Classes\User\Live2d\AppMacros.h" />
+    <ClInclude Include="..\Classes\User\Live2d\LAppDefine.h" />
+    <ClInclude Include="..\Classes\User\Live2d\LAppLive2DManager.h" />
+    <ClInclude Include="..\Classes\User\Live2d\LAppModel.h" />
+    <ClInclude Include="..\Classes\User\Live2d\LAppTextureDesc.h" />
+    <ClInclude Include="..\Classes\User\Live2d\LAppView.h" />
+    <ClInclude Include="..\Classes\User\Live2d\ModelSetting.h" />
+    <ClInclude Include="..\Classes\User\Live2d\ModelSettingJson.h" />
+    <ClInclude Include="..\Classes\User\Live2d\PlatformManager.h" />
+    <ClInclude Include="..\Classes\User\Live2d\TouchManager.h" />
+    <ClInclude Include="..\Classes\User\Novel\BackgroundLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\BackLogLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\HumanLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\ModalLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\NameLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\NovelLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\OptionalValues.h" />
+    <ClInclude Include="..\Classes\User\Novel\SceneNovel.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptBackground.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptBase.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptHuman.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptInstruction.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptLive2d.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptName.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptStaticData.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptStill.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptSystem.h" />
+    <ClInclude Include="..\Classes\User\Novel\SelectLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\StillLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\SystemLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\TextChunk.h" />
+    <ClInclude Include="..\Classes\User\Novel\TextChunkManager.h" />
+    <ClInclude Include="..\Classes\User\Novel\TextData.h" />
+    <ClInclude Include="..\Classes\User\Novel\TextLabels.h" />
+    <ClInclude Include="..\Classes\User\Novel\TextScriptAnalysis.h" />
+    <ClInclude Include="..\Classes\User\Novel\TextScriptReader.h" />
+    <ClInclude Include="..\Classes\User\Novel\TextString.h" />
+    <ClInclude Include="..\Classes\User\Novel\TextTypes.hpp" />
     <ClInclude Include="..\Classes\User\SceneBase.h" />
     <ClInclude Include="..\Classes\User\SceneManager.h" />
     <ClInclude Include="..\Classes\User\Title\SceneTitle.h" />
     <ClInclude Include="..\Classes\User\Title\TitleManager.h" />
     <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\BackgroundLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\BackLogLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\HumanLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\NameLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\NovelLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\OptionalValues.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\SceneNovel.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptBackground.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptBase.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptHuman.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptName.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptStaticData.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptStill.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\ScriptSystem.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\SelectLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\StillLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\SystemLayer.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextChunkManager.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextScriptAnalysis.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextScriptReader.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextChunk.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextData.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextLabels.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextString.h" />
-    <ClInclude Include="..\Classes\User\Yumayo\TextTypes.hpp" />
+    <ClInclude Include="..\live2d\framework\IPlatformManager.h" />
+    <ClInclude Include="..\live2d\framework\L2DBaseModel.h" />
+    <ClInclude Include="..\live2d\framework\L2DExpressionMotion.h" />
+    <ClInclude Include="..\live2d\framework\L2DEyeBlink.h" />
+    <ClInclude Include="..\live2d\framework\L2DMatrix44.h" />
+    <ClInclude Include="..\live2d\framework\L2DModelMatrix.h" />
+    <ClInclude Include="..\live2d\framework\L2DMotionManager.h" />
+    <ClInclude Include="..\live2d\framework\L2DPhysics.h" />
+    <ClInclude Include="..\live2d\framework\L2DPose.h" />
+    <ClInclude Include="..\live2d\framework\L2DStandardID.h" />
+    <ClInclude Include="..\live2d\framework\L2DTargetPoint.h" />
+    <ClInclude Include="..\live2d\framework\L2DTextureDesc.h" />
+    <ClInclude Include="..\live2d\framework\L2DViewMatrix.h" />
+    <ClInclude Include="..\live2d\framework\Live2DFramework.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

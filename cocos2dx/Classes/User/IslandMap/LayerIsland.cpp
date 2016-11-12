@@ -1,8 +1,11 @@
+
 #include "LayerIsland.h"
 
 #include "../SceneManager.h"
 
-#include "../Yumayo/OptionalValues.h"
+#include "../Novel/OptionalValues.h"
+
+#include "../Live2d/LAppView.h"
 
 #include <vector>
 #include <functional>
@@ -46,7 +49,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/全体マップ.png" );
+        background = Sprite::create( u8"res/texture/system/worldmap.png" );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
@@ -82,17 +85,17 @@ namespace User
                 if ( type == ui::Widget::TouchEventType::ENDED )
                 {
                     layout->setEnabled( false );
-                    SceneManager::createCiryMap( novel );
+                    SceneManager::createCityMap( novel );
                 }
             } );
         };
 
-        createButton( 206, 510, u8"ミニマップ.png" );
-        createButton( 314, 374, u8"ミニマップ.png" );
-        createButton( 567, 482, u8"ミニマップ.png" );
-        createButton( 618, 366, u8"ミニマップ.png" );
-        createButton( 803, 582, u8"ミニマップ.png" );
-        createButton( 788, 312, u8"ミニマップ.png" );
+        createButton( 206, 510, u8"minimap.png" );
+        createButton( 314, 374, u8"minimap.png" );
+        createButton( 567, 482, u8"minimap.png" );
+        createButton( 618, 366, u8"minimap.png" );
+        createButton( 803, 582, u8"minimap.png" );
+        createButton( 788, 312, u8"minimap.png" );
     }
     void LayerIsland::initListener( )
     {
@@ -112,8 +115,12 @@ namespace User
             for ( auto& obj : touches )
             {
                 auto movedPos = background->getPosition( ) - translate + obj->getDelta( );
-                movedPos.clamp( clearance * -1, clearance );
-                background->setPosition( movedPos + translate );
+                if ( clearance.width * -1 <= clearance.width &&
+                     clearance.height * -1 <= clearance.height )
+                {
+                    movedPos.clamp( clearance * -1, clearance );
+                    background->setPosition( movedPos + translate );
+                }
             }
         };
         listener->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
