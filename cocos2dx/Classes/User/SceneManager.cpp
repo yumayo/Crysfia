@@ -18,11 +18,11 @@
 
 // 小松さんのホームシーンを作成します。
 #include "Breeding/SceneBreeding.h"
+#include "Breeding/SceneCreaning.h"
+#include "Breeding/SceneCloset.h"
 
 // 小松さんのタイトルシーンを追加します。
 #include "Title/SceneTitle.h"
-
-#include "SceneTy/SceneTy.h"
 
 USING_NS_CC;
 
@@ -32,7 +32,7 @@ namespace User
     {
         OptionalValues::setup( );
 
-        create<SceneTy>( );
+		createBreeding();
     }
     void SceneManager::createTitle( )
     {
@@ -58,6 +58,16 @@ namespace User
     {
         create<SceneBreeding>( );
     }
+	void SceneManager::createCreaning()
+	{
+		create<SceneCreaning>();
+	}
+
+	void SceneManager::createCloset()
+	{
+		create<SceneCloset>();
+	}
+
     void SceneManager::childrenCallSetup( cocos2d::Scene* scene )
     {
         auto children = scene->getChildren( );
