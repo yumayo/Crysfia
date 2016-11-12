@@ -6,14 +6,12 @@
 
 namespace User
 {
-	class Home : public SceneBase
+	class SceneBreeding : public SceneBase
 	{
 	private:
 
-		enum LayerZOders
-		{
+		enum LayerZOders{
 			DEBUG = 0,
-			BACKGROUND,
 			PLAYER,
 			UI,
 		};
