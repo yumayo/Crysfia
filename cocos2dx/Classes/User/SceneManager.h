@@ -18,6 +18,8 @@ namespace User
         static void createIslandMap( );
         static void createCiryMap( std::string const& backgroundPath );
         static void createBreeding( );
+		static void createCloset();
+		static void createCreaning();
     private:
         static void childrenCallSetup( cocos2d::Scene* scene );
         template <class Ty>

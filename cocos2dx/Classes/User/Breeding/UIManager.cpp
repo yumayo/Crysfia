@@ -12,7 +12,7 @@ namespace User
 	UIManager::UIManager() :
 		winSize(Director::getInstance()->getVisibleSize()),
 		origin(Director::getInstance()->getVisibleOrigin()),
-		pos(Director::getInstance()->getVisibleSize() / Director::getInstance()->getContentScaleFactor()),
+		pos(Director::getInstance()->getVisibleSize()),
 		menuWindow(nullptr),
 		swicthWindow(nullptr),
 		optionIcon(nullptr),
@@ -91,6 +91,9 @@ namespace User
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x, pos.y * 0));
 		layout->setContentSize(Size(winSize.x, 150));
+
+		log("layout X=[%f]",pos.x);
+		log("layout Y=[%f]",pos.y);
 
 		//メニューの背景
 		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_88.png",
@@ -189,9 +192,6 @@ namespace User
 	{
 		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
 		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
-		
-		//auto 
-		
 		swapWindow(s, m);
 		bgManager->changeBackGround( (int)BGType::MAIN_MENU, (int)BGType::BREEDING_MENU);
 	}
@@ -202,7 +202,6 @@ namespace User
 		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
 		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
 		swapWindow(m, s);
-
 		bgManager->changeBackGround((int)BGType::BREEDING_MENU, (int)BGType::MAIN_MENU);
 	}
 
