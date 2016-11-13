@@ -14,23 +14,24 @@ namespace User
     public:
         ScriptSystem( cocos2d::Layer* layer );
         ~ScriptSystem( );
-    public: // 他のレイヤーを設定するときに使います。
-        void SETUP( ArgumentList const& args );
+    public:
+        void setup( );
     public: // システムの動作を変えるときなどに使います。
-        // シナリオ読み込みをストップ
-        void l( ArgumentList const& args );
-        // 選択肢の表示
-        void select( ArgumentList const& args );
-        void stop( ArgumentList const& args );
-        void novelon( ArgumentList const& args );
-        void noveloff( ArgumentList const& args );
+        SCRIPT( l ); // シナリオ読み込みをストップ
+        SCRIPT( select ); // 選択肢の表示
+        SCRIPT( stop );
+        SCRIPT( novelon );
+        SCRIPT( noveloff );
     public: // 変数の登録に使います。
-        void name( ArgumentList const& args );
-        void background( ArgumentList const& args );
-        void bgm( ArgumentList const& args );
-        void se( ArgumentList const& args );
-        void human( ArgumentList const& args );
-        void still( ArgumentList const& args );
+            // 全てのクラスはシステムを経由してでないと作成できません。
+        SCRIPT( name );
+        SCRIPT( background );
+        SCRIPT( bgm );
+        SCRIPT( se );
+        SCRIPT( human );
+        SCRIPT( still );
+        SCRIPT( heart );
+        SCRIPT( live2d );
     public:
         cocos2d::Layer* nameLayer = nullptr;
         cocos2d::Layer* humanLayer = nullptr;
@@ -38,6 +39,8 @@ namespace User
         cocos2d::Layer* selectLayer = nullptr;
         cocos2d::Layer* novelLayer = nullptr;
         cocos2d::Layer* stillLayer = nullptr;
+        cocos2d::Layer* heartLayer = nullptr;
+        cocos2d::Layer* live2dLayer = nullptr;
 
         static size_t novelIndex;
     };

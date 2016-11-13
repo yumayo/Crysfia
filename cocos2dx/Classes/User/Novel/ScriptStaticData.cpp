@@ -8,6 +8,10 @@ namespace User
 
     void ScriptStaticData::setup( )
     {
+        clear( );
+    }
+    void ScriptStaticData::clear( )
+    {
         data.clear( );
     }
     void ScriptStaticData::run( FunctionScript const& functionScript )

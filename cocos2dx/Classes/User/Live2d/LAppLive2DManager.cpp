@@ -49,6 +49,7 @@ void LAppLive2DManager::releaseInstance( )
         delete instance;
         auto framework = live2d::framework::Live2DFramework::getPlatformManager( );
         delete framework;
+        framework = nullptr;
     }
 
     instance = nullptr;
@@ -60,7 +61,7 @@ LAppLive2DManager::LAppLive2DManager( )
     if ( LAppDefine::DEBUG_LOG )
     {
         log( "==============================================" );
-        log( "   Live2D SDK Sample App1" );
+        log( "         BEGIN Live2D SDK Sample App1" );
         log( "==============================================" );
     }
 
@@ -81,23 +82,29 @@ LAppLive2DManager::LAppLive2DManager( )
     }
 #endif
 
-
     Live2DFramework::setPlatformManager( new PlatformManager( ) );
-    createModel( MODEL_HARU_DIR, MODEL_HARU );
 }
 
 
 LAppLive2DManager::~LAppLive2DManager( )
 {
+    if ( LAppDefine::DEBUG_LOG )
+    {
+        log( "==============================================" );
+        log( "         END Live2D SDK Sample App1" );
+        log( "==============================================" );
+    }
+
     releaseModel( );
     Live2D::dispose( );
-
 }
 
 
 void LAppLive2DManager::releaseModel( )
 {
     delete model;
+    model = nullptr;
+    work = nullptr;
 }
 
 #ifdef L2D_TARGET_ANDROID_ES2
@@ -109,9 +116,9 @@ void LAppLive2DManager::reinit( )
 
 void LAppLive2DManager::onDrag( float x, float y )
 {
-    if ( !model ) return;
+    if ( !work ) return;
 
-    model->setDrag( x, y );
+    work->setDrag( x, y );
 }
 
 
@@ -119,23 +126,23 @@ void LAppLive2DManager::onTap( float x, float y )
 {
     if ( LAppDefine::DEBUG_LOG )log( "tapEvent" );
 
-    if ( !model ) return;
+    if ( !work ) return;
 
-    if ( model->hitTest( HIT_AREA_NAME_HEAD, x, y ) )
+    if ( work->hitTest( HIT_AREA_NAME_HEAD, x, y ) )
     {
         if ( LAppDefine::DEBUG_LOG )log( "face" );
-        model->setRandomExpression( );
+        work->setRandomExpression( );
     }
-    else if ( model->hitTest( HIT_AREA_NAME_BODY, x, y ) )
+    else if ( work->hitTest( HIT_AREA_NAME_BODY, x, y ) )
     {
         if ( LAppDefine::DEBUG_LOG )log( "body" );
-        model->startRandomMotion( MOTION_GROUP_TAP_BODY, PRIORITY_NORMAL );
+        work->startRandomMotion( MOTION_GROUP_TAP_BODY, PRIORITY_NORMAL );
     }
 }
 
 void LAppLive2DManager::onUpdate( )
 {
-    if ( !model ) return;
+    if ( !work ) return;
 
     live2d::DrawProfileCocos2D::preDraw( );
 
@@ -144,18 +151,50 @@ void LAppLive2DManager::onUpdate( )
     Size window = director->getWinSize( );
     projection.scale( 1, window.width / window.height );
 
-    if ( !viewMatrix ) projection.append( viewMatrix );
+    // 急にexeが止まるようになったので急遽コメントアウト。
+    //if ( !viewMatrix )
+    //    projection.append( viewMatrix );
 
-    model->update( );
-    model->draw( projection );
+    work->update( );
+    work->draw( projection );
 
     live2d::DrawProfileCocos2D::postDraw( );
 }
 
+
+void LAppLive2DManager::setExpression( std::string name )
+{
+    if ( !work ) return;
+    work->setExpression( name );
+}
+
+void LAppLive2DManager::setMotion( std::string name, int no )
+{
+    if ( !work ) return;
+    work->startMotion( name, no, PRIORITY_NORMAL );
+}
 
 void LAppLive2DManager::createModel( std::string dirPath, std::string jsonPath )
 {
     releaseModel( );
     model = new LAppModel( );
     model->load( dirPath.c_str( ), jsonPath.c_str( ) );
+    work = model;
+}
+
+void LAppLive2DManager::enableModel( bool enable )
+{
+    if ( enable )
+    {
+        work = model;
+    }
+    else
+    {
+        work = nullptr;
+    }
+}
+
+bool LAppLive2DManager::isExist( )
+{
+    return model != nullptr;
 }

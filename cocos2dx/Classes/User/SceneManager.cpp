@@ -23,7 +23,15 @@ namespace User
     {
         OptionalValues::setup( );
 
-		createTitle();
+        {
+            int err = errno;
+            if ( err != 0 )
+            {
+                int a = err;
+            }
+        }
+
+        createIslandMap();
     }
     void SceneManager::createTitle( )
     {

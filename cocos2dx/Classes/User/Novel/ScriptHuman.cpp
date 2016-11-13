@@ -8,24 +8,24 @@ namespace User
         : ScriptBase( layer )
         , textureName( textureName )
     {
-        REGIST_SCRIPT( u8"in", ScriptHuman::in );
-        REGIST_SCRIPT( u8"out", ScriptHuman::out );
-        REGIST_SCRIPT( u8"fadein", ScriptHuman::fadein );
-        REGIST_SCRIPT( u8"fadeout", ScriptHuman::fadeout );
+        REGIST_FUNC( ScriptHuman, in );
+        REGIST_FUNC( ScriptHuman, out );
+        REGIST_FUNC( ScriptHuman, fadein );
+        REGIST_FUNC( ScriptHuman, fadeout );
     }
     ScriptHuman::~ScriptHuman( )
     {
 
     }
-    void ScriptHuman::in( ArgumentList const& args )
+    SCRIPT( ScriptHuman::in )
     {
         create( );
     }
-    void ScriptHuman::out( ArgumentList const & args )
+    SCRIPT( ScriptHuman::out )
     {
         layer->removeChildByTag( (int)Tag::Human );
     }
-    void ScriptHuman::fadein( ArgumentList const & args )
+    SCRIPT( ScriptHuman::fadein )
     {
         auto sprite = create( );
         if ( !sprite ) return;
@@ -35,7 +35,7 @@ namespace User
         auto fade = FadeIn::create( 1.0 );
         sprite->runAction( Sequence::create( fade, nullptr ) );
     }
-    void ScriptHuman::fadeout( ArgumentList const & args )
+    SCRIPT( ScriptHuman::fadeout )
     {
         if ( auto node = layer->getChildByTag( (int)Tag::Human ) )
         {

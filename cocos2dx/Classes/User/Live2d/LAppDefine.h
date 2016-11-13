@@ -20,36 +20,6 @@ static const float VIEW_LOGICAL_MAX_RIGHT = 2;
 static const float VIEW_LOGICAL_MAX_BOTTOM = -2;
 static const float VIEW_LOGICAL_MAX_TOP = 2;
 
-
-// モデル定義------------------------------------------------------------------------
-// モデルの後ろにある背景の画像ファイル
-static const char BACK_IMAGE_NAME [ ] = "res/live2d/back_class_normal.png";
-
-static const char MODEL_CHANGE_ICON_NAME [ ] = "res/live2d/icon_gear.png";
-
-
-// モデル定義-----------------------------------------------------------------------
-static const int SCENE_INDEX_HARU = 0;
-static const int SCENE_INDEX_SHIZUKU = 1;
-static const int SCENE_INDEX_WANKO = 2;
-static const int SCENE_INDEX_MULTI_MODEL = 3;
-static const int SCENE_INDEX_EPSILON = 4;
-
-static const char MODEL_HARU_DIR [ ] = "res/live2d/haru/";
-static const char MODEL_SHIZUKU_DIR [ ] = "res/live2d/shizuku/";
-static const char MODEL_WANKO_DIR [ ] = "res/live2d/wanko/";
-static const char MODEL_EPSILON_DIR [ ] = "res/live2d/epsilon/";
-
-static const char MODEL_HARU [ ] = "haru.model.json";
-static const char MODEL_HARU_A [ ] = "haru_01.model.json";
-static const char MODEL_HARU_B [ ] = "haru_02.model.json";
-static const char MODEL_SHIZUKU [ ] = "shizuku.model.json";
-static const char MODEL_WANKO [ ] = "wanko.model.json";
-static const char MODEL_EPSILON [ ] = "Epsilon2.1.model.json";
-
-static const int SCENE_NUM = 5;
-
-
 // 外部定義ファイル(json)と合わせる
 static const char MOTION_GROUP_IDLE [ ] = "idle";// アイドリング
 static const char MOTION_GROUP_TAP_BODY [ ] = "tap_body";// 体をタップしたとき

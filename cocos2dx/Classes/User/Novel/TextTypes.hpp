@@ -20,6 +20,7 @@ namespace User
         Live2d,
         Novel,
         Name,
+        Heart,
         Select,
         BackLog,
         System,

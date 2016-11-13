@@ -167,7 +167,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Live2d\TouchManager.cpp" />
     <ClCompile Include="..\Classes\User\Novel\BackgroundLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\BackLogLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\HeartLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\HumanLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\INIReader.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\INIWriter.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\Live2dLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ModalLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\NameLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\NovelLayer.cpp" />
@@ -175,6 +179,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Novel\SceneNovel.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptBackground.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptBase.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptHeart.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptHuman.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptInstruction.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptLive2d.cpp" />
@@ -184,6 +189,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Novel\ScriptSystem.cpp" />
     <ClCompile Include="..\Classes\User\Novel\SelectLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\StillLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\StringUtil.cpp" />
     <ClCompile Include="..\Classes\User\Novel\SystemLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\TextChunk.cpp" />
     <ClCompile Include="..\Classes\User\Novel\TextChunkManager.cpp" />
@@ -240,7 +246,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Live2d\TouchManager.h" />
     <ClInclude Include="..\Classes\User\Novel\BackgroundLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\BackLogLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\HeartLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\HumanLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\INIReader.h" />
+    <ClInclude Include="..\Classes\User\Novel\INIWriter.h" />
+    <ClInclude Include="..\Classes\User\Novel\Live2dLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\ModalLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\NameLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\NovelLayer.h" />
@@ -248,6 +258,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Novel\SceneNovel.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptBackground.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptBase.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptHeart.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptHuman.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptInstruction.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptLive2d.h" />
@@ -257,6 +268,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Novel\ScriptSystem.h" />
     <ClInclude Include="..\Classes\User\Novel\SelectLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\StillLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\StringUtil.h" />
     <ClInclude Include="..\Classes\User\Novel\SystemLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\TextChunk.h" />
     <ClInclude Include="..\Classes\User\Novel\TextChunkManager.h" />

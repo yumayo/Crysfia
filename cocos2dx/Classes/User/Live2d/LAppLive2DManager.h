@@ -14,10 +14,12 @@
 
 class LAppModel;
 
-class LAppLive2DManager {
+class LAppLive2DManager
+{
 private:
+    LAppModel* work = nullptr;
     LAppModel* model = nullptr;
-    live2d::framework::L2DMatrix44* viewMatrix;
+    live2d::framework::L2DMatrix44* viewMatrix = nullptr;
 public:
     static LAppLive2DManager* getInstance( );
     static void releaseInstance( );
@@ -34,7 +36,13 @@ public:
     void releaseModel( );
     LAppModel* getModel() { return model; }
 
+    void setExpression( std::string name );
+    void setMotion( std::string name, int no );
     void createModel( std::string dirPath, std::string jsonPath );
+    void enableModel( bool enable );
+    // ÉÇÉfÉãÇ™ë∂ç›Ç∑ÇÈÇ»ÇÁ true
+    // ë∂ç›ÇµÇ»Ç¢Ç»ÇÁ false
+    bool isExist( );
 private:
     LAppLive2DManager( );
     virtual ~LAppLive2DManager( );

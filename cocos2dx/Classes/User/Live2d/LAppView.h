@@ -24,8 +24,8 @@
 class LAppView :public cocos2d::DrawNode
 {    
 public:
-	LAppView();
-	virtual ~LAppView(){}
+	LAppView( );
+    virtual ~LAppView( );
 	//virtual bool init();
 	virtual void onEnter();
 	virtual void onExit();
@@ -46,9 +46,9 @@ public:
 	static LAppView* createDrawNode();
 
 private:
-	TouchManager* touchMgr;
-	live2d::framework::L2DMatrix44* deviceToScreen;
-    live2d::framework::L2DViewMatrix* viewMatrix;
+	TouchManager* touchMgr = nullptr;
+	live2d::framework::L2DMatrix44* deviceToScreen = nullptr;
+    live2d::framework::L2DViewMatrix* viewMatrix = nullptr;
 	
 protected:
 	cocos2d::CustomCommand _customCommand;

@@ -13,8 +13,8 @@ namespace User
         ScriptName( cocos2d::Layer* layer, std::string characterName, std::string fontPath );
         ~ScriptName( );
     public:
-        void in( ArgumentList const& args );
-        void out( ArgumentList const& args );
+        SCRIPT( in );
+        SCRIPT( out );
     private:
         cocos2d::Label* create( );
     private:

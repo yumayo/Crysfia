@@ -8,26 +8,26 @@ namespace User
         : ScriptBase( layer )
         , textureName( textureName )
     {
-        REGIST_SCRIPT( u8"in", ScriptStill::in );
-        REGIST_SCRIPT( u8"out", ScriptStill::out );
-        REGIST_SCRIPT( u8"fadein", ScriptStill::fadein );
-        REGIST_SCRIPT( u8"fadeout", ScriptStill::fadeout );
-        REGIST_SCRIPT( u8"circlein", ScriptStill::circlein );
-        REGIST_SCRIPT( u8"circleout", ScriptStill::circleout );
+        REGIST_FUNC( ScriptStill, in );
+        REGIST_FUNC( ScriptStill, out );
+        REGIST_FUNC( ScriptStill, fadein );
+        REGIST_FUNC( ScriptStill, fadeout );
+        REGIST_FUNC( ScriptStill, circlein );
+        REGIST_FUNC( ScriptStill, circleout );
     }
     ScriptStill::~ScriptStill( )
     {
 
     }
-    void ScriptStill::in( ArgumentList const& args )
+    SCRIPT( ScriptStill::in )
     {
         create( );
     }
-    void ScriptStill::out( ArgumentList const & args )
+    SCRIPT( ScriptStill::out )
     {
         layer->removeChildByTag( (int)Tag::Still );
     }
-    void ScriptStill::fadein( ArgumentList const & args )
+    SCRIPT( ScriptStill::fadein )
     {
         auto sprite = create( );
         if ( !sprite ) return;
@@ -37,7 +37,7 @@ namespace User
         auto fade = FadeIn::create( 1.0 );
         sprite->runAction( Sequence::create( fade, nullptr ) );
     }
-    void ScriptStill::fadeout( ArgumentList const & args )
+    SCRIPT( ScriptStill::fadeout )
     {
         if ( auto node = layer->getChildByTag( (int)Tag::Still ) )
         {
@@ -46,7 +46,7 @@ namespace User
             node->runAction( Sequence::create( fade, remove, nullptr ) );
         }
     }
-    void ScriptStill::circlein( ArgumentList const & args )
+    SCRIPT( ScriptStill::circlein )
     {
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
@@ -77,7 +77,7 @@ namespace User
 
         layer->addChild( clipping );
     }
-    void ScriptStill::circleout( ArgumentList const & args )
+    SCRIPT( ScriptStill::circleout )
     {
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );

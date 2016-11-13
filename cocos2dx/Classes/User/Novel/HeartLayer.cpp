@@ -1,24 +1,24 @@
-#include "StillLayer.h"
+#include "HeartLayer.h"
 
 USING_NS_CC;
 
 namespace User
 {
-    StillLayer::StillLayer( )
+    HeartLayer::HeartLayer( )
     {
 
     }
-    StillLayer::~StillLayer( )
+    HeartLayer::~HeartLayer( )
     {
 
     }
-    bool StillLayer::init( )
+    bool HeartLayer::init( )
     {
         if ( !Layer::init( ) ) return false;
 
         return true;
     }
-    void StillLayer::setup( )
+    void HeartLayer::setup( )
     {
 
     }

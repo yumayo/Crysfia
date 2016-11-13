@@ -8,26 +8,26 @@ namespace User
         : ScriptBase( layer )
         , textureName( textureName )
     {
-        REGIST_SCRIPT( u8"in", ScriptBackground::in );
-        REGIST_SCRIPT( u8"out", ScriptBackground::out );
-        REGIST_SCRIPT( u8"fadein", ScriptBackground::fadein );
-        REGIST_SCRIPT( u8"fadeout", ScriptBackground::fadeout );
-        REGIST_SCRIPT( u8"circlein", ScriptBackground::circlein );
-        REGIST_SCRIPT( u8"circleout", ScriptBackground::circleout );
+        REGIST_FUNC( ScriptBackground, in );
+        REGIST_FUNC( ScriptBackground, out );
+        REGIST_FUNC( ScriptBackground, fadein );
+        REGIST_FUNC( ScriptBackground, fadeout );
+        REGIST_FUNC( ScriptBackground, circlein );
+        REGIST_FUNC( ScriptBackground, circleout );
     }
     ScriptBackground::~ScriptBackground( )
     {
 
     }
-    void ScriptBackground::in( ArgumentList const& args )
+    SCRIPT( ScriptBackground::in )
     {
         create( );
     }
-    void ScriptBackground::out( ArgumentList const & args )
+    SCRIPT( ScriptBackground::out )
     {
         layer->removeChildByTag( (int)Tag::Background );
     }
-    void ScriptBackground::fadein( ArgumentList const & args )
+    SCRIPT( ScriptBackground::fadein )
     {
         auto sprite = create( );
         if ( !sprite ) return;
@@ -37,7 +37,7 @@ namespace User
         auto fade = FadeIn::create( 1.0 );
         sprite->runAction( Sequence::create( fade, nullptr ) );
     }
-    void ScriptBackground::fadeout( ArgumentList const & args )
+    SCRIPT( ScriptBackground::fadeout )
     {
         if ( auto node = layer->getChildByTag( (int)Tag::Background ) )
         {
@@ -46,7 +46,7 @@ namespace User
             node->runAction( Sequence::create( fade, remove, nullptr ) );
         }
     }
-    void ScriptBackground::circlein( ArgumentList const & args )
+    SCRIPT( ScriptBackground::circlein )
     {
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
@@ -77,7 +77,7 @@ namespace User
 
         layer->addChild( clipping );
     }
-    void ScriptBackground::circleout( ArgumentList const & args )
+    SCRIPT( ScriptBackground::circleout )
     {
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );

@@ -13,10 +13,10 @@ namespace User
     {
         auto fileUtil = FileUtils::getInstance( );
         
-        auto paths = fileUtil->getSearchPaths( );
-        if ( !paths.empty( ) )
+        auto path = fileUtil->getWritablePath( );
+        if ( !path.empty( ) )
         {
-            std::string savepath = paths[0] + "../../Resources/res/data/debugLog.txt";
+            std::string savepath = path + "debugLog.txt";
             fileUtil->writeStringToFile( dataStr, savepath );
         }
     }
@@ -31,6 +31,9 @@ namespace User
         {
             writeDebugLog( stream.str( ) );
         }
-        throw( stream.str( ) );
+        else
+        {
+            throw( stream.str( ) );
+        }
     }
 }
