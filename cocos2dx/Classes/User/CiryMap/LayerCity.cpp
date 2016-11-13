@@ -135,7 +135,12 @@ namespace User
         button->setTitleFontName( u8"res/fonts/meiryo.ttc" );
         button->setTitleFontSize( OptionalValues::fontSize );
         button->setTitleText( u8"DEBUG" );
-        button->setPosition( origin + visibleSize - button->getContentSize( ) / 2.0 );
+
+        auto tar = Size( 128, 128 );
+        auto con = button->getContentSize( );
+        auto sca = tar.height / con.height;
+        button->setScale( sca, sca );
+        button->setPosition( origin + visibleSize + tar / 2.0 );
         button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )

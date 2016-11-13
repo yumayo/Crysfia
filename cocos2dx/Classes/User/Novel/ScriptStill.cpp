@@ -8,12 +8,12 @@ namespace User
         : ScriptBase( layer )
         , textureName( textureName )
     {
-        funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
-        funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
-        funcs.insert( std::make_pair( u8"fadein", [ this ] ( ArgumentList const& args ) { fadein( args ); } ) );
-        funcs.insert( std::make_pair( u8"fadeout", [ this ] ( ArgumentList const& args ) { fadeout( args ); } ) );
-        funcs.insert( std::make_pair( u8"circlein", [ this ] ( ArgumentList const& args ) { circlein( args ); } ) );
-        funcs.insert( std::make_pair( u8"circleout", [ this ] ( ArgumentList const& args ) { circleout( args ); } ) );
+        REGIST_SCRIPT( u8"in", ScriptStill::in );
+        REGIST_SCRIPT( u8"out", ScriptStill::out );
+        REGIST_SCRIPT( u8"fadein", ScriptStill::fadein );
+        REGIST_SCRIPT( u8"fadeout", ScriptStill::fadeout );
+        REGIST_SCRIPT( u8"circlein", ScriptStill::circlein );
+        REGIST_SCRIPT( u8"circleout", ScriptStill::circleout );
     }
     ScriptStill::~ScriptStill( )
     {

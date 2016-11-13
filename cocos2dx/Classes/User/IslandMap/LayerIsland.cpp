@@ -34,6 +34,8 @@ namespace User
 
         this->addChild( createDebugButton( ) );
 
+        this->addChild( createBackButton( ) );
+
         return true;
     }
     void LayerIsland::setup( )
@@ -129,6 +131,27 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
     }
+    cocos2d::ui::Button * LayerIsland::createBackButton( )
+    {
+        auto visibleSize = Director::getInstance( )->getVisibleSize( );
+        auto origin = Director::getInstance( )->getVisibleOrigin( );
+
+        auto button = ui::Button::create( u8"res/texture/system/bacbutton.png" );
+
+        auto tar = Size( 128, 128 );
+        auto con = button->getContentSize( );
+        auto sca = tar.height / con.height;
+        button->setScale( sca, sca );
+        button->setPosition( origin + tar / 2.0 );
+        button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
+        {
+            if ( type == ui::Widget::TouchEventType::ENDED )
+            {
+                SceneManager::createBreeding( );
+            }
+        } );
+        return button;
+    }
     cocos2d::ui::Button* LayerIsland::createDebugButton( )
     {
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
@@ -138,7 +161,12 @@ namespace User
         button->setTitleFontName( u8"res/fonts/meiryo.ttc" );
         button->setTitleFontSize( OptionalValues::fontSize );
         button->setTitleText( u8"DEBUG" );
-        button->setPosition( origin + visibleSize - button->getContentSize( ) / 2.0 );
+
+        auto tar = Size( 128, 128 );
+        auto con = button->getContentSize( );
+        auto sca = tar.height / con.height;
+        button->setScale( sca, sca );
+        button->setPosition( origin + visibleSize + tar / 2.0 );
         button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )

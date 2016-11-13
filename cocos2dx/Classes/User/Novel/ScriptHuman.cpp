@@ -8,10 +8,10 @@ namespace User
         : ScriptBase( layer )
         , textureName( textureName )
     {
-        funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
-        funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
-        funcs.insert( std::make_pair( u8"fadein", [ this ] ( ArgumentList const& args ) { fadein( args ); } ) );
-        funcs.insert( std::make_pair( u8"fadeout", [ this ] ( ArgumentList const& args ) { fadeout( args ); } ) );
+        REGIST_SCRIPT( u8"in", ScriptHuman::in );
+        REGIST_SCRIPT( u8"out", ScriptHuman::out );
+        REGIST_SCRIPT( u8"fadein", ScriptHuman::fadein );
+        REGIST_SCRIPT( u8"fadeout", ScriptHuman::fadeout );
     }
     ScriptHuman::~ScriptHuman( )
     {

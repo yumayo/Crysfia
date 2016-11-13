@@ -4,21 +4,15 @@
 // scenarioに使われる変数のサイズなどの初期化。
 #include "Novel/OptionalValues.h"
 
-// ユーマヨのノベルシーンを作成します。
+// ユーマヨが管理するシーンを作成します。
 #include "Novel/SceneNovel.h"
-
-// 島マップシーンを作成します。
 #include "IslandMap/SceneIslandMap.h"
-
-// 街マップシーンを作成します。
 #include "CiryMap/SceneCityMap.h"
 
-// 小松さんのホームシーンを作成します。
+// 小松さんが管理するシーンを作成します。
 #include "Breeding/SceneBreeding.h"
 #include "Breeding/SceneCreaning.h"
 #include "Breeding/SceneCloset.h"
-
-// 小松さんのタイトルシーンを追加します。
 #include "Title/SceneTitle.h"
 
 USING_NS_CC;
@@ -29,7 +23,7 @@ namespace User
     {
         OptionalValues::setup( );
 
-		createBreeding();
+		createTitle();
     }
     void SceneManager::createTitle( )
     {

@@ -116,11 +116,12 @@ namespace User
     }
     void NovelLayer::on( )
     {
-        auto selectLayer = this->getLayer<SelectLayer>( );
+        this->getEventDispatcher( )->resumeEventListenersForTarget( this );
         this->setVisible( true );
     }
     void NovelLayer::off( )
     {
+        this->getEventDispatcher( )->pauseEventListenersForTarget( this );
         this->setVisible( false );
     }
     void NovelLayer::select( std::string const & name )

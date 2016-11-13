@@ -60,24 +60,6 @@
     <ClCompile Include="..\Classes\User\SceneManager.cpp">
       <Filter>src\User</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\FrameLayer.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\Home.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\Test.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp">
       <Filter>src\User\CityMap</Filter>
     </ClCompile>
@@ -243,6 +225,24 @@
     <ClCompile Include="..\Classes\User\Novel\ScriptLive2d.cpp">
       <Filter>src\User\Novel</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneCloset.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneCreaning.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\Test.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -256,27 +256,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\SceneManager.h">
       <Filter>src\User</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\FrameLayer.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\Home.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\Test.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
-      <Filter>src\User\Breeding</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h">
       <Filter>src\User\CityMap</Filter>
@@ -460,6 +439,30 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Novel\ScriptLive2d.h">
       <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneCloset.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneCreaning.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\soundResources.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\Test.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
+      <Filter>src\User\Breeding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

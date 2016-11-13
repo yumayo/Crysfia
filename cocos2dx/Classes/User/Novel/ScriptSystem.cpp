@@ -27,35 +27,24 @@ namespace User
     ScriptSystem::ScriptSystem( cocos2d::Layer* layer )
         : ScriptBase( layer )
     {
-        funcs.insert( std::make_pair( u8"SETUP", [ this ] ( ArgumentList const& args ) { SETUP( ); } ) );
-
-        funcs.insert( std::make_pair( u8"l", [ this ] ( ArgumentList const& args ) { l( ); } ) );
-        funcs.insert( std::make_pair( u8"select", [ this ] ( ArgumentList const& args ) { select( args ); } ) );
-        funcs.insert( std::make_pair( u8"stop", [ this ] ( ArgumentList const& args ) { stop( args ); } ) );
-
-        funcs.insert( std::make_pair( u8"bgm", [ this ] ( ArgumentList const& args ) { bgm( args ); } ) );
-        funcs.insert( std::make_pair( u8"se", [ this ] ( ArgumentList const& args ) { se( args ); } ) );
-        funcs.insert( std::make_pair( u8"name", [ this ] ( ArgumentList const& args ) { name( args ); } ) );
-        funcs.insert( std::make_pair( u8"human", [ this ] ( ArgumentList const& args ) { human( args ); } ) );
-        funcs.insert( std::make_pair( u8"background", [ this ] ( ArgumentList const& args ) { background( args ); } ) );
-        funcs.insert( std::make_pair( u8"still", [ this ] ( ArgumentList const& args ) { still( args ); } ) );
-
-        funcs.insert( std::make_pair( u8"novelon", [ this ] ( ArgumentList const& args )
-        {
-            if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->on( );
-            if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->on( );
-        } ) );
-        funcs.insert( std::make_pair( u8"noveloff", [ this ] ( ArgumentList const& args )
-        {
-            if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->off( );
-            if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->off( );
-        } ) );
+        REGIST_SCRIPT( u8"SETUP", ScriptSystem::SETUP );
+        REGIST_SCRIPT( u8"l", ScriptSystem::l );
+        REGIST_SCRIPT( u8"select", ScriptSystem::select );
+        REGIST_SCRIPT( u8"stop", ScriptSystem::stop );
+        REGIST_SCRIPT( u8"bgm", ScriptSystem::bgm );
+        REGIST_SCRIPT( u8"se", ScriptSystem::se );
+        REGIST_SCRIPT( u8"name", ScriptSystem::name );
+        REGIST_SCRIPT( u8"human", ScriptSystem::human );
+        REGIST_SCRIPT( u8"background", ScriptSystem::background );
+        REGIST_SCRIPT( u8"still", ScriptSystem::still );
+        REGIST_SCRIPT( u8"novelon", ScriptSystem::novelon );
+        REGIST_SCRIPT( u8"noveloff", ScriptSystem::noveloff );
     }
     ScriptSystem::~ScriptSystem( )
     {
 
     }
-    void ScriptSystem::SETUP( )
+    void ScriptSystem::SETUP( ArgumentList const& args )
     {
         auto systemLayer = dynamic_cast<SystemLayer*>( layer );
         humanLayer = systemLayer->getLayer<HumanLayer>( );
@@ -65,13 +54,13 @@ namespace User
         selectLayer = systemLayer->getLayer<SelectLayer>( );
         stillLayer = systemLayer->getLayer<StillLayer>( );
     }
-    void ScriptSystem::l( )
+    void ScriptSystem::l( ArgumentList const& args )
     {
         novelIndex = lineSize;
     }
     void ScriptSystem::select( ArgumentList const & args )
     {
-        l( );
+        l( args );
 
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
         novel->systemStop.on( );
@@ -114,6 +103,16 @@ namespace User
         default:
             break;
         }
+    }
+    void ScriptSystem::novelon( ArgumentList const& args )
+    {
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->on( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->on( );
+    }
+    void ScriptSystem::noveloff( ArgumentList const& args )
+    {
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->off( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->off( );
     }
     void ScriptSystem::name( ArgumentList const & args )
     {

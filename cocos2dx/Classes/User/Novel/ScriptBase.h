@@ -9,6 +9,8 @@
 
 # include "TextTypes.hpp"
 
+# define REGIST_SCRIPT(name, func) funcs.insert( std::make_pair( name, std::bind( &func, this, std::placeholders::_1 ) ) )
+
 namespace User
 {
     class ScriptBase

@@ -15,13 +15,15 @@ namespace User
         ScriptSystem( cocos2d::Layer* layer );
         ~ScriptSystem( );
     public: // 他のレイヤーを設定するときに使います。
-        void SETUP( );
+        void SETUP( ArgumentList const& args );
     public: // システムの動作を変えるときなどに使います。
         // シナリオ読み込みをストップ
-        void l( );
+        void l( ArgumentList const& args );
         // 選択肢の表示
         void select( ArgumentList const& args );
         void stop( ArgumentList const& args );
+        void novelon( ArgumentList const& args );
+        void noveloff( ArgumentList const& args );
     public: // 変数の登録に使います。
         void name( ArgumentList const& args );
         void background( ArgumentList const& args );

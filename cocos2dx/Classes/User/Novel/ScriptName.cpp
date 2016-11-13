@@ -18,8 +18,8 @@ namespace User
         position = origin + Vec2( 0, OptionalValues::lineViewSize + OptionalValues::stringViewSize.y + OptionalValues::lineViewSize );
         slideSize = visibleSize.width * 0.1;
 
-        funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
-        funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
+        REGIST_SCRIPT( u8"in", ScriptName::in );
+        REGIST_SCRIPT( u8"out", ScriptName::out );
     }
     ScriptName::~ScriptName( )
     {
