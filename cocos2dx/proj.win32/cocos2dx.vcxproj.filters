@@ -46,6 +46,12 @@
     <Filter Include="src\Lib\Live2d\framework">
       <UniqueIdentifier>{d193d8a4-ca57-46f9-9476-089b312ea74c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\ishibashi">
+      <UniqueIdentifier>{56fd8090-a36b-4c7e-9cb7-2bd76c9b2651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\Diary">
+      <UniqueIdentifier>{547d4680-e421-43c7-a00a-b3cd3850c051}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -260,6 +266,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\User\Novel\Live2dLayer.cpp">
       <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\LayerDiary.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Ishibashi\Layer_ishibashi.cpp">
+      <Filter>src\User\ishibashi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp">
+      <Filter>src\User\ishibashi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -499,6 +517,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Novel\Live2dLayer.h">
       <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\LayerDiary.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\SceneDiary.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Ishibashi\Layer_ishibashi.h">
+      <Filter>src\User\ishibashi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h">
+      <Filter>src\User\ishibashi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

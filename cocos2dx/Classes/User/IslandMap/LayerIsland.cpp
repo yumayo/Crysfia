@@ -136,7 +136,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        auto button = ui::Button::create( u8"res/texture/system/bacbutton.png" );
+        auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
 
         auto tar = Size( 128, 128 );
         auto con = button->getContentSize( );

@@ -156,6 +156,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp" />
+    <ClCompile Include="..\Classes\User\Diary\LayerDiary.cpp" />
+    <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp" />
+    <ClCompile Include="..\Classes\User\Ishibashi\Layer_ishibashi.cpp" />
+    <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp" />
     <ClCompile Include="..\Classes\User\LayerBase.cpp" />
@@ -231,6 +235,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h" />
     <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h" />
     <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h" />
+    <ClInclude Include="..\Classes\User\Diary\LayerDiary.h" />
+    <ClInclude Include="..\Classes\User\Diary\SceneDiary.h" />
+    <ClInclude Include="..\Classes\User\Ishibashi\Layer_ishibashi.h" />
+    <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h" />
     <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h" />
     <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h" />
     <ClInclude Include="..\Classes\User\LayerBase.h" />

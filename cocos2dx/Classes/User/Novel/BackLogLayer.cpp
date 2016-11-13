@@ -99,7 +99,7 @@ namespace User
                 }
                 listView->jumpToBottom( );
 
-                auto closeButton = ui::Button::create( u8"res/texture/system/bacbutton.png" );
+                auto closeButton = ui::Button::create( u8"res/texture/system/backbutton.png" );
                 layout->addChild( closeButton );
                 auto tar = Size( 128, 128 );
                 auto con = closeButton->getContentSize( );

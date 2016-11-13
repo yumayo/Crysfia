@@ -15,6 +15,12 @@
 #include "Breeding/SceneCloset.h"
 #include "Title/SceneTitle.h"
 
+// 石橋くんが管理するシーンを作成します。
+#include "Ishibashi/Scene_ishibashi.h"
+
+// 畠山くんが管理するシーンを作成します。
+#include "Diary/SceneDiary.h"
+
 USING_NS_CC;
 
 namespace User
@@ -22,16 +28,7 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-
-        {
-            int err = errno;
-            if ( err != 0 )
-            {
-                int a = err;
-            }
-        }
-
-        createIslandMap();
+        createTitle( );
     }
     void SceneManager::createTitle( )
     {
@@ -53,15 +50,22 @@ namespace User
     {
         create<SceneBreeding>( );
     }
-	void SceneManager::createCreaning()
-	{
-		create<SceneCreaning>();
-	}
-
-	void SceneManager::createCloset()
-	{
-		create<SceneCloset>();
-	}
+    void SceneManager::createCreaning( )
+    {
+        create<SceneCreaning>( );
+    }
+    void SceneManager::createDiary( )
+    {
+        create<SceneDiary>( );
+    }
+    void SceneManager::createIshibashi( )
+    {
+        create<Scene_ishibashi>( );
+    }
+    void SceneManager::createCloset( )
+    {
+        create<SceneCloset>( );
+    }
 
     void SceneManager::childrenCallSetup( cocos2d::Scene* scene )
     {
