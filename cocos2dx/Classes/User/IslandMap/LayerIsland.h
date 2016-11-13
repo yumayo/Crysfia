@@ -20,6 +20,7 @@ namespace User
         void initBackground( );
         void initCountry( );
         void initListener( );
+        cocos2d::ui::Button* createBackButton( );
     private:
         bool isDebug = false;
         cocos2d::ui::Button* createDebugButton( );

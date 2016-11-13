@@ -2,7 +2,9 @@
 
 #include "../SceneManager.h"
 
-#include "../Yumayo/OptionalValues.h"
+#include "../Novel/OptionalValues.h"
+
+#include "../Novel/ScriptHeart.h"
 
 #include <vector>
 #include <functional>
@@ -14,6 +16,7 @@ namespace User
     LayerCity::LayerCity( std::string const& backgroundPath )
         : backgroundPath( backgroundPath )
     {
+
     }
     LayerCity::~LayerCity( )
     {
@@ -47,7 +50,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/" + backgroundPath );
+        background = Sprite::create( u8"res/texture/system/" + backgroundPath );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
@@ -91,7 +94,8 @@ namespace User
         createButton( 155, 384, u8"res/Image/WindowBase/WinBase_91.png", u8"scenario1.txt" );
         createButton( 167, 201, u8"res/Image/WindowBase/WinBase_89.png", u8"scenario2.txt" );
         createButton( 342, 102, u8"res/Image/WindowBase/WinBase_90.png", u8"scenario3.txt" );
-        createButton( 374, 248, u8"res/Image/WindowBase/WinBase_91.png", u8"scenario1.txt" );
+        createButton( 374, 248, u8"res/Image/WindowBase/WinBase_92.png", u8"scenario4.txt" );
+        createButton( 256, 256, u8"res/Image/WindowBase/WinBase_88.png", u8"live2d.txt" );
     }
     void LayerCity::initListener( )
     {
@@ -111,8 +115,12 @@ namespace User
             for ( auto& obj : touches )
             {
                 auto movedPos = background->getPosition( ) - translate + obj->getDelta( );
-                movedPos.clamp( clearance * -1, clearance );
-                background->setPosition( movedPos + translate );
+                if ( clearance.width * -1 <= clearance.width &&
+                     clearance.height * -1 <= clearance.height )
+                {
+                    movedPos.clamp( clearance * -1, clearance );
+                    background->setPosition( movedPos + translate );
+                }
             }
         };
         listener->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
@@ -130,7 +138,12 @@ namespace User
         button->setTitleFontName( u8"res/fonts/meiryo.ttc" );
         button->setTitleFontSize( OptionalValues::fontSize );
         button->setTitleText( u8"DEBUG" );
-        button->setPosition( origin + visibleSize - button->getContentSize( ) / 2.0 );
+
+        auto tar = Size( 128, 128 );
+        auto con = button->getContentSize( );
+        auto sca = tar.height / con.height;
+        button->setScale( sca, sca );
+        button->setPosition( origin + visibleSize + tar / 2.0 );
         button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )

@@ -1,5 +1,5 @@
 #include "Test.h"
-
+#include "ui/CocosGUI.h"
 USING_NS_CC;
 
 namespace User
@@ -8,15 +8,23 @@ namespace User
     {
         
     }
+    Test::~Test( )
+    {
+        
+    }
 	bool Test::init()
 	{
-		if (!ui::Button::init()) { return false; }
-		
-		auto winSize = Director::getInstance()->getWinSize();
-		auto button = ui::Button::create("option_icon.png");
-		button->setPosition(Vec2(winSize/2));
-		button->setScale(0.5);
-		addChild(button);
+		if (!Layer::init()) { return false; }
+
+		auto winSize = Director::getInstance()->getVisibleSize();
+
+		auto sprite = Sprite::create("HelloWorld.png");
+		sprite->setPosition(Vec2::ZERO);
+		addChild(sprite);
+
+		auto background = LayerColor::create(Color4B::GRAY, winSize.width, winSize.height);
+		addChild(background);
+
 
 		return true;
 	}

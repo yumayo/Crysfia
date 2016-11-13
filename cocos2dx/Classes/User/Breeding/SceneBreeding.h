@@ -12,7 +12,6 @@ namespace User
 
 		enum LayerZOders{
 			DEBUG = 0,
-			BACKGROUND,
 			PLAYER,
 			UI,
 		};

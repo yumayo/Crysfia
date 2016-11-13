@@ -1,0 +1,6 @@
+@sys:live2d(haru)
+
+@haru:in
+
+@sys:noveloff
+@sys:l

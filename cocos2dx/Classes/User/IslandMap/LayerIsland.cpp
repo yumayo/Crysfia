@@ -3,7 +3,9 @@
 
 #include "../SceneManager.h"
 
-#include "../Yumayo/OptionalValues.h"
+#include "../Novel/OptionalValues.h"
+
+#include "../Live2d/LAppView.h"
 
 #include <vector>
 #include <functional>
@@ -32,6 +34,8 @@ namespace User
 
         this->addChild( createDebugButton( ) );
 
+        this->addChild( createBackButton( ) );
+
         return true;
     }
     void LayerIsland::setup( )
@@ -47,7 +51,7 @@ namespace User
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/全体マップ.png" );
+        background = Sprite::create( u8"res/texture/system/worldmap.png" );
 
         translate = origin + visibleSize / 2;
         targetSize = visibleSize;
@@ -83,17 +87,17 @@ namespace User
                 if ( type == ui::Widget::TouchEventType::ENDED )
                 {
                     layout->setEnabled( false );
-                    SceneManager::createCiryMap( novel );
+                    SceneManager::createCityMap( novel );
                 }
             } );
         };
 
-        createButton( 206, 510, u8"ミニマップ.png" );
-        createButton( 314, 374, u8"ミニマップ.png" );
-        createButton( 567, 482, u8"ミニマップ.png" );
-        createButton( 618, 366, u8"ミニマップ.png" );
-        createButton( 803, 582, u8"ミニマップ.png" );
-        createButton( 788, 312, u8"ミニマップ.png" );
+        createButton( 206, 510, u8"minimap.png" );
+        createButton( 314, 374, u8"minimap.png" );
+        createButton( 567, 482, u8"minimap.png" );
+        createButton( 618, 366, u8"minimap.png" );
+        createButton( 803, 582, u8"minimap.png" );
+        createButton( 788, 312, u8"minimap.png" );
     }
     void LayerIsland::initListener( )
     {
@@ -113,8 +117,12 @@ namespace User
             for ( auto& obj : touches )
             {
                 auto movedPos = background->getPosition( ) - translate + obj->getDelta( );
-                movedPos.clamp( clearance * -1, clearance );
-                background->setPosition( movedPos + translate );
+                if ( clearance.width * -1 <= clearance.width &&
+                     clearance.height * -1 <= clearance.height )
+                {
+                    movedPos.clamp( clearance * -1, clearance );
+                    background->setPosition( movedPos + translate );
+                }
             }
         };
         listener->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
@@ -122,6 +130,27 @@ namespace User
 
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
+    }
+    cocos2d::ui::Button * LayerIsland::createBackButton( )
+    {
+        auto visibleSize = Director::getInstance( )->getVisibleSize( );
+        auto origin = Director::getInstance( )->getVisibleOrigin( );
+
+        auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
+
+        auto tar = Size( 128, 128 );
+        auto con = button->getContentSize( );
+        auto sca = tar.height / con.height;
+        button->setScale( sca, sca );
+        button->setPosition( origin + tar / 2.0 );
+        button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
+        {
+            if ( type == ui::Widget::TouchEventType::ENDED )
+            {
+                SceneManager::createBreeding( );
+            }
+        } );
+        return button;
     }
     cocos2d::ui::Button* LayerIsland::createDebugButton( )
     {
@@ -132,7 +161,12 @@ namespace User
         button->setTitleFontName( u8"res/fonts/meiryo.ttc" );
         button->setTitleFontSize( OptionalValues::fontSize );
         button->setTitleText( u8"DEBUG" );
-        button->setPosition( origin + visibleSize - button->getContentSize( ) / 2.0 );
+
+        auto tar = Size( 128, 128 );
+        auto con = button->getContentSize( );
+        auto sca = tar.height / con.height;
+        button->setScale( sca, sca );
+        button->setPosition( origin + visibleSize + tar / 2.0 );
         button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
