@@ -30,14 +30,14 @@ namespace User
 	}
 	void Layer_ishibashi::setup()
 	{
-		//メニュー表
+		//
 	}
 	void Layer_ishibashi::update(float delta)
 	{
 
 	}
 
-	//食事のメニュー用の説明文
+	//
 	void Layer_ishibashi::eatText()
 	{
 

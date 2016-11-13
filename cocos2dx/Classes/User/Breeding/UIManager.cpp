@@ -2,8 +2,8 @@
 #include "Test.h"
 #include "BGManager.h"
 #include "../SceneManager.h"
-#include "cocos2d/external/json/rapidjson.h"
-#include "cocos2d/external/json/document.h"
+#include "external/json/rapidjson.h"
+#include "external/json/document.h"
 
 #include "../Diary/LayerDiary.h"
 #include "../Ishibashi/Layer_ishibashi.h"

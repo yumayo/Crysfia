@@ -68,7 +68,7 @@ namespace User
             clipping->setAlphaThreshold( 0.0 );
 
             auto max = 100;
-            auto& data = reader[u8"ƒNƒƒG"][u8"now"];
+            auto& data = reader[u8"ã‚¯ãƒ­ã‚¨"][u8"now"];
             int now = 0;
             try
             {
@@ -76,7 +76,7 @@ namespace User
             }
             catch ( ... )
             {
-                throw( "•Ï”‚ª”š‚Å‚Í‚ ‚è‚Ü‚¹‚ñB" );
+                throw( "æ•°å€¤ãŒç•°å¸¸ãªå€¤ã§ã™ã€‚" );
             }
             auto targetValue = clampf( now + value, 0, max );
             data = StringUtil::value_string<int>( targetValue );
