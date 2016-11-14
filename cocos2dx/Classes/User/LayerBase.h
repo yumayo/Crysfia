@@ -31,7 +31,7 @@ namespace User
     {
     public:
         LayerBase( );
-        ~LayerBase( );
+        virtual ~LayerBase( );
         // initŠÖ”‚ÌŒã‚ÉŒÄ‚Î‚ê‚Ü‚·B
         // setup‚©‚çgetLayer‚ªg‚¦‚é‚æ‚¤‚É‚È‚è‚Ü‚·B
         virtual void setup( );

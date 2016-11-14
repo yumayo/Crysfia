@@ -2,27 +2,24 @@
 #include "LayerBase.h"
 
 // scenarioに使われる変数のサイズなどの初期化。
-#include "Yumayo/OptionalValues.h"
+#include "Novel/OptionalValues.h"
 
-// サンプルシーンを作成します。
-#include "Sample/SceneSample.h"
-
-// ユーマヨのノベルシーンを作成します。
-#include "Yumayo/SceneNovel.h"
-
-// 島マップシーンを作成します。
+// ユーマヨが管理するシーンを作成します。
+#include "Novel/SceneNovel.h"
 #include "IslandMap/SceneIslandMap.h"
-
-// 街マップシーンを作成します。
 #include "CiryMap/SceneCityMap.h"
 
-// 小松さんのホームシーンを作成します。
+// 小松さんが管理するシーンを作成します。
 #include "Breeding/SceneBreeding.h"
 #include "Breeding/SceneCreaning.h"
 #include "Breeding/SceneCloset.h"
-
-// 小松さんのタイトルシーンを追加します。
 #include "Title/SceneTitle.h"
+
+// 石橋くんが管理するシーンを作成します。
+#include "Ishibashi/Scene_ishibashi.h"
+
+// 畠山くんが管理するシーンを作成します。
+#include "Diary/SceneDiary.h"
 
 USING_NS_CC;
 
@@ -31,16 +28,11 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-
-		createBreeding();
+        createTitle( );
     }
     void SceneManager::createTitle( )
     {
         create<SceneTitle>( );
-    }
-    void SceneManager::createSample( )
-    {
-        create<SceneSample>( );
     }
     void SceneManager::createNovel( std::string const& novelPath )
     {
@@ -50,7 +42,7 @@ namespace User
     {
         create<SceneIslandMap>( );
     }
-    void SceneManager::createCiryMap( std::string const& backgroundPath )
+    void SceneManager::createCityMap( std::string const& backgroundPath )
     {
         create<SceneCityMap>( backgroundPath );
     }
@@ -58,15 +50,22 @@ namespace User
     {
         create<SceneBreeding>( );
     }
-	void SceneManager::createCreaning()
-	{
-		create<SceneCreaning>();
-	}
-
-	void SceneManager::createCloset()
-	{
-		create<SceneCloset>();
-	}
+    void SceneManager::createCreaning( )
+    {
+        create<SceneCreaning>( );
+    }
+    void SceneManager::createDiary( )
+    {
+        create<SceneDiary>( );
+    }
+    void SceneManager::createIshibashi( )
+    {
+        create<Scene_ishibashi>( );
+    }
+    void SceneManager::createCloset( )
+    {
+        create<SceneCloset>( );
+    }
 
     void SceneManager::childrenCallSetup( cocos2d::Scene* scene )
     {

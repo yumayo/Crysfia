@@ -1,19 +1,17 @@
 #include "AppDelegate.h"
 #include "Lib/EnvironmentDefaultData/EnvironmentDefaultData.h"
 #include "User/SceneManager.h"
-#include "Live2d.h"
-
-using namespace live2d;
 
 USING_NS_CC;
 
 AppDelegate::AppDelegate( )
 {
+
 }
 
 AppDelegate::~AppDelegate( )
 {
-    Live2D::dispose( );
+
 }
 
 // if you want a different context, modify the value of glContextAttrs
@@ -143,11 +141,7 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
         director->setContentScaleFactor( MIN( env->smallResolutionSize.height / env->designResolutionSize.height, env->smallResolutionSize.width / env->designResolutionSize.width ) );
     }
 
-    auto scaleFactor = director->getContentScaleFactor( );
-
     register_all_packages( );
-
-    Live2D::init( );
 
     User::SceneManager::createSystemAppDelegateStart( );
 
