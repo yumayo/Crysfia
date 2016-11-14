@@ -1,49 +1,75 @@
 #include "TitleManager.h"
 #include "../SceneManager.h"
-
+#include "audio/include/AudioEngine.h"
 USING_NS_CC;
+using namespace experimental;
 
 namespace User
 {
-	TitleManager::TitleManager():
-		uiLabel(Label::createWithSystemFont("TAP TO SCREEN", "Arial", 40)),
-		fadeSprite(nullptr)
+	TitleManager::TitleManager() :
+		uiLabel(Label::createWithSystemFont("TAP TO SCREEN", "Arial", 50)),
+		fadeSprite(nullptr),
+		vol(1.f),
+		isGameStarted(false),
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		titleBgm(AudioEngine::play2d("res/sound/BGM/title.mp3"))
+#else
+		titleBgm(AudioEngine::play2d("res/sound/BGM/title.wav"))
+#endif
 	{
+		AudioEngine::setLoop(titleBgm, true);
+		AudioEngine::setVolume(titleBgm, vol);
 	}
+
 	TitleManager::~TitleManager() {}
 
 	bool TitleManager::init()
 	{
 		if (!Layer::init()) { return false; }
-		
+
 		createTitleWindow();
 		createTapUI();
 		createFadeSprite();
+		this->scheduleUpdate();
 
 		auto listener = EventListenerTouchOneByOne::create();
 		listener->setSwallowTouches(true);
-		listener->onTouchBegan = [&](Touch* touch, Event* event) {
+		
+		listener->onTouchBegan = [=](Touch* touch, Event* event) {
 			return true;
 		};
 
-		listener->onTouchEnded = [&](Touch* touch, Event* event) {
+		listener->onTouchEnded = [=](Touch* touch, Event* event) {
+			isGameStarted = true;
 			uiLabel->runAction(afterAction());
-			fadeSprite->runAction(fadeAction(2,1));
+			fadeSprite->runAction(fadeAction(1.f, 2.0f));
 		};
 		this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
 		return true;
 	}
 
+	void TitleManager::update(float dt)
+	{
+		if (isGameStarted)
+		{
+			vol = vol >= 0 ? vol-=0.01f : isGameStarted = false, titleBgm = NULL;
+			AudioEngine::setVolume(titleBgm, vol);
+		}
+	}
+
 	void TitleManager::createTitleWindow()
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
 
-		auto backGround = Sprite::create("res/texture/novel/背景娯楽の島.png");
+		auto backGround = Sprite::create("res/texture/背景娯楽の島.png");
 		backGround->setPosition(winSize / 2);
 		this->addChild(backGround);
 
-		auto titleLabel = Label::createWithSystemFont("Crysfia", "Arial", 150);
+		int bgm(AudioEngine::play2d("res/sound/BGM/title.wav"));
+
+		auto titleLabel = Label::createWithSystemFont("C r y s f i a", "Arial", 150);
 		titleLabel->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.7f));
 		titleLabel->setColor(Color3B::WHITE);
 		titleLabel->enableShadow(Color4B::BLACK);
@@ -55,7 +81,7 @@ namespace User
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
 		uiLabel->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.55f));
-		uiLabel->enableShadow(Color4B::BLACK, Size(4,-4));
+		uiLabel->enableShadow(Color4B::BLACK, Size(4, -4));
 		this->addChild(uiLabel);
 		uiLabel->runAction(normalAction());
 	}
@@ -66,10 +92,10 @@ namespace User
 		auto winSize = Director::getInstance()->getVisibleSize();
 
 		fadeSprite = Sprite::create();
-		fadeSprite->setTextureRect(Rect(0,0,winSize.width, winSize.height));
+		fadeSprite->setTextureRect(Rect(0, 0, winSize.width, winSize.height));
 		fadeSprite->setColor(Color3B::BLACK);
 		fadeSprite->setOpacity(0);
-		fadeSprite->setPosition(winSize/2);
+		fadeSprite->setPosition(winSize / 2);
 		this->addChild(fadeSprite);
 	}
 
