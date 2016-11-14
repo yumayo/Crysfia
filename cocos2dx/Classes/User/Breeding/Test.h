@@ -2,18 +2,19 @@
 # define __Test__
 
 # include "cocos2d.h"
-#include "ui/CocosGUI.h" 
+
 namespace User
 {
-    class Test : public cocos2d::ui::Button
+    class Test : public cocos2d::Layer
     {
     public:
         Test( );
-		~Test() {}
+        ~Test( );
+
 		bool init();
 
 		CREATE_FUNC(Test);
-    private:
+	private:
 
     };
 }

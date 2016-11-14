@@ -1,0 +1,46 @@
+{
+  "Button": 
+  [
+
+    {
+      "name": "戻る",
+      "res": "res/Image/WindowBase/WinBase_1.png",
+      "pos": 
+      {
+        "x":0.125,
+        "y": 0.5
+      }
+    },
+
+    {
+      "name": "食事",
+      "res": "res/Image/WindowBase/WinBase_24.png",
+      "pos": 
+      {
+        "x":0.375,
+        "y": 0.5
+      }
+    },
+
+    {
+      "name": "着替え",
+      "res": "res/Image/WindowBase/WinBase_24.png",
+      "pos": 
+      {
+        "x":0.625,
+        "y": 0.5
+      }
+    },
+
+    {
+      "name": "掃除",
+      "res": "res/Image/WindowBase/WinBase_24.png",
+      "pos": 
+      {
+        "x":0.875,
+        "y": 0.5
+      }
+    }
+  ]
+
+}

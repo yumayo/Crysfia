@@ -9,7 +9,7 @@
 // @sys:background(変数名)
 @sys:background(背景娯楽の島)
 @sys:background(背景黒)
-@sys:background(背景市場)
+@sys:background(背景商店街)
 @sys:background(背景噴水広場)
 @sys:background(背景遊園地)
 
@@ -24,10 +24,10 @@
 
 // 人物画像を追加したい場合
 // @sys:human(変数名)
-@sys:human(クロエの立ち絵怒り)
-@sys:human(クロエの立ち絵普通)
-@sys:human(クロエの立ち絵喜び)
-@sys:human(クロエの立ち絵驚き)
+@sys:human(クロエ怒り)
+@sys:human(クロエ普通)
+@sys:human(クロエ喜び)
+@sys:human(クロエ驚き)
 //===================================================================
 // 変数を登録する
 //===================================================================

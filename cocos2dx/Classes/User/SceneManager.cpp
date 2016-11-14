@@ -1,19 +1,25 @@
 #include "SceneManager.h"
 #include "LayerBase.h"
 
-// サンプルシーンを作成します。
-#include "Sample/SceneSample.h"
+// scenarioに使われる変数のサイズなどの初期化。
+#include "Novel/OptionalValues.h"
 
-// ユーマヨシーンを作成します。
-#include "Yumayo/SceneYumayo.h"
-
-#include "Yumayo/OptionalValues.h"
-
-// 島マップシーンを作成します。
+// ユーマヨが管理するシーンを作成します。
+#include "Novel/SceneNovel.h"
 #include "IslandMap/SceneIslandMap.h"
+#include "CiryMap/SceneCityMap.h"
 
-// 小松さんのシーンを作成します。
-#include "Breeding/Home.h"
+// 小松さんが管理するシーンを作成します。
+#include "Breeding/SceneBreeding.h"
+#include "Breeding/SceneCreaning.h"
+#include "Breeding/SceneCloset.h"
+#include "Title/SceneTitle.h"
+
+// 石橋くんが管理するシーンを作成します。
+#include "Ishibashi/Scene_ishibashi.h"
+
+// 畠山くんが管理するシーンを作成します。
+#include "Diary/SceneDiary.h"
 
 USING_NS_CC;
 
@@ -22,45 +28,45 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-
-        createIslandMap( );
+        createTitle( );
     }
-    void SceneManager::createSample( )
+    void SceneManager::createTitle( )
     {
-        SceneSample base;
-        auto scene = base.create( );
-
-        childrenCallSetup( scene );
-
-        Director::getInstance( )->replaceScene( scene );
+        create<SceneTitle>( );
     }
-    void SceneManager::createYumayo( )
+    void SceneManager::createNovel( std::string const& novelPath )
     {
-        SceneYumayo base;
-        auto scene = base.create( );
-
-        childrenCallSetup( scene );
-
-        Director::getInstance( )->replaceScene( scene );
+        create<SceneNovel>( novelPath );
     }
     void SceneManager::createIslandMap( )
     {
-        SceneIslandMap base;
-        auto scene = base.create( );
-
-        childrenCallSetup( scene );
-
-        Director::getInstance( )->replaceScene( scene );
+        create<SceneIslandMap>( );
+    }
+    void SceneManager::createCityMap( std::string const& backgroundPath )
+    {
+        create<SceneCityMap>( backgroundPath );
     }
     void SceneManager::createBreeding( )
     {
-        Home base;
-        auto scene = base.create( );
-
-        childrenCallSetup( scene );
-
-        Director::getInstance( )->replaceScene( scene );
+        create<SceneBreeding>( );
     }
+    void SceneManager::createCreaning( )
+    {
+        create<SceneCreaning>( );
+    }
+    void SceneManager::createDiary( )
+    {
+        create<SceneDiary>( );
+    }
+    void SceneManager::createIshibashi( )
+    {
+        create<Scene_ishibashi>( );
+    }
+    void SceneManager::createCloset( )
+    {
+        create<SceneCloset>( );
+    }
+
     void SceneManager::childrenCallSetup( cocos2d::Scene* scene )
     {
         auto children = scene->getChildren( );
