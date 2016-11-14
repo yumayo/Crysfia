@@ -17,6 +17,7 @@ namespace User
 		CREATE_FUNC(BGManager);
 	private:
 
+		int homeBgm;
 		std::vector<cocos2d::Sprite*> backgrounds;
 
 	};
