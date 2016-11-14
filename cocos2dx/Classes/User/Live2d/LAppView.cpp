@@ -22,6 +22,11 @@ LAppView::LAppView():DrawNode()
 	log("hello");
 }
 
+LAppView::~LAppView( )
+{
+    LAppLive2DManager::releaseInstance( );
+}
+
 //bool LAppView::init()
 //{
 //    if ( !Sprite::init() )
@@ -97,8 +102,7 @@ void LAppView::onEnter()
     listener->onTouchesEnded = CC_CALLBACK_2(LAppView::onTouchesEnded, this);
    
 	
-    // 優先度100でディスパッチャーに登録
-    this->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 100);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority( listener, this );
 	
 }
 

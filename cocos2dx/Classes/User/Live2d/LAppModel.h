@@ -26,37 +26,37 @@ class LAppModel : public live2d::framework::L2DBaseModel
 {
 private:
     ModelSetting* modelSetting;
-	const char* modelHomeDir;
-	
+    std::string modelHomeDir;
+
 public:
-    LAppModel();
-    virtual ~LAppModel(void);
-	//Initialize
-	void init(ModelSetting* setting);
-	
-	//Load
-    void load(const char dir[],const char path[]);
-	void preloadMotionGroup(const char name[]);
-	void releaseMotionGroup(const char name[]);
-	
-	//Update
-    void update();
-    void draw();
-	void draw(live2d::framework::L2DMatrix44& matrix);
-	void setViewMatrix(float matrix[16]);
-	
+    LAppModel( );
+    virtual ~LAppModel( void );
+    //Initialize
+    void init( ModelSetting* setting );
+
+    //Load
+    void load( std::string dir, std::string path );
+    void preloadMotionGroup( std::string name );
+    void releaseMotionGroup( std::string name );
+
+    //Update
+    void update( );
+    void draw( );
+    void draw( live2d::framework::L2DMatrix44& matrix );
+    void setViewMatrix( float matrix[16] );
+
     // 全てのモーションデータを設定する。
-    int startMotion(const char group[],int no,int priority);
-	int startRandomMotion(const char name[],int priority);
+    int startMotion( std::string group, int no, int priority );
+    int startRandomMotion( std::string name, int priority );
 
     // 表情のアニメーションデータを設定する。
     // 上のstartMotionと競合はしない。
     // 一緒のフレームでやっても特に破綻したりはしない。
-	void setExpression(const char name[]);
-	void setRandomExpression();
-    
-	//Other
-	virtual bool hitTest(const char pid[],float testX,float testY);
+    void setExpression( std::string name );
+    void setRandomExpression( );
+
+    //Other
+    virtual bool hitTest( std::string pid, float testX, float testY );
 };
 
 

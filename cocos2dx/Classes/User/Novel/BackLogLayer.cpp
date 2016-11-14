@@ -6,6 +6,8 @@
 
 #include "OptionalValues.h"
 
+#include "ScriptStaticData.h"
+
 USING_NS_CC;
 
 namespace User
@@ -23,13 +25,17 @@ namespace User
         if ( !Layer::init( ) ) return false;
 
         auto keyEvent = EventListenerKeyboard::create( );
-        keyEvent->onKeyPressed = [ this ] ( EventKeyboard::KeyCode code, Event* event )
+
+        keyEvent->onKeyReleased = [ this ] ( EventKeyboard::KeyCode code, Event* event )
         {
             if ( code == EventKeyboard::KeyCode::KEY_0 )
             {
+                if ( isBacklog ) return;
+                isBacklog = true;
+
                 auto novelLayer = getLayer<NovelLayer>( );
 
-                this->getEventDispatcher( )->pauseEventListenersForTarget( novelLayer );
+                ScriptStaticData::run( { "sys", "noveloff" } );
 
                 auto origin = Director::getInstance( )->getVisibleOrigin( );
                 auto visibleSize = Director::getInstance( )->getVisibleSize( );
@@ -40,30 +46,14 @@ namespace User
                 layout->setName( u8"layout" );
                 layout->setContentSize( visibleSize );
 
-                auto closeButton = ui::Button::create( u8"res/Image/WindowBase/WinBase_18.png" );
-                layout->addChild( closeButton );
-                closeButton->setTitleFontSize( OptionalValues::fontSize );
-                closeButton->setTitleText( u8"close" );
-                closeButton->setPosition( origin + Vec2( visibleSize.width * 0.5, visibleSize.height * 0.15 ) );
-
-                closeButton->addTouchEventListener( [ = ] ( Ref* pSender, ui::Widget::TouchEventType type )
-                {
-                    auto node = this->getChildByName( u8"layout" );
-                    if ( type == ui::Widget::TouchEventType::ENDED )
-                    {
-                        this->removeChild( node );
-                        this->getEventDispatcher( )->resumeEventListenersForTarget( novelLayer );
-                    }
-                } );
-
                 auto menuImage = ui::Scale9Sprite::create( u8"res/Image/WindowBase/WinBase_58.png",
                                                            Rect( 0 / contentScale, 0 / contentScale,
                                                                  120 / contentScale, 120 / contentScale ),
                                                            Rect( 32 / contentScale, 32 / contentScale,
                                                                  64 / contentScale, 64 / contentScale ) );
                 layout->addChild( menuImage );
-                menuImage->setContentSize( Size( visibleSize.width * 0.9, visibleSize.height * 0.7 ) );
-                menuImage->setPosition( origin + Size( visibleSize.width * 0.5, visibleSize.height * 0.5 + visibleSize.height * 0.15 ) );
+                menuImage->setContentSize( Size( visibleSize.width * 0.9, visibleSize.height * 0.9 ) );
+                menuImage->setPosition( origin + visibleSize * 0.5 );
                 auto menuImageSize = menuImage->getContentSize( );
 
                 auto listView = ui::ListView::create( );
@@ -107,6 +97,24 @@ namespace User
                         index++;
                     }
                 }
+                listView->jumpToBottom( );
+
+                auto closeButton = ui::Button::create( u8"res/texture/system/backbutton.png" );
+                layout->addChild( closeButton );
+                auto tar = Size( 128, 128 );
+                auto con = closeButton->getContentSize( );
+                auto sca = tar.height / con.height;
+                closeButton->setScale( sca, sca );
+                closeButton->setPosition( origin + tar / 2.0 );
+                closeButton->addTouchEventListener( [ = ] ( Ref* pSender, ui::Widget::TouchEventType type )
+                {
+                    if ( type == ui::Widget::TouchEventType::ENDED )
+                    {
+                        ScriptStaticData::run( { "sys", "novelon" } );
+                        this->removeChild( layout );
+                        isBacklog = false;
+                    }
+                } );
             }
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );

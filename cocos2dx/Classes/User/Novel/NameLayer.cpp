@@ -18,8 +18,6 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        setName( typeid( *this ).name( ) );
-
         return true;
     }
     void NameLayer::setup( )

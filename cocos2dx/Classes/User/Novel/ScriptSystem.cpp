@@ -10,11 +10,15 @@
 #include "NovelLayer.h"
 #include "SelectLayer.h"
 #include "StillLayer.h"
+#include "HeartLayer.h"
+#include "Live2dLayer.h"
 
 #include "ScriptHuman.h"
 #include "ScriptBackground.h"
 #include "ScriptName.h"
 #include "ScriptStill.h"
+#include "ScriptHeart.h"
+#include "ScriptLive2d.h"
 
 #include "ui/CocosGUI.h"
 
@@ -27,36 +31,28 @@ namespace User
     ScriptSystem::ScriptSystem( cocos2d::Layer* layer )
         : ScriptBase( layer )
     {
-        funcs.insert( std::make_pair( u8"SETUP", [ this ] ( ArgumentList const& args ) { SETUP( ); } ) );
-
-        funcs.insert( std::make_pair( u8"l", [ this ] ( ArgumentList const& args ) { l( ); } ) );
-        funcs.insert( std::make_pair( u8"select", [ this ] ( ArgumentList const& args ) { select( args ); } ) );
-        funcs.insert( std::make_pair( u8"stop", [ this ] ( ArgumentList const& args ) { stop( args ); } ) );
-
-        funcs.insert( std::make_pair( u8"bgm", [ this ] ( ArgumentList const& args ) { bgm( args ); } ) );
-        funcs.insert( std::make_pair( u8"se", [ this ] ( ArgumentList const& args ) { se( args ); } ) );
-        funcs.insert( std::make_pair( u8"name", [ this ] ( ArgumentList const& args ) { name( args ); } ) );
-        funcs.insert( std::make_pair( u8"human", [ this ] ( ArgumentList const& args ) { human( args ); } ) );
-        funcs.insert( std::make_pair( u8"background", [ this ] ( ArgumentList const& args ) { background( args ); } ) );
-        funcs.insert( std::make_pair( u8"still", [ this ] ( ArgumentList const& args ) { still( args ); } ) );
-
-        funcs.insert( std::make_pair( u8"novelon", [ this ] ( ArgumentList const& args )
-        {
-            if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->on( );
-            if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->on( );
-        } ) );
-        funcs.insert( std::make_pair( u8"noveloff", [ this ] ( ArgumentList const& args )
-        {
-            if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->off( );
-            if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->off( );
-        } ) );
+        REGIST_FUNC( ScriptSystem, l );
+        REGIST_FUNC( ScriptSystem, select );
+        REGIST_FUNC( ScriptSystem, stop );
+        REGIST_FUNC( ScriptSystem, heart );
+        REGIST_FUNC( ScriptSystem, bgm );
+        REGIST_FUNC( ScriptSystem, se );
+        REGIST_FUNC( ScriptSystem, name );
+        REGIST_FUNC( ScriptSystem, human );
+        REGIST_FUNC( ScriptSystem, background );
+        REGIST_FUNC( ScriptSystem, still );
+        REGIST_FUNC( ScriptSystem, live2d );
+        REGIST_FUNC( ScriptSystem, novelon );
+        REGIST_FUNC( ScriptSystem, noveloff );
     }
     ScriptSystem::~ScriptSystem( )
     {
 
     }
-    void ScriptSystem::SETUP( )
+    void ScriptSystem::setup( )
     {
+        novelIndex = 0;
+
         auto systemLayer = dynamic_cast<SystemLayer*>( layer );
         humanLayer = systemLayer->getLayer<HumanLayer>( );
         backgroundLayer = systemLayer->getLayer<BackgroundLayer>( );
@@ -64,14 +60,16 @@ namespace User
         novelLayer = systemLayer->getLayer<NovelLayer>( );
         selectLayer = systemLayer->getLayer<SelectLayer>( );
         stillLayer = systemLayer->getLayer<StillLayer>( );
+        heartLayer = systemLayer->getLayer<HeartLayer>( );
+        live2dLayer = systemLayer->getLayer<Live2dLayer>( );
     }
-    void ScriptSystem::l( )
+    SCRIPT( ScriptSystem::l )
     {
         novelIndex = lineSize;
     }
-    void ScriptSystem::select( ArgumentList const & args )
+    SCRIPT( ScriptSystem::select )
     {
-        l( );
+        l( args );
 
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
         novel->systemStop.on( );
@@ -100,7 +98,7 @@ namespace User
             selectLayer->addChild( menu );
         }
     }
-    void ScriptSystem::stop( ArgumentList const & args )
+    SCRIPT( ScriptSystem::stop )
     {
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
         switch ( args.size( ) )
@@ -115,7 +113,17 @@ namespace User
             break;
         }
     }
-    void ScriptSystem::name( ArgumentList const & args )
+    SCRIPT( ScriptSystem::novelon )
+    {
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->on( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->on( );
+    }
+    SCRIPT( ScriptSystem::noveloff )
+    {
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->off( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->off( );
+    }
+    SCRIPT( ScriptSystem::name )
     {
         switch ( args.size( ) )
         {
@@ -126,53 +134,84 @@ namespace User
             auto pos = variable.find( u8"–¼‘O" );
             if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"–¼‘O" ).size( ) );
 
-            auto script = new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" );
-            ScriptStaticData::addData( std::make_pair( variable, std::unique_ptr<ScriptBase>( script ) ) );
+            REGIST_VARIABLE( variable, new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" ) );
         }
         break;
         case 2:
         {
-            auto script = new ScriptName( nameLayer, args[1], u8"F910MinchoW3.otf" );
-            ScriptStaticData::addData( std::make_pair( args[0], std::unique_ptr<ScriptBase>( script ) ) );
+            REGIST_VARIABLE( args[0], new ScriptName( nameLayer, args[1], u8"F910MinchoW3.otf" ) );
         }
         break;
         default:
             break;
         }
     }
-    void ScriptSystem::background( ArgumentList const & args )
+    SCRIPT( ScriptSystem::background )
     {
-        if ( 1 == args.size( ) )
+        switch ( args.size( ) )
         {
-            std::string variable = args[0];
-            auto script = new ScriptBackground( backgroundLayer, variable + u8".png" );
-            ScriptStaticData::addData( std::make_pair( variable, std::unique_ptr<ScriptBase>( script ) ) );
+        case 1:
+            REGIST_VARIABLE( args[0], new ScriptBackground( backgroundLayer, args[0] + u8".png" ) );
+            break;
+        default:
+            break;
         }
     }
-    void ScriptSystem::bgm( ArgumentList const & args )
+    SCRIPT( ScriptSystem::bgm )
     {
 
     }
-    void ScriptSystem::se( ArgumentList const & args )
+    SCRIPT( ScriptSystem::se )
     {
 
     }
-    void ScriptSystem::human( ArgumentList const & args )
+    SCRIPT( ScriptSystem::human )
     {
-        if ( 1 == args.size( ) )
+        switch ( args.size( ) )
         {
-            std::string variable = args[0];
-            auto script = new ScriptHuman( humanLayer, variable + u8".png" );
-            ScriptStaticData::addData( std::make_pair( variable, std::unique_ptr<ScriptBase>( script ) ) );
+        case 1:
+            REGIST_VARIABLE( args[0], new ScriptHuman( stillLayer, args[0] + u8".png" ) );
+            break;
+        default:
+            break;
         }
     }
-    void ScriptSystem::still( ArgumentList const & args )
+    SCRIPT( ScriptSystem::still )
     {
-        if ( 1 == args.size( ) )
+        switch ( args.size( ) )
         {
-            std::string variable = args[0];
-            auto script = new ScriptStill( stillLayer, variable + u8".png" );
-            ScriptStaticData::addData( std::make_pair( variable, std::unique_ptr<ScriptBase>( script ) ) );
+        case 1:
+            REGIST_VARIABLE( args[0], new ScriptStill( stillLayer, args[0] + u8".png" ) );
+            break;
+        default:
+            break;
+        }
+    }
+    SCRIPT( ScriptSystem::heart )
+    {
+        switch ( args.size( ) )
+        {
+        case 1:
+            REGIST_VARIABLE( args[0], new ScriptHeart( heartLayer, args[0] + u8".ini" ) );
+            break;
+        default:
+            break;
+        }
+    }
+    SCRIPT( ScriptSystem::live2d )
+    {
+        switch ( args.size( ) )
+        {
+        case 1:
+        {
+            auto var = args[0];
+            auto dir = u8"res/live2d/" + var + u8"/";
+            auto json = var + u8".model.json";
+            REGIST_VARIABLE( var, new ScriptLive2d( live2dLayer, dir, json ) );
+        }
+        break;
+        default:
+            break;
         }
     }
 }

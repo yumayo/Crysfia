@@ -33,7 +33,6 @@ namespace User
         if ( ( findPosition = lineString.find_first_not_of( u8" " ) ) != std::string::npos ) lineString = lineString.substr( findPosition );
         else lineString = u8"";
     }
-
     TextData::TextData( )
     {
         preprocess.insert( std::make_pair( u8"import", std::bind( &TextData::import, this, std::placeholders::_1 ) ) );
@@ -88,7 +87,7 @@ namespace User
         size_t stringPosition = 0;
         size_t findPosition = 0;
         size_t lineNumber = 1; // 普通のテキストエディタでは行番号は「1」から始まるので。
-        const std::string eolString = u8"\r\n";
+        const std::string eolString = u8"\n";
         const size_t eolSize = std::string( eolString ).size( );
         while ( findPosition != std::string::npos )
         {

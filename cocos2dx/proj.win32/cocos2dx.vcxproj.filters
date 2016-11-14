@@ -46,6 +46,12 @@
     <Filter Include="src\Lib\Live2d\framework">
       <UniqueIdentifier>{d193d8a4-ca57-46f9-9476-089b312ea74c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\ishibashi">
+      <UniqueIdentifier>{56fd8090-a36b-4c7e-9cb7-2bd76c9b2651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\Diary">
+      <UniqueIdentifier>{547d4680-e421-43c7-a00a-b3cd3850c051}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -59,24 +65,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\User\SceneManager.cpp">
       <Filter>src\User</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\FrameLayer.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\Home.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\Test.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
-      <Filter>src\User\Breeding</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp">
       <Filter>src\User\CityMap</Filter>
@@ -243,6 +231,54 @@
     <ClCompile Include="..\Classes\User\Novel\ScriptLive2d.cpp">
       <Filter>src\User\Novel</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneCloset.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneCreaning.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\Test.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptHeart.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\HeartLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\INIReader.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\INIWriter.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\StringUtil.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\Live2dLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\LayerDiary.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Ishibashi\Layer_ishibashi.cpp">
+      <Filter>src\User\ishibashi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp">
+      <Filter>src\User\ishibashi</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -256,27 +292,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\SceneManager.h">
       <Filter>src\User</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\FrameLayer.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\Home.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\Test.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
-      <Filter>src\User\Breeding</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h">
       <Filter>src\User\CityMap</Filter>
@@ -460,6 +475,60 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Novel\ScriptLive2d.h">
       <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneCloset.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneCreaning.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\soundResources.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\Test.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptHeart.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\HeartLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\INIReader.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\INIWriter.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\StringUtil.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\Live2dLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\LayerDiary.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\SceneDiary.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Ishibashi\Layer_ishibashi.h">
+      <Filter>src\User\ishibashi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h">
+      <Filter>src\User\ishibashi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

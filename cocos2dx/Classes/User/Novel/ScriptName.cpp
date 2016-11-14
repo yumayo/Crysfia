@@ -18,14 +18,14 @@ namespace User
         position = origin + Vec2( 0, OptionalValues::lineViewSize + OptionalValues::stringViewSize.y + OptionalValues::lineViewSize );
         slideSize = visibleSize.width * 0.1;
 
-        funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
-        funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
+        REGIST_FUNC( ScriptName, in );
+        REGIST_FUNC( ScriptName, out );
     }
     ScriptName::~ScriptName( )
     {
 
     }
-    void ScriptName::in( ArgumentList const& args )
+    SCRIPT( ScriptName::in )
     {
         auto label = create( );
         if ( !label ) return;
@@ -37,7 +37,7 @@ namespace User
         auto fadeWithSlide = Spawn::create( fade, slide, nullptr );
         label->runAction( Spawn::create( fadeWithSlide, nullptr ) );
     }
-    void ScriptName::out( ArgumentList const & args )
+    SCRIPT( ScriptName::out )
     {
         if ( auto node = layer->getChildByTag( (int)Tag::Name ) )
         {

@@ -8,26 +8,26 @@ namespace User
         : ScriptBase( layer )
         , textureName( textureName )
     {
-        funcs.insert( std::make_pair( u8"in", [ this ] ( ArgumentList const& args ) { in( args ); } ) );
-        funcs.insert( std::make_pair( u8"out", [ this ] ( ArgumentList const& args ) { out( args ); } ) );
-        funcs.insert( std::make_pair( u8"fadein", [ this ] ( ArgumentList const& args ) { fadein( args ); } ) );
-        funcs.insert( std::make_pair( u8"fadeout", [ this ] ( ArgumentList const& args ) { fadeout( args ); } ) );
-        funcs.insert( std::make_pair( u8"circlein", [ this ] ( ArgumentList const& args ) { circlein( args ); } ) );
-        funcs.insert( std::make_pair( u8"circleout", [ this ] ( ArgumentList const& args ) { circleout( args ); } ) );
+        REGIST_FUNC( ScriptStill, in );
+        REGIST_FUNC( ScriptStill, out );
+        REGIST_FUNC( ScriptStill, fadein );
+        REGIST_FUNC( ScriptStill, fadeout );
+        REGIST_FUNC( ScriptStill, circlein );
+        REGIST_FUNC( ScriptStill, circleout );
     }
     ScriptStill::~ScriptStill( )
     {
 
     }
-    void ScriptStill::in( ArgumentList const& args )
+    SCRIPT( ScriptStill::in )
     {
         create( );
     }
-    void ScriptStill::out( ArgumentList const & args )
+    SCRIPT( ScriptStill::out )
     {
         layer->removeChildByTag( (int)Tag::Still );
     }
-    void ScriptStill::fadein( ArgumentList const & args )
+    SCRIPT( ScriptStill::fadein )
     {
         auto sprite = create( );
         if ( !sprite ) return;
@@ -37,7 +37,7 @@ namespace User
         auto fade = FadeIn::create( 1.0 );
         sprite->runAction( Sequence::create( fade, nullptr ) );
     }
-    void ScriptStill::fadeout( ArgumentList const & args )
+    SCRIPT( ScriptStill::fadeout )
     {
         if ( auto node = layer->getChildByTag( (int)Tag::Still ) )
         {
@@ -46,7 +46,7 @@ namespace User
             node->runAction( Sequence::create( fade, remove, nullptr ) );
         }
     }
-    void ScriptStill::circlein( ArgumentList const & args )
+    SCRIPT( ScriptStill::circlein )
     {
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
@@ -77,7 +77,7 @@ namespace User
 
         layer->addChild( clipping );
     }
-    void ScriptStill::circleout( ArgumentList const & args )
+    SCRIPT( ScriptStill::circleout )
     {
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );

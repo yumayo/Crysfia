@@ -5,6 +5,9 @@
 #include "cocos2d/external/json/rapidjson.h"
 #include "cocos2d/external/json/document.h"
 
+#include "../Diary/LayerDiary.h"
+#include "../Ishibashi/Layer_ishibashi.h"
+
 USING_NS_CC;
 
 namespace User
@@ -194,6 +197,9 @@ namespace User
 		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
 		swapWindow(s, m);
 		bgManager->changeBackGround( (int)BGType::MAIN_MENU, (int)BGType::BREEDING_MENU);
+
+        this->removeChildByName( typeid( Layer_ishibashi ).name() );
+        this->removeChildByName( typeid( LayerDiary ).name( ) );
 	}
 
 	//メインメニューからサブメニューへ変更する関数です
@@ -203,6 +209,10 @@ namespace User
 		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
 		swapWindow(m, s);
 		bgManager->changeBackGround((int)BGType::BREEDING_MENU, (int)BGType::MAIN_MENU);
+
+        auto layer = Layer_ishibashi::create( );
+        layer->setName( typeid( Layer_ishibashi ).name( ) );
+        this->addChild( layer );
 	}
 
 	void UIManager::changeToDiaryWindow()
@@ -211,6 +221,10 @@ namespace User
 		auto d = this->getChildByTag((int)LayerType::DIARY_MENU);
 		swapWindow(m,d);
 		bgManager->changeBackGround((int)BGType::DIARY_MENU, (int)BGType::MAIN_MENU);
+
+        auto layer = LayerDiary::create( );
+        layer->setName( typeid( LayerDiary ).name( ) );
+        this->addChild( layer );
 	}
 
 	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです

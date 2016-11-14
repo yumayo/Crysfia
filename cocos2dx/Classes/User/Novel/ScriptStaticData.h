@@ -16,6 +16,7 @@ namespace User
     {
     public:
         static void setup( );
+        static void clear( );
         static void run( FunctionScript const& functionScript );
         static void addData( std::pair<std::string, std::unique_ptr<ScriptBase>>&& pairData );
     private:
@@ -23,5 +24,7 @@ namespace User
         static std::map<std::string, std::unique_ptr<ScriptBase>> data;
     };
 }
+
+# define REGIST_VARIABLE(variable_, script_) ScriptStaticData::addData( std::make_pair( variable_, std::unique_ptr<ScriptBase>( script_ ) ) );
 
 # endif // __ScriptData__

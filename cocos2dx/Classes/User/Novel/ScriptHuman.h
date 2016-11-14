@@ -13,10 +13,10 @@ namespace User
         ScriptHuman( cocos2d::Layer* layer, std::string textureName );
         ~ScriptHuman( );
     public:
-        void in( ArgumentList const& args );
-        void out( ArgumentList const& args );
-        void fadein( ArgumentList const& args );
-        void fadeout( ArgumentList const& args );
+        SCRIPT( in );
+        SCRIPT( out );
+        SCRIPT( fadein );
+        SCRIPT( fadeout );
     private:
         cocos2d::Sprite* create( );
         std::string textureName;

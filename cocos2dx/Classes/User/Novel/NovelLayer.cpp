@@ -6,6 +6,8 @@
 
 #include "../SceneManager.h"
 
+#include "ScriptStaticData.h"
+
 USING_NS_CC;
 
 namespace User
@@ -26,9 +28,7 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        setName( typeid( *this ).name( ) );
-
-        scheduleUpdate( );
+        this->scheduleUpdate( );
 
         auto keyEvent = EventListenerKeyboard::create( );
         keyEvent->onKeyPressed = [ this ] ( EventKeyboard::KeyCode code, Event* event )
@@ -73,6 +73,7 @@ namespace User
         //};
         //this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
 
+
         return true;
     }
     void NovelLayer::setup( )
@@ -96,11 +97,11 @@ namespace User
         };
         textChunkManager.novelEndCallBack = [ this ]
         {
+            ScriptStaticData::clear( );
             SceneManager::createIslandMap( );
         };
 
         textChunkManager.make( novelPath );
-        textChunkManager.textRead( );
     }
     void NovelLayer::update( float delta )
     {
@@ -116,11 +117,12 @@ namespace User
     }
     void NovelLayer::on( )
     {
-        auto selectLayer = this->getLayer<SelectLayer>( );
+        this->resume( );
         this->setVisible( true );
     }
     void NovelLayer::off( )
     {
+        this->pause( );
         this->setVisible( false );
     }
     void NovelLayer::select( std::string const & name )
