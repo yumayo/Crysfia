@@ -54,7 +54,7 @@ namespace User
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
 
         auto multiTouchEvent = EventListenerTouchAllAtOnce::create( );
-        multiTouchEvent->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        multiTouchEvent->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
             for ( auto& touch : touches )
             {
