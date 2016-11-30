@@ -8,16 +8,18 @@ namespace User
 	class BGManager : public cocos2d::Layer
 	{
 	public:
+		
+		CREATE_FUNC(BGManager);
 		BGManager();
 		~BGManager();
 		bool init();
 
 		void changeBackGround(int targetBG, int changeBG);
 
-		CREATE_FUNC(BGManager);
 	private:
 
 		int homeBgm;
+		cocos2d::Size winSize;
 		std::vector<cocos2d::Sprite*> backgrounds;
 
 	};
