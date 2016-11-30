@@ -12,6 +12,7 @@
 #include "BackLogLayer.h"
 #include "HeartLayer.h"
 #include "Live2dLayer.h"
+#include "FlickFunctionLayer.h"
 
 #include "ScriptSystem.h"
 
@@ -34,6 +35,7 @@ namespace User
         scene->addChild( createLayer<HeartLayer>( ), (int)Tag::Heart );
         scene->addChild( createLayer<SelectLayer>( ), (int)Tag::Select );
         scene->addChild( createLayer<BackLogLayer>( ), (int)Tag::BackLog );
+        scene->addChild( createLayer<FlickFunctionLayer>( ), (int)Tag::FlickFunction );
 
         // システムレイヤーの登録
         // 全てのスクリプトを司る"sys"は初期化の時点で登録をします。

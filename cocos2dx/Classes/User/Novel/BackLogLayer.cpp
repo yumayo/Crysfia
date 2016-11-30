@@ -33,8 +33,6 @@ namespace User
                 if ( isBacklog ) return;
                 isBacklog = true;
 
-                auto novelLayer = getLayer<NovelLayer>( );
-
                 ScriptStaticData::run( { "sys", "noveloff" } );
 
                 auto origin = Director::getInstance( )->getVisibleOrigin( );
@@ -61,6 +59,7 @@ namespace User
                 listView->setContentSize( Size( menuImageSize.width, menuImageSize.height ) );
                 auto listViewSize = listView->getContentSize( );
 
+                auto novelLayer = getLayer<NovelLayer>( );
                 auto chunk = novelLayer->getTextChunkManager( ).getTextChunk( );
 
                 for ( auto& novel : chunk )

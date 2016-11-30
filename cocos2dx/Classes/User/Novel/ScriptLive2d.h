@@ -22,6 +22,8 @@ namespace User
         SCRIPT( sorrow );
         SCRIPT( getSurprise );
         SCRIPT( getAngry );
+        SCRIPT( ê^ñ ñ⁄Ç»äÁ );
+        SCRIPT( îYÇÒÇ≈ÇÈäÁ );
     public:
         SCRIPT( touchon );
         SCRIPT( touchoff );
