@@ -21,6 +21,9 @@
 //@sys:stop(1)
 
 @sys:live2d(haru)
+@haru:touchoff
+@haru:getAngry
+
 @sys:heart(クロエ)
 
 //ここから
@@ -45,7 +48,7 @@
 相変わらずそっぽを向いたままだ。@sys:l
 @名前アレン:in
 「いい加減機嫌直してよ」@sys:l
-@haru:touchoff
+
 @haru:in
     @haru:怒る
     @名前クロエ:in
@@ -112,7 +115,6 @@
 
 @名前アレン:in
 「つまらなそうだね。クロエも興味ないだろう？」@sys:l
-@haru立ち絵普通:in(1)
 @名前クロエ:in
 「でも、あの子頑張ってチラシ配ってたよ。」@sys:l
 「クロエ、あの子のパフォーマンス見てみたいな」@sys:l

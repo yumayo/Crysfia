@@ -279,6 +279,9 @@
     <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp">
       <Filter>src\User\ishibashi</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\FlickFunctionLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -529,6 +532,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h">
       <Filter>src\User\ishibashi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\FlickFunctionLayer.h">
+      <Filter>src\User\Novel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -171,6 +171,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Live2d\TouchManager.cpp" />
     <ClCompile Include="..\Classes\User\Novel\BackgroundLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\BackLogLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\FlickFunctionLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\HeartLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\HumanLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\INIReader.cpp" />
@@ -254,6 +255,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Live2d\TouchManager.h" />
     <ClInclude Include="..\Classes\User\Novel\BackgroundLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\BackLogLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\FlickFunctionLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\HeartLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\HumanLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\INIReader.h" />
