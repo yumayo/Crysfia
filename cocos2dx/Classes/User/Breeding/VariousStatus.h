@@ -2,20 +2,23 @@
 
 //描画順用ステータス
 enum class zOder {
-	BACKGROUND =  0,
-	MAIN_MENU,
-	SUB_MENU,
-	DIARY_MENU,
+	BACKGROUND = 0,
+	CHARACTER,
+	UI_MANAGER,
+	MENU,
 	OPTION,
+	FOREGROUND,
+	
 };
 
-enum class LayerType
+enum class tabLayer
 {
-	BACGROUND = 0,
-	MAIN_MENU,
-	SUB_MENU,
-	DIARY_MENU,
-	OPTION,
+	BACKGROUND = 0,
+	CHARACTER,
+	UI_MANAGER,
+	CLEANING,
+	FOREGROUND,
+	LAYER_MANAGER = -1,
 
 	MAX
 };
@@ -41,10 +44,11 @@ enum class SubButtonType
 	MAX
 };
 
-enum class BGType {
+enum class tabMenu {
 	MAIN_MENU = 0,
 	BREEDING_MENU,
 	DIARY_MENU,
+	OPTION,
 
 	MAX
 };

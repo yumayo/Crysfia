@@ -15,7 +15,7 @@ namespace User
 
 		bool isOpen;
 		bool init();
-
+		
 		CC_SYNTHESIZE_READONLY(cocos2d::Vec2, winSize, WinSize);
 		CC_SYNTHESIZE_READONLY(cocos2d::Vec2, origin, Origin);
 		CC_SYNTHESIZE_READONLY(cocos2d::Vec2, pos, Pos);
@@ -25,7 +25,7 @@ namespace User
 		CREATE_FUNC(UIManager);
 		UIManager();
 		~UIManager();
-
+	
 	private:
 		BGManager* bgManager;
 		cocos2d::ui::ListView*	menuWindow;
@@ -41,9 +41,10 @@ namespace User
 		void touchEventOfMainMenu(Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 		void touchEventOfSubMenu(Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 
-		void changeToMainWindow();
 		void changeToSubWindow();
+		void changeToMainWindow();
 		void changeToDiaryWindow();
+		void changeToCreaning();
 		void swapWindow(Node* moveOutObj, Node* moveInObj);
 
 		void createMainMenuWindow();
@@ -54,3 +55,7 @@ namespace User
 }
 
 # endif // __UIControl__
+
+
+
+
