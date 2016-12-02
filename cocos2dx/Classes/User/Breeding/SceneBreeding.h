@@ -8,15 +8,8 @@ namespace User
 {
 	class SceneBreeding : public SceneBase
 	{
-	private:
-
-		enum LayerZOders{
-			DEBUG = 0,
-			PLAYER,
-			UI,
-		};
-
 	public:
+		SceneBreeding();
 		cocos2d::Scene* create()override;
 	};
 }
