@@ -17,9 +17,6 @@ namespace User
         static void createIslandMap( );
         static void createCityMap( std::string const& backgroundPath );
         static void createBreeding( );
-		static void createCloset();
-		static void createCreaning();
-        static void createDiary( );
         static void createIshibashi( );
     private:
         static void childrenCallSetup( cocos2d::Scene* scene );
