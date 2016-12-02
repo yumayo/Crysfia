@@ -198,7 +198,7 @@ namespace User
 		swapWindow(s, m);
 		bgManager->changeBackGround( (int)BGType::MAIN_MENU, (int)BGType::BREEDING_MENU);
 
-        this->removeChildByName( typeid( Layer_ishibashi ).name() );
+        this->removeChildByName( typeid( Layer_meal ).name() );
         this->removeChildByName( typeid( LayerDiary ).name( ) );
 	}
 
@@ -210,8 +210,8 @@ namespace User
 		swapWindow(m, s);
 		bgManager->changeBackGround((int)BGType::BREEDING_MENU, (int)BGType::MAIN_MENU);
 
-        auto layer = Layer_ishibashi::create( );
-        layer->setName( typeid( Layer_ishibashi ).name( ) );
+        auto layer = Layer_meal::create( );
+        layer->setName( typeid( Layer_meal ).name( ) );
         this->addChild( layer );
 	}
 
