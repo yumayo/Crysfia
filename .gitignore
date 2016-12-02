@@ -6,3 +6,5 @@ cocos2dx/proj.win32/
 
 cocos2dx/.cocos-project.json
 cocos2dx/CMakeLists.txt
+
+.gitignore
