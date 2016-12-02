@@ -1,5 +1,9 @@
 #include "FlickFunctionLayer.h"
 
+#include "NovelLayer.h"
+
+#include "../SceneManager.h"
+
 USING_NS_CC;
 
 namespace User
@@ -46,27 +50,17 @@ namespace User
     }
     void FlickFunctionLayer::setup( )
     {
-
+        novelLayer = getLayer<NovelLayer>( );
     }
     void FlickFunctionLayer::update( float delta )
     {
-        if ( isTap )
-        {
-            if ( isLongTap )
-            {
-                holdTapTime += delta;
+        if ( isTap && !isLongTap( ) ) holdTapTime += delta;
 
-                if ( 0.8F <= holdTapTime )
-                {
-                    isTap = false;
-                    createFlickCircle( );
-                }
-            }
-        }
+        if ( isLongTap( ) && !circle ) createFlickCircle( );
 
-        if ( circle )
+        if ( isFunction )
         {
-            if ( functionStart )
+            if ( circle )
             {
                 bool hit = false;
                 for ( auto& obj : circle->getChildren( ) )
@@ -75,17 +69,17 @@ namespace User
                     auto pos = item->getWorldPosition( );
 
                     float distance;
-                    if ( ( distance = pos.distance( tapLastPosition ) ) < 60.0F )
+                    if ( ( distance = pos.distance( tapLastPosition ) ) < subMenuRadius )
                     {
                         log( "distance : %f", distance );
-                        circle->drawDot( Vec2::ZERO, 100.0F, item->getDrawColor( ) );
+                        circle->drawDot( Vec2::ZERO, circleRadius, item->getDrawColor( ) );
                         hit = true;
                         //break;
                     }
                 }
                 if ( !hit )
                 {
-                    circle->drawDot( Vec2::ZERO, 100.0F, Color4F::YELLOW );
+                    circle->drawDot( Vec2::ZERO, circleRadius, Color4F::YELLOW );
                 }
             }
         }
@@ -93,29 +87,36 @@ namespace User
     void FlickFunctionLayer::began( cocos2d::Touch * touch )
     {
         isTap = true;
-        isLongTap = true;
-        functionStart = false;
+
+        isFunction = false;
+
+        isSuccessLongTap = true;
+
         holdTapTime = 0.0F;
+
         tapBeganPosition = touch->getLocation( );
+
         tapLastPosition = tapBeganPosition;
     }
     void FlickFunctionLayer::moved( cocos2d::Touch * touch )
     {
         tapLastPosition = touch->getLocation( );
 
-        if ( 50.0F < tapBeganPosition.distance( tapLastPosition ) )
+        if ( !isLongTap( ) )
         {
-            isLongTap = false;
+            if ( longTapShiftLength <= tapBeganPosition.distance( tapLastPosition ) ) isSuccessLongTap = false;
         }
     }
     void FlickFunctionLayer::ended( cocos2d::Touch * touch )
     {
-        functionStart = false;
         isTap = false;
+        isFunction = false;
 
         // ‹@”\‚Ì‚·‚×‚Ä‚ð‚µ‚Ü‚¤
         if ( circle )
         {
+            if ( novelLayer ) novelLayer->resume( );
+
             auto children = circle->getChildren( );
             int i = 0;
             for ( int size = children.size( ); i < size; ++i )
@@ -123,22 +124,41 @@ namespace User
                 auto move = MoveTo::create( 1.0F, Vec2::ZERO );
                 auto easing = EaseExponentialOut::create( move );
                 auto delay = DelayTime::create( 0.1F * i );
+                children.at( i )->stopAllActions( );
                 children.at( i )->runAction( Sequence::create( delay, easing, nullptr ) );
             }
 
             auto scale = ScaleTo::create( 1.0F, 0.0F );
             auto easeScale = EaseElasticOut::create( scale );
             auto delay = DelayTime::create( 0.1F * i );
-            circle->runAction( Sequence::create( delay, easeScale, CallFunc::create( [ this ] { circle = nullptr; } ), RemoveSelf::create( ), nullptr ) );
+            auto modeShift = CallFunc::create( [ this ] 
+            {
+                if ( circle->getDrawColor( ) == Color3B::RED )
+                {
+                    SceneManager::createBreeding( );
+                }
+                else if ( circle->getDrawColor( ) == Color3B::BLUE )
+                {
+                    SceneManager::createTitle( );
+                }
+                else if ( circle->getDrawColor( ) == Color3B::GREEN )
+                {
+                    SceneManager::createIslandMap( );
+                }
+            } );
+            circle->stopAllActions( );
+            circle->runAction( Sequence::create( delay, easeScale, modeShift, RemoveSelf::create( ), CallFunc::create( [ this ] { circle = nullptr; } ), nullptr ) );
         }
     }
     void FlickFunctionLayer::createFlickCircle( )
     {
+        if ( novelLayer ) novelLayer->pause( ); 
+
         // ’†‰›‚ÌŠÛ
         int thisNumber = 0;
         circle = FunctionCircle::create( );
         {
-            circle->drawDot( Vec2::ZERO, 100.0F, Color4F::YELLOW );
+            circle->drawDot( Vec2::ZERO, circleRadius, Color4F::YELLOW );
             circle->setPosition( tapLastPosition );
             circle->setScale( 0.0F );
             auto scale = ScaleTo::create( 1.0F, 1.0F );
@@ -155,8 +175,8 @@ namespace User
         thisNumber++;
         {
             auto dot = FunctionCircle::create( );
-            dot->drawDot( Vec2::ZERO, 60.0F, Color4F::RED );
-            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * 150.0F, sin( selfAngle * thisNumber ) * 150.0F ) );
+            dot->drawDot( Vec2::ZERO, subMenuRadius, Color4F::RED );
+            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ), sin( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ) ) );
             auto easing = EaseExponentialOut::create( move );
             auto delay = DelayTime::create( 0.1F * thisNumber );
             dot->runAction( Sequence::create( delay, easing, nullptr ) );
@@ -167,8 +187,8 @@ namespace User
         thisNumber++;
         {
             auto dot = FunctionCircle::create( );
-            dot->drawDot( Vec2::ZERO, 60.0F, Color4F::BLUE );
-            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * 150.0F, sin( selfAngle * thisNumber ) * 150.0F ) );
+            dot->drawDot( Vec2::ZERO, subMenuRadius, Color4F::BLUE );
+            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ), sin( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ) ) );
             auto easing = EaseExponentialOut::create( move );
             auto delay = DelayTime::create( 0.1F * thisNumber );
             dot->runAction( Sequence::create( delay, easing, nullptr ) );
@@ -179,11 +199,11 @@ namespace User
         thisNumber++;
         {
             auto dot = FunctionCircle::create( );
-            dot->drawDot( Vec2::ZERO, 60.0F, Color4F::GREEN );
-            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * 150.0F, sin( selfAngle * thisNumber ) * 150.0F ) );
+            dot->drawDot( Vec2::ZERO, subMenuRadius, Color4F::GREEN );
+            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ), sin( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ) ) );
             auto easing = EaseExponentialOut::create( move );
             auto delay = DelayTime::create( 0.1F * thisNumber );
-            dot->runAction( Sequence::create( delay, easing, CallFunc::create( [ this ] { functionStart = true; } ), nullptr ) );
+            dot->runAction( Sequence::create( delay, easing, CallFunc::create( [ this ] { isFunction = true; } ), nullptr ) );
             circle->addChild( dot );
         }
     }
