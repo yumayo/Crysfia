@@ -22,8 +22,8 @@ namespace User
         Name,
         Heart,
         Select,
-        BackLog,
         FlickFunction,
+        BackLog,
         System,
     };
     constexpr uint32_t lineSize = 3U;

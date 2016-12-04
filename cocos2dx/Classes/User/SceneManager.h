@@ -17,6 +17,7 @@ namespace User
         static void createIslandMap( );
         static void createCityMap( std::string const& backgroundPath );
         static void createBreeding( );
+        static void createDiary( );
         static void createIshibashi( );
     private:
         static void childrenCallSetup( cocos2d::Scene* scene );
@@ -31,8 +32,7 @@ namespace User
     template<class Ty>
     inline void SceneManager::create( )
     {
-        Ty base;
-        auto scene = base.create( );
+        auto scene = Ty::create( );
 
         childrenCallSetup( scene );
 

@@ -13,6 +13,16 @@ USING_NS_CC;
 
 namespace User
 {
+    MainMark * MainMark::createMark( )
+    {
+        const std::string dir = u8"res/texture/system/";
+
+        auto mark = create( );
+        mark->initWithFile( dir + "scenario.main.png" );
+
+        return mark;
+    }
+
     LayerCity::LayerCity( std::string const& backgroundPath )
         : backgroundPath( backgroundPath )
     {

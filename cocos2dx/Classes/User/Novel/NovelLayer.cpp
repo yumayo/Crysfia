@@ -97,7 +97,6 @@ namespace User
         };
         textChunkManager.novelEndCallBack = [ this ]
         {
-            ScriptStaticData::clear( );
             SceneManager::createIslandMap( );
         };
 

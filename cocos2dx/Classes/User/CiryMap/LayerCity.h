@@ -7,6 +7,27 @@
 
 namespace User
 {
+    class Mark : public cocos2d::Sprite
+    {
+    protected:
+        /**
+         *  すでに読んだシナリオなのかどうか。
+         *  @true   読んでいたら
+         *  @false  未読なら
+         */
+        bool isChecked;
+    };
+
+    class MainMark : public Mark
+    {
+    public:
+        static MainMark* createMark( );
+        MainMark( ) { }
+        ~MainMark( ) { }
+    private:
+        CREATE_FUNC( MainMark );
+    };
+
     class LayerCity : public LayerBase
     {
     public:
@@ -31,6 +52,35 @@ namespace User
         cocos2d::Sprite* background;
     private:
         std::string backgroundPath;
+
+        /**
+         * 次の行動目的を表示するためのデータ。
+         */
+        std::map<std::string, cocos2d::Data> data;
+
+        /**
+         *  月
+         */
+        int month;
+
+        /**
+         *  日
+         */
+        int day;
+
+        /**
+         *  時刻
+         */
+        enum Times
+        {
+            morning,
+            daytime,
+            night
+        };
+        Times times;
+
+
+
     };
 }
 
