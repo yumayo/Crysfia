@@ -9,18 +9,90 @@
 #include <vector>
 #include <functional>
 
+#include "../Novel/StringUtil.h"
+
 USING_NS_CC;
 
 namespace User
 {
-    MainMark * MainMark::createMark( )
+    void Mark::pasteMap( cocos2d::Sprite * map, ScenarioData const & data )
+    {
+        initData( data );
+
+        auto s = map->getContentSize( );
+
+        float x = position.x;
+        float y = position.y;
+
+        auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+
+        x *= scale; y *= scale;
+
+        map->addChild( this );
+
+        setPosition( Vec2( x, s.height - y ) );
+        auto tar = Size( 64, 64 );
+        auto con = getContentSize( );
+        auto sca = tar.height / con.height;
+        setScale( sca, sca );
+
+        addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
+        {
+            if ( type == ui::Widget::TouchEventType::ENDED )
+            {
+                map->pause( );
+                SceneManager::createNovel( this->scenario );
+            }
+        } );
+    }
+
+    void MainMark::pasteMap( cocos2d::Sprite* map, ScenarioData const& data )
     {
         const std::string dir = u8"res/texture/system/";
 
-        auto mark = create( );
-        mark->initWithFile( dir + "scenario.main.png" );
+        loadTextureNormal( dir + "scenario.main.png" );
 
-        return mark;
+        Mark::pasteMap( map, data );
+    }
+
+    void SubMark::pasteMap( cocos2d::Sprite* map, ScenarioData const& data )
+    {
+        const std::string dir = u8"res/texture/system/";
+
+        loadTextureNormal( dir + "scenario.sub.png" );
+
+        Mark::pasteMap( map, data );
+    }
+
+    Calendar* Calendar::make( int day )
+    {
+        const std::string dir = u8"res/texture/system/";
+
+        initWithFile( dir + "calendar.png" );
+
+        setAnchorPoint( Vec2( 0, 1 ) );
+
+        auto origin = Director::getInstance( )->getVisibleOrigin( );
+        auto size = Director::getInstance( )->getVisibleSize( );
+        auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+
+        auto tar = Size( 196, 196 );
+        auto con = getContentSize( );
+        auto sca = tar.height / con.height;
+        setScale( sca, sca );
+        auto pos = Vec2( 0, size.height );
+        setPosition( origin + pos );
+
+        this->day = day;
+
+        auto fDay = Label::createWithTTF( StringUtil::value_string( day ),
+                                          u8"res/fonts/meiryo.ttc",
+                                          150 );
+        this->addChild( fDay );
+        fDay->setPosition( 128 * scale, ( con.height - 256 ) * scale );
+        fDay->setColor( Color3B( 39, 39, 39 ) );
+
+        return this;
     }
 
     LayerCity::LayerCity( std::string const& backgroundPath )
@@ -42,6 +114,8 @@ namespace User
         initBackground( );
 
         initCountry( );
+
+        this->addChild( Calendar::create( )->make( 5 ) );
 
         this->addChild( createDebugButton( ) );
 
@@ -73,39 +147,11 @@ namespace User
     }
     void LayerCity::initCountry( )
     {
-        auto s = background->getContentSize( );
-
-        auto layout = ui::Layout::create( );
-        background->addChild( layout );
-
-        auto createButton = [ & ] ( float x, float y, std::string const& name, std::string const& novel )
-        {
-            auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
-            x *= scale; y *= scale;
-
-            auto button = ui::Button::create( name );
-            layout->addChild( button );
-
-            button->setPosition( Vec2( x, s.height - y ) );
-            auto tar = Size( 64, 64 );
-            auto con = button->getContentSize( );
-            auto sca = tar.height / con.height;
-            button->setScale( sca, sca );
-            button->addTouchEventListener( [ this, layout, novel ] ( Ref* pSender, ui::Widget::TouchEventType type )
-            {
-                if ( type == ui::Widget::TouchEventType::ENDED )
-                {
-                    layout->setEnabled( false );
-                    SceneManager::createNovel( novel );
-                }
-            } );
-        };
-
-        createButton( 155, 384, u8"res/Image/WindowBase/WinBase_91.png", u8"scenario1.txt" );
-        createButton( 167, 201, u8"res/Image/WindowBase/WinBase_89.png", u8"scenario2.txt" );
-        createButton( 342, 102, u8"res/Image/WindowBase/WinBase_90.png", u8"scenario3.txt" );
-        createButton( 374, 248, u8"res/Image/WindowBase/WinBase_92.png", u8"scenario4.txt" );
-        createButton( 256, 256, u8"res/Image/WindowBase/WinBase_88.png", u8"live2d.txt" );
+        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 155, 384 ), u8"scenario1.txt" } );
+        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 167, 201 ), u8"scenario2.txt" } );
+        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 342, 102 ), u8"scenario3.txt" } );
+        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 374, 248 ), u8"scenario4.txt" } );
+        SubMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 256, 256 ), u8"live2d.txt" } );
     }
     void LayerCity::initListener( )
     {

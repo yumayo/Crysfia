@@ -7,25 +7,77 @@
 
 namespace User
 {
-    class Mark : public cocos2d::Sprite
+    struct ScenarioData
     {
-    protected:
+        /**
+         *  データの初期化を行います。
+         *  構造に必要なデータを一つ一つ詰めます。
+         */
+        void initData( bool isChecked, cocos2d::Vec2 const& position, std::string const& scenario )
+        {
+            this->isChecked = isChecked;
+            this->position = position;
+            this->scenario = scenario;
+        }
+
+        /**
+         *  データの初期化を行います。
+         *  コピーを取ってそのまま代入します。
+         */
+        void initData( ScenarioData const& scenario ) { *this = scenario; }
+
         /**
          *  すでに読んだシナリオなのかどうか。
          *  @true   読んでいたら
          *  @false  未読なら
          */
         bool isChecked;
+
+        /**
+         *  マップ画像中の表示位置。
+         */
+        cocos2d::Vec2 position;
+
+        /**
+         *  読み込むシナリオファイルのパス。
+         */
+        std::string scenario;
+    };
+
+    class Mark : protected ScenarioData, public cocos2d::ui::Button
+    {
+    protected:
+        void pasteMap( cocos2d::Sprite* map, ScenarioData const& data );
     };
 
     class MainMark : public Mark
     {
     public:
-        static MainMark* createMark( );
+        CREATE_FUNC( MainMark );
+        void pasteMap( cocos2d::Sprite* map, ScenarioData const& data );
         MainMark( ) { }
         ~MainMark( ) { }
+    };
+
+    class SubMark : public Mark
+    {
+    public:
+        CREATE_FUNC( SubMark );
+        void pasteMap( cocos2d::Sprite* map, ScenarioData const& data );
+        SubMark( ) { }
+        ~SubMark( ) { }
+    };
+
+    class Calendar : public cocos2d::Sprite
+    {
+    public:
+        CREATE_FUNC( Calendar );
+        Calendar* make( int day );
     private:
-        CREATE_FUNC( MainMark );
+        /**
+        *  カレンダーに表示する日にち。
+        */
+        int day;
     };
 
     class LayerCity : public LayerBase
@@ -58,18 +110,10 @@ namespace User
          */
         std::map<std::string, cocos2d::Data> data;
 
-        /**
-         *  月
-         */
-        int month;
+
 
         /**
-         *  日
-         */
-        int day;
-
-        /**
-         *  時刻
+         *  今の時間。
          */
         enum Times
         {
@@ -78,9 +122,6 @@ namespace User
             night
         };
         Times times;
-
-
-
     };
 }
 
