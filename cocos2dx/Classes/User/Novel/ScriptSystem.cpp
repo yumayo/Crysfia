@@ -53,6 +53,8 @@ namespace User
     }
     void ScriptSystem::setup( )
     {
+        ScriptStaticData::setup( );
+
         novelIndex = 0;
         isShowNovel = true;
 
@@ -208,7 +210,7 @@ namespace User
         switch ( args.size( ) )
         {
         case 1:
-            REGIST_VARIABLE( args[0], new ScriptHeart( heartLayer, args[0] + u8".ini" ) );
+            REGIST_VARIABLE( args[0], new ScriptHeart( heartLayer ) );
             break;
         default:
             break;

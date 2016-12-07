@@ -4,18 +4,22 @@
 
 #include "../Novel/OptionalValues.h"
 
-#include "../Novel/ScriptHeart.h"
-
 #include <vector>
 #include <functional>
 
 #include "../Novel/StringUtil.h"
 
+#include "../Novel/ScriptStaticData.h"
+
+#include "../Novel/INIReader.h"
+
+#include "../System/DataSettings.h"
+
 USING_NS_CC;
 
 namespace User
 {
-    void Mark::pasteMap( cocos2d::Sprite * map, ScenarioData const & data )
+    void Mark::pasteMap( cocos2d::Sprite * map, ScenarioPointData const & data )
     {
         initData( data );
 
@@ -40,13 +44,36 @@ namespace User
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
-                map->pause( );
-                SceneManager::createNovel( this->scenario );
+                if ( auto parent = getParent( ) )
+                {
+                    if ( auto p = dynamic_cast<CityMap*>( parent ) )
+                        p->allChildCheckRemoved( );
+                }
+
+                const std::string dir = u8"res/texture/system/";
+
+                auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+
+                auto kuroe = Sprite::create( dir + "kuroeicon.png" );
+                addChild( kuroe );
+                kuroe->setPosition( Vec2( getContentSize( ) / 2 ) );
+
+                auto ok = ui::Button::create( dir + u8"ok.png" );
+                addChild( ok );
+                ok->setPosition( Vec2( getContentSize( ) / 2 ) + Vec2( 0, -64 - 128 - 35 ) * scale );
+                ok->addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
+                {
+                    if ( type == ui::Widget::TouchEventType::ENDED )
+                    {
+                        map->pause( );
+                        SceneManager::createNovel( this->scenario );
+                    }
+                } );
             }
         } );
     }
 
-    void MainMark::pasteMap( cocos2d::Sprite* map, ScenarioData const& data )
+    void MainMark::pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data )
     {
         const std::string dir = u8"res/texture/system/";
 
@@ -55,7 +82,7 @@ namespace User
         Mark::pasteMap( map, data );
     }
 
-    void SubMark::pasteMap( cocos2d::Sprite* map, ScenarioData const& data )
+    void SubMark::pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data )
     {
         const std::string dir = u8"res/texture/system/";
 
@@ -70,7 +97,7 @@ namespace User
 
         initWithFile( dir + "calendar.png" );
 
-        setAnchorPoint( Vec2( 0, 1 ) );
+        setAnchorPoint( Vec2( 1, 1 ) );
 
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto size = Director::getInstance( )->getVisibleSize( );
@@ -80,7 +107,7 @@ namespace User
         auto con = getContentSize( );
         auto sca = tar.height / con.height;
         setScale( sca, sca );
-        auto pos = Vec2( 0, size.height );
+        auto pos = size;
         setPosition( origin + pos );
 
         this->day = day;
@@ -95,6 +122,63 @@ namespace User
         return this;
     }
 
+    CityMap* CityMap::make( std::string const& backgroundfile )
+    {
+        const std::string dir = u8"res/texture/system/";
+
+        initWithFile( dir + backgroundfile );
+
+        auto size = Director::getInstance( )->getVisibleSize( );
+        auto origin = Director::getInstance( )->getVisibleOrigin( );
+
+        auto targetSize = size;
+        translate = origin + size / 2;
+        backgroundWindowHeightFitScale = targetSize.height / getContentSize( ).height;
+
+        setPosition( translate );
+        setScale( backgroundWindowHeightFitScale, backgroundWindowHeightFitScale );
+
+        auto listener = EventListenerTouchAllAtOnce::create( );
+        listener->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        {
+
+        };
+        listener->onTouchesMoved = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        {
+            auto visibleSize = Director::getInstance( )->getVisibleSize( );
+
+            auto texS_2 = ( getContentSize( ) * backgroundWindowHeightFitScale ) / 2;
+            auto winS_2 = visibleSize / 2;
+            auto clearance = texS_2 - winS_2;
+
+            for ( auto& obj : touches )
+            {
+                auto movedPos = getPosition( ) - translate + obj->getDelta( );
+                if ( clearance.width * -1 <= clearance.width &&
+                     clearance.height * -1 <= clearance.height )
+                {
+                    movedPos.clamp( clearance * -1, clearance );
+                    setPosition( movedPos + translate );
+                }
+            }
+        };
+        listener->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        {
+
+        };
+        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
+
+        return this;
+    }
+
+    void CityMap::allChildCheckRemoved( )
+    {
+        for ( auto& obj : getChildren( ) )
+        {
+            obj->removeAllChildren( );
+        }
+    }
+
     LayerCity::LayerCity( std::string const& backgroundPath )
         : backgroundPath( backgroundPath )
     {
@@ -107,17 +191,26 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        this->scheduleUpdate( );
+        auto background = CityMap::create( )->make( backgroundPath );
+        this->addChild( background );
 
-        initListener( );
-
-        initBackground( );
-
-        initCountry( );
+        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 155, 384 ), u8"scenario1.txt" } );
+        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 167, 201 ), u8"scenario2.txt" } );
+        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 342, 102 ), u8"scenario3.txt" } );
+        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 374, 248 ), u8"scenario4.txt" } );
+        SubMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 256, 256 ), u8"live2d.txt" } );
 
         this->addChild( Calendar::create( )->make( 5 ) );
 
-        this->addChild( createDebugButton( ) );
+        this->addChild( createBackButton( ) );
+
+        ScriptStaticData::run( { "sys", { "heart", { u8"クロエ" } } } );
+        ScriptStaticData::run( { u8"クロエ", { "draw", { } } } );
+
+        auto data = UserDefault::getInstance( );
+        auto day = data->getIntegerForKey( u8"日" );
+        day += 10;
+        data->setIntegerForKey( u8"日", day );
 
         return true;
     }
@@ -125,92 +218,23 @@ namespace User
     {
 
     }
-    void LayerCity::update( float delta )
-    {
-
-    }
-    void LayerCity::initBackground( )
+    cocos2d::ui::Button * LayerCity::createBackButton( )
     {
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-        background = Sprite::create( u8"res/texture/system/" + backgroundPath );
-
-        translate = origin + visibleSize / 2;
-        targetSize = visibleSize;
-        backgroundWindowHeightFitScale = targetSize.height / background->getContentSize( ).height;
-
-        background->setPosition( translate );
-        background->setScale( backgroundWindowHeightFitScale, backgroundWindowHeightFitScale );
-
-        this->addChild( background );
-    }
-    void LayerCity::initCountry( )
-    {
-        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 155, 384 ), u8"scenario1.txt" } );
-        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 167, 201 ), u8"scenario2.txt" } );
-        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 342, 102 ), u8"scenario3.txt" } );
-        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 374, 248 ), u8"scenario4.txt" } );
-        SubMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 256, 256 ), u8"live2d.txt" } );
-    }
-    void LayerCity::initListener( )
-    {
-        auto listener = EventListenerTouchAllAtOnce::create( );
-        listener->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
-        {
-
-        };
-        listener->onTouchesMoved = [ this ] ( const std::vector<Touch*>& touches, Event* event )
-        {
-            auto visibleSize = Director::getInstance( )->getVisibleSize( );
-
-            auto texS_2 = ( background->getContentSize( ) * backgroundWindowHeightFitScale ) / 2;
-            auto winS_2 = visibleSize / 2;
-            auto clearance = texS_2 - winS_2;
-
-            for ( auto& obj : touches )
-            {
-                auto movedPos = background->getPosition( ) - translate + obj->getDelta( );
-                if ( clearance.width * -1 <= clearance.width &&
-                     clearance.height * -1 <= clearance.height )
-                {
-                    movedPos.clamp( clearance * -1, clearance );
-                    background->setPosition( movedPos + translate );
-                }
-            }
-        };
-        listener->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
-        {
-
-        };
-        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
-    }
-    cocos2d::ui::Button* LayerCity::createDebugButton( )
-    {
-        auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-
-        auto button = ui::Button::create( u8"res/Image/WindowBase/WinBase_104.png" );
-        button->setTitleFontName( u8"res/fonts/meiryo.ttc" );
-        button->setTitleFontSize( OptionalValues::fontSize );
-        button->setTitleText( u8"DEBUG" );
+        auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
 
         auto tar = Size( 128, 128 );
         auto con = button->getContentSize( );
         auto sca = tar.height / con.height;
         button->setScale( sca, sca );
-        button->setPosition( origin + visibleSize + tar / 2.0 );
+        button->setPosition( origin + tar / 2.0 );
         button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
-                isDebug = !isDebug;
-                auto but = dynamic_cast<ui::Button*>( pSender );
-                if ( but )
-                {
-                    if ( isDebug ) but->loadTextureNormal( u8"res/Image/WindowBase/WinBase_64.png" );
-                    else but->loadTextureNormal( u8"res/Image/WindowBase/WinBase_104.png" );
-                }
+                SceneManager::createBreeding( );
             }
         } );
         return button;

@@ -24,8 +24,6 @@ namespace User
 {
     cocos2d::Scene * SceneNovel::create( std::string const& novelPath )
     {
-        ScriptStaticData::clear( );
-
         auto scene = Scene::create( );
 
         scene->addChild( createLayer<BackgroundLayer>( ), (int)Tag::Background );
@@ -44,8 +42,8 @@ namespace User
         auto system = createLayer<SystemLayer>( );
         scene->addChild( system, (int)Tag::System );
         auto script = new ScriptSystem( system );
-        REGIST_VARIABLE( u8"sys", script );
         script->setup( );
+        REGIST_VARIABLE( u8"sys", script );
 
         return scene;
     }

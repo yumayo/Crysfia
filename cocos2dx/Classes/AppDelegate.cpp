@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "Lib/EnvironmentDefaultData/EnvironmentDefaultData.h"
 #include "User/SceneManager.h"
+#include "User/System/DataSettings.h"
 
 USING_NS_CC;
 
@@ -144,6 +145,8 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
     register_all_packages( );
 
     User::SceneManager::createSystemAppDelegateStart( );
+
+    User::userDefaultSetup( );
 
     return true;
 }

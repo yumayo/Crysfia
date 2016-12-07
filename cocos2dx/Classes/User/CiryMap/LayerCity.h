@@ -7,7 +7,7 @@
 
 namespace User
 {
-    struct ScenarioData
+    struct ScenarioPointData
     {
         /**
          *  データの初期化を行います。
@@ -24,7 +24,7 @@ namespace User
          *  データの初期化を行います。
          *  コピーを取ってそのまま代入します。
          */
-        void initData( ScenarioData const& scenario ) { *this = scenario; }
+        void initData( ScenarioPointData const& scenario ) { *this = scenario; }
 
         /**
          *  すでに読んだシナリオなのかどうか。
@@ -44,28 +44,24 @@ namespace User
         std::string scenario;
     };
 
-    class Mark : protected ScenarioData, public cocos2d::ui::Button
+    class Mark : protected ScenarioPointData, public cocos2d::ui::Button
     {
     protected:
-        void pasteMap( cocos2d::Sprite* map, ScenarioData const& data );
+        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
     };
 
     class MainMark : public Mark
     {
     public:
         CREATE_FUNC( MainMark );
-        void pasteMap( cocos2d::Sprite* map, ScenarioData const& data );
-        MainMark( ) { }
-        ~MainMark( ) { }
+        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
     };
 
     class SubMark : public Mark
     {
     public:
         CREATE_FUNC( SubMark );
-        void pasteMap( cocos2d::Sprite* map, ScenarioData const& data );
-        SubMark( ) { }
-        ~SubMark( ) { }
+        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
     };
 
     class Calendar : public cocos2d::Sprite
@@ -75,43 +71,18 @@ namespace User
         Calendar* make( int day );
     private:
         /**
-        *  カレンダーに表示する日にち。
-        */
+         *  カレンダーに表示する日にち。
+         */
         int day;
     };
 
-    class LayerCity : public LayerBase
+    class CityMap : public cocos2d::Sprite
     {
     public:
-        CREATE_ARGS_FUNC( LayerCity );
-        LayerCity( std::string const& backgroundPath );
-        ~LayerCity( );
-        bool init( ) override;
-        void setup( ) override;
-        void update( float delta ) override;
+        CREATE_FUNC( CityMap );
+        CityMap* make( std::string const& backgroundfile );
+        void allChildCheckRemoved( );
     private:
-        void initBackground( );
-        void initCountry( );
-        void initListener( );
-    private:
-        bool isDebug = false;
-        cocos2d::ui::Button* createDebugButton( );
-    private:
-        // 背景画像をウィンドウの縦にピッタリと合わせるサイズ
-        float backgroundWindowHeightFitScale;
-        cocos2d::Vec2 translate;
-        cocos2d::Size targetSize;
-        cocos2d::Sprite* background;
-    private:
-        std::string backgroundPath;
-
-        /**
-         * 次の行動目的を表示するためのデータ。
-         */
-        std::map<std::string, cocos2d::Data> data;
-
-
-
         /**
          *  今の時間。
          */
@@ -122,6 +93,35 @@ namespace User
             night
         };
         Times times;
+
+        /**
+         *  画像をウィンドウの縦に収めるためのスケールです。
+         *  このスケールを掛けると画像が縦画面にピッタリ収まります。
+         */
+        float backgroundWindowHeightFitScale;
+
+        /**
+         *  マップを横にスライドするときに使います。
+         */
+        cocos2d::Vec2 translate;
+    };
+
+    class LayerCity : public LayerBase
+    {
+    public:
+        CREATE_ARGS_FUNC( LayerCity );
+        LayerCity( std::string const& backgroundPath );
+        ~LayerCity( );
+        bool init( ) override;
+        void setup( ) override;
+        cocos2d::ui::Button* createBackButton( );
+    private:
+        std::string backgroundPath;
+
+        /**
+         * 次の行動目的を表示するためのデータ。
+         */
+        std::map<std::string, cocos2d::Data> data;
     };
 }
 

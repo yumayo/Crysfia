@@ -52,6 +52,9 @@
     <Filter Include="src\User\Diary">
       <UniqueIdentifier>{547d4680-e421-43c7-a00a-b3cd3850c051}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\System">
+      <UniqueIdentifier>{3e129644-97b0-4177-82b7-15154879f80a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -284,6 +287,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp">
       <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\System\DataSettings.cpp">
+      <Filter>src\User\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -541,6 +547,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Title\TitleManager.h">
       <Filter>src\User\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\System\DataSettings.h">
+      <Filter>src\User\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
