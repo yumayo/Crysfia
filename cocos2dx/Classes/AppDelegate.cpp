@@ -41,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
     auto glview = director->getOpenGLView( );
     if ( !glview ) {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect( env->gameName, cocos2d::Rect( 0, 0, 540, 960 ) );
+        glview = GLViewImpl::createWithRect( env->gameName, cocos2d::Rect( 0, 0, 1080 / 2, 1920 / 2 ) );
     #else
         glview = GLViewImpl::create( env->gameName );
     #endif

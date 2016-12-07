@@ -12,11 +12,7 @@ namespace User
 {
     HeartGauge* HeartGauge::make( )
     {
-        now = UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" );
-        size = Size( 512, 196 ) * 0.75;
-        start = 81.0F / 2;
-        end = size.width - start;
-
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
         {
             auto size = Director::getInstance( )->getVisibleSize( );
             auto origin = Director::getInstance( )->getVisibleOrigin( );
@@ -24,6 +20,19 @@ namespace User
         }
 
         auto anchor = Vec2( 0, 1 );
+        if ( auto frame = Sprite::create( u8"res/texture/system/heart.frame.png" ) )
+        {
+            addChild( frame, 1 );
+            auto frameSize = frame->getContentSize( );
+            setContentSize( frameSize );
+            frame->setAnchorPoint( anchor );
+
+            size = frame->getTexture( )->getContentSizeInPixels( );
+        }
+
+        now = UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" );
+        start = 27;
+        end = size.width - 31;
 
         if ( auto clipping = ClippingNode::create( ) )
         {
@@ -31,30 +40,20 @@ namespace User
             clipping->setInverted( false );
             clipping->setAlphaThreshold( 0.0 );
 
-            if ( auto mask = Sprite::create( "res/texture/system/frame.mask.png" ) )
+            if ( auto mask = Sprite::create( "res/texture/system/heart.mask.png" ) )
             {
                 clipping->setStencil( mask );
-                auto maskSize = mask->getContentSize( );
                 mask->setAnchorPoint( anchor );
-                mask->setScale( size.width / maskSize.width, size.height / maskSize.height );
             }
 
-            if ( auto background = Sprite::create( u8"res/texture/system/favoritegauge.jpg",
-                                                   Rect( 0, 0, start + getWidth( now ), size.height ) ) )
+            if ( auto background = Sprite::create( u8"res/texture/system/favoritegauge.png",
+                                                   Rect( 0, 0, ( start + getWidth( now ) ) * scale, size.height * scale ) ) )
             {
                 this->background = background;
                 clipping->addChild( background );
                 background->setAnchorPoint( anchor );
                 background->getTexture( )->setTexParameters( { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT } );
             }
-        }
-
-        if ( auto frame = Sprite::create( u8"res/texture/system/frame.png" ) )
-        {
-            addChild( frame );
-            auto frameSize = frame->getContentSize( );
-            frame->setAnchorPoint( anchor );
-            frame->setScale( size.width / frameSize.width, size.height / frameSize.height );
         }
 
         return this;
@@ -65,6 +64,7 @@ namespace User
         auto value = StringUtil::string_value<int>( str );
         if ( value < 1 ) return nullptr;
         runAction( createInValueStopOutExitAction( value ) );
+        setScale( 0.5, 0.5 );
         return this;
     }
 
@@ -73,6 +73,7 @@ namespace User
         auto value = StringUtil::string_value<int>( str );
         if ( value < 1 ) return nullptr;
         runAction( createInValueStopOutExitAction( -value ) );
+        setScale( 0.5, 0.5 );
         return this;
     }
 
@@ -99,30 +100,30 @@ namespace User
     cocos2d::FiniteTimeAction * HeartGauge::createValueAction( int value )
     {
         if ( !background ) return nullptr;
-        return CallFunc::create( [ this, value ]
+
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        return CallFunc::create( [ this, value, scale ]
         {
             auto targetValue = clampf( now + value, 0, max );
+
             UserDefault::getInstance( )->setIntegerForKey( u8"親愛度", targetValue );
             auto rect = background->getTextureRect( );
             background->runAction( ActionFloat::create( 1.0F, now, targetValue, [ = ] ( float t )
             {
-                background->setTextureRect( Rect( rect.origin.x, rect.origin.y, start + getWidth( t ), rect.size.height ) );
+                background->setTextureRect( Rect( rect.origin.x, rect.origin.y, ( start + getWidth( t ) ) * scale, rect.size.height ) );
             } ) );
+
+            now = targetValue;
         } );
     }
 
     cocos2d::Sequence* HeartGauge::createInValueStopOutExitAction( int value )
     {
-        auto size = Director::getInstance( )->getVisibleSize( );
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-        auto scale = Director::getInstance( )->getContentScaleFactor( );
-
-        auto targetSize = Size( 512, 196 ) * 0.75;
-        auto slideSize = targetSize.height;
-        auto pos = getPosition( ) + Vec2( 0, slideSize );
-        setPosition( pos );
-        auto movein = EaseExponentialOut::create( MoveBy::create( 0.3, Vec2( 0, -slideSize ) ) );
-        auto moveout = EaseExponentialOut::create( MoveBy::create( 0.3, Vec2( 0, slideSize ) ) );
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        auto pixel = size / scale;
+        setPosition( getPosition( ) + Vec2( 0, pixel.height ) * scale );
+        auto movein = EaseExponentialOut::create( MoveBy::create( 0.5, Vec2( 0, -pixel.height ) * scale ) );
+        auto moveout = EaseExponentialOut::create( MoveBy::create( 0.5, Vec2( 0, pixel.height ) * scale ) );
 
         auto stop = DelayTime::create( 2.0F );
         auto exit = RemoveSelf::create( );

@@ -9,6 +9,8 @@
 
 #include "../Novel/ScriptHeart.h"
 
+#include "../../Lib/Utility/Utilitys.h"
+
 USING_NS_CC;
 
 namespace User
@@ -17,22 +19,14 @@ namespace User
     {
         initData( data );
 
-        auto s = map->getContentSize( );
-
-        float x = position.x;
-        float y = position.y;
+        auto pixel = map->getTexture( )->getContentSizeInPixels( );
 
         auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
 
-        x *= scale; y *= scale;
-
         map->addChild( this );
 
-        setPosition( Vec2( x, s.height - y ) );
-        auto tar = Size( 64, 64 );
-        auto con = getContentSize( );
-        auto sca = tar.height / con.height;
-        setScale( sca, sca );
+        setPosition( Vec2( position.x, pixel.height - position.y ) * scale );
+        setScale( Lib::fitWidth( this, 64 * scale ), Lib::fitWidth( this, 64 * scale ) );
 
         addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
@@ -40,29 +34,38 @@ namespace User
             {
                 if ( auto parent = getParent( ) )
                 {
-                    if ( auto p = dynamic_cast<CityMap*>( parent ) )
-                        p->allChildCheckRemoved( );
-                }
+                    auto pixel = map->getTexture( )->getContentSizeInPixels( );
 
-                const std::string dir = u8"res/texture/system/";
+                    auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
 
-                auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+                    parent->removeChildByName( u8"ok.button" );
 
-                auto kuroe = Sprite::create( dir + "kuroeicon.png" );
-                addChild( kuroe );
-                kuroe->setPosition( Vec2( getContentSize( ) / 2 ) );
+                    auto node = Node::create( );
+                    node->setPosition( Vec2( position.x, pixel.height - position.y ) * scale );
+                    node->setName( u8"ok.button" );
+                    parent->addChild( node );
 
-                auto ok = ui::Button::create( dir + u8"ok.png" );
-                addChild( ok );
-                ok->setPosition( Vec2( getContentSize( ) / 2 ) + Vec2( 0, -64 - 128 - 35 ) * scale );
-                ok->addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
-                {
-                    if ( type == ui::Widget::TouchEventType::ENDED )
+                    const std::string dir = u8"res/texture/system/";
+                    auto kuroe = Sprite::create( dir + "kuroeicon.png" );
+                    auto kuroePixel = kuroe->getContentSize( ) / scale;
+                    node->addChild( kuroe );
+
+                    auto fitButton = Lib::fitWidth( kuroe, 64 * scale );
+                    node->setScale( fitButton );
+
+                    auto ok = ui::Button::create( dir + u8"ok.png" );
+                    auto okPixel = ok->getContentSize( ) / scale;
+                    node->addChild( ok );
+                    ok->setPosition( Vec2( 0, -kuroePixel.height / 2 - okPixel.height / 2 ) * scale );
+                    ok->addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
                     {
-                        map->pause( );
-                        SceneManager::createNovel( this->scenario );
-                    }
-                } );
+                        if ( type == ui::Widget::TouchEventType::ENDED )
+                        {
+                            map->pause( );
+                            SceneManager::createNovel( this->scenario );
+                        }
+                    } );
+                }
             }
         } );
     }
@@ -85,33 +88,48 @@ namespace User
         Mark::pasteMap( map, data );
     }
 
-    Calendar* Calendar::make( int day )
+    Calendar* Calendar::make( )
     {
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        setPosition( vo + vs );
+
         const std::string dir = u8"res/texture/system/";
 
-        initWithFile( dir + "calendar.png" );
+        if ( auto calendar = Sprite::create( dir + "calendar.png" ) )
+        {
+            addChild( calendar );
+            setContentSize( calendar->getContentSize( ) );
+            calendar->setAnchorPoint( Vec2( 1, 1 ) );
 
-        setAnchorPoint( Vec2( 1, 1 ) );
+            auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-        auto size = Director::getInstance( )->getVisibleSize( );
-        auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+            auto pixel = calendar->getContentSize( ) / scale;
 
-        auto tar = Size( 196, 196 );
-        auto con = getContentSize( );
-        auto sca = tar.height / con.height;
-        setScale( sca, sca );
-        auto pos = size;
-        setPosition( origin + pos );
+            day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
 
-        this->day = day;
+            {
+                auto font = Label::createWithTTF( StringUtils::toString( day ),
+                                                  u8"res/fonts/HGRGE.TTC",
+                                                  130 * scale );
+                calendar->addChild( font );
+                font->setAnchorPoint( Vec2( 0.5F, 0 ) );
+                font->setPosition( Vec2( 90, ( pixel.height - 230 ) ) * scale );
+                font->setColor( Color3B( 39, 39, 39 ) );
+            }
 
-        auto fDay = Label::createWithTTF( StringUtils::toString( day ),
-                                          u8"res/fonts/meiryo.ttc",
-                                          150 );
-        this->addChild( fDay );
-        fDay->setPosition( 128 * scale, ( con.height - 256 ) * scale );
-        fDay->setColor( Color3B( 39, 39, 39 ) );
+            {
+                auto font = Label::createWithTTF( u8"日目",
+                                                  u8"res/fonts/HGRGE.TTC",
+                                                  40 * scale );
+                calendar->addChild( font );
+                font->setPosition( Vec2( 203, ( pixel.height - 134 ) ) * scale );
+                font->setColor( Color3B( 39, 39, 39 ) );
+            }
+        }
+
+
+
 
         return this;
     }
@@ -165,14 +183,6 @@ namespace User
         return this;
     }
 
-    void CityMap::allChildCheckRemoved( )
-    {
-        for ( auto& obj : getChildren( ) )
-        {
-            obj->removeAllChildren( );
-        }
-    }
-
     LayerCity::LayerCity( std::string const& backgroundPath )
         : backgroundPath( backgroundPath )
     {
@@ -185,6 +195,12 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
+        using namespace Lib;
+
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+
         auto background = CityMap::create( )->make( backgroundPath );
         this->addChild( background );
 
@@ -194,11 +210,55 @@ namespace User
         MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 374, 248 ), u8"scenario4.txt" } );
         SubMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 256, 256 ), u8"live2d.txt" } );
 
-        this->addChild( Calendar::create( )->make( 5 ) );
 
-        this->addChild( createBackButton( ) );
+        /**
+         *  画面上部のメニュー
+         */
+        {
+            auto board = Sprite::create( u8"res/texture/system/board.png" );
+            auto boardPixel = board->getContentSize( ) / scale;
+            auto boardScale = fitWidth( board, vs.width );
+            board->setScale( boardScale, boardScale );
+            board->setAnchorPoint( Vec2( 0, 1 ) );
+            board->setPosition( Vec2( vo + Vec2( 0, vs.height ) ) );
+            addChild( board );
 
-        this->addChild( HeartGauge::create( )->make( ) );
+            auto height = boardPixel.height - 10 * 2;
+            if ( auto calendar = Calendar::create( )->make( ) )
+            {
+                board->addChild( calendar );
+                calendar->setScale( fitHeight( calendar, height * scale ), fitHeight( calendar, height * scale ) );
+                calendar->setPosition( Vec2( boardPixel ) * scale + Vec2( -10, -10 ) * scale );
+            }
+
+            if ( auto heart = HeartGauge::create( )->make( ) )
+            {
+                board->addChild( heart );
+                heart->setScale( fitHeight( heart, height * scale ), fitHeight( heart, height * scale ) );
+                heart->setPosition( Vec2( 0, boardPixel.height ) * scale + Vec2( 10, -10 ) * scale );
+            }
+        }
+
+        /**
+         *  画面下部のメニュー
+         */
+        {
+            auto board = Sprite::create( u8"res/texture/system/board.png" );
+            auto boardPixel = board->getContentSize( ) / scale;
+            auto boardScale = fitWidth( board, vs.width );
+            board->setScale( boardScale, boardScale );
+            board->setAnchorPoint( Vec2( 0, 0 ) );
+            board->setPosition( vo );
+            addChild( board );
+
+            auto height = boardPixel.height - 10 * 2;
+            if ( auto button = createBackButton( ) )
+            {
+                board->addChild( button );
+                button->setScale( fitHeight( button, height * scale ), fitHeight( button, height * scale ) );
+                button->setPosition( Vec2( 10, 10 ) * scale );
+            }
+        }
 
         return true;
     }
@@ -208,16 +268,12 @@ namespace User
     }
     cocos2d::ui::Button * LayerCity::createBackButton( )
     {
-        auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
         auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
 
-        auto tar = Size( 128, 128 );
-        auto con = button->getContentSize( );
-        auto sca = tar.height / con.height;
-        button->setScale( sca, sca );
-        button->setPosition( origin + tar / 2.0 );
+        button->setScale( Lib::fitWidth( button, 128 * scale ), Lib::fitWidth( button, 128 * scale ) );
+        button->setAnchorPoint( Vec2( 0, 0 ) );
         button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )

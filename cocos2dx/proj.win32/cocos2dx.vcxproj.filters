@@ -55,6 +55,9 @@
     <Filter Include="src\User\System">
       <UniqueIdentifier>{3e129644-97b0-4177-82b7-15154879f80a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Lib\Utility">
+      <UniqueIdentifier>{5d7bb23b-e773-426e-aa60-037ffd5e6cdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -290,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\User\System\DataSettings.cpp">
       <Filter>src\User\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Utility\Utilitys.cpp">
+      <Filter>src\Lib\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -550,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\System\DataSettings.h">
       <Filter>src\User\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Utility\Utilitys.h">
+      <Filter>src\Lib\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

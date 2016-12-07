@@ -64,11 +64,11 @@ namespace User
         void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
     };
 
-    class Calendar : public cocos2d::Sprite
+    class Calendar : public cocos2d::ui::Layout
     {
     public:
         CREATE_FUNC( Calendar );
-        Calendar* make( int day );
+        Calendar* make( );
     private:
         /**
          *  カレンダーに表示する日にち。
@@ -81,7 +81,6 @@ namespace User
     public:
         CREATE_FUNC( CityMap );
         CityMap* make( std::string const& backgroundfile );
-        void allChildCheckRemoved( );
     private:
         /**
          *  今の時間。

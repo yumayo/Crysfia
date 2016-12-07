@@ -2,11 +2,15 @@
 
 #include "NovelLayer.h"
 
+#include "FlickFunctionLayer.h"
+
 #include "ui/CocosGUI.h"
 
 #include "OptionalValues.h"
 
 #include "ScriptStaticData.h"
+
+#include "../../Lib/Utility/Utilitys.h"
 
 USING_NS_CC;
 
@@ -46,6 +50,10 @@ namespace User
         if ( isBacklog ) return;
         isBacklog = true;
 
+        auto novelLayer = getLayer<NovelLayer>( );
+        auto flickFunctionLayer = getLayer<FlickFunctionLayer>( );
+        flickFunctionLayer->pause( );
+
         ScriptStaticData::run( { "sys", "noveloff" } );
 
         auto origin = Director::getInstance( )->getVisibleOrigin( );
@@ -72,7 +80,6 @@ namespace User
         listView->setContentSize( Size( menuImageSize.width, menuImageSize.height ) );
         auto listViewSize = listView->getContentSize( );
 
-        auto novelLayer = getLayer<NovelLayer>( );
         auto chunk = novelLayer->getTextChunkManager( ).getTextChunk( );
 
         for ( auto& novel : chunk )
@@ -111,20 +118,22 @@ namespace User
         }
         listView->jumpToBottom( );
 
-        auto closeButton = ui::Button::create( u8"res/texture/system/backbutton.png" );
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        auto closeButton = ui::Button::create( u8"res/texture/system/backlog.button.png" );
         layout->addChild( closeButton );
-        auto tar = Size( 128, 128 );
-        auto con = closeButton->getContentSize( );
-        auto sca = tar.height / con.height;
-        closeButton->setScale( sca, sca );
-        closeButton->setPosition( origin + tar / 2.0 );
+        closeButton->setAnchorPoint( Vec2( 0, 0 ) );
+        closeButton->setScale( Lib::fitWidth( closeButton, visibleSize.width ), Lib::fitWidth( closeButton, visibleSize.width ) );
         closeButton->addTouchEventListener( [ = ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
                 this->removeChild( layout );
                 isBacklog = false;
-                this->scheduleOnce( [ ] ( float d ) {ScriptStaticData::run( { "sys", "novelon" } ); }, 0.016F, std::string( "baglog" ) );
+                this->scheduleOnce( [ = ] ( float d )
+                {
+                    flickFunctionLayer->resume( );
+                    ScriptStaticData::run( { "sys", "novelon" } );
+                }, 0.016F, std::string( "baglog" ) );
             }
         } );
     }

@@ -6,8 +6,6 @@
 
 # include "ScriptBase.h"
 
-# include "INIReader.h"
-
 namespace User
 {
     /**
@@ -29,6 +27,11 @@ namespace User
         HeartGauge* make( );
     public:
         /**
+         *  現在の親愛度を返します。
+         */
+        int getValue( ) { return now; }
+
+        /**
          *  ゲージの量を増やします。
          *  < value >に自然数を入れると作動します。
          *  一秒間で現在の数値から< value >分上がります。
@@ -46,6 +49,7 @@ namespace User
 
         /**
          *  スクリプト用のアクションを開始します。
+         *  自動で削除を行います。
          *  < str >には文字列で数値代入できます。
          *  < str="10" >のように使えます。
          */
@@ -53,6 +57,7 @@ namespace User
 
         /**
          *  スクリプト用のアクションを開始します。
+         *  自動で削除を行います。
          *  < str >には文字列で数値代入できます。
          *  < str="10" >のように使えます。
          */
