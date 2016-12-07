@@ -10,13 +10,53 @@
 
 namespace User
 {
+    /**
+     *  親愛度ゲージクラス
+     *  主な使い方 HeartGauge::create()->make()
+     *  上記のように記入すると、画面左上に設定されたノードが返ってきます。
+     *  そのままレイヤーに貼り付けましょう。
+     */
     class HeartGauge : public cocos2d::ui::Layout
     {
     public:
         CREATE_FUNC( HeartGauge );
-        HeartGauge* make( int now );
-        void up( int value );
-        void down( int value );
+        /**
+         *  親愛度ゲージを作成します。
+         *  表示位置は画面の左上です。
+         *  アンカーポイントは画像の左上です。
+         *  この関数を呼んだときに、親愛度は自動的にロードします。
+         */
+        HeartGauge* make( );
+    public:
+        /**
+         *  ゲージの量を増やします。
+         *  < value >に自然数を入れると作動します。
+         *  一秒間で現在の数値から< value >分上がります。
+         *  中でセーブも自動的に行われます。
+         */
+        HeartGauge* up( int value );
+
+        /**
+         *  ゲージの量を増やします。
+         *  < value >に自然数を入れると作動します。
+         *  一秒間で現在の数値から< value >分下がります。
+         *  中でセーブも自動的に行われます。
+         */
+        HeartGauge* down( int value );
+
+        /**
+         *  スクリプト用のアクションを開始します。
+         *  < str >には文字列で数値代入できます。
+         *  < str="10" >のように使えます。
+         */
+        HeartGauge* scriptUpAction( std::string const& str );
+
+        /**
+         *  スクリプト用のアクションを開始します。
+         *  < str >には文字列で数値代入できます。
+         *  < str="10" >のように使えます。
+         */
+        HeartGauge* scriptDownAction( std::string const& str );
     private:
         int max = 200;
         int now = 0;
@@ -25,7 +65,7 @@ namespace User
         int end = 0;
         int getWidth( int value );
         cocos2d::Sprite* background = nullptr;
-
+    private:
         cocos2d::FiniteTimeAction* createValueAction( int value );
         cocos2d::Sequence* createInValueStopOutExitAction( int value );
     };
@@ -37,9 +77,6 @@ namespace User
     public:
         SCRIPT( up );
         SCRIPT( down );
-        SCRIPT( draw );
-    private:
-
     };
 }
 

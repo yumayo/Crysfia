@@ -7,13 +7,7 @@
 #include <vector>
 #include <functional>
 
-#include "../Novel/StringUtil.h"
-
-#include "../Novel/ScriptStaticData.h"
-
-#include "../Novel/INIReader.h"
-
-#include "../System/DataSettings.h"
+#include "../Novel/ScriptHeart.h"
 
 USING_NS_CC;
 
@@ -112,7 +106,7 @@ namespace User
 
         this->day = day;
 
-        auto fDay = Label::createWithTTF( StringUtil::value_string( day ),
+        auto fDay = Label::createWithTTF( StringUtils::toString( day ),
                                           u8"res/fonts/meiryo.ttc",
                                           150 );
         this->addChild( fDay );
@@ -204,13 +198,7 @@ namespace User
 
         this->addChild( createBackButton( ) );
 
-        ScriptStaticData::run( { "sys", { "heart", { u8"クロエ" } } } );
-        ScriptStaticData::run( { u8"クロエ", { "draw", { } } } );
-
-        auto data = UserDefault::getInstance( );
-        auto day = data->getIntegerForKey( u8"日" );
-        day += 10;
-        data->setIntegerForKey( u8"日", day );
+        this->addChild( HeartGauge::create( )->make( ) );
 
         return true;
     }

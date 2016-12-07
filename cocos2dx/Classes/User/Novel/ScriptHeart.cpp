@@ -10,19 +10,19 @@ USING_NS_CC;
 
 namespace User
 {
-    HeartGauge* HeartGauge::make( int now )
+    HeartGauge* HeartGauge::make( )
     {
-        this->now = now;
+        now = UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" );
         size = Size( 512, 196 ) * 0.75;
         start = 81.0F / 2;
         end = size.width - start;
 
-        auto size = Director::getInstance( )->getVisibleSize( );
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        {
+            auto size = Director::getInstance( )->getVisibleSize( );
+            auto origin = Director::getInstance( )->getVisibleOrigin( );
+            setPosition( origin + Vec2( 0, size.height ) );
+        }
 
-        // 左上に表示
-        setPosition( origin + Vec2( 0, size.height ) );
         auto anchor = Vec2( 0, 1 );
 
         if ( auto clipping = ClippingNode::create( ) )
@@ -31,23 +31,21 @@ namespace User
             clipping->setInverted( false );
             clipping->setAlphaThreshold( 0.0 );
 
-            // マスクを作成。
             if ( auto mask = Sprite::create( "res/texture/system/frame.mask.png" ) )
             {
                 clipping->setStencil( mask );
-
                 auto maskSize = mask->getContentSize( );
                 mask->setAnchorPoint( anchor );
-                mask->setScale( this->size.width / maskSize.width, this->size.height / maskSize.height );
+                mask->setScale( size.width / maskSize.width, size.height / maskSize.height );
             }
 
             if ( auto background = Sprite::create( u8"res/texture/system/favoritegauge.jpg",
-                                                   Rect( 0, 0, start + getWidth( now ), this->size.height ) ) )
+                                                   Rect( 0, 0, start + getWidth( now ), size.height ) ) )
             {
                 this->background = background;
+                clipping->addChild( background );
                 background->setAnchorPoint( anchor );
                 background->getTexture( )->setTexParameters( { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT } );
-                clipping->addChild( background );
             }
         }
 
@@ -56,20 +54,40 @@ namespace User
             addChild( frame );
             auto frameSize = frame->getContentSize( );
             frame->setAnchorPoint( anchor );
-            frame->setScale( this->size.width / frameSize.width, this->size.height / frameSize.height );
+            frame->setScale( size.width / frameSize.width, size.height / frameSize.height );
         }
 
         return this;
     }
 
-    void HeartGauge::up( int value )
+    HeartGauge* HeartGauge::scriptUpAction( std::string const & str )
     {
+        auto value = StringUtil::string_value<int>( str );
+        if ( value < 1 ) return nullptr;
         runAction( createInValueStopOutExitAction( value ) );
+        return this;
     }
 
-    void HeartGauge::down( int value )
+    HeartGauge* HeartGauge::scriptDownAction( std::string const & str )
     {
+        auto value = StringUtil::string_value<int>( str );
+        if ( value < 1 ) return nullptr;
         runAction( createInValueStopOutExitAction( -value ) );
+        return this;
+    }
+
+    HeartGauge * HeartGauge::up( int value )
+    {
+        if ( value < 1 ) return nullptr;
+        runAction( createInValueStopOutExitAction( value ) );
+        return this;
+    }
+
+    HeartGauge * HeartGauge::down( int value )
+    {
+        if ( value < 1 ) return nullptr;
+        runAction( createInValueStopOutExitAction( -value ) );
+        return this;
     }
 
     int HeartGauge::getWidth( int value )
@@ -121,7 +139,6 @@ namespace User
     {
         REGIST_FUNC( ScriptHeart, up );
         REGIST_FUNC( ScriptHeart, down );
-        REGIST_FUNC( ScriptHeart, draw );
     }
     SCRIPT( ScriptHeart::up )
     {
@@ -129,11 +146,10 @@ namespace User
         {
         case 1:
         {
-            auto value = StringUtil::string_value<int>( args[0] );
-            if ( value < 1 ) return;
-            auto heart = HeartGauge::create( )->make( UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" ) );
-            layer->addChild( heart );
-            heart->up( value );
+            if ( auto heart = HeartGauge::create( )->make( )->scriptUpAction( args[0] ) )
+            {
+                layer->addChild( heart );
+            }
         }
         break;
         default:
@@ -146,20 +162,14 @@ namespace User
         {
         case 1:
         {
-            auto value = StringUtil::string_value<int>( args[0] );
-            if ( value < 1 ) return;
-            auto heart = HeartGauge::create( )->make( UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" ) );
-            layer->addChild( heart );
-            heart->down( value );
+            if ( auto heart = HeartGauge::create( )->make( )->scriptDownAction( args[0] ) )
+            {
+                layer->addChild( heart );
+            }
         }
         break;
         default:
             break;
         }
     }
-    SCRIPT( ScriptHeart::draw )
-    {
-        layer->addChild( HeartGauge::create( )->make( UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" ) ) );
-    }
-
 }
