@@ -1,0 +1,29 @@
+{
+  "first": {
+    "path": "res/texture/system/minimap.png",
+    "point.main": {
+      "scenario1.txt": {
+        "visit": false,
+        "position": [ 155, 384 ]
+      },
+      "scenario2.txt": {
+        "visit": false,
+        "position": [ 167, 201 ]
+      },
+      "scenario3.txt": {
+        "visit": false,
+        "position": [ 342, 102 ]
+      },
+      "scenario4.txt": {
+        "visit": false,
+        "position": [ 374, 248 ]
+      }
+    },
+    "point.sub": {
+      "live2d.txt": {
+        "visit": false,
+        "position": [ 256, 256 ]
+      }
+    }
+  }
+}

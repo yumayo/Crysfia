@@ -94,12 +94,6 @@ namespace User
         Times times;
 
         /**
-         *  画像をウィンドウの縦に収めるためのスケールです。
-         *  このスケールを掛けると画像が縦画面にピッタリ収まります。
-         */
-        float backgroundWindowHeightFitScale;
-
-        /**
          *  マップを横にスライドするときに使います。
          */
         cocos2d::Vec2 translate;
@@ -109,13 +103,13 @@ namespace User
     {
     public:
         CREATE_ARGS_FUNC( LayerCity );
-        LayerCity( std::string const& backgroundPath );
+        LayerCity( std::string const& tag );
         ~LayerCity( );
         bool init( ) override;
         void setup( ) override;
         cocos2d::ui::Button* createBackButton( );
     private:
-        std::string backgroundPath;
+        std::string tag;
 
         /**
          * 次の行動目的を表示するためのデータ。

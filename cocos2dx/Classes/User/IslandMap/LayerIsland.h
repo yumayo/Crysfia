@@ -10,38 +10,38 @@ namespace User
     struct CityPointData
     {
         /**
-        *  データの初期化を行います。
-        *  構造に必要なデータを一つ一つ詰めます。
-        */
-        void initData( bool isChecked, cocos2d::Vec2 const& position, std::string const& scenario )
+         *  データの初期化を行います。
+         *  構造に必要なデータを一つ一つ詰めます。
+         */
+        void initData( bool isChecked, cocos2d::Vec2 const& position, std::string const& island )
         {
             this->isChecked = isChecked;
             this->position = position;
-            this->scenario = scenario;
+            this->island = island;
         }
 
         /**
-        *  データの初期化を行います。
-        *  コピーを取ってそのまま代入します。
-        */
+         *  データの初期化を行います。
+         *  コピーを取ってそのまま代入します。
+         */
         void initData( CityPointData const& scenario ) { *this = scenario; }
 
         /**
-        *  すでに読んだシナリオなのかどうか。
-        *  @true   読んでいたら
-        *  @false  未読なら
-        */
+         *  すでに読んだシナリオなのかどうか。
+         *  @true   読んでいたら
+         *  @false  未読なら
+         */
         bool isChecked;
 
         /**
-        *  マップ画像中の表示位置。
-        */
+         *  マップ画像中の表示位置。
+         */
         cocos2d::Vec2 position;
 
         /**
-        *  読み込むシナリオファイルのパス。
-        */
-        std::string scenario;
+         *  島の情報。
+         */
+        std::string island;
     };
 
     class Mark : protected CityPointData, public cocos2d::ui::Button
@@ -64,25 +64,33 @@ namespace User
         IslandMap* make( );
     private:
         /**
-        *  今の時間。
-        */
+         *  滞在中の島
+         */
+        enum Islands
+        {
+            none,
+            first,
+            second,
+            third,
+            forth,
+            fifth,
+        };
+        Islands islands = Islands::none;
+
+        /**
+         *  今の時間。
+         */
         enum Times
         {
             morning,
             daytime,
             night
         };
-        Times times;
+        Times times = Times::morning;
 
         /**
-        *  画像をウィンドウの縦に収めるためのスケールです。
-        *  このスケールを掛けると画像が縦画面にピッタリ収まります。
-        */
-        float backgroundWindowHeightFitScale;
-
-        /**
-        *  マップを横にスライドするときに使います。
-        */
+         *  マップを横にスライドするときに使います。
+         */
         cocos2d::Vec2 translate;
     };
 
@@ -94,7 +102,6 @@ namespace User
         ~LayerIsland( );
         bool init( ) override;
         void setup( ) override;
-        cocos2d::ui::Button* createBackButton( );
     };
 }
 

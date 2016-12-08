@@ -11,6 +11,11 @@
 
 #include "../../Lib/Utility/Utilitys.h"
 
+#include "json/rapidjson.h"
+#include "json/document.h"
+#include "json/stringbuffer.h"
+#include "json/writer.h"
+
 USING_NS_CC;
 
 namespace User
@@ -128,24 +133,19 @@ namespace User
             }
         }
 
-
-
-
         return this;
     }
 
     CityMap* CityMap::make( std::string const& backgroundfile )
     {
-        const std::string dir = u8"res/texture/system/";
-
-        initWithFile( dir + backgroundfile );
+        initWithFile( backgroundfile );
 
         auto size = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
         auto targetSize = size;
         translate = origin + size / 2;
-        backgroundWindowHeightFitScale = targetSize.height / getContentSize( ).height;
+        auto backgroundWindowHeightFitScale = targetSize.height / getContentSize( ).height;
 
         setPosition( translate );
         setScale( backgroundWindowHeightFitScale, backgroundWindowHeightFitScale );
@@ -155,7 +155,7 @@ namespace User
         {
 
         };
-        listener->onTouchesMoved = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        listener->onTouchesMoved = [ this, backgroundWindowHeightFitScale ] ( const std::vector<Touch*>& touches, Event* event )
         {
             auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
@@ -183,8 +183,8 @@ namespace User
         return this;
     }
 
-    LayerCity::LayerCity( std::string const& backgroundPath )
-        : backgroundPath( backgroundPath )
+    LayerCity::LayerCity( std::string const& tag )
+        : tag( tag )
     {
 
     }
@@ -201,15 +201,55 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        auto background = CityMap::create( )->make( backgroundPath );
+        rapidjson::Document json;
+        if ( json.Parse( FileUtils::getInstance( )->getStringFromFile( u8"res/data/island.json" ).c_str( ) ).HasParseError( ) )
+        {
+            log( "parse error!!" );
+        }
+
+        auto map = json[tag.c_str( )][u8"path"].GetString( );
+        auto background = CityMap::create( )->make( map );
         this->addChild( background );
 
-        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 155, 384 ), u8"scenario1.txt" } );
-        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 167, 201 ), u8"scenario2.txt" } );
-        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 342, 102 ), u8"scenario3.txt" } );
-        MainMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 374, 248 ), u8"scenario4.txt" } );
-        SubMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 256, 256 ), u8"live2d.txt" } );
+        std::vector<ScenarioPointData> main;
+        {
+            auto& root = json[tag.c_str( )][u8"point.main"];
+            for ( auto itr = root.MemberBegin( );
+                  itr != root.MemberEnd( );
+                  ++itr )
+            {
+                ScenarioPointData temp;
+                temp.scenario = itr->name.GetString( );
+                temp.isChecked = itr->value[u8"visit"].GetBool( );
+                temp.position = Vec2( itr->value[u8"position"][0].GetInt( ),
+                                      itr->value[u8"position"][1].GetInt( ) );
+                main.emplace_back( temp );
+            }
+        }
+        std::vector<ScenarioPointData> sub;
+        {
+            auto& root = json[tag.c_str( )][u8"point.sub"];
+            for ( auto itr = root.MemberBegin( );
+                  itr != root.MemberEnd( );
+                  ++itr )
+            {
+                ScenarioPointData temp;
+                temp.scenario = itr->name.GetString( );
+                temp.isChecked = itr->value[u8"visit"].GetBool( );
+                temp.position = Vec2( itr->value[u8"position"][0].GetInt( ),
+                                      itr->value[u8"position"][1].GetInt( ) );
+                sub.emplace_back( temp );
+            }
+        }
 
+        for ( auto& obj : main )
+        {
+            MainMark::create( )->pasteMap( background, obj );
+        }
+        for ( auto& obj : sub )
+        {
+            SubMark::create( )->pasteMap( background, obj );
+        }
 
         /**
          *  ‰æ–Êã•”‚Ìƒƒjƒ…[
