@@ -16,18 +16,30 @@ namespace User
 		~LayerCleaning();
 	private:
 
+		int  cleanDegrees;
+		bool canCleaning;
+
 		bool init();
 		void thisLocationTouchProcess();
 		void uiTouchProcess();
-		void hoge();
+
+		void setInfoLayer();
+		void setInfoLayer(cocos2d::Node* _node, cocos2d::Label* _label, std::string _text, int _fontSize = 24);
+		
+		void labelAction(float dt);
+		void completeDirection();
 
 		cocos2d::Size			winSize;
+		cocos2d::Vec2			touchLocation;
 		cocos2d::Sprite*		bottle;
 		cocos2d::Sprite*		mask;
 		cocos2d::ClippingNode*	clippingNode;
 		cocos2d::Sprite*		clippingShape;
+		cocos2d::Label*			infoLabel;
+		cocos2d::Sequence*		testAction;
 
-		std::vector<cocos2d::ui::Button*> buttons;
+		cocos2d::EventListenerTouchOneByOne*	listener;
+		std::vector<cocos2d::ui::Button*>		buttons;
 	};
 }
 

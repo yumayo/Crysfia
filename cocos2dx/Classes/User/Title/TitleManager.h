@@ -20,6 +20,7 @@ namespace User
 		void update(float dt);
 		
 		int titleBgm;
+		int titleSE;
 		float vol;
 		bool isGameStarted;
 

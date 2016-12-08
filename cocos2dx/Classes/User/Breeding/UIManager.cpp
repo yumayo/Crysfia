@@ -40,9 +40,6 @@ namespace User
 		createSubMenuWindow();
 		createMainMenuWindow();
 
-		auto layer = LayerManager::create();
-		this->addChild(layer);
-
 		return true;
 	}
 
@@ -146,8 +143,6 @@ namespace User
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x, pos.y * 0));
 		layout->setContentSize(Size(winSize.x, 150));
-
-		
 		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::DIARY_MENU);
 	}
 
@@ -175,6 +170,7 @@ namespace User
 		}
 	}
 
+	//育成メニューのボタン処理
 	void UIManager::touchEventOfSubMenu(Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
 	{
 		switch (type)
@@ -199,8 +195,8 @@ namespace User
 		swapWindow(s, m);
 
 		//現在のシーンを取得し、シーンからaddChildされているBGManagerにアクセスして関数を呼び出す。
-		auto currentScene = (Scene*)Director::getInstance()->getRunningScene();
-		auto c = (BGManager*)currentScene->getChildByTag((int)tabLayer::BACKGROUND);
+		auto p = this->getParent();
+		auto c = (BGManager*)p->getChildByTag((int)tabLayer::BACKGROUND);
 		c->changeBackGround((int)tabMenu::MAIN_MENU, (int)tabMenu::BREEDING_MENU);
 	}
 
@@ -211,8 +207,8 @@ namespace User
 		auto s = this->getChildByTag((int)tabMenu::BREEDING_MENU);
 		swapWindow(m, s);
 
-		auto currentScene = (Scene*)Director::getInstance()->getRunningScene();
-		auto c = (BGManager*)currentScene->getChildByTag((int)tabLayer::BACKGROUND);
+		auto p = this->getParent();
+		auto c = (BGManager*)p->getChildByTag((int)tabLayer::BACKGROUND);
 		c->changeBackGround((int)tabMenu::BREEDING_MENU, (int)tabMenu::MAIN_MENU);
 	}
 
@@ -230,10 +226,12 @@ namespace User
 	//掃除画面のレイヤーに貼り替え
 	void UIManager::changeToCreaning()
 	{
-		auto s = (Scene*)Director::getInstance()->getRunningScene();
-		s->removeChildByTag((int)tabLayer::CHARACTER);
-		s->removeChildByTag((int)tabLayer::UI_MANAGER);
-		s->addChild(LayerCleaning::create(), 0, (int)tabLayer::CLEANING);
+		auto p = this->getParent();
+		p->removeChildByTag((int)tabLayer::CHARACTER);
+		p->removeChildByTag((int)tabLayer::UI_MANAGER);
+		p->removeChildByTag((int)tabLayer::BACKGROUND);
+
+		p->addChild(LayerCleaning::create(), 0, (int)tabLayer::CLEANING);
 	}
 
 	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです

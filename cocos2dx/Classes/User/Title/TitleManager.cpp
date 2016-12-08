@@ -18,11 +18,15 @@ namespace User
 		titleBgm(AudioEngine::play2d("res/sound/BGM/title.wav"))
 #endif
 	{
+		//TODO: 設定ができたらボリュームなどを対応させる
 		AudioEngine::setLoop(titleBgm, true);
 		AudioEngine::setVolume(titleBgm, vol);
+		AudioEngine::setVolume(titleSE, vol);
 	}
 
-	TitleManager::~TitleManager() {}
+	TitleManager::~TitleManager() 
+	{
+	}
 
 	bool TitleManager::init()
 	{
@@ -35,7 +39,7 @@ namespace User
 
 		auto listener = EventListenerTouchOneByOne::create();
 		listener->setSwallowTouches(true);
-		
+
 		listener->onTouchBegan = [=](Touch* touch, Event* event) {
 			return true;
 		};
@@ -54,8 +58,9 @@ namespace User
 	{
 		if (isGameStarted)
 		{
-			vol = vol >= 0 ? vol-=0.01f : isGameStarted = false, titleBgm = NULL;
+			vol = vol >= 0 ? vol -= 0.01f : isGameStarted = false, titleBgm = NULL;
 			AudioEngine::setVolume(titleBgm, vol);
+			
 		}
 	}
 
@@ -112,6 +117,13 @@ namespace User
 	//タップした後のアクション
 	cocos2d::Action * TitleManager::afterAction()
 	{
+		AudioEngine::setCurrentTime(titleSE,1);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		titleSE = AudioEngine::play2d("res/sound/SE/title_SE.mp3");
+#else
+		titleSE = AudioEngine::play2d("res/sound/SE/title_SE.wav");
+#endif
+
 		auto fadeIn = FadeIn::create(0.1f);
 		auto fadeOut = FadeOut::create(0.1f);
 		auto fadeInOut = Sequence::create(fadeOut, fadeIn, nullptr);
