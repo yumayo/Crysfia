@@ -148,6 +148,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp" />
+    <ClCompile Include="..\Classes\Lib\Utility\Utilitys.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\FGManager.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\LayerCleaning.cpp" />
@@ -207,6 +208,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Novel\TextTypes.cpp" />
     <ClCompile Include="..\Classes\User\SceneBase.cpp" />
     <ClCompile Include="..\Classes\User\SceneManager.cpp" />
+    <ClCompile Include="..\Classes\User\System\DataSettings.cpp" />
     <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp" />
     <ClCompile Include="..\Classes\User\Title\TitleManager.cpp" />
     <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp" />
@@ -227,6 +229,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h" />
+    <ClInclude Include="..\Classes\Lib\Utility\Utilitys.h" />
     <ClInclude Include="..\Classes\User\Breeding\BGManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\FGManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\LayerCleaning.h" />
@@ -292,6 +295,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Novel\TextTypes.hpp" />
     <ClInclude Include="..\Classes\User\SceneBase.h" />
     <ClInclude Include="..\Classes\User\SceneManager.h" />
+    <ClInclude Include="..\Classes\User\System\DataSettings.h" />
     <ClInclude Include="..\Classes\User\Title\SceneTitle.h" />
     <ClInclude Include="..\Classes\User\Title\TitleManager.h" />
     <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h" />

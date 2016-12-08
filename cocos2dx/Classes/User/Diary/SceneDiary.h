@@ -11,9 +11,7 @@ namespace User
     public:
         SceneDiary( );
         ~SceneDiary( );
-		cocos2d::Scene* create()override;
-    private:
-		
+        static cocos2d::Scene* create( );
     };
 }
 

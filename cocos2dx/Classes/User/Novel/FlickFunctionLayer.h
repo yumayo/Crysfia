@@ -5,23 +5,25 @@
 
 namespace User
 {
-    class FunctionCircle : public cocos2d::DrawNode
+    class Menu : public cocos2d::Sprite
     {
     public:
-        CREATE_FUNC( FunctionCircle );
-        void drawDot( const cocos2d::Vec2 &pos, float radius, const cocos2d::Color4F &color )
-        {
-            cocos2d::DrawNode::drawDot( pos, radius, color );
-            this->radius = radius;
-            this->color = color;
-        }
+        CREATE_FUNC( Menu );
+        Menu( ) { }
+        ~Menu( ) { }
+        std::function<void( )> menuCallBack;
     private:
-        cocos2d::Color4F color;
-        float radius;
+        bool onTouch = false;
+        bool prevOnTouch = false;
     public:
-        cocos2d::Color4F getDrawColor( ) { return color; }
-        float getRadius( ) { return radius; }
-        cocos2d::Vec2 getWorldPosition( ) { return convertToWorldSpaceAR( cocos2d::Point::ZERO ); }
+        void update( bool touch );
+        bool isHit( cocos2d::Vec2 touchPos );
+        bool isIn( );
+        bool isStay( );
+        bool isOut( );
+    public:
+        static float circleRadius;
+        static int maxMenuNumber;
     };
 
     class FlickFunctionLayer : public LayerBase
@@ -71,11 +73,11 @@ namespace User
          *  ロングタップに移行するまでの時間です。
          *  < holdTapTime > がこの時間以上でロングタップ扱いになります。
          */
-        const float longTapShiftTime = 0.8F;
+        const float longTapShiftTime = 0.4F;
 
         /**
          *  ロングタップとみなすかの距離です。
-         *  最初にタップした位置からこの時間以上でロングタップではなくなります。
+         *  最初にタップした位置からこの距離よりも遠くに離れるとロングタップではなくなります。
          */
         const float longTapShiftLength = 50.0F;
 
@@ -93,23 +95,39 @@ namespace User
         /**
          *  中央のサークルのポインタを保存しておきます。
          */
-        FunctionCircle* circle = nullptr;
+        cocos2d::Node* circle = nullptr;
 
         /**
-         *  中央のサークルの半径です。
+         *  メニューまでの距離です。
          */
-        const float circleRadius = 100.0F;
+        const float menuLength = 100.0F;
 
         /**
-         *  サブメニューサークルの半径です。
+         *  メニューの半径です。
          */
-        const float subMenuRadius = 60.0F;
+        const float menuCircleRadius = 80.0F;
+
+        /**
+         *  メニューの数です。
+         */
+        const int numberMenu = 4;
 
         /**
          *  Novelレイヤーを保存します。
          *  メニューを出したら、Novelレイヤーのタッチイベントを無効にするためです。
          */
         cocos2d::Layer* novelLayer = nullptr;
+
+        /**
+         *  バッグログレイヤーを保存します。
+         *  サークルの機能として使うためです。
+         */
+        cocos2d::Layer* baglogLayer = nullptr;
+
+        /**
+         *  メニューの機能を追加します。
+         */
+        void addMenu( std::string name, std::function<void( )> const& lambda );
     };
 }
 

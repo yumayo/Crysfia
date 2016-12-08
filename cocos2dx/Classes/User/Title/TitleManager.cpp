@@ -1,6 +1,8 @@
 #include "TitleManager.h"
 #include "../SceneManager.h"
 #include "audio/include/AudioEngine.h"
+
+#include "SceneTitle.h"
 USING_NS_CC;
 using namespace experimental;
 

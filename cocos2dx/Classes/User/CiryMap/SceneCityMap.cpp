@@ -9,7 +9,9 @@ namespace User
     cocos2d::Scene* SceneCityMap::create( std::string const & backgroundPath )
     {
         auto scene = Scene::create( );
+
         scene->addChild( createLayer<LayerCity>( backgroundPath ) );
+
         return scene;
     }
 }

@@ -10,7 +10,7 @@ namespace User
 	class Scene_ishibashi : public SceneBase
 	{
 	public:
-		cocos2d::Scene* create() override;
+        static cocos2d::Scene* create( );
 	};
 }
 

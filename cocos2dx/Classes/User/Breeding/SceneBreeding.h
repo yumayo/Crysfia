@@ -10,7 +10,7 @@ namespace User
 	{
 	public:
 		SceneBreeding();
-		cocos2d::Scene* create()override;
+        static cocos2d::Scene* create( );
 	};
 }
 

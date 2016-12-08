@@ -10,103 +10,136 @@ USING_NS_CC;
 
 namespace User
 {
-    ScriptHeart::ScriptHeart( cocos2d::Layer * layer, std::string const & filePath )
-        : ScriptBase( layer )
-        , filePath( filePath )
+    HeartGauge* HeartGauge::make( )
     {
-        REGIST_FUNC( ScriptHeart, up );
-        REGIST_FUNC( ScriptHeart, down );
-
-        auto file = FileUtils::getInstance( );
-        auto path = file->getWritablePath( ) + filePath;
-        if ( file->isFileExist( path ) )
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
         {
-            reader.read( path );
+            auto size = Director::getInstance( )->getVisibleSize( );
+            auto origin = Director::getInstance( )->getVisibleOrigin( );
+            setPosition( origin + Vec2( 0, size.height ) );
         }
-        else
+
+        auto anchor = Vec2( 0, 1 );
+        if ( auto frame = Sprite::create( u8"res/texture/system/heart.frame.png" ) )
         {
-            reader.read( u8"res/data/" + filePath );
+            addChild( frame, 1 );
+            auto frameSize = frame->getContentSize( );
+            setContentSize( frameSize );
+            frame->setAnchorPoint( anchor );
+
+            size = frame->getTexture( )->getContentSizeInPixels( );
         }
-    }
-    ScriptHeart::~ScriptHeart( )
-    {
-        INIWriter::write( filePath, reader );
-    }
-    void ScriptHeart::favorabilityRating( int value )
-    {
-        auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-        auto contentScale = Director::getInstance( )->getContentScaleFactor( );
 
-        auto slideSize = visibleSize.height * 0.1;
+        now = UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" );
+        start = 27;
+        end = size.width - 31;
 
-        auto layout = ui::Layout::create( );
-        layer->addChild( layout );
-        layout->setTag( (int)Tag::Heart );
-        layout->setPosition( origin + Vec2( 0, visibleSize.height + slideSize ) );
-        auto movein = EaseExponentialOut::create( MoveBy::create( 0.3, Vec2( 0, -slideSize ) ) );
-        auto moveout = EaseExponentialOut::create( MoveBy::create( 0.3, Vec2( 0, slideSize ) ) );
-
-        auto targetSize = Size( 512, 196 ) / 2;
-        auto left = 81.0F / 2;
-        auto right = targetSize.width - left;
-
-        auto clipping = ClippingNode::create( );
-        if ( !clipping ) return;
-        layout->addChild( clipping );
+        if ( auto clipping = ClippingNode::create( ) )
         {
-            auto mask = Sprite::create( "res/texture/system/frame.mask.png" );
-            if ( !mask ) return;
-            {
-                auto size = mask->getContentSize( );
-                mask->setAnchorPoint( Vec2( 0, 1 ) );
-                mask->setScale( targetSize.width / size.width, targetSize.height / size.height );
-            }
-            clipping->setTag( (int)Tag::Heart );
-            clipping->setStencil( mask );
+            addChild( clipping );
             clipping->setInverted( false );
             clipping->setAlphaThreshold( 0.0 );
 
-            auto max = 100;
-            auto& data = reader[u8"クロエ"][u8"now"];
-            int now = 0;
-            try
+            if ( auto mask = Sprite::create( "res/texture/system/heart.mask.png" ) )
             {
-                now = StringUtil::string_value<int>( data );
+                clipping->setStencil( mask );
+                mask->setAnchorPoint( anchor );
             }
-            catch ( ... )
-            {
-                throw( "変数が数字ではありません。" );
-            }
-            auto targetValue = clampf( now + value, 0, max );
-            data = StringUtil::value_string<int>( targetValue );
 
-            auto getWidth = [ = ] ( float now ) { return ( right - left ) * ( now / max ); };
-            auto background = Sprite::create( u8"res/texture/system/favoritegauge.jpg", Rect( 0, 0, left + getWidth( now ), targetSize.height ) );
-            if ( !background ) return;
+            if ( auto background = Sprite::create( u8"res/texture/system/favoritegauge.png",
+                                                   Rect( 0, 0, ( start + getWidth( now ) ) * scale, size.height * scale ) ) )
             {
-                auto up = ActionFloat::create( 1.0F, now, targetValue, [ = ] ( float t )
-                {
-                    auto rect = background->getTextureRect( );
-                    background->setTextureRect( Rect( rect.origin.x, rect.origin.y, left + getWidth( t ), rect.size.height ) );
-                } );
-                auto stop = DelayTime::create( 1.0 );
-                auto exit = RemoveSelf::create( );
-                layout->runAction( Sequence::create( movein, up, stop, moveout, exit, nullptr ) );
-                background->setAnchorPoint( Vec2( 0, 1 ) );
-                background->getTexture( )->setTexParameters( { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT } );
+                this->background = background;
                 clipping->addChild( background );
+                background->setAnchorPoint( anchor );
+                background->getTexture( )->setTexParameters( { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT } );
             }
         }
 
-        auto frame = Sprite::create( u8"res/texture/system/frame.png" );
-        if ( !frame ) return;
-        layout->addChild( frame );
+        return this;
+    }
+
+    HeartGauge* HeartGauge::scriptUpAction( std::string const & str )
+    {
+        auto value = StringUtil::string_value<int>( str );
+        if ( value < 1 ) return nullptr;
+        runAction( createInValueStopOutExitAction( value ) );
+        setScale( 0.5, 0.5 );
+        return this;
+    }
+
+    HeartGauge* HeartGauge::scriptDownAction( std::string const & str )
+    {
+        auto value = StringUtil::string_value<int>( str );
+        if ( value < 1 ) return nullptr;
+        runAction( createInValueStopOutExitAction( -value ) );
+        setScale( 0.5, 0.5 );
+        return this;
+    }
+
+    HeartGauge * HeartGauge::up( int value )
+    {
+        if ( value < 1 ) return nullptr;
+        runAction( createInValueStopOutExitAction( value ) );
+        return this;
+    }
+
+    HeartGauge * HeartGauge::down( int value )
+    {
+        if ( value < 1 ) return nullptr;
+        runAction( createInValueStopOutExitAction( -value ) );
+        return this;
+    }
+
+    int HeartGauge::getWidth( int value )
+    {
+        float t = value;
+        return ( end - start ) * ( t / max );
+    }
+
+    cocos2d::FiniteTimeAction * HeartGauge::createValueAction( int value )
+    {
+        if ( !background ) return nullptr;
+
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        return CallFunc::create( [ this, value, scale ]
         {
-            auto size = frame->getContentSize( );
-            frame->setAnchorPoint( Vec2( 0, 1 ) );
-            frame->setScale( targetSize.width / size.width, targetSize.height / size.height );
+            auto targetValue = clampf( now + value, 0, max );
+
+            UserDefault::getInstance( )->setIntegerForKey( u8"親愛度", targetValue );
+            auto rect = background->getTextureRect( );
+            background->runAction( ActionFloat::create( 1.0F, now, targetValue, [ = ] ( float t )
+            {
+                background->setTextureRect( Rect( rect.origin.x, rect.origin.y, ( start + getWidth( t ) ) * scale, rect.size.height ) );
+            } ) );
+
+            now = targetValue;
+        } );
+    }
+
+    cocos2d::Sequence* HeartGauge::createInValueStopOutExitAction( int value )
+    {
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        auto pixel = size / scale;
+        setPosition( getPosition( ) + Vec2( 0, pixel.height ) * scale );
+        auto movein = EaseExponentialOut::create( MoveBy::create( 0.5, Vec2( 0, -pixel.height ) * scale ) );
+        auto moveout = EaseExponentialOut::create( MoveBy::create( 0.5, Vec2( 0, pixel.height ) * scale ) );
+
+        auto stop = DelayTime::create( 2.0F );
+        auto exit = RemoveSelf::create( );
+
+        if ( auto action = createValueAction( value ) )
+        {
+            return Sequence::create( movein, action, stop, moveout, exit, nullptr );
         }
+        return nullptr;
+    }
+
+    ScriptHeart::ScriptHeart( cocos2d::Layer * layer )
+        : ScriptBase( layer )
+    {
+        REGIST_FUNC( ScriptHeart, up );
+        REGIST_FUNC( ScriptHeart, down );
     }
     SCRIPT( ScriptHeart::up )
     {
@@ -114,9 +147,10 @@ namespace User
         {
         case 1:
         {
-            auto value = StringUtil::string_value<int>( args[0] );
-            if ( value < 1 ) return;
-            favorabilityRating( value );
+            if ( auto heart = HeartGauge::create( )->make( )->scriptUpAction( args[0] ) )
+            {
+                layer->addChild( heart );
+            }
         }
         break;
         default:
@@ -129,9 +163,10 @@ namespace User
         {
         case 1:
         {
-            auto value = StringUtil::string_value<int>( args[0] );
-            if ( value < 1 ) return;
-            favorabilityRating( -value );
+            if ( auto heart = HeartGauge::create( )->make( )->scriptDownAction( args[0] ) )
+            {
+                layer->addChild( heart );
+            }
         }
         break;
         default:
