@@ -34,16 +34,16 @@ namespace User
         scene->addChild( createLayer<NameLayer>( ), (int)Tag::Name );
         scene->addChild( createLayer<HeartLayer>( ), (int)Tag::Heart );
         scene->addChild( createLayer<SelectLayer>( ), (int)Tag::Select );
-        scene->addChild( createLayer<BackLogLayer>( ), (int)Tag::BackLog );
         scene->addChild( createLayer<FlickFunctionLayer>( ), (int)Tag::FlickFunction );
+        scene->addChild( createLayer<BackLogLayer>( ), (int)Tag::BackLog );
 
         // システムレイヤーの登録
         // 全てのスクリプトを司る"sys"は初期化の時点で登録をします。
         auto system = createLayer<SystemLayer>( );
         scene->addChild( system, (int)Tag::System );
         auto script = new ScriptSystem( system );
-        REGIST_VARIABLE( u8"sys", script );
         script->setup( );
+        REGIST_VARIABLE( u8"sys", script );
 
         return scene;
     }

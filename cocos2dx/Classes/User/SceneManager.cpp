@@ -25,8 +25,7 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-		createBreeding();
-		//createTitle();
+        createIslandMap( );
     }
     void SceneManager::createTitle( )
     {
@@ -48,7 +47,10 @@ namespace User
     {
         create<SceneBreeding>( );
     }
-
+    void SceneManager::createDiary( )
+    {
+        create<SceneDiary>( );
+    }
     void SceneManager::createIshibashi( )
     {
         create<Scene_ishibashi>( );

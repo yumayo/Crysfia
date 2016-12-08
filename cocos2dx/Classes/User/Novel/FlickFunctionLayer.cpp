@@ -2,12 +2,67 @@
 
 #include "NovelLayer.h"
 
+#include "BackLogLayer.h"
+
+#include "ScriptStaticData.h"
+
 #include "../SceneManager.h"
+
+#include "ScriptSystem.h"
 
 USING_NS_CC;
 
 namespace User
 {
+    int Menu::maxMenuNumber = 0;
+    float Menu::circleRadius = 0.0F;
+
+    void Menu::update( bool touch )
+    {
+        prevOnTouch = onTouch;
+        onTouch = touch;
+
+        const std::string dir = u8"res/texture/system/";
+
+        if ( isIn( ) )
+        {
+            initWithFile( dir + u8"base.true.png" );
+        }
+        else if ( isStay( ) )
+        {
+            if ( auto parent = getParent( ) )
+            {
+                parent->setName( getName( ) );
+            }
+        }
+        else if ( isOut( ) )
+        {
+            if ( auto parent = getParent( ) )
+            {
+                parent->setName( "" );
+            }
+            initWithFile( dir + u8"base.false.png" );
+        }
+    }
+    bool Menu::isHit( cocos2d::Vec2 touchPos )
+    {
+        auto pos = convertToWorldSpaceAR( cocos2d::Point::ZERO );
+
+        return pos.distance( touchPos ) < circleRadius;
+    }
+    bool Menu::isIn( )
+    {
+        return !prevOnTouch && onTouch;
+    }
+    bool Menu::isStay( )
+    {
+        return prevOnTouch && onTouch;
+    }
+    bool Menu::isOut( )
+    {
+        return prevOnTouch && !onTouch;
+    }
+
     FlickFunctionLayer::FlickFunctionLayer( )
     {
 
@@ -46,10 +101,13 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( multiTouchEvent, this );
 
+
+
         return true;
     }
     void FlickFunctionLayer::setup( )
     {
+        baglogLayer = getLayer<BackLogLayer>( );
         novelLayer = getLayer<NovelLayer>( );
     }
     void FlickFunctionLayer::update( float delta )
@@ -62,24 +120,12 @@ namespace User
         {
             if ( circle )
             {
-                bool hit = false;
                 for ( auto& obj : circle->getChildren( ) )
                 {
-                    auto item = dynamic_cast<FunctionCircle*>( obj );
-                    auto pos = item->getWorldPosition( );
-
-                    float distance;
-                    if ( ( distance = pos.distance( tapLastPosition ) ) < subMenuRadius )
+                    if ( auto item = dynamic_cast<Menu*>( obj ) )
                     {
-                        log( "distance : %f", distance );
-                        circle->drawDot( Vec2::ZERO, circleRadius, item->getDrawColor( ) );
-                        hit = true;
-                        //break;
+                        item->update( item->isHit( tapLastPosition ) );
                     }
-                }
-                if ( !hit )
-                {
-                    circle->drawDot( Vec2::ZERO, circleRadius, Color4F::YELLOW );
                 }
             }
         }
@@ -123,88 +169,77 @@ namespace User
             {
                 auto move = MoveTo::create( 1.0F, Vec2::ZERO );
                 auto easing = EaseExponentialOut::create( move );
-                auto delay = DelayTime::create( 0.1F * i );
                 children.at( i )->stopAllActions( );
-                children.at( i )->runAction( Sequence::create( delay, easing, nullptr ) );
+                children.at( i )->runAction( Sequence::create( easing, nullptr ) );
             }
 
             auto scale = ScaleTo::create( 1.0F, 0.0F );
             auto easeScale = EaseElasticOut::create( scale );
-            auto delay = DelayTime::create( 0.1F * i );
-            auto modeShift = CallFunc::create( [ this ] 
+            auto modeShift = CallFunc::create( [ this ]
             {
-                if ( circle->getDrawColor( ) == Color3B::RED )
-                {
-                    SceneManager::createBreeding( );
-                }
-                else if ( circle->getDrawColor( ) == Color3B::BLUE )
-                {
-                    SceneManager::createTitle( );
-                }
-                else if ( circle->getDrawColor( ) == Color3B::GREEN )
-                {
-                    SceneManager::createIslandMap( );
-                }
+                if ( !circle->getName( ).empty( ) )
+                    if ( auto item = dynamic_cast<Menu*>( circle->getChildByName( circle->getName( ) ) ) )
+                    {
+                        item->menuCallBack( );
+                    }
             } );
             circle->stopAllActions( );
-            circle->runAction( Sequence::create( delay, easeScale, modeShift, RemoveSelf::create( ), CallFunc::create( [ this ] { circle = nullptr; } ), nullptr ) );
+            circle->runAction( Sequence::create( modeShift, easeScale, RemoveSelf::create( ), CallFunc::create( [ this ] { circle = nullptr; } ), nullptr ) );
         }
     }
     void FlickFunctionLayer::createFlickCircle( )
     {
-        if ( novelLayer ) novelLayer->pause( ); 
+        if ( novelLayer ) novelLayer->pause( );
+
+        Menu::maxMenuNumber = numberMenu;
+        Menu::circleRadius = menuCircleRadius;
 
         // 中央の丸
-        int thisNumber = 0;
-        circle = FunctionCircle::create( );
-        {
-            circle->drawDot( Vec2::ZERO, circleRadius, Color4F::YELLOW );
-            circle->setPosition( tapLastPosition );
-            circle->setScale( 0.0F );
-            auto scale = ScaleTo::create( 1.0F, 1.0F );
-            auto delay = DelayTime::create( 0.1F * thisNumber );
-            auto easing = EaseElasticOut::create( scale );
-            circle->runAction( Sequence::create( delay, easing, nullptr ) );
-            this->addChild( circle );
-        }
+        circle = Node::create( );
+        this->addChild( circle );
+        circle->setPosition( tapLastPosition );
+        circle->setScale( 0.0F );
+        auto scale = ScaleTo::create( 1.0F, 1.0F );
+        auto easing = EaseElasticOut::create( scale );
+        circle->runAction( Sequence::create( easing, DelayTime::create( longTapShiftTime ), CallFunc::create( [ this ] { isFunction = true; } ), nullptr ) );
 
-        int num = 3;
-        float selfAngle = M_PI * 2 / num;
-
-        // セーブ機能
-        thisNumber++;
+        addMenu( "backlog", [ this ]
         {
-            auto dot = FunctionCircle::create( );
-            dot->drawDot( Vec2::ZERO, subMenuRadius, Color4F::RED );
-            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ), sin( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ) ) );
-            auto easing = EaseExponentialOut::create( move );
-            auto delay = DelayTime::create( 0.1F * thisNumber );
-            dot->runAction( Sequence::create( delay, easing, nullptr ) );
-            circle->addChild( dot );
-        }
-
-        // ロード機能
-        thisNumber++;
+            if ( auto baglog = dynamic_cast<BackLogLayer*>( baglogLayer ) )
+            {
+                baglog->showBacklog( );
+            }
+        } );
+        addMenu( "novelswitch", [ this ]
         {
-            auto dot = FunctionCircle::create( );
-            dot->drawDot( Vec2::ZERO, subMenuRadius, Color4F::BLUE );
-            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ), sin( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ) ) );
-            auto easing = EaseExponentialOut::create( move );
-            auto delay = DelayTime::create( 0.1F * thisNumber );
-            dot->runAction( Sequence::create( delay, easing, nullptr ) );
-            circle->addChild( dot );
-        }
-
-        // メッセージウィンドウの非表示機能
-        thisNumber++;
+            ScriptStaticData::run( { "sys", "novelswitch" } );
+        } );
+        addMenu( "save", [ this ]
         {
-            auto dot = FunctionCircle::create( );
-            dot->drawDot( Vec2::ZERO, subMenuRadius, Color4F::GREEN );
-            auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ), sin( selfAngle * thisNumber ) * ( circleRadius + subMenuRadius ) ) );
-            auto easing = EaseExponentialOut::create( move );
-            auto delay = DelayTime::create( 0.1F * thisNumber );
-            dot->runAction( Sequence::create( delay, easing, CallFunc::create( [ this ] { isFunction = true; } ), nullptr ) );
-            circle->addChild( dot );
-        }
+
+        } );
+        addMenu( "load", [ this ]
+        {
+
+        } );
+    }
+    void FlickFunctionLayer::addMenu( std::string name, std::function<void( )> const & lambda )
+    {
+        const std::string dir = u8"res/texture/system/";
+        const float selfAngle = M_PI * 2 / Menu::maxMenuNumber;
+
+        auto menu = Menu::create( );
+        menu->initWithFile( dir + u8"base.false.png" );
+        circle->addChild( menu );
+        menu->menuCallBack = lambda;
+        menu->setName( name );
+        auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * circle->getChildrenCount( ) ) * ( menuLength + Menu::circleRadius ),
+                                                sin( selfAngle * circle->getChildrenCount( ) ) * ( menuLength + Menu::circleRadius ) ) );
+        auto easing = EaseExponentialOut::create( move );
+        menu->runAction( Sequence::create( easing, nullptr ) );
+
+        auto icon = Sprite::create( dir + name + u8".png" );
+        menu->addChild( icon );
+        icon->setAnchorPoint( Vec2( 0, 0 ) );
     }
 }
