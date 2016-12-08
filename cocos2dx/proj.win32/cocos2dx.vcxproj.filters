@@ -58,6 +58,9 @@
     <Filter Include="src\Lib\Utility">
       <UniqueIdentifier>{5d7bb23b-e773-426e-aa60-037ffd5e6cdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resource\Scenario">
+      <UniqueIdentifier>{6cd43fdb-48ea-438d-83f9-71b0060832cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -565,5 +568,25 @@
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\res\scenario\live2d.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario1.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario2.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario3.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario4.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\variable.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
   </ItemGroup>
 </Project>

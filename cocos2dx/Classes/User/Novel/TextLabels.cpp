@@ -31,13 +31,14 @@ namespace User
             ds[i].setDrawPosition( Vec2( position.x, position.y - OptionalValues::lineViewSize * i ) );
         }
 
-        ds[0].actionAndCallfuncStart( [ & ] { ds[1].actionAndCallfuncStart( [ & ] { ds[2].actionAndCallfuncStart( [ this ] { isReadOuted = true; } ); } ); } );
+        ds[0].actionAndCallfuncStart( [ & ] { ds[1].actionAndCallfuncStart( [ & ] { ds[2].actionAndCallfuncStart( [ this ] { isReadOuted = true; if ( animationEndCallBack ) animationEndCallBack( ); } ); } ); } );
 
         for ( auto& ds : textStrings ) ds.layerPasting( );
     }
     void TextLabels::actionStop( )
     {
         for ( auto& obj : textStrings ) obj.actionStop( );
+        if ( !isReadOuted ) if ( animationEndCallBack ) animationEndCallBack( );
         isReadOuted = true;
     }
     bool TextLabels::getIsReadOuted( )

@@ -23,6 +23,13 @@ namespace User
         bool frag;
     };
 
+    class NovelReadedPointer : public cocos2d::Sprite
+    {
+    public:
+        CREATE_FUNC( NovelReadedPointer );
+        NovelReadedPointer* make( );
+    };
+
     class NovelLayer : public LayerBase
     {
     public:
@@ -60,6 +67,11 @@ namespace User
         SwitchBoolean readProceed;
         TextLabels textLabels;
         TextChunkManager textChunkManager;
+
+        /**
+         *  ƒmƒxƒ‹‚ğ•\¦‚ğ‚·‚é‰æ‘œ‚ğ•Û‘¶‚µ‚Ü‚·B
+         */
+        cocos2d::Sprite* novelWindow = nullptr;
     };
 }
 

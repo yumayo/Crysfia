@@ -8,6 +8,8 @@
 
 #include "ScriptStaticData.h"
 
+#include "../../Lib/Utility/Utilitys.h"
+
 USING_NS_CC;
 
 namespace User
@@ -73,7 +75,6 @@ namespace User
         //};
         //this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
 
-
         return true;
     }
     void NovelLayer::setup( )
@@ -87,7 +88,16 @@ namespace User
         square->setTextureRect( rect );
         square->setPosition( rect.origin + rect.size / 2 );
         this->addChild( square );
+        novelWindow = square;
 
+        textLabels.animationEndCallBack = [ this ]
+        {
+            auto icon = NovelReadedPointer::create( )->make( );
+            auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+            auto size = novelWindow->getContentSize( );
+            icon->setPosition( size.width, 0 );
+            novelWindow->addChild( icon );
+        };
         textChunkManager.readEndCallBack = [ this ]
         {
             // テキストデータを貼り付けて。
@@ -169,6 +179,7 @@ namespace User
     {
         if ( textLabels.getIsReadOuted( ) )
         {
+            removeChildByName( u8"novelReadedAnimation" );
             makeLoadingFeatureOn( );
         }
         else
@@ -202,5 +213,32 @@ namespace User
         readNextNovel( );
 
         textLabels.actionStop( );
+    }
+    NovelReadedPointer* NovelReadedPointer::make( )
+    {
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+
+        auto sprite = Sprite::create( u8"res/texture/system/crystal.png" );
+        auto size = sprite->getContentSize( );
+        const int sx = 6;
+        const int sy = 5;
+        const auto parts = Size( size.width / sx, size.height / sy );
+        setContentSize( parts * scale );
+        Vector<SpriteFrame*> frames;
+        for ( int y = 0; y < sy; ++y )
+        {
+            for ( int x = 0; x < sx; ++x )
+            {
+                auto rect = Rect( x * parts.width, y * parts.height, parts.width, parts.height );
+                frames.pushBack( SpriteFrame::create( u8"res/texture/system/crystal.png", rect ) );
+            }
+        }
+        auto animation = Animation::createWithSpriteFrames( frames, 0.016F );
+        setScale( Lib::fitHeight( this, 64 * scale ), Lib::fitHeight( this, 64 * scale ) );
+        runAction( RepeatForever::create( Animate::create( animation ) ) );
+        setName( u8"novelReadedAnimation" );
+        setAnchorPoint( Vec2( 1, 0 ) );
+
+        return this;
     }
 }
