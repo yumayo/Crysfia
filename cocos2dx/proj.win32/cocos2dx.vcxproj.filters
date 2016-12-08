@@ -61,6 +61,9 @@
     <Filter Include="resource\Scenario">
       <UniqueIdentifier>{6cd43fdb-48ea-438d-83f9-71b0060832cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Lib\Json">
+      <UniqueIdentifier>{107b268a-1431-4229-a329-cd646e89a1e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -299,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Lib\Utility\Utilitys.cpp">
       <Filter>src\Lib\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Json\jsoncpp.cpp">
+      <Filter>src\Lib\Json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -562,6 +568,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Utility\Utilitys.h">
       <Filter>src\Lib\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Json\json.h">
+      <Filter>src\Lib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Json\json-forwards.h">
+      <Filter>src\Lib\Json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

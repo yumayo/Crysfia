@@ -4,6 +4,9 @@
 #include "../Novel/INIWriter.h"
 #include "../Novel/StringUtil.h"
 
+#include "json/stringbuffer.h"
+#include "json/writer.h"
+
 USING_NS_CC;
 
 namespace User
@@ -94,6 +97,46 @@ namespace User
                 }
             }
             data->setBoolForKey( "INITDATA", true );
+        }
+    }
+    std::string getLocalReadPath( std::string const & name )
+    {
+        auto file = FileUtils::getInstance( );
+        std::string path;
+        if ( file->isFileExist( file->getWritablePath( ) + name ) )
+            path = file->getWritablePath( ) + name;
+        else
+            path = name;
+        return path;
+    }
+    std::string getLocalReadPath( std::string const & name, std::string const & directory )
+    {
+        auto file = FileUtils::getInstance( );
+        std::string path;
+        if ( file->isFileExist( file->getWritablePath( ) + name ) )
+            path = file->getWritablePath( ) + name;
+        else
+            path = directory + name;
+        return path;
+    }
+    void writeUserLocal( std::string const & data, std::string const & name )
+    {
+        auto fileUtil = FileUtils::getInstance( );
+
+        auto path = fileUtil->getWritablePath( );
+        if ( !path.empty( ) )
+        {
+            fileUtil->writeStringToFile( data, path + name );
+        }
+    }
+    void writeUserLocal( std::string const & data, std::string const & name, std::string const & directory )
+    {
+        auto fileUtil = FileUtils::getInstance( );
+
+        auto path = fileUtil->getWritablePath( );
+        if ( !path.empty( ) )
+        {
+            fileUtil->writeStringToFile( data, path + directory + name );
         }
     }
 }

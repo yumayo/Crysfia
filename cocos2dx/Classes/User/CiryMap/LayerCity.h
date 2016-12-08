@@ -107,6 +107,8 @@ namespace User
         ~LayerCity( );
         bool init( ) override;
         void setup( ) override;
+        void jsonRead( );
+        void jsonReadNew( );
         cocos2d::ui::Button* createBackButton( );
     private:
         std::string tag;

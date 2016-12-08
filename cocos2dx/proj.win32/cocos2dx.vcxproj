@@ -148,6 +148,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp" />
+    <ClCompile Include="..\Classes\Lib\Json\jsoncpp.cpp" />
     <ClCompile Include="..\Classes\Lib\Utility\Utilitys.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\FGManager.cpp" />
@@ -229,6 +230,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h" />
+    <ClInclude Include="..\Classes\Lib\Json\json-forwards.h" />
+    <ClInclude Include="..\Classes\Lib\Json\json.h" />
     <ClInclude Include="..\Classes\Lib\Utility\Utilitys.h" />
     <ClInclude Include="..\Classes\User\Breeding\BGManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\FGManager.h" />

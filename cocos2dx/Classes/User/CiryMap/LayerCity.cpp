@@ -11,10 +11,9 @@
 
 #include "../../Lib/Utility/Utilitys.h"
 
-#include "json/rapidjson.h"
-#include "json/document.h"
-#include "json/stringbuffer.h"
-#include "json/writer.h"
+#include "../../Lib/Json/json.h"
+
+#include "../System/DataSettings.h"
 
 USING_NS_CC;
 
@@ -201,55 +200,8 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        rapidjson::Document json;
-        if ( json.Parse( FileUtils::getInstance( )->getStringFromFile( u8"res/data/island.json" ).c_str( ) ).HasParseError( ) )
-        {
-            log( "parse error!!" );
-        }
-
-        auto map = json[tag.c_str( )][u8"path"].GetString( );
-        auto background = CityMap::create( )->make( map );
-        this->addChild( background );
-
-        std::vector<ScenarioPointData> main;
-        {
-            auto& root = json[tag.c_str( )][u8"point.main"];
-            for ( auto itr = root.MemberBegin( );
-                  itr != root.MemberEnd( );
-                  ++itr )
-            {
-                ScenarioPointData temp;
-                temp.scenario = itr->name.GetString( );
-                temp.isChecked = itr->value[u8"visit"].GetBool( );
-                temp.position = Vec2( itr->value[u8"position"][0].GetInt( ),
-                                      itr->value[u8"position"][1].GetInt( ) );
-                main.emplace_back( temp );
-            }
-        }
-        std::vector<ScenarioPointData> sub;
-        {
-            auto& root = json[tag.c_str( )][u8"point.sub"];
-            for ( auto itr = root.MemberBegin( );
-                  itr != root.MemberEnd( );
-                  ++itr )
-            {
-                ScenarioPointData temp;
-                temp.scenario = itr->name.GetString( );
-                temp.isChecked = itr->value[u8"visit"].GetBool( );
-                temp.position = Vec2( itr->value[u8"position"][0].GetInt( ),
-                                      itr->value[u8"position"][1].GetInt( ) );
-                sub.emplace_back( temp );
-            }
-        }
-
-        for ( auto& obj : main )
-        {
-            MainMark::create( )->pasteMap( background, obj );
-        }
-        for ( auto& obj : sub )
-        {
-            SubMark::create( )->pasteMap( background, obj );
-        }
+        //jsonRead( );
+        jsonReadNew( );
 
         /**
          *  ‰æ–Êã•”‚Ìƒƒjƒ…[
@@ -305,6 +257,101 @@ namespace User
     void LayerCity::setup( )
     {
 
+    }
+    void LayerCity::jsonRead( )
+    {
+        rapidjson::Document json;
+        if ( json.Parse( FileUtils::getInstance( )->getStringFromFile( u8"res/data/island.json" ).c_str( ) ).HasParseError( ) )
+        {
+            log( "parse error!!" );
+        }
+
+        auto map = json[tag.c_str( )][u8"path"].GetString( );
+        auto background = CityMap::create( )->make( map );
+        this->addChild( background );
+
+        std::vector<ScenarioPointData> main;
+        {
+            auto& root = json[tag.c_str( )][u8"point.main"];
+            for ( auto itr = root.MemberBegin( );
+                  itr != root.MemberEnd( );
+                  ++itr )
+            {
+                ScenarioPointData temp;
+                temp.scenario = itr->name.GetString( );
+                temp.isChecked = itr->value[u8"visit"].GetBool( );
+                temp.position = Vec2( itr->value[u8"position"][0].GetInt( ),
+                                      itr->value[u8"position"][1].GetInt( ) );
+                main.emplace_back( temp );
+            }
+        }
+        std::vector<ScenarioPointData> sub;
+        {
+            auto& root = json[tag.c_str( )][u8"point.sub"];
+            for ( auto itr = root.MemberBegin( );
+                  itr != root.MemberEnd( );
+                  ++itr )
+            {
+                ScenarioPointData temp;
+                temp.scenario = itr->name.GetString( );
+                temp.isChecked = itr->value[u8"visit"].GetBool( );
+                temp.position = Vec2( itr->value[u8"position"][0].GetInt( ),
+                                      itr->value[u8"position"][1].GetInt( ) );
+                sub.emplace_back( temp );
+            }
+        }
+
+        for ( auto& obj : main )
+        {
+            MainMark::create( )->pasteMap( background, obj );
+        }
+        for ( auto& obj : sub )
+        {
+            SubMark::create( )->pasteMap( background, obj );
+        }
+    }
+    void LayerCity::jsonReadNew( )
+    {
+        Json::Reader reader;
+        Json::Value root;
+        if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( u8"island.json", u8"res/data/" ) ), root ) )
+        {
+            auto map = root[tag][u8"path"].asString( );
+            auto background = CityMap::create( )->make( map );
+            addChild( background );
+
+            std::vector<ScenarioPointData> main;
+            for ( auto& value : root[tag][u8"point.main"] )
+            {
+                ScenarioPointData temp;
+                temp.scenario = value[u8"scenario"].asString( );
+                temp.isChecked = value[u8"visit"].asBool( );
+                temp.position = Vec2( value[u8"position"][0].asInt( ),
+                                      value[u8"position"][1].asInt( ) );
+                main.emplace_back( temp );
+            }
+            std::vector<ScenarioPointData> sub;
+            for ( auto& value : root[tag][u8"point.sub"] )
+            {
+                ScenarioPointData temp;
+                temp.scenario = value[u8"scenario"].asString( );
+                temp.isChecked = value[u8"visit"].asBool( );
+                temp.position = Vec2( value[u8"position"][0].asInt( ),
+                                      value[u8"position"][1].asInt( ) );
+                sub.emplace_back( temp );
+            }
+
+            for ( auto& obj : main )
+            {
+                MainMark::create( )->pasteMap( background, obj );
+            }
+            for ( auto& obj : sub )
+            {
+                SubMark::create( )->pasteMap( background, obj );
+            }
+        }
+        Json::StyledWriter writer;
+        writeUserLocal( writer.write( root ), u8"island.json" );
     }
     cocos2d::ui::Button * LayerCity::createBackButton( )
     {
