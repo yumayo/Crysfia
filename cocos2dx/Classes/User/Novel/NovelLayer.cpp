@@ -79,16 +79,16 @@ namespace User
     }
     void NovelLayer::setup( )
     {
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-        auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        Rect rect = Rect( origin.x, origin.y, visibleSize.width, OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::lineSpaceSize );
-        Sprite* square = Sprite::create( );
-        square->setColor( Color3B( 0, 0, 0 ) );
-        square->setOpacity( 128 );
-        square->setTextureRect( rect );
-        square->setPosition( rect.origin + rect.size / 2 );
-        this->addChild( square );
-        novelWindow = square;
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        Sprite* window = Sprite::create( u8"res/texture/system/message.window.png" );
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        window->setAnchorPoint( Vec2(0, 0) );
+        auto boardPixel = window->getContentSize( ) / scale;
+        auto boardScale = Lib::fitWidth( window, vs.width );
+        window->setScale( boardScale, boardScale );
+        this->addChild( window );
+        novelWindow = window;
 
         textLabels.animationEndCallBack = [ this ]
         {
@@ -179,7 +179,7 @@ namespace User
     {
         if ( textLabels.getIsReadOuted( ) )
         {
-            removeChildByName( u8"novelReadedAnimation" );
+            novelWindow->removeChildByName( u8"novelReadedAnimation" );
             makeLoadingFeatureOn( );
         }
         else
@@ -218,7 +218,8 @@ namespace User
     {
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        auto sprite = Sprite::create( u8"res/texture/system/crystal.png" );
+        auto path = u8"res/texture/system/crystal.png";
+        auto sprite = Sprite::create( path );
         auto size = sprite->getContentSize( );
         const int sx = 6;
         const int sy = 5;
@@ -230,7 +231,7 @@ namespace User
             for ( int x = 0; x < sx; ++x )
             {
                 auto rect = Rect( x * parts.width, y * parts.height, parts.width, parts.height );
-                frames.pushBack( SpriteFrame::create( u8"res/texture/system/crystal.png", rect ) );
+                frames.pushBack( SpriteFrame::create( path, rect ) );
             }
         }
         auto animation = Animation::createWithSpriteFrames( frames, 0.016F );

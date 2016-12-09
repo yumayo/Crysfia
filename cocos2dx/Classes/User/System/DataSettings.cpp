@@ -4,9 +4,6 @@
 #include "../Novel/INIWriter.h"
 #include "../Novel/StringUtil.h"
 
-#include "json/stringbuffer.h"
-#include "json/writer.h"
-
 USING_NS_CC;
 
 namespace User
@@ -38,7 +35,7 @@ namespace User
     void userDefaultLoading( )
     {
         INIReader reader;
-        iniDataRead( reader, u8"system.ini", u8"res/data/" );
+        iniDataRead( reader, u8"userDefault.ini", u8"res/data/" );
 
         auto data = UserDefault::getInstance( );
         for ( auto& tag : reader.getData( ) )
@@ -96,7 +93,7 @@ namespace User
                         data->setIntegerForKey( value.first.c_str( ), StringUtil::string_value<int>( value.second ) );
                 }
             }
-            data->setBoolForKey( "INITDATA", true );
+            data->setBoolForKey( u8"INITDATA", true );
         }
     }
     std::string getLocalReadPath( std::string const & name )

@@ -13,9 +13,9 @@ namespace User
          *  データの初期化を行います。
          *  構造に必要なデータを一つ一つ詰めます。
          */
-        void initData( bool isChecked, cocos2d::Vec2 const& position, std::string const& scenario )
+        void initData( bool visit, cocos2d::Vec2 const& position, std::string const& scenario )
         {
-            this->isChecked = isChecked;
+            this->visit = visit;
             this->position = position;
             this->scenario = scenario;
         }
@@ -31,7 +31,7 @@ namespace User
          *  @true   読んでいたら
          *  @false  未読なら
          */
-        bool isChecked;
+        bool visit;
 
         /**
          *  マップ画像中の表示位置。
@@ -42,6 +42,11 @@ namespace User
          *  読み込むシナリオファイルのパス。
          */
         std::string scenario;
+
+        /**
+         *  このノベルのタイトル。
+         */
+        std::string title;
     };
 
     class Mark : protected ScenarioPointData, public cocos2d::ui::Button
@@ -103,15 +108,17 @@ namespace User
     {
     public:
         CREATE_ARGS_FUNC( LayerCity );
-        LayerCity( std::string const& tag );
+        LayerCity( std::string const& path );
         ~LayerCity( );
         bool init( ) override;
         void setup( ) override;
         void jsonRead( );
-        void jsonReadNew( );
         cocos2d::ui::Button* createBackButton( );
     private:
-        std::string tag;
+        /**
+         *  jsonデータへのパスを保存します。
+         */
+        std::string path;
 
         /**
          * 次の行動目的を表示するためのデータ。

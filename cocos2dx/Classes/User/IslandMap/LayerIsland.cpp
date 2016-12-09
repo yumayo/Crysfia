@@ -33,7 +33,7 @@ namespace User
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
                 map->pause( );
-                SceneManager::createCityMap( this->island );
+                SceneManager::createCityMap( this->path );
             }
         } );
     }
@@ -109,11 +109,11 @@ namespace User
         auto background = IslandMap::create( )->make( );
         this->addChild( background );
 
-        CityMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 206, 510 ), u8"first" } );
-        CityMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 314, 374 ), u8"second" } );
-        CityMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 567, 482 ), u8"third" } );
-        CityMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 618, 366 ), u8"forth" } );
-        CityMark::create( )->pasteMap( background, { false, cocos2d::Vec2( 803, 582 ), u8"fifth" } );
+        CityMark::create( )->pasteMap( background, { cocos2d::Vec2( 206, 510 ), u8"island.json" } );
+        CityMark::create( )->pasteMap( background, { cocos2d::Vec2( 314, 374 ), u8"island.json" } );
+        CityMark::create( )->pasteMap( background, { cocos2d::Vec2( 567, 482 ), u8"island.json" } );
+        CityMark::create( )->pasteMap( background, { cocos2d::Vec2( 618, 366 ), u8"island.json" } );
+        CityMark::create( )->pasteMap( background, { cocos2d::Vec2( 803, 582 ), u8"island.json" } );
 
         return true;
     }

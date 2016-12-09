@@ -13,11 +13,10 @@ namespace User
          *  データの初期化を行います。
          *  構造に必要なデータを一つ一つ詰めます。
          */
-        void initData( bool isChecked, cocos2d::Vec2 const& position, std::string const& island )
+        void initData( cocos2d::Vec2 const& position, std::string const& path )
         {
-            this->isChecked = isChecked;
             this->position = position;
-            this->island = island;
+            this->path = path;
         }
 
         /**
@@ -27,13 +26,6 @@ namespace User
         void initData( CityPointData const& scenario ) { *this = scenario; }
 
         /**
-         *  すでに読んだシナリオなのかどうか。
-         *  @true   読んでいたら
-         *  @false  未読なら
-         */
-        bool isChecked;
-
-        /**
          *  マップ画像中の表示位置。
          */
         cocos2d::Vec2 position;
@@ -41,7 +33,7 @@ namespace User
         /**
          *  島の情報。
          */
-        std::string island;
+        std::string path;
     };
 
     class Mark : protected CityPointData, public cocos2d::ui::Button
