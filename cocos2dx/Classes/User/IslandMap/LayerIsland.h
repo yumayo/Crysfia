@@ -36,13 +36,13 @@ namespace User
         std::string path;
     };
 
-    class Mark : protected CityPointData, public cocos2d::ui::Button
+    class LayerIslandMark : protected CityPointData, public cocos2d::ui::Button
     {
     protected:
         void pasteMap( cocos2d::Sprite* map, CityPointData const& data );
     };
 
-    class CityMark : public Mark
+    class CityMark : public LayerIslandMark
     {
     public:
         CREATE_FUNC( CityMark );

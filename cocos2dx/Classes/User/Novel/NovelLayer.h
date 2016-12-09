@@ -40,6 +40,7 @@ namespace User
         void setup( ) override;
         void update( float delta )override;
     public:
+        void delayOn( );
         void on( );
         void off( );
     public:

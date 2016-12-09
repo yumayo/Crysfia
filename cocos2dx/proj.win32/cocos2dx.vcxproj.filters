@@ -306,6 +306,9 @@
     <ClCompile Include="..\Classes\Lib\Json\jsoncpp.cpp">
       <Filter>src\Lib\Json</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ItemLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -575,6 +578,9 @@
     <ClInclude Include="..\Classes\Lib\Json\json-forwards.h">
       <Filter>src\Lib\Json</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ItemLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -598,6 +604,9 @@
       <Filter>resource\Scenario</Filter>
     </Text>
     <Text Include="..\Resources\res\scenario\variable.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\debug.txt">
       <Filter>resource\Scenario</Filter>
     </Text>
   </ItemGroup>

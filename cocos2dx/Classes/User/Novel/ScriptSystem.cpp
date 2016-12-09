@@ -12,6 +12,7 @@
 #include "StillLayer.h"
 #include "HeartLayer.h"
 #include "Live2dLayer.h"
+#include "ItemLayer.h"
 
 #include "ScriptHuman.h"
 #include "ScriptBackground.h"
@@ -46,6 +47,7 @@ namespace User
         REGIST_FUNC( ScriptSystem, novelon );
         REGIST_FUNC( ScriptSystem, noveloff );
         REGIST_FUNC( ScriptSystem, novelswitch );
+        REGIST_FUNC( ScriptSystem, item );
     }
     ScriptSystem::~ScriptSystem( )
     {
@@ -67,6 +69,7 @@ namespace User
         stillLayer = systemLayer->getLayer<StillLayer>( );
         heartLayer = systemLayer->getLayer<HeartLayer>( );
         live2dLayer = systemLayer->getLayer<Live2dLayer>( );
+        itemLayer = systemLayer->getLayer<ItemLayer>( );
     }
     SCRIPT( ScriptSystem::l )
     {
@@ -139,6 +142,13 @@ namespace User
         else
         {
             novelon( args );
+        }
+    }
+    SCRIPT( ScriptSystem::item )
+    {
+        if ( auto ptr = dynamic_cast<ItemLayer*>( itemLayer ) )
+        {
+            ptr->make( args[0] );
         }
     }
     SCRIPT( ScriptSystem::name )

@@ -13,6 +13,7 @@
 #include "HeartLayer.h"
 #include "Live2dLayer.h"
 #include "FlickFunctionLayer.h"
+#include "ItemLayer.h"
 
 #include "ScriptSystem.h"
 
@@ -34,6 +35,7 @@ namespace User
         scene->addChild( createLayer<NameLayer>( ), (int)Tag::Name );
         scene->addChild( createLayer<HeartLayer>( ), (int)Tag::Heart );
         scene->addChild( createLayer<SelectLayer>( ), (int)Tag::Select );
+        scene->addChild( createLayer<ItemLayer>( ), (int)Tag::ItemLayer );
         scene->addChild( createLayer<FlickFunctionLayer>( ), (int)Tag::FlickFunction );
         scene->addChild( createLayer<BackLogLayer>( ), (int)Tag::BackLog );
 

@@ -161,7 +161,8 @@ namespace User
         // ‹@”\‚Ì‚·‚×‚Ä‚ð‚µ‚Ü‚¤
         if ( circle )
         {
-            if ( novelLayer ) novelLayer->resume( );
+            if ( circle->getName( ).empty( ) )
+                if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->delayOn( );
 
             auto children = circle->getChildren( );
             int i = 0;

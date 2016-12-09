@@ -31,8 +31,8 @@ namespace User
         }
 
         now = UserDefault::getInstance( )->getIntegerForKey( u8"êeà§ìx" );
-        start = 27;
-        end = size.width - 31;
+        start = 7;
+        end = size.width - 9;
 
         if ( auto clipping = ClippingNode::create( ) )
         {

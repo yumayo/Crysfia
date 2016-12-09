@@ -23,6 +23,7 @@ namespace User
         SCRIPT( novelon );
         SCRIPT( noveloff );
         SCRIPT( novelswitch );
+        SCRIPT( item );
     public: // 変数の登録に使います。
             // 全てのクラスはシステムを経由してでないと作成できません。
         SCRIPT( name );
@@ -42,6 +43,7 @@ namespace User
         cocos2d::Layer* stillLayer = nullptr;
         cocos2d::Layer* heartLayer = nullptr;
         cocos2d::Layer* live2dLayer = nullptr;
+        cocos2d::Layer* itemLayer = nullptr;
 
         /**
          *  現在のメッセージウィンドウの行数を保存しておきます。

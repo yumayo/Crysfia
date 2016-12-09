@@ -1,6 +1,7 @@
 #include "BackLogLayer.h"
 
 #include "NovelLayer.h"
+#include "NameLayer.h"
 
 #include "FlickFunctionLayer.h"
 
@@ -129,11 +130,17 @@ namespace User
             {
                 this->removeChild( layout );
                 isBacklog = false;
-                this->scheduleOnce( [ = ] ( float d )
+                flickFunctionLayer->resume( );
+
+                if ( auto ptr = getLayer<NovelLayer>( ) )
                 {
-                    flickFunctionLayer->resume( );
-                    ScriptStaticData::run( { "sys", "novelon" } );
-                }, 0.016F, std::string( "baglog" ) );
+                    ptr->delayOn( );
+                }
+                if ( auto ptr = getLayer<NameLayer>( ) )
+                {
+                    ptr->resume( );
+                    ptr->setVisible( true );
+                }
             }
         } );
     }

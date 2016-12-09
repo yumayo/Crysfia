@@ -83,7 +83,7 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         Sprite* window = Sprite::create( u8"res/texture/system/message.window.png" );
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-        window->setAnchorPoint( Vec2(0, 0) );
+        window->setAnchorPoint( Vec2( 0, 0 ) );
         auto boardPixel = window->getContentSize( ) / scale;
         auto boardScale = Lib::fitWidth( window, vs.width );
         window->setScale( boardScale, boardScale );
@@ -92,10 +92,13 @@ namespace User
 
         textLabels.animationEndCallBack = [ this ]
         {
-            auto icon = NovelReadedPointer::create( )->make( );
-            auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+            auto visibleSize = Director::getInstance( )->getVisibleSize( );
+            auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
             auto size = novelWindow->getContentSize( );
-            icon->setPosition( size.width, 0 );
+            auto mul = size.width / visibleSize.width;
+            auto position = Vec2( 950.0F * scale, ( 400.0F - 340.0F ) * scale );
+            auto icon = NovelReadedPointer::create( )->make( );
+            icon->setPosition( position );
             novelWindow->addChild( icon );
         };
         textChunkManager.readEndCallBack = [ this ]
@@ -123,6 +126,15 @@ namespace User
         // テキストの読み込み。
         // delayが0である限り、テキストを読み込み続けます。
         readNextNovel( );
+    }
+    void NovelLayer::delayOn( )
+    {
+        this->scheduleOnce( [ this ] ( float delay )
+        {
+            this->resume( );
+        }, 0.016F, std::string( "novel.layer.delay" ) );
+
+        this->setVisible( true );
     }
     void NovelLayer::on( )
     {

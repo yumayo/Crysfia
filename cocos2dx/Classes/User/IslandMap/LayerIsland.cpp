@@ -16,7 +16,7 @@ USING_NS_CC;
 
 namespace User
 {
-    void Mark::pasteMap( cocos2d::Sprite * map, CityPointData const & data )
+    void LayerIslandMark::pasteMap( cocos2d::Sprite * map, CityPointData const & data )
     {
         initData( data );
 
@@ -26,7 +26,7 @@ namespace User
         map->addChild( this );
 
         setPosition( Vec2( position.x, pixel.height - position.y ) * scale );
-        setScale( Lib::fitWidth( this, 64 * scale ), Lib::fitWidth( this, 64 * scale ) );
+        setScale( Lib::fitWidth( this, 128 * scale ), Lib::fitWidth( this, 128 * scale ) );
 
         addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
@@ -44,7 +44,7 @@ namespace User
 
         loadTextureNormal( dir + u8"castle.png" );
 
-        Mark::pasteMap( map, data );
+        LayerIslandMark::pasteMap( map, data );
     }
 
     IslandMap * IslandMap::make( )

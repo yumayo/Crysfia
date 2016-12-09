@@ -49,20 +49,20 @@ namespace User
         std::string title;
     };
 
-    class Mark : protected ScenarioPointData, public cocos2d::ui::Button
+    class LayerCityMark : protected ScenarioPointData, public cocos2d::ui::Button
     {
     protected:
         void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
     };
 
-    class MainMark : public Mark
+    class MainMark : public LayerCityMark
     {
     public:
         CREATE_FUNC( MainMark );
         void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
     };
 
-    class SubMark : public Mark
+    class SubMark : public LayerCityMark
     {
     public:
         CREATE_FUNC( SubMark );

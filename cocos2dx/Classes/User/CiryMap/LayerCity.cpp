@@ -19,7 +19,7 @@ USING_NS_CC;
 
 namespace User
 {
-    void Mark::pasteMap( cocos2d::Sprite * map, ScenarioPointData const & data )
+    void LayerCityMark::pasteMap( cocos2d::Sprite * map, ScenarioPointData const & data )
     {
         initData( data );
 
@@ -81,7 +81,7 @@ namespace User
 
         loadTextureNormal( dir + "scenario.main.png" );
 
-        Mark::pasteMap( map, data );
+        LayerCityMark::pasteMap( map, data );
     }
 
     void SubMark::pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data )
@@ -90,7 +90,7 @@ namespace User
 
         loadTextureNormal( dir + "scenario.sub.png" );
 
-        Mark::pasteMap( map, data );
+        LayerCityMark::pasteMap( map, data );
     }
 
     Calendar* Calendar::make( )
