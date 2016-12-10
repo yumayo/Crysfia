@@ -8,6 +8,8 @@
 
 #include "ScriptStaticData.h"
 
+#include "../../Lib/Utility/Utilitys.h"
+
 USING_NS_CC;
 
 namespace User
@@ -54,7 +56,7 @@ namespace User
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
 
         auto multiTouchEvent = EventListenerTouchAllAtOnce::create( );
-        multiTouchEvent->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        multiTouchEvent->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
             for ( auto& touch : touches )
             {
@@ -73,21 +75,32 @@ namespace User
         //};
         //this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
 
-
         return true;
     }
     void NovelLayer::setup( )
     {
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-        auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        Rect rect = Rect( origin.x, origin.y, visibleSize.width, OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::lineSpaceSize );
-        Sprite* square = Sprite::create( );
-        square->setColor( Color3B( 0, 0, 0 ) );
-        square->setOpacity( 128 );
-        square->setTextureRect( rect );
-        square->setPosition( rect.origin + rect.size / 2 );
-        this->addChild( square );
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        Sprite* window = Sprite::create( u8"res/texture/system/message.window.png" );
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        window->setAnchorPoint( Vec2( 0, 0 ) );
+        auto boardPixel = window->getContentSize( ) / scale;
+        auto boardScale = Lib::fitWidth( window, vs.width );
+        window->setScale( boardScale, boardScale );
+        this->addChild( window );
+        novelWindow = window;
 
+        textLabels.animationEndCallBack = [ this ]
+        {
+            auto visibleSize = Director::getInstance( )->getVisibleSize( );
+            auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+            auto size = novelWindow->getContentSize( );
+            auto mul = size.width / visibleSize.width;
+            auto position = Vec2( 950.0F * scale, ( 400.0F - 340.0F ) * scale );
+            auto icon = NovelReadedPointer::create( )->make( );
+            icon->setPosition( position );
+            novelWindow->addChild( icon );
+        };
         textChunkManager.readEndCallBack = [ this ]
         {
             // テキストデータを貼り付けて。
@@ -97,7 +110,6 @@ namespace User
         };
         textChunkManager.novelEndCallBack = [ this ]
         {
-            ScriptStaticData::clear( );
             SceneManager::createIslandMap( );
         };
 
@@ -114,6 +126,15 @@ namespace User
         // テキストの読み込み。
         // delayが0である限り、テキストを読み込み続けます。
         readNextNovel( );
+    }
+    void NovelLayer::delayOn( )
+    {
+        this->scheduleOnce( [ this ] ( float delay )
+        {
+            this->resume( );
+        }, 0.016F, std::string( "novel.layer.delay" ) );
+
+        this->setVisible( true );
     }
     void NovelLayer::on( )
     {
@@ -170,6 +191,7 @@ namespace User
     {
         if ( textLabels.getIsReadOuted( ) )
         {
+            novelWindow->removeChildByName( u8"novelReadedAnimation" );
             makeLoadingFeatureOn( );
         }
         else
@@ -203,5 +225,33 @@ namespace User
         readNextNovel( );
 
         textLabels.actionStop( );
+    }
+    NovelReadedPointer* NovelReadedPointer::make( )
+    {
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+
+        auto path = u8"res/texture/system/crystal.png";
+        auto sprite = Sprite::create( path );
+        auto size = sprite->getContentSize( );
+        const int sx = 6;
+        const int sy = 5;
+        const auto parts = Size( size.width / sx, size.height / sy );
+        setContentSize( parts * scale );
+        Vector<SpriteFrame*> frames;
+        for ( int y = 0; y < sy; ++y )
+        {
+            for ( int x = 0; x < sx; ++x )
+            {
+                auto rect = Rect( x * parts.width, y * parts.height, parts.width, parts.height );
+                frames.pushBack( SpriteFrame::create( path, rect ) );
+            }
+        }
+        auto animation = Animation::createWithSpriteFrames( frames, 0.016F );
+        setScale( Lib::fitHeight( this, 64 * scale ), Lib::fitHeight( this, 64 * scale ) );
+        runAction( RepeatForever::create( Animate::create( animation ) ) );
+        setName( u8"novelReadedAnimation" );
+        setAnchorPoint( Vec2( 1, 0 ) );
+
+        return this;
     }
 }

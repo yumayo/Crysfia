@@ -13,6 +13,7 @@ namespace User
         ~BackLogLayer( );
         bool init( ) override;
         void setup( ) override;
+        void showBacklog( );
     private:
         bool isBacklog = false;
     };

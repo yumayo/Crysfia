@@ -1,0 +1,37 @@
+{
+  "background": "res/texture/system/minimap.png",
+  "point.main": [
+    {
+      "position": [ 155, 384 ],
+      "scenario": "scenario1.txt",
+      "visit": true,
+      "title": "クロエが不機嫌のままだ。島を一緒に回れば少しは直してもらえるかも？"
+    },
+    {
+      "position": [ 167, 201 ],
+      "scenario": "scenario2.txt",
+      "visit": false,
+      "title": "クロエが不機嫌のままだ。島を一緒に回れば少しは直してもらえるかも？"
+    },
+    {
+      "position": [ 342, 102 ],
+      "scenario": "scenario3.txt",
+      "visit": false,
+      "title": "クロエが不機嫌のままだ。島を一緒に回れば少しは直してもらえるかも？"
+    },
+    {
+      "position": [ 374, 248 ],
+      "scenario": "scenario4.txt",
+      "visit": false,
+      "title": "クロエが不機嫌のままだ。島を一緒に回れば少しは直してもらえるかも？"
+    }
+  ],
+  "point.sub": [
+    {
+      "position": [ 256, 256 ],
+      "scenario": "live2d.txt",
+      "visit": false,
+      "title": "クロエが不機嫌のままだ。島を一緒に回れば少しは直してもらえるかも？"
+    }
+  ]
+}

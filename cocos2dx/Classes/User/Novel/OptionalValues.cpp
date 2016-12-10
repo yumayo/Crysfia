@@ -17,8 +17,11 @@ namespace User
 
     void OptionalValues::setup( )
     {
-        auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
-        auto stringViewWidth = visibleWidth * 0.9;
+        auto scale = 810.0F / 1080;
+
+        auto vs = Director::getInstance( )->getVisibleSize( );
+
+        auto stringViewWidth = vs.width * scale;
 
         readOutSpeed = 0.1F;
         stringSize = 20;

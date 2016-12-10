@@ -1,12 +1,14 @@
 #include "UIManager.h"
-#include "Test.h"
 #include "BGManager.h"
 #include "../SceneManager.h"
 #include "cocos2d/external/json/rapidjson.h"
 #include "cocos2d/external/json/document.h"
 
+#include "LayerCleaning.h"
 #include "../Diary/LayerDiary.h"
 #include "../Ishibashi/Layer_ishibashi.h"
+
+#include "LayerManager.h"
 
 USING_NS_CC;
 
@@ -33,11 +35,14 @@ namespace User
 	bool UIManager::init()
 	{
 		if (!Layer::init()) { return false; }
-		
-		this->addChild(bgManager, (int)zOder::BACKGROUND, (int)LayerType::BACGROUND);
+	
 		createDiaryWindow();
 		createSubMenuWindow();
 		createMainMenuWindow();
+
+		auto layer = LayerManager::create();
+		this->addChild(layer);
+
 		return true;
 	}
 
@@ -85,7 +90,7 @@ namespace User
 				menuButtons[i]->addTouchEventListener(CC_CALLBACK_2(UIManager::touchEventOfMainMenu, this));
 			}
 		}
-		this->addChild(layout, (int)zOder::SUB_MENU, (int)LayerType::MAIN_MENU);
+		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::MAIN_MENU);	
 	}
 
 	//育成メニューの処理
@@ -94,9 +99,6 @@ namespace User
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x, pos.y * 0));
 		layout->setContentSize(Size(winSize.x, 150));
-
-		log("layout X=[%f]",pos.x);
-		log("layout Y=[%f]",pos.y);
 
 		//メニューの背景
 		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_88.png",
@@ -136,8 +138,7 @@ namespace User
 				subButtons[i]->addTouchEventListener(CC_CALLBACK_2(UIManager::touchEventOfSubMenu, this));
 			}
 		}
-
-		this->addChild(layout, (int)zOder::SUB_MENU, (int)LayerType::SUB_MENU);
+		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::BREEDING_MENU);
 	}
 
 	void UIManager::createDiaryWindow()
@@ -147,7 +148,7 @@ namespace User
 		layout->setContentSize(Size(winSize.x, 150));
 
 		
-		this->addChild(layout, (int)zOder::DIARY_MENU, (int)LayerType::DIARY_MENU);
+		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::DIARY_MENU);
 	}
 
 	//各メニューボタンの処理
@@ -168,7 +169,7 @@ namespace User
 			if (pSender == menuButtons[(int)ButtonType::BREEDING]) { changeToSubWindow(); }
 			if (pSender == menuButtons[(int)ButtonType::OPTION]) { setOptionWindow(); }
 			if (pSender == menuButtons[(int)ButtonType::DIARY]) { changeToDiaryWindow(); }
-
+			
 		default:
 			break;
 		}
@@ -184,7 +185,7 @@ namespace User
 			if (pSender == subButtons[(int)SubButtonType::BACK]) { changeToMainWindow(); }
 			if (pSender == subButtons[(int)SubButtonType::MEAL]) { }
 			if (pSender == subButtons[(int)SubButtonType::CLOTHES]) { }
-			if (pSender == subButtons[(int)SubButtonType::CLEANING]) { }
+			if (pSender == subButtons[(int)SubButtonType::CLEANING]) { changeToCreaning(); }
 		default:
 			break;
 		}
@@ -193,38 +194,57 @@ namespace User
 	//育成メニューからメインメニューへ戻す関数です
 	void UIManager::changeToMainWindow()
 	{
-		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
-		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
+		auto m = this->getChildByTag((int)tabMenu::MAIN_MENU);
+		auto s = this->getChildByTag((int)tabMenu::BREEDING_MENU);
 		swapWindow(s, m);
-		bgManager->changeBackGround( (int)BGType::MAIN_MENU, (int)BGType::BREEDING_MENU);
 
+<<<<<<< HEAD
         this->removeChildByName( typeid( Layer_meal ).name() );
         this->removeChildByName( typeid( LayerDiary ).name( ) );
+=======
+		//現在のシーンを取得し、シーンからaddChildされているBGManagerにアクセスして関数を呼び出す。
+		auto currentScene = (Scene*)Director::getInstance()->getRunningScene();
+		auto c = (BGManager*)currentScene->getChildByTag((int)tabLayer::BACKGROUND);
+		c->changeBackGround((int)tabMenu::MAIN_MENU, (int)tabMenu::BREEDING_MENU);
+>>>>>>> pr/7
 	}
 
 	//メインメニューからサブメニューへ変更する関数です
 	void UIManager::changeToSubWindow()
 	{
-		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
-		auto s = this->getChildByTag((int)LayerType::SUB_MENU);
+		auto m = this->getChildByTag((int)tabMenu::MAIN_MENU);
+		auto s = this->getChildByTag((int)tabMenu::BREEDING_MENU);
 		swapWindow(m, s);
-		bgManager->changeBackGround((int)BGType::BREEDING_MENU, (int)BGType::MAIN_MENU);
 
+<<<<<<< HEAD
         auto layer = Layer_meal::create( );
         layer->setName( typeid( Layer_meal ).name( ) );
         this->addChild( layer );
+=======
+		auto currentScene = (Scene*)Director::getInstance()->getRunningScene();
+		auto c = (BGManager*)currentScene->getChildByTag((int)tabLayer::BACKGROUND);
+		c->changeBackGround((int)tabMenu::BREEDING_MENU, (int)tabMenu::MAIN_MENU);
+>>>>>>> pr/7
 	}
 
+	//日記画面へ移動
 	void UIManager::changeToDiaryWindow()
 	{
-		auto m = this->getChildByTag((int)LayerType::MAIN_MENU);
-		auto d = this->getChildByTag((int)LayerType::DIARY_MENU);
-		swapWindow(m,d);
-		bgManager->changeBackGround((int)BGType::DIARY_MENU, (int)BGType::MAIN_MENU);
+		auto layer = LayerDiary::create();
+		layer->setName(typeid(LayerDiary).name());
+		layer->setPosition(Vec2(winSize * 0.f));
+		this->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabMenu::DIARY_MENU);
 
-        auto layer = LayerDiary::create( );
-        layer->setName( typeid( LayerDiary ).name( ) );
-        this->addChild( layer );
+		//TODO: 遷移時の演出はあとからFGManagerで作る
+	}
+
+	//掃除画面のレイヤーに貼り替え
+	void UIManager::changeToCreaning()
+	{
+		auto s = (Scene*)Director::getInstance()->getRunningScene();
+		s->removeChildByTag((int)tabLayer::CHARACTER);
+		s->removeChildByTag((int)tabLayer::UI_MANAGER);
+		s->addChild(LayerCleaning::create(), 0, (int)tabLayer::CLEANING);
 	}
 
 	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです
@@ -250,7 +270,7 @@ namespace User
 
 		auto list = ui::ListView::create();
 		list->setContentSize(winSize);
-		this->addChild(list, (int)zOder::OPTION, (int)LayerType::OPTION);
+		this->addChild(list, (int)zOder::OPTION, (int)tabMenu::OPTION);
 
 		auto layout = ui::Layout::create();
 		layout->setContentSize(list->getContentSize());
@@ -281,7 +301,7 @@ namespace User
 		//CloseButtonの処理
 		//ボタンを押したときにLayerに追加されているOptionタグを持つ子ノードを取得しLayerから外している
 		closeButton->addTouchEventListener([&](Ref* pSender, ui::Widget::TouchEventType type) {
-			auto option = this->getChildByTag((int)LayerType::OPTION);
+			auto option = this->getChildByTag((int)tabMenu::OPTION);
 			if (type == ui::Widget::TouchEventType::ENDED)
 			{
 				this->removeChild(option);
