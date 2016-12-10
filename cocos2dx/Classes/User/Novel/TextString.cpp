@@ -70,7 +70,7 @@ namespace User
     {
         this->text = text;
         label = Label::createWithTTF( text, OptionalValues::fontName, OptionalValues::fontSize );
-        label->setTextColor( Color4B::WHITE );
+        label->setTextColor( Color4B( 39, 39, 39, 255 ) );
         label->setTag( (int)Tag::Novel );
         for ( int i = 0; i < label->getStringLength( ); i++ )
         {

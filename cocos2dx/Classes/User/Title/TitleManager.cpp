@@ -1,6 +1,8 @@
 #include "TitleManager.h"
 #include "../SceneManager.h"
 #include "audio/include/AudioEngine.h"
+
+#include "SceneTitle.h"
 USING_NS_CC;
 using namespace experimental;
 
@@ -63,7 +65,7 @@ namespace User
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
 
-		auto backGround = Sprite::create("res/texture/背景娯楽の島.png");
+		auto backGround = Sprite::create("res/texture/novel/背景娯楽の島.png");
 		backGround->setPosition(winSize / 2);
 		this->addChild(backGround);
 

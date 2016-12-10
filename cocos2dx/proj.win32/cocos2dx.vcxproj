@@ -148,11 +148,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp" />
+    <ClCompile Include="..\Classes\Lib\Json\jsoncpp.cpp" />
+    <ClCompile Include="..\Classes\Lib\Utility\Utilitys.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\FGManager.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\LayerCleaning.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\LayerManager.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp" />
-    <ClCompile Include="..\Classes\User\Breeding\SceneCloset.cpp" />
-    <ClCompile Include="..\Classes\User\Breeding\SceneCreaning.cpp" />
-    <ClCompile Include="..\Classes\User\Breeding\Test.cpp" />
+    <ClCompile Include="..\Classes\User\Breeding\TemporaryCharacter.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp" />
@@ -171,10 +174,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Live2d\TouchManager.cpp" />
     <ClCompile Include="..\Classes\User\Novel\BackgroundLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\BackLogLayer.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\FlickFunctionLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\HeartLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\HumanLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\INIReader.cpp" />
     <ClCompile Include="..\Classes\User\Novel\INIWriter.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ItemLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\Live2dLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ModalLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\NameLayer.cpp" />
@@ -205,6 +210,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Novel\TextTypes.cpp" />
     <ClCompile Include="..\Classes\User\SceneBase.cpp" />
     <ClCompile Include="..\Classes\User\SceneManager.cpp" />
+    <ClCompile Include="..\Classes\User\System\DataSettings.cpp" />
     <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp" />
     <ClCompile Include="..\Classes\User\Title\TitleManager.cpp" />
     <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp" />
@@ -225,12 +231,16 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h" />
+    <ClInclude Include="..\Classes\Lib\Json\json-forwards.h" />
+    <ClInclude Include="..\Classes\Lib\Json\json.h" />
+    <ClInclude Include="..\Classes\Lib\Utility\Utilitys.h" />
     <ClInclude Include="..\Classes\User\Breeding\BGManager.h" />
+    <ClInclude Include="..\Classes\User\Breeding\FGManager.h" />
+    <ClInclude Include="..\Classes\User\Breeding\LayerCleaning.h" />
+    <ClInclude Include="..\Classes\User\Breeding\LayerManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h" />
-    <ClInclude Include="..\Classes\User\Breeding\SceneCloset.h" />
-    <ClInclude Include="..\Classes\User\Breeding\SceneCreaning.h" />
     <ClInclude Include="..\Classes\User\Breeding\soundResources.h" />
-    <ClInclude Include="..\Classes\User\Breeding\Test.h" />
+    <ClInclude Include="..\Classes\User\Breeding\TemporaryCharacter.h" />
     <ClInclude Include="..\Classes\User\Breeding\UIManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h" />
     <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h" />
@@ -254,10 +264,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Live2d\TouchManager.h" />
     <ClInclude Include="..\Classes\User\Novel\BackgroundLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\BackLogLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\FlickFunctionLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\HeartLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\HumanLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\INIReader.h" />
     <ClInclude Include="..\Classes\User\Novel\INIWriter.h" />
+    <ClInclude Include="..\Classes\User\Novel\ItemLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\Live2dLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\ModalLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\NameLayer.h" />
@@ -288,6 +300,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Novel\TextTypes.hpp" />
     <ClInclude Include="..\Classes\User\SceneBase.h" />
     <ClInclude Include="..\Classes\User\SceneManager.h" />
+    <ClInclude Include="..\Classes\User\System\DataSettings.h" />
     <ClInclude Include="..\Classes\User\Title\SceneTitle.h" />
     <ClInclude Include="..\Classes\User\Title\TitleManager.h" />
     <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h" />
@@ -321,6 +334,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\res\scenario\debug.txt" />
+    <Text Include="..\Resources\res\scenario\live2d.txt" />
+    <Text Include="..\Resources\res\scenario\scenario1.txt" />
+    <Text Include="..\Resources\res\scenario\scenario2.txt" />
+    <Text Include="..\Resources\res\scenario\scenario3.txt" />
+    <Text Include="..\Resources\res\scenario\scenario4.txt" />
+    <Text Include="..\Resources\res\scenario\variable.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

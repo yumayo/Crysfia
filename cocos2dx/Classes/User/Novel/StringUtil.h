@@ -16,8 +16,14 @@ namespace User
     private:
         static double string_double( std::string const& str );
         static int string_int( std::string const& str );
+        static bool string_bool( std::string const& str );
     };
 
+    template<>
+    inline bool StringUtil::string_value<bool>( std::string const& str )
+    {
+        return string_bool( str );
+    }
     template<>
     inline int StringUtil::string_value<int>( std::string const & str )
     {
@@ -27,6 +33,18 @@ namespace User
     inline double StringUtil::string_value<double>( std::string const & str )
     {
         return string_double( str );
+    }
+    template<>
+    inline std::string StringUtil::value_string<bool>( bool value )
+    {
+        if ( value )
+        {
+            return u8"true";
+        }
+        else
+        {
+            return u8"false";
+        }
     }
     template<>
     inline std::string StringUtil::value_string<int>( int value )

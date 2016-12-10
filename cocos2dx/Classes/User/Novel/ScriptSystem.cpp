@@ -12,6 +12,7 @@
 #include "StillLayer.h"
 #include "HeartLayer.h"
 #include "Live2dLayer.h"
+#include "ItemLayer.h"
 
 #include "ScriptHuman.h"
 #include "ScriptBackground.h"
@@ -27,6 +28,7 @@ USING_NS_CC;
 namespace User
 {
     size_t ScriptSystem::novelIndex = 0;
+    bool ScriptSystem::isShowNovel = true;
 
     ScriptSystem::ScriptSystem( cocos2d::Layer* layer )
         : ScriptBase( layer )
@@ -44,6 +46,8 @@ namespace User
         REGIST_FUNC( ScriptSystem, live2d );
         REGIST_FUNC( ScriptSystem, novelon );
         REGIST_FUNC( ScriptSystem, noveloff );
+        REGIST_FUNC( ScriptSystem, novelswitch );
+        REGIST_FUNC( ScriptSystem, item );
     }
     ScriptSystem::~ScriptSystem( )
     {
@@ -51,7 +55,10 @@ namespace User
     }
     void ScriptSystem::setup( )
     {
+        ScriptStaticData::setup( );
+
         novelIndex = 0;
+        isShowNovel = true;
 
         auto systemLayer = dynamic_cast<SystemLayer*>( layer );
         humanLayer = systemLayer->getLayer<HumanLayer>( );
@@ -62,6 +69,7 @@ namespace User
         stillLayer = systemLayer->getLayer<StillLayer>( );
         heartLayer = systemLayer->getLayer<HeartLayer>( );
         live2dLayer = systemLayer->getLayer<Live2dLayer>( );
+        itemLayer = systemLayer->getLayer<ItemLayer>( );
     }
     SCRIPT( ScriptSystem::l )
     {
@@ -115,13 +123,33 @@ namespace User
     }
     SCRIPT( ScriptSystem::novelon )
     {
+        isShowNovel = true;
         if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->on( );
         if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->on( );
     }
     SCRIPT( ScriptSystem::noveloff )
     {
+        isShowNovel = false;
         if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->off( );
         if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->off( );
+    }
+    SCRIPT( ScriptSystem::novelswitch )
+    {
+        if ( isShowNovel )
+        {
+            noveloff( args );
+        }
+        else
+        {
+            novelon( args );
+        }
+    }
+    SCRIPT( ScriptSystem::item )
+    {
+        if ( auto ptr = dynamic_cast<ItemLayer*>( itemLayer ) )
+        {
+            ptr->make( args[0] );
+        }
     }
     SCRIPT( ScriptSystem::name )
     {
@@ -192,7 +220,7 @@ namespace User
         switch ( args.size( ) )
         {
         case 1:
-            REGIST_VARIABLE( args[0], new ScriptHeart( heartLayer, args[0] + u8".ini" ) );
+            REGIST_VARIABLE( args[0], new ScriptHeart( heartLayer ) );
             break;
         default:
             break;

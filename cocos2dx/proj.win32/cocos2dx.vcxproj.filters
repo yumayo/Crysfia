@@ -52,6 +52,18 @@
     <Filter Include="src\User\Diary">
       <UniqueIdentifier>{547d4680-e421-43c7-a00a-b3cd3850c051}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\System">
+      <UniqueIdentifier>{3e129644-97b0-4177-82b7-15154879f80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lib\Utility">
+      <UniqueIdentifier>{5d7bb23b-e773-426e-aa60-037ffd5e6cdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\Scenario">
+      <UniqueIdentifier>{6cd43fdb-48ea-438d-83f9-71b0060832cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lib\Json">
+      <UniqueIdentifier>{107b268a-1431-4229-a329-cd646e89a1e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -162,12 +174,6 @@
     <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp">
       <Filter>src\User\TouchiEvent</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp">
-      <Filter>src\User\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Title\TitleManager.cpp">
-      <Filter>src\User\Title</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp">
       <Filter>src\Lib\EnvironmentDefaultData</Filter>
     </ClCompile>
@@ -231,24 +237,6 @@
     <ClCompile Include="..\Classes\User\Novel\ScriptLive2d.cpp">
       <Filter>src\User\Novel</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneCloset.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneCreaning.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\Test.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\User\Novel\ScriptHeart.cpp">
       <Filter>src\User\Novel</Filter>
     </ClCompile>
@@ -270,14 +258,56 @@
     <ClCompile Include="..\Classes\User\Diary\LayerDiary.cpp">
       <Filter>src\User\Diary</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp">
-      <Filter>src\User\Diary</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\User\Ishibashi\Layer_ishibashi.cpp">
       <Filter>src\User\ishibashi</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp">
       <Filter>src\User\ishibashi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\FlickFunctionLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\FGManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\LayerCleaning.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\LayerManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\TemporaryCharacter.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp">
+      <Filter>src\User\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Title\TitleManager.cpp">
+      <Filter>src\User\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\System\DataSettings.cpp">
+      <Filter>src\User\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Utility\Utilitys.cpp">
+      <Filter>src\Lib\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Json\jsoncpp.cpp">
+      <Filter>src\Lib\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ItemLayer.cpp">
+      <Filter>src\User\Novel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,12 +419,6 @@
     <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h">
       <Filter>src\User\TouchiEvent</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Title\SceneTitle.h">
-      <Filter>src\User\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Title\TitleManager.h">
-      <Filter>src\User\Title</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h">
       <Filter>src\Lib\EnvironmentDefaultData</Filter>
     </ClInclude>
@@ -476,30 +500,6 @@
     <ClInclude Include="..\Classes\User\Novel\ScriptLive2d.h">
       <Filter>src\User\Novel</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneCloset.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneCreaning.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\soundResources.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\Test.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\User\Novel\ScriptHeart.h">
       <Filter>src\User\Novel</Filter>
     </ClInclude>
@@ -530,10 +530,84 @@
     <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h">
       <Filter>src\User\ishibashi</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\FlickFunctionLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\FGManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\LayerCleaning.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\LayerManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\soundResources.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\TemporaryCharacter.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Title\SceneTitle.h">
+      <Filter>src\User\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Title\TitleManager.h">
+      <Filter>src\User\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\System\DataSettings.h">
+      <Filter>src\User\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Utility\Utilitys.h">
+      <Filter>src\Lib\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Json\json.h">
+      <Filter>src\Lib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Json\json-forwards.h">
+      <Filter>src\Lib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ItemLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\res\scenario\live2d.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario1.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario2.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario3.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario4.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\variable.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\debug.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
   </ItemGroup>
 </Project>

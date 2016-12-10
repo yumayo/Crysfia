@@ -22,16 +22,7 @@ namespace User
     }
     void NameLayer::setup( )
     {
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-        auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        Rect rect = Rect( 0, 0, visibleSize.width, OptionalValues::lineViewSize );
-        Sprite* square = Sprite::create( );
-        square->setColor( Color3B( 0, 0, 0 ) );
-        square->setOpacity( 128 );
-        square->setTextureRect( rect );
-        auto pos = origin + Vec2( 0, OptionalValues::lineViewSize + OptionalValues::stringViewSize.y );
-        square->setPosition( pos + rect.size / 2 );
-        this->addChild( square );
+
     }
     void NameLayer::on( )
     {
