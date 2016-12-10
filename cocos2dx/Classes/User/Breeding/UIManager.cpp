@@ -202,6 +202,7 @@ namespace User
 		auto currentScene = (Scene*)Director::getInstance()->getRunningScene();
 		auto c = (BGManager*)currentScene->getChildByTag((int)tabLayer::BACKGROUND);
 		c->changeBackGround((int)tabMenu::MAIN_MENU, (int)tabMenu::BREEDING_MENU);
+
 	}
 
 	//メインメニューからサブメニューへ変更する関数です
@@ -211,9 +212,11 @@ namespace User
 		auto s = this->getChildByTag((int)tabMenu::BREEDING_MENU);
 		swapWindow(m, s);
 
+
 		auto currentScene = (Scene*)Director::getInstance()->getRunningScene();
 		auto c = (BGManager*)currentScene->getChildByTag((int)tabLayer::BACKGROUND);
 		c->changeBackGround((int)tabMenu::BREEDING_MENU, (int)tabMenu::MAIN_MENU);
+
 	}
 
 	//日記画面へ移動
