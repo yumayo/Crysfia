@@ -198,15 +198,11 @@ namespace User
 		auto s = this->getChildByTag((int)tabMenu::BREEDING_MENU);
 		swapWindow(s, m);
 
-<<<<<<< HEAD
-        this->removeChildByName( typeid( Layer_meal ).name() );
-        this->removeChildByName( typeid( LayerDiary ).name( ) );
-=======
 		//現在のシーンを取得し、シーンからaddChildされているBGManagerにアクセスして関数を呼び出す。
 		auto currentScene = (Scene*)Director::getInstance()->getRunningScene();
 		auto c = (BGManager*)currentScene->getChildByTag((int)tabLayer::BACKGROUND);
 		c->changeBackGround((int)tabMenu::MAIN_MENU, (int)tabMenu::BREEDING_MENU);
->>>>>>> pr/7
+
 	}
 
 	//メインメニューからサブメニューへ変更する関数です
@@ -216,15 +212,11 @@ namespace User
 		auto s = this->getChildByTag((int)tabMenu::BREEDING_MENU);
 		swapWindow(m, s);
 
-<<<<<<< HEAD
-        auto layer = Layer_meal::create( );
-        layer->setName( typeid( Layer_meal ).name( ) );
-        this->addChild( layer );
-=======
+
 		auto currentScene = (Scene*)Director::getInstance()->getRunningScene();
 		auto c = (BGManager*)currentScene->getChildByTag((int)tabLayer::BACKGROUND);
 		c->changeBackGround((int)tabMenu::BREEDING_MENU, (int)tabMenu::MAIN_MENU);
->>>>>>> pr/7
+
 	}
 
 	//日記画面へ移動
