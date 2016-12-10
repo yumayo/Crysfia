@@ -4,7 +4,8 @@ USING_NS_CC;
 
 namespace User
 {
-    LayerBase::LayerBase( )
+	LayerBase::LayerBase()
+		: Layer()
     {
         
     }

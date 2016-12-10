@@ -18,7 +18,6 @@
 
 // 畠山くんが管理するシーンを作成します。
 #include "Diary/SceneDiary.h"
-
 USING_NS_CC;
 
 namespace User

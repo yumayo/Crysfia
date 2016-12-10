@@ -3,6 +3,7 @@
 
 # include "cocos2d.h"
 #include "../LayerBase.h"
+#include "../SceneBase.h"
 
 namespace User
 {
@@ -13,8 +14,17 @@ namespace User
         LayerManager( );
         ~LayerManager( );
 
-    private:
+	private:
+		
 		bool init();
+
+	public:
+
+		void initLayer();
+		void changeToMainMenuLayer();
+		void changeToSubMenuLayer();
+		void removeLayer();
+
     };
 }
 
