@@ -9,7 +9,7 @@ namespace User
 	cocos2d::Scene * Scene_ishibashi::create()
 	{
 		auto scene = Scene::create();
-		scene->addChild(createLayer<Layer_ishibashi>());
+		scene->addChild(createLayer<Layer_meal>());
 		return scene;
 	}
 }
