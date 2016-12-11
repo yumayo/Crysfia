@@ -32,6 +32,12 @@
       "scenario": "live2d.txt",
       "visit": false,
       "title": "クロエが不機嫌のままだ。島を一緒に回れば少しは直してもらえるかも？"
+    },
+    {
+      "position": [ 300, 300 ],
+      "scenario": "debug.txt",
+      "visit": false,
+      "title": "クロエが不機嫌のままだ。島を一緒に回れば少しは直してもらえるかも？"
     }
   ]
 }

@@ -5,6 +5,8 @@
 
 # include "ui/CocosGUI.h"
 
+#include "../../Lib/Json/json.h"
+
 namespace User
 {
     struct ScenarioPointData
@@ -51,8 +53,11 @@ namespace User
 
     class LayerCityMark : protected ScenarioPointData, public cocos2d::ui::Button
     {
+    public:
+        void setButtonEndCallBack( std::function<void( )>const& callback );
     protected:
         void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        std::function<void( )> buttonEnd;
     };
 
     class MainMark : public LayerCityMark
@@ -124,6 +129,11 @@ namespace User
          * 次の行動目的を表示するためのデータ。
          */
         std::map<std::string, cocos2d::Data> data;
+
+        /**
+         *
+         */
+        Json::Value root;
     };
 }
 

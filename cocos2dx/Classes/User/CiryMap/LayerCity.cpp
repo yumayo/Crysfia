@@ -19,6 +19,10 @@ USING_NS_CC;
 
 namespace User
 {
+    void LayerCityMark::setButtonEndCallBack( std::function<void( )>const& callback )
+    {
+        buttonEnd = callback;
+    }
     void LayerCityMark::pasteMap( cocos2d::Sprite * map, ScenarioPointData const & data )
     {
         initData( data );
@@ -66,6 +70,7 @@ namespace User
                     {
                         if ( type == ui::Widget::TouchEventType::ENDED )
                         {
+                            if ( buttonEnd ) buttonEnd( );
                             map->pause( );
                             SceneManager::createNovel( this->scenario );
                         }
@@ -261,7 +266,6 @@ namespace User
     void LayerCity::jsonRead( )
     {
         Json::Reader reader;
-        Json::Value root;
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( path, u8"res/data/" ) ), root ) )
         {
             auto map = root[u8"background"].asString( );
@@ -291,15 +295,29 @@ namespace User
 
             for ( auto& obj : main )
             {
-                MainMark::create( )->pasteMap( background, obj );
+                auto mark = MainMark::create( );
+                mark->pasteMap( background, obj );
+
+                mark->setButtonEndCallBack( [ this ]
+                {
+                    //root[u8"point.main"][u8"visit"] = true;
+                    Json::StyledWriter writer;
+                    writeUserLocal( writer.write( root ), u8"island.json" );
+                } );
             }
             for ( auto& obj : sub )
             {
-                SubMark::create( )->pasteMap( background, obj );
+                auto mark = SubMark::create( );
+                mark->pasteMap( background, obj );
+
+                mark->setButtonEndCallBack( [ this ]
+                {
+                    //root[u8"point.sub"][u8"visit"] = true;
+                    Json::StyledWriter writer;
+                    writeUserLocal( writer.write( root ), u8"island.json" );
+                } );
             }
         }
-        Json::StyledWriter writer;
-        writeUserLocal( writer.write( root ), u8"island.json" );
     }
     cocos2d::ui::Button * LayerCity::createBackButton( )
     {
