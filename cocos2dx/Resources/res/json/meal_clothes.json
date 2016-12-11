@@ -1,0 +1,19 @@
+{
+  "button_texture": 
+  [
+    { "texture": "ringo.png" },
+    { "texture": "ichigo.png" },
+    { "texture": "kiwi.png" },
+    { "texture": "charry.png" },
+    { "texture": "kinkan.png" }
+  ],
+
+  "dress_texture": 
+  [
+    { "clothes": "dress_A.png" },
+    { "clothes": "dress_B.png" },
+    { "clothes": "dress_C.png" },
+    { "clothes": "dress_D.png" },
+    { "clothes": "dress_E.png" }
+  ]
+}

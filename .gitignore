@@ -4,5 +4,5 @@ cocos2dx/proj.android/
 cocos2dx/proj.ios_mac/
 cocos2dx/proj.win32/
 
-cocos2dx/.cocos-project.json
-cocos2dx/CMakeLists.txt
+.cocos-project.json
+CMakeLists.txt
