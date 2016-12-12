@@ -12,7 +12,7 @@ namespace User
 	class UIManager : public LayerBase
 	{
 	private:
-
+		
 		bool isOpen;
 		bool init();
 		
