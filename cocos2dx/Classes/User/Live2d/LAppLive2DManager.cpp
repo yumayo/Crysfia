@@ -188,6 +188,7 @@ void LAppLive2DManager::enableModel( bool enable )
     }
     else
     {
+        
         work = nullptr;
     }
 }

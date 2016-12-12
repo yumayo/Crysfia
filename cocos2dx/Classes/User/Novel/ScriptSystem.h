@@ -34,6 +34,7 @@ namespace User
         SCRIPT( still );
         SCRIPT( heart );
         SCRIPT( live2d );
+        SCRIPT( voice );
     public:
         cocos2d::Layer* nameLayer = nullptr;
         cocos2d::Layer* humanLayer = nullptr;
@@ -44,6 +45,7 @@ namespace User
         cocos2d::Layer* heartLayer = nullptr;
         cocos2d::Layer* live2dLayer = nullptr;
         cocos2d::Layer* itemLayer = nullptr;
+        cocos2d::Layer* voiceLayer = nullptr;
 
         /**
          *  現在のメッセージウィンドウの行数を保存しておきます。

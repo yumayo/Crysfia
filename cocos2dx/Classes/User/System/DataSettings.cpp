@@ -37,18 +37,33 @@ namespace User
         INIReader reader;
         iniDataRead( reader, u8"userDefault.ini", u8"res/data/" );
 
-        auto data = UserDefault::getInstance( );
+        std::map<std::string, std::function<void( std::map<std::string, std::string> )>> calls;
+
+        calls.insert( { u8"bool", [ ] ( std::map< std::string, std::string > tag )
+        {
+            auto data = UserDefault::getInstance( );
+            for ( auto& value : tag )
+                data->setBoolForKey( value.first.c_str( ), StringUtil::string_value<bool>( value.second ) );
+        } } );
+        calls.insert( { u8"int", [ ] ( std::map< std::string, std::string > tag )
+        {
+             auto data = UserDefault::getInstance( );
+             for ( auto& value : tag )
+                 data->setIntegerForKey( value.first.c_str( ), StringUtil::string_value<int>( value.second ) );
+        } } );
+        calls.insert( { u8"float", [ ] ( std::map< std::string, std::string > tag )
+        {
+            auto data = UserDefault::getInstance( );
+            for ( auto& value : tag )
+                data->setFloatForKey( value.first.c_str( ), StringUtil::string_value<float>( value.second ) );
+        } } );
+
         for ( auto& tag : reader.getData( ) )
         {
-            if ( tag.first == u8"bool" )
+            auto itr = calls.find( tag.first );
+            if ( itr != calls.end( ) )
             {
-                for ( auto& value : tag.second )
-                    data->setBoolForKey( value.first.c_str( ), StringUtil::string_value<bool>( value.second ) );
-            }
-            else if ( tag.first == u8"int" )
-            {
-                for ( auto& value : tag.second )
-                    data->setIntegerForKey( value.first.c_str( ), StringUtil::string_value<int>( value.second ) );
+                itr->second( tag.second );
             }
         }
     }
@@ -79,18 +94,36 @@ namespace User
         auto data = UserDefault::getInstance( );
         if ( !data->getBoolForKey( u8"INITDATA", false ) )
         {
-            INIReader reader( u8"res/data/system.ini" );
+            INIReader reader;
+            iniDataRead( reader, u8"userDefault.ini", u8"res/data/" );
+
+            std::map<std::string, std::function<void( std::map<std::string, std::string> )>> calls;
+
+            calls.insert( { u8"bool", [ ] ( std::map< std::string, std::string > tag )
+            {
+                auto data = UserDefault::getInstance( );
+                for ( auto& value : tag )
+                    data->setBoolForKey( value.first.c_str( ), StringUtil::string_value<bool>( value.second ) );
+            } } );
+            calls.insert( { u8"int", [ ] ( std::map< std::string, std::string > tag )
+            {
+                auto data = UserDefault::getInstance( );
+                for ( auto& value : tag )
+                    data->setIntegerForKey( value.first.c_str( ), StringUtil::string_value<int>( value.second ) );
+            } } );
+            calls.insert( { u8"float", [ ] ( std::map< std::string, std::string > tag )
+            {
+                auto data = UserDefault::getInstance( );
+                for ( auto& value : tag )
+                    data->setFloatForKey( value.first.c_str( ), StringUtil::string_value<float>( value.second ) );
+            } } );
+
             for ( auto& tag : reader.getData( ) )
             {
-                if ( tag.first == u8"bool" )
+                auto itr = calls.find( tag.first );
+                if ( itr != calls.end( ) )
                 {
-                    for ( auto& value : tag.second )
-                        data->setBoolForKey( value.first.c_str( ), StringUtil::string_value<bool>( value.second ) );
-                }
-                else if ( tag.first == u8"int" )
-                {
-                    for ( auto& value : tag.second )
-                        data->setIntegerForKey( value.first.c_str( ), StringUtil::string_value<int>( value.second ) );
+                    itr->second( tag.second );
                 }
             }
             data->setBoolForKey( u8"INITDATA", true );

@@ -54,10 +54,9 @@ namespace User
     public:
         CREATE_FUNC( IslandMap );
         IslandMap* make( );
-    private:
         /**
-         *  ‘Øİ’†‚Ì“‡
-         */
+        *  ‘Øİ’†‚Ì“‡
+        */
         enum Islands
         {
             none,
@@ -67,17 +66,19 @@ namespace User
             forth,
             fifth,
         };
-        Islands islands = Islands::none;
 
         /**
-         *  ¡‚ÌŠÔB
-         */
+        *  ¡‚ÌŠÔB
+        */
         enum Times
         {
             morning,
             daytime,
             night
         };
+    private:
+        Islands islands = Islands::none;
+
         Times times = Times::morning;
 
         /**
@@ -94,6 +95,8 @@ namespace User
         ~LayerIsland( );
         bool init( ) override;
         void setup( ) override;
+    private:
+        void movePoint( cocos2d::Sprite* map, cocos2d::Vec2 start, cocos2d::Vec2 end, std::string path );
     };
 }
 
