@@ -23,7 +23,9 @@ namespace User
 
         auto stringViewWidth = vs.width * scale;
 
-        readOutSpeed = 0.1F;
+        auto user = UserDefault::getInstance( );
+
+        readOutSpeed = user->getFloatForKey( u8"novel.speed" );
         stringSize = 20;
         fontSize = stringViewWidth / stringSize;
         lineSpaceSize = fontSize * 0.7;
