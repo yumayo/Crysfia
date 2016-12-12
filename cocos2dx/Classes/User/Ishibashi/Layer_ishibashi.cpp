@@ -35,7 +35,7 @@ namespace User
         Menu( );
         eatText( );
         character( );
-        mealTutorial( );
+        //mealTutorial( );
         //heart();
 
         return true;
@@ -385,7 +385,7 @@ namespace User
         switch ( change )
         {
         case meal:
-            if ( food_gain[text_number] == true ) w = 150;
+			if (food_gain[text_number] == true) w = 150;
             break;
         case dressClothes:
             if ( dress_gain[text_number] == true ) w = 180;
@@ -404,25 +404,30 @@ namespace User
                 switch ( change )
                 {
                 case meal://食事用
-                    if ( reside == true )
-                    {
-                        buttonAudio( ".../button70.mp3", audio_volume );
+					if (food_gain[text_number] == true) {
+						if (reside == true)
+						{
+							buttonAudio(".../button70.mp3", audio_volume);
+							love_degrees = text_number;
 
-                        animation_num = text_number;
+							animation_num = text_number;
 
-                        eraseFoodText( );
-                        foodText( food_commentary[text_number], 1 );
-                    }
+							eraseFoodText();
+							foodText(food_commentary[text_number], 1);
+						}
+					}
                     break;
                 case dressClothes://着替え用
-                    if ( reside == true )
-                    {
-                        buttonAudio( ".../button70.mp3", audio_volume );
+					if (dress_gain[text_number] == true) {
+						if (reside == true)
+						{
+							buttonAudio(".../button70.mp3", audio_volume);
 
-                        //着替える動作を入れる
-                        eraseFoodText( );
-                        foodText( dress_commentary[text_number], 1 );
-                    }
+							//着替える動作を入れる
+							eraseFoodText();
+							foodText(dress_commentary[text_number], 1);
+						}
+					}
                     break;
                 default:
                     break;
@@ -501,18 +506,28 @@ namespace User
 
     void Layer_meal::loadData( )
     {
-        auto path = FileUtils::getInstance( )->getWritablePath( );
+        auto item = UserDefault::getInstance();
 
 
-        food_gain.push_back( true );
-        food_gain.push_back( true );
-        food_gain.push_back( true );
-        food_gain.push_back( true );
-        food_gain.push_back( true );
-        dress_gain.push_back( true );
-        dress_gain.push_back( true );
-        dress_gain.push_back( true );
-        dress_gain.push_back( true );
-        dress_gain.push_back( true );
+        food_gain.push_back(item->getBoolForKey(u8"角砂糖"));
+        food_gain.push_back(item->getBoolForKey(u8"花"));
+        food_gain.push_back(item->getBoolForKey(u8"果物"));
+        food_gain.push_back(item->getBoolForKey(u8"コンペイトウ"));
+        food_gain.push_back(item->getBoolForKey(u8"宝石"));
+        dress_gain.push_back(item->getBoolForKey(u8"服A"));
+        dress_gain.push_back(item->getBoolForKey(u8"服B"));
+        dress_gain.push_back(item->getBoolForKey(u8"服C"));
+        dress_gain.push_back(item->getBoolForKey(u8"服D"));
+        dress_gain.push_back(item->getBoolForKey(u8"服E"));
     }
+
+	void Layer_meal::loveMetor()
+	{
+		int love_gauge;
+
+		auto love = UserDefault::getInstance();
+		love_gauge = love->getIntegerForKey(u8"親愛度");
+		love_gauge += love_degrees;
+		love->setIntegerForKey(u8"親愛度", love_gauge);
+	}
 }
