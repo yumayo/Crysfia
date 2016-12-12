@@ -315,6 +315,15 @@
     <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp">
       <Filter>src\User\TouchiEvent</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptVoice.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\VoiceLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\LayerOption.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -593,6 +602,15 @@
     <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h">
       <Filter>src\User\TouchiEvent</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptVoice.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\VoiceLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\LayerOption.h">
+      <Filter>src\User\CityMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -600,7 +618,34 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\Resources\res\scenario\scenario.1.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\debug.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\first.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
     <Text Include="..\Resources\res\scenario\live2d.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\past.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.2.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.3.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.4.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.5.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.6.txt">
       <Filter>resource\Scenario</Filter>
     </Text>
     <Text Include="..\Resources\res\scenario\scenario1.txt">
@@ -618,7 +663,10 @@
     <Text Include="..\Resources\res\scenario\variable.txt">
       <Filter>resource\Scenario</Filter>
     </Text>
-    <Text Include="..\Resources\res\scenario\debug.txt">
+    <Text Include="..\Resources\res\scenario\kuroe.live2d.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario5.txt">
       <Filter>resource\Scenario</Filter>
     </Text>
   </ItemGroup>

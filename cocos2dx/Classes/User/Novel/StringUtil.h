@@ -17,6 +17,7 @@ namespace User
         static double string_double( std::string const& str );
         static int string_int( std::string const& str );
         static bool string_bool( std::string const& str );
+        static float string_float( std::string const& str );
     };
 
     template<>
@@ -33,6 +34,11 @@ namespace User
     inline double StringUtil::string_value<double>( std::string const & str )
     {
         return string_double( str );
+    }
+    template<>
+    inline float StringUtil::string_value<float>( std::string const & str )
+    {
+        return string_float( str );
     }
     template<>
     inline std::string StringUtil::value_string<bool>( bool value )

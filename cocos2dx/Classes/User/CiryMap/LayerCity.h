@@ -119,6 +119,7 @@ namespace User
         void setup( ) override;
         void jsonRead( );
         cocos2d::ui::Button* createBackButton( );
+        cocos2d::ui::Button* createOptionButton( );
     private:
         /**
          *  jsonデータへのパスを保存します。

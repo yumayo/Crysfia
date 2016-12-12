@@ -47,6 +47,15 @@ namespace User
         script->setup( );
         REGIST_VARIABLE( u8"sys", script );
 
+        if ( auto sprite = Sprite::create( ) )
+        {
+            sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
+            sprite->setAnchorPoint( Vec2( 0, 0 ) );
+            sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
+            sprite->runAction( Sequence::create( FadeOut::create( 1.0F ), RemoveSelf::create( ), nullptr ) );
+            scene->addChild( sprite, 20000 );
+        }
+
         return scene;
     }
 }

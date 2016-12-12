@@ -15,6 +15,8 @@
 
 #include "../System/DataSettings.h"
 
+#include "LayerOption.h"
+
 USING_NS_CC;
 
 namespace User
@@ -72,7 +74,6 @@ namespace User
                         {
                             if ( buttonEnd ) buttonEnd( );
                             map->pause( );
-                            SceneManager::createNovel( this->scenario );
                         }
                     } );
                 }
@@ -206,6 +207,8 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
+
+
         jsonRead( );
 
         /**
@@ -255,6 +258,23 @@ namespace User
                 button->setScale( fitHeight( button, height * scale ), fitHeight( button, height * scale ) );
                 button->setPosition( Vec2( 10, 10 ) * scale );
             }
+
+            if ( auto button = createOptionButton( ) )
+            {
+                board->addChild( button );
+                button->setScale( fitHeight( button, height * scale ), fitHeight( button, height * scale ) );
+                button->setPosition( Vec2( boardPixel.width - 10, 10 ) * scale );
+            }
+        }
+
+        if ( auto sprite = Sprite::create( ) )
+        {
+            sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
+            sprite->setAnchorPoint( Vec2( 0, 0 ) );
+            sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
+            sprite->setColor( Color3B( 0, 0, 0 ) );
+            sprite->runAction( Sequence::create( FadeOut::create( 1.0F ), RemoveSelf::create( ), nullptr ) );
+            addChild( sprite );
         }
 
         return true;
@@ -293,29 +313,53 @@ namespace User
                 sub.emplace_back( temp );
             }
 
+            int i = 0;
             for ( auto& obj : main )
             {
                 auto mark = MainMark::create( );
                 mark->pasteMap( background, obj );
 
-                mark->setButtonEndCallBack( [ this ]
+                mark->setButtonEndCallBack( [ this, i ]
                 {
-                    //root[u8"point.main"][u8"visit"] = true;
+                    root[u8"point.main"][i][u8"visit"] = true;
                     Json::StyledWriter writer;
                     writeUserLocal( writer.write( root ), u8"island.json" );
+
+                    if ( auto sprite = Sprite::create( ) )
+                    {
+                        sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
+                        sprite->setAnchorPoint( Vec2( 0, 0 ) );
+                        sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
+                        sprite->setOpacity( 0 );
+                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ i, this ] { SceneManager::createNovel( root[u8"point.main"][i][u8"scenario"].asString( ) ); } ), RemoveSelf::create( ), nullptr ) );
+                        addChild( sprite );
+                    }
                 } );
+                ++i;
             }
+            i = 0;
             for ( auto& obj : sub )
             {
                 auto mark = SubMark::create( );
                 mark->pasteMap( background, obj );
 
-                mark->setButtonEndCallBack( [ this ]
+                mark->setButtonEndCallBack( [ this, i ]
                 {
-                    //root[u8"point.sub"][u8"visit"] = true;
+                    root[u8"point.sub"][i][u8"visit"] = true;
                     Json::StyledWriter writer;
                     writeUserLocal( writer.write( root ), u8"island.json" );
+
+                    if ( auto sprite = Sprite::create( ) )
+                    {
+                        sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
+                        sprite->setAnchorPoint( Vec2( 0, 0 ) );
+                        sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
+                        sprite->setOpacity( 0 );
+                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ i, this ] { SceneManager::createNovel( root[u8"point.sub"][i][u8"scenario"].asString( ) ); } ), RemoveSelf::create( ), nullptr ) );
+                        addChild( sprite );
+                    }
                 } );
+                ++i;
             }
         }
     }
@@ -332,6 +376,26 @@ namespace User
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
                 SceneManager::createBreeding( );
+            }
+        } );
+        return button;
+    }
+    cocos2d::ui::Button * LayerCity::createOptionButton( )
+    {
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+
+        auto button = ui::Button::create( u8"res/texture/system/button.option.png" );
+
+        button->setScale( Lib::fitWidth( button, 128 * scale ), Lib::fitWidth( button, 128 * scale ) );
+        button->setAnchorPoint( Vec2( 1, 0 ) );
+        button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
+        {
+            if ( type == ui::Widget::TouchEventType::ENDED )
+            {
+                auto scene = Director::getInstance( )->getRunningScene( );
+                auto layer = LayerOption::create( );
+                layer->setup( );
+                scene->addChild( layer );
             }
         } );
         return button;

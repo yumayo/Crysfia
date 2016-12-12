@@ -160,6 +160,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Breeding\TemporaryCharacter.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp" />
+    <ClCompile Include="..\Classes\User\CiryMap\LayerOption.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp" />
     <ClCompile Include="..\Classes\User\Diary\LayerDiary.cpp" />
     <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp" />
@@ -198,6 +199,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Novel\ScriptStaticData.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptStill.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptSystem.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\ScriptVoice.cpp" />
     <ClCompile Include="..\Classes\User\Novel\SelectLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\StillLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\StringUtil.cpp" />
@@ -210,6 +212,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Novel\TextScriptReader.cpp" />
     <ClCompile Include="..\Classes\User\Novel\TextString.cpp" />
     <ClCompile Include="..\Classes\User\Novel\TextTypes.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\VoiceLayer.cpp" />
     <ClCompile Include="..\Classes\User\SceneBase.cpp" />
     <ClCompile Include="..\Classes\User\SceneManager.cpp" />
     <ClCompile Include="..\Classes\User\System\DataSettings.cpp" />
@@ -248,6 +251,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Breeding\UIManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h" />
     <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h" />
+    <ClInclude Include="..\Classes\User\CiryMap\LayerOption.h" />
     <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h" />
     <ClInclude Include="..\Classes\User\Diary\LayerDiary.h" />
     <ClInclude Include="..\Classes\User\Diary\SceneDiary.h" />
@@ -290,6 +294,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Novel\ScriptStaticData.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptStill.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptSystem.h" />
+    <ClInclude Include="..\Classes\User\Novel\ScriptVoice.h" />
     <ClInclude Include="..\Classes\User\Novel\SelectLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\StillLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\StringUtil.h" />
@@ -302,6 +307,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Novel\TextScriptReader.h" />
     <ClInclude Include="..\Classes\User\Novel\TextString.h" />
     <ClInclude Include="..\Classes\User\Novel\TextTypes.hpp" />
+    <ClInclude Include="..\Classes\User\Novel\VoiceLayer.h" />
     <ClInclude Include="..\Classes\User\SceneBase.h" />
     <ClInclude Include="..\Classes\User\SceneManager.h" />
     <ClInclude Include="..\Classes\User\System\DataSettings.h" />
@@ -341,11 +347,21 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\res\scenario\debug.txt" />
+    <Text Include="..\Resources\res\scenario\first.txt" />
+    <Text Include="..\Resources\res\scenario\kuroe.live2d.txt" />
     <Text Include="..\Resources\res\scenario\live2d.txt" />
+    <Text Include="..\Resources\res\scenario\past.txt" />
+    <Text Include="..\Resources\res\scenario\scenario.1.txt" />
+    <Text Include="..\Resources\res\scenario\scenario.2.txt" />
+    <Text Include="..\Resources\res\scenario\scenario.3.txt" />
+    <Text Include="..\Resources\res\scenario\scenario.4.txt" />
+    <Text Include="..\Resources\res\scenario\scenario.5.txt" />
+    <Text Include="..\Resources\res\scenario\scenario.6.txt" />
     <Text Include="..\Resources\res\scenario\scenario1.txt" />
     <Text Include="..\Resources\res\scenario\scenario2.txt" />
     <Text Include="..\Resources\res\scenario\scenario3.txt" />
     <Text Include="..\Resources\res\scenario\scenario4.txt" />
+    <Text Include="..\Resources\res\scenario\scenario5.txt" />
     <Text Include="..\Resources\res\scenario\variable.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
