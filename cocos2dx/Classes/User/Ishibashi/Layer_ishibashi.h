@@ -89,8 +89,9 @@ namespace User
             u8"ïÛêŒ",
         };
 
-        CREATE_FUNC( Layer_meal );
-        Layer_meal( );
+        CREATE_ARGS_FUNC( Layer_meal );
+		Layer_meal();
+        Layer_meal( int layer );
         ~Layer_meal( );
 
         bool init( )override;
