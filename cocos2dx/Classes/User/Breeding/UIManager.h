@@ -45,6 +45,7 @@ namespace User
 		void changeToMainWindow();
 		void changeToDiaryWindow();
 		void changeToCreaning();
+		void changeToBreeding(int _menuId);
 		void swapWindow(Node* moveOutObj, Node* moveInObj);
 
 		void createMainMenuWindow();
