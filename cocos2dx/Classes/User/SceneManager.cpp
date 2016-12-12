@@ -26,7 +26,8 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-        createIslandMap( );
+		//createTitle();
+		createBreeding();
     }
     void SceneManager::createTitle( )
     {

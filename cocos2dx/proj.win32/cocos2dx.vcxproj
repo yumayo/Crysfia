@@ -153,7 +153,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\FGManager.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\FrameLayer.cpp" />
-    <ClCompile Include="..\Classes\User\Breeding\Home.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\LayerCleaning.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\LayerManager.cpp" />
     <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp" />
@@ -242,7 +241,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Breeding\BGManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\FGManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\FrameLayer.h" />
-    <ClInclude Include="..\Classes\User\Breeding\Home.h" />
     <ClInclude Include="..\Classes\User\Breeding\LayerCleaning.h" />
     <ClInclude Include="..\Classes\User\Breeding\LayerManager.h" />
     <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h" />

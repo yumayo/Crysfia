@@ -8,11 +8,15 @@ using namespace experimental;
 
 namespace User
 {
-    Layer_meal::Layer_meal( )
-    {
-        setLayer( meal );
-    }
-    Layer_meal::~Layer_meal( )
+	Layer_meal::Layer_meal()
+	{
+		setLayer(meal);
+	}
+	Layer_meal::Layer_meal(int layer)
+	{
+		setLayer(layer);
+	}
+	Layer_meal::~Layer_meal( )
     {
     }
     bool Layer_meal::init( )

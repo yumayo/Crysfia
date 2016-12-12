@@ -16,6 +16,7 @@ enum class tabLayer
 	BACKGROUND = 0,
 	CHARACTER,
 	UI_MANAGER,
+	BREEDING,
 	CLEANING,
 	FOREGROUND,
 	LAYER_MANAGER = -1,
@@ -51,4 +52,9 @@ enum class tabMenu {
 	OPTION,
 
 	MAX
+};
+
+enum BreedingID {
+	MEAL,
+	DRESS_CLOSET
 };

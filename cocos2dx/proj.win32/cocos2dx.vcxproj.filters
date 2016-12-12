@@ -126,33 +126,6 @@
     <ClCompile Include="..\Classes\Lib\Json\jsoncpp.cpp">
       <Filter>src\Lib\Json</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\FGManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\FrameLayer.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\Home.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\LayerCleaning.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\LayerManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\TemporaryCharacter.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp">
       <Filter>src\User\CityMap</Filter>
     </ClCompile>
@@ -324,6 +297,30 @@
     <ClCompile Include="..\Classes\User\CiryMap\LayerOption.cpp">
       <Filter>src\User\CityMap</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\FGManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\FrameLayer.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\LayerCleaning.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\LayerManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\TemporaryCharacter.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -394,39 +391,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Json\json-forwards.h">
       <Filter>src\Lib\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\FGManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\FrameLayer.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\Home.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\LayerCleaning.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\LayerManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\soundResources.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\TemporaryCharacter.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
-      <Filter>src\User\Breeding</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h">
       <Filter>src\User\CityMap</Filter>
@@ -610,6 +574,36 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\CiryMap\LayerOption.h">
       <Filter>src\User\CityMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\FGManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\FrameLayer.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\LayerCleaning.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\LayerManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\soundResources.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\TemporaryCharacter.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
+      <Filter>src\User\Breeding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
