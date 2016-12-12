@@ -1,5 +1,5 @@
 @sys:l
-@sys:item(服A)
+@sys:item(隴帛哩)
 @sys:l
 @sys:voice(first)
 @first:play(01)

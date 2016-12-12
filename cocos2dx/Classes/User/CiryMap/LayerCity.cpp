@@ -17,6 +17,10 @@
 
 #include "LayerOption.h"
 
+#include "SimpleAudioEngine.h"
+
+#include "AudioEngine.h"
+
 USING_NS_CC;
 
 namespace User
@@ -207,7 +211,12 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-
+        //{
+        //    // オーディオ定義ファイルの読み込み  
+        //    AudioManager::getInstance( )->readAudioListFile( "res/data/audio.json" );
+        //    AudioManager::getInstance( )->playBgm( "city", 1.5f );
+        //    AudioManager::getInstance( )->setBgmVolume( UserDefault::getInstance( )->getFloatForKey( u8"bgm" ) );
+        //}
 
         jsonRead( );
 
