@@ -17,10 +17,15 @@ namespace User
 
     void OptionalValues::setup( )
     {
-        auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
-        auto stringViewWidth = visibleWidth * 0.9;
+        auto scale = 810.0F / 1080;
 
-        readOutSpeed = 0.1F;
+        auto vs = Director::getInstance( )->getVisibleSize( );
+
+        auto stringViewWidth = vs.width * scale;
+
+        auto user = UserDefault::getInstance( );
+
+        readOutSpeed = user->getFloatForKey( u8"novel.speed" );
         stringSize = 20;
         fontSize = stringViewWidth / stringSize;
         lineSpaceSize = fontSize * 0.7;

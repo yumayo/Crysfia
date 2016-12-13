@@ -22,6 +22,8 @@ namespace User
         SCRIPT( stop );
         SCRIPT( novelon );
         SCRIPT( noveloff );
+        SCRIPT( novelswitch );
+        SCRIPT( item );
     public: // 変数の登録に使います。
             // 全てのクラスはシステムを経由してでないと作成できません。
         SCRIPT( name );
@@ -32,6 +34,7 @@ namespace User
         SCRIPT( still );
         SCRIPT( heart );
         SCRIPT( live2d );
+        SCRIPT( voice );
     public:
         cocos2d::Layer* nameLayer = nullptr;
         cocos2d::Layer* humanLayer = nullptr;
@@ -41,8 +44,18 @@ namespace User
         cocos2d::Layer* stillLayer = nullptr;
         cocos2d::Layer* heartLayer = nullptr;
         cocos2d::Layer* live2dLayer = nullptr;
+        cocos2d::Layer* itemLayer = nullptr;
+        cocos2d::Layer* voiceLayer = nullptr;
 
+        /**
+         *  現在のメッセージウィンドウの行数を保存しておきます。
+         */
         static size_t novelIndex;
+
+        /**
+         *  ノベルウィンドウの表示状態を保存しておきます。
+         */
+        static bool isShowNovel;
     };
 }
 

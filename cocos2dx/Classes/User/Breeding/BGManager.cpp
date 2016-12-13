@@ -1,23 +1,31 @@
 #include "BGManager.h"
 #include "cocos2d/external/json/rapidjson.h"
 #include "cocos2d/external/json/document.h"
-
+#include "audio/include/AudioEngine.h"
 USING_NS_CC;
+using namespace experimental;
 
 namespace User
 {
-	BGManager::BGManager():
-		backgrounds(std::vector<Sprite*>())
+	BGManager::BGManager() :
+		winSize(Director::getInstance()->getVisibleSize()),
+		backgrounds(std::vector<Sprite*>()),
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		homeBgm(AudioEngine::play2d("res/sound/BGM/home.mp3"))
+#else
+		homeBgm(AudioEngine::play2d("res/sound/BGM/home.wav"))
+#endif
 	{
+		
 	}
+
 	BGManager::~BGManager()
 	{
+		AudioEngine::stop(homeBgm);
 	}
 
 	bool BGManager::init()
-	{
-		auto size = Director::getInstance()->getVisibleSize();
-
+	{		
 		//jsonファイルの読み込み
 		auto fileUtils = FileUtils::getInstance();
 		auto path = fileUtils->getStringFromFile("res/json/background.json");
@@ -33,13 +41,14 @@ namespace User
 				backgrounds.push_back(Sprite::create(backgroundData[i]["res"].GetString()));
 				float x = backgroundData[i]["pos"]["x"].GetDouble();
 				float y = backgroundData[i]["pos"]["y"].GetDouble();
-				backgrounds[i]->setPosition(size / 2);
+				backgrounds[i]->setPosition(winSize / 2);
 				backgrounds[i]->setScale(backgroundData[i]["scale"].GetDouble());
 				backgrounds[i]->setOpacity(backgroundData[i]["alpha"].GetInt());
 				this->addChild(backgrounds[i], -i, i);
 			}
 		}
-	
+
+
 		return true;
 	}
 
@@ -48,4 +57,5 @@ namespace User
 		backgrounds[changeBG]->runAction(FadeOut::create(1));
 		backgrounds[targetBG]->runAction(FadeIn::create(1));
 	}
+
 }

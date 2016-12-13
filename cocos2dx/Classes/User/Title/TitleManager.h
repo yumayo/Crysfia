@@ -17,7 +17,11 @@ namespace User
 		void createTitleWindow();
 		void createTapUI();
 		void createFadeSprite();
+		void update(float dt);
 		
+		int titleBgm;
+		float vol;
+		bool isGameStarted;
 
 		cocos2d::Sprite* fadeSprite;
 		cocos2d::Label*  uiLabel;

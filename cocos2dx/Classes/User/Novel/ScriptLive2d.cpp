@@ -11,7 +11,7 @@ USING_NS_CC;
 
 namespace User
 {
-    ScriptLive2d::ScriptLive2d( cocos2d::Layer* layer, std::string dirPath, std::string jsonPath )
+    ScriptLive2d::ScriptLive2d( cocos2d::Layer* layer, std::string model, std::string dir )
         : ScriptBase( layer )
     {
         REGIST_FUNC( ScriptLive2d, in );
@@ -27,7 +27,7 @@ namespace User
         REGIST_FUNC( ScriptLive2d, touchoff );
 
         auto manager = LAppLive2DManager::getInstance( );
-        manager->createModel( dirPath, jsonPath );
+        manager->createModel( dir, model + u8".model.json" );
         LAppLive2DManager::getInstance( )->enableModel( false );
 
         node = LAppView::createDrawNode( );

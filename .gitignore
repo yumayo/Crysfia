@@ -1,0 +1,8 @@
+cocos2dx/cocos2d/
+cocos2dx/live2d/
+cocos2dx/proj.android/
+cocos2dx/proj.ios_mac/
+cocos2dx/proj.win32/
+
+.cocos-project.json
+CMakeLists.txt

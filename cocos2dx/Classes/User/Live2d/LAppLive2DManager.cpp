@@ -151,9 +151,7 @@ void LAppLive2DManager::onUpdate( )
     Size window = director->getWinSize( );
     projection.scale( 1, window.width / window.height );
 
-    // 急にexeが止まるようになったので急遽コメントアウト。
-    //if ( !viewMatrix )
-    //    projection.append( viewMatrix );
+    if ( viewMatrix ) projection.append( viewMatrix );
 
     work->update( );
     work->draw( projection );
@@ -190,6 +188,7 @@ void LAppLive2DManager::enableModel( bool enable )
     }
     else
     {
+        
         work = nullptr;
     }
 }

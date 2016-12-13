@@ -52,6 +52,18 @@
     <Filter Include="src\User\Diary">
       <UniqueIdentifier>{547d4680-e421-43c7-a00a-b3cd3850c051}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\System">
+      <UniqueIdentifier>{3e129644-97b0-4177-82b7-15154879f80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lib\Utility">
+      <UniqueIdentifier>{5d7bb23b-e773-426e-aa60-037ffd5e6cdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\Scenario">
+      <UniqueIdentifier>{6cd43fdb-48ea-438d-83f9-71b0060832cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lib\Json">
+      <UniqueIdentifier>{107b268a-1431-4229-a329-cd646e89a1e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,131 +78,11 @@
     <ClCompile Include="..\Classes\User\SceneManager.cpp">
       <Filter>src\User</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp">
-      <Filter>src\User\CityMap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp">
-      <Filter>src\User\CityMap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp">
-      <Filter>src\User\IslandMap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp">
-      <Filter>src\User\IslandMap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\BackgroundLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\BackLogLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\HumanLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ModalLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\NameLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\NovelLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\OptionalValues.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\SceneNovel.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptBackground.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptBase.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptHuman.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptInstruction.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptName.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptStaticData.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptStill.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptSystem.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\SelectLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\StillLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\SystemLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\TextChunk.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\TextChunkManager.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\TextData.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\TextLabels.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\TextScriptAnalysis.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\TextScriptReader.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\TextString.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\TextTypes.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp">
-      <Filter>src\User\TouchiEvent</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp">
-      <Filter>src\User\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Title\TitleManager.cpp">
-      <Filter>src\User\Title</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.cpp">
       <Filter>src\Lib\EnvironmentDefaultData</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Live2d\LAppLive2DManager.cpp">
-      <Filter>src\User\Live2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Live2d\LAppModel.cpp">
-      <Filter>src\User\Live2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Live2d\LAppTextureDesc.cpp">
-      <Filter>src\User\Live2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Live2d\LAppView.cpp">
-      <Filter>src\User\Live2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Live2d\PlatformManager.cpp">
-      <Filter>src\User\Live2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Live2d\TouchManager.cpp">
-      <Filter>src\User\Live2d</Filter>
     </ClCompile>
     <ClCompile Include="..\live2d\framework\L2DBaseModel.cpp">
       <Filter>src\Lib\Live2d\framework</Filter>
@@ -228,44 +120,17 @@
     <ClCompile Include="..\live2d\framework\Live2DFramework.cpp">
       <Filter>src\Lib\Live2d\framework</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptLive2d.cpp">
-      <Filter>src\User\Novel</Filter>
+    <ClCompile Include="..\Classes\Lib\Utility\Utilitys.cpp">
+      <Filter>src\Lib\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
-      <Filter>src\User\Breeding</Filter>
+    <ClCompile Include="..\Classes\Lib\Json\jsoncpp.cpp">
+      <Filter>src\Lib\Json</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
-      <Filter>src\User\Breeding</Filter>
+    <ClCompile Include="..\Classes\User\CiryMap\LayerCity.cpp">
+      <Filter>src\User\CityMap</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneCloset.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\SceneCreaning.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\Test.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
-      <Filter>src\User\Breeding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\ScriptHeart.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\HeartLayer.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\INIReader.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\INIWriter.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\StringUtil.cpp">
-      <Filter>src\User\Novel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\Novel\Live2dLayer.cpp">
-      <Filter>src\User\Novel</Filter>
+    <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp">
+      <Filter>src\User\CityMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Diary\LayerDiary.cpp">
       <Filter>src\User\Diary</Filter>
@@ -278,6 +143,183 @@
     </ClCompile>
     <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp">
       <Filter>src\User\ishibashi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp">
+      <Filter>src\User\IslandMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp">
+      <Filter>src\User\IslandMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Live2d\LAppLive2DManager.cpp">
+      <Filter>src\User\Live2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Live2d\LAppModel.cpp">
+      <Filter>src\User\Live2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Live2d\LAppTextureDesc.cpp">
+      <Filter>src\User\Live2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Live2d\LAppView.cpp">
+      <Filter>src\User\Live2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Live2d\PlatformManager.cpp">
+      <Filter>src\User\Live2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Live2d\TouchManager.cpp">
+      <Filter>src\User\Live2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\BackgroundLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\BackLogLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\FlickFunctionLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\HeartLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\HumanLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\INIReader.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\INIWriter.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ItemLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\Live2dLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ModalLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\NameLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\NovelLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\OptionalValues.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\SceneNovel.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptBackground.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptBase.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptHeart.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptHuman.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptInstruction.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptLive2d.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptName.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptStaticData.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptStill.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptSystem.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\SelectLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\StillLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\StringUtil.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\SystemLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\TextChunk.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\TextChunkManager.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\TextData.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\TextLabels.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\TextScriptAnalysis.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\TextScriptReader.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\TextString.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\TextTypes.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\System\DataSettings.cpp">
+      <Filter>src\User\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Title\SceneTitle.cpp">
+      <Filter>src\User\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Title\TitleManager.cpp">
+      <Filter>src\User\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\TouchiEvent\EventListenerGesture.cpp">
+      <Filter>src\User\TouchiEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\ScriptVoice.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\VoiceLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\LayerOption.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\BGManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\FGManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\FrameLayer.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\LayerCleaning.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\LayerManager.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\SceneBreeding.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\TemporaryCharacter.cpp">
+      <Filter>src\User\Breeding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
+      <Filter>src\User\Breeding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,143 +335,11 @@
     <ClInclude Include="..\Classes\User\SceneManager.h">
       <Filter>src\User</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h">
-      <Filter>src\User\CityMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h">
-      <Filter>src\User\CityMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h">
-      <Filter>src\User\IslandMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h">
-      <Filter>src\User\IslandMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\BackgroundLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\BackLogLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\HumanLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ModalLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\NameLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\NovelLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\OptionalValues.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\SceneNovel.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptBackground.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptBase.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptHuman.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptInstruction.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptName.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptStaticData.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptStill.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptSystem.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\SelectLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\StillLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\SystemLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\TextChunk.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\TextChunkManager.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\TextData.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\TextLabels.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\TextScriptAnalysis.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\TextScriptReader.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\TextString.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\TextTypes.hpp">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h">
-      <Filter>src\User\TouchiEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Title\SceneTitle.h">
-      <Filter>src\User\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Title\TitleManager.h">
-      <Filter>src\User\Title</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Lib\EnvironmentDefaultData\EnvironmentDefaultData.h">
       <Filter>src\Lib\EnvironmentDefaultData</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\LAppDefine.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\LAppLive2DManager.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\LAppModel.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\LAppTextureDesc.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\LAppView.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\ModelSetting.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\ModelSettingJson.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\PlatformManager.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\TouchManager.h">
-      <Filter>src\User\Live2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Live2d\AppMacros.h">
-      <Filter>src\User\Live2d</Filter>
     </ClInclude>
     <ClInclude Include="..\live2d\framework\IPlatformManager.h">
       <Filter>src\Lib\Live2d\framework</Filter>
@@ -473,50 +383,20 @@
     <ClInclude Include="..\live2d\framework\Live2DFramework.h">
       <Filter>src\Lib\Live2d\framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptLive2d.h">
-      <Filter>src\User\Novel</Filter>
+    <ClInclude Include="..\Classes\Lib\Utility\Utilitys.h">
+      <Filter>src\Lib\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
-      <Filter>src\User\Breeding</Filter>
+    <ClInclude Include="..\Classes\Lib\Json\json.h">
+      <Filter>src\Lib\Json</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
-      <Filter>src\User\Breeding</Filter>
+    <ClInclude Include="..\Classes\Lib\Json\json-forwards.h">
+      <Filter>src\Lib\Json</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneCloset.h">
-      <Filter>src\User\Breeding</Filter>
+    <ClInclude Include="..\Classes\User\CiryMap\LayerCity.h">
+      <Filter>src\User\CityMap</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\SceneCreaning.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\soundResources.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\Test.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
-      <Filter>src\User\Breeding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\ScriptHeart.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\HeartLayer.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\INIReader.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\INIWriter.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\StringUtil.h">
-      <Filter>src\User\Novel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\Novel\Live2dLayer.h">
-      <Filter>src\User\Novel</Filter>
+    <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h">
+      <Filter>src\User\CityMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Diary\LayerDiary.h">
       <Filter>src\User\Diary</Filter>
@@ -530,10 +410,258 @@
     <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h">
       <Filter>src\User\ishibashi</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h">
+      <Filter>src\User\IslandMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h">
+      <Filter>src\User\IslandMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\AppMacros.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\LAppDefine.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\LAppLive2DManager.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\LAppModel.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\LAppTextureDesc.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\LAppView.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\ModelSetting.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\ModelSettingJson.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\PlatformManager.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Live2d\TouchManager.h">
+      <Filter>src\User\Live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\BackgroundLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\BackLogLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\FlickFunctionLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\HeartLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\HumanLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\INIReader.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\INIWriter.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ItemLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\Live2dLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ModalLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\NameLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\NovelLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\OptionalValues.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\SceneNovel.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptBackground.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptBase.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptHeart.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptHuman.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptInstruction.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptLive2d.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptName.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptStaticData.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptStill.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptSystem.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\SelectLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\StillLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\StringUtil.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\SystemLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\TextChunk.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\TextChunkManager.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\TextData.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\TextLabels.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\TextScriptAnalysis.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\TextScriptReader.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\TextString.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\TextTypes.hpp">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\System\DataSettings.h">
+      <Filter>src\User\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Title\SceneTitle.h">
+      <Filter>src\User\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Title\TitleManager.h">
+      <Filter>src\User\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\TouchiEvent\EventListenerGesture.h">
+      <Filter>src\User\TouchiEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\ScriptVoice.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\VoiceLayer.h">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\LayerOption.h">
+      <Filter>src\User\CityMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\BGManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\FGManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\FrameLayer.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\LayerCleaning.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\LayerManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\SceneBreeding.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\soundResources.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\TemporaryCharacter.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\UIManager.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
+      <Filter>src\User\Breeding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\res\scenario\scenario.1.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\debug.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\first.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\live2d.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\past.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.2.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.3.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.4.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.5.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario.6.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario1.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario2.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario3.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario4.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\variable.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\kuroe.live2d.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
+    <Text Include="..\Resources\res\scenario\scenario5.txt">
+      <Filter>resource\Scenario</Filter>
+    </Text>
   </ItemGroup>
 </Project>
