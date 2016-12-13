@@ -43,10 +43,13 @@ namespace User
 
         void loadData( );
 
+		void loveMetor();
+
     public:
         bool exist;//食べ物画像用
         bool reside;//決定の有無用
         int change;//食事と着替え
+		int love_degrees = 0;//親愛度受け渡し用
         int audio_volume = 1.0f;
         int animation_num = 0;//アニメーション番号
         cocos2d::Sprite * food;//アニメーション用画像
@@ -72,11 +75,11 @@ namespace User
         //衣装解説
         std::vector<std::string> dress_commentary
         {
-            u8"普段着",
-            u8"dress_B.png",
-            u8"dress_C.png",
-            u8"dress_D.png",
-            u8"dress_E.png",
+            u8"ワンピース",
+            u8"ドレス",
+            u8"着ぐるみ",
+            u8"シスター服",
+            u8"セーラー服",
         };
 
         //食べ物解説
