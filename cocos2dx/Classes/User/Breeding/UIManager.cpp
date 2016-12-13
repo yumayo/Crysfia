@@ -259,7 +259,7 @@ namespace User
 		p->removeChildByTag((int)tabLayer::CHARACTER);
 		p->removeChildByTag((int)tabLayer::UI_MANAGER);
 
-		p->addChild(Layer_meal::create(1), 0, (int)tabLayer::CLEANING);
+		p->addChild(Layer_meal::create(0), 0, (int)tabLayer::CLEANING);
 	}
 
 	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです

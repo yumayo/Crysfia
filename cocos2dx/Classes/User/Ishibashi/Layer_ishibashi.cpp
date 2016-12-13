@@ -106,6 +106,7 @@ namespace User
                     //食事用アクション（暫定）
                     animation( animation_num );
                     this->removeChildByName( "delite" );
+					loveMetor();
                     reside = false;
                     break;
                 case dressClothes:
@@ -257,10 +258,6 @@ namespace User
             }
         }
 
-
-        food_gain.push_back( true );
-
-
         switch ( change )
         {
         case meal:
@@ -360,7 +357,7 @@ namespace User
 
     void Layer_meal::animation( int anime_num )
     {
-        food = Sprite::create( "res/texture/" + food_button[anime_num] );
+        food = Sprite::create( "res/texture/item/" + food_button[anime_num] );
         food->setPosition( Vec2( 280, 1050 ) );
         food->setScale( 0.5 );
         this->addChild( food );
@@ -375,7 +372,7 @@ namespace User
 
     void Layer_meal::normalButton( int text_number, std::string button_photo, int normalButtonTag )
     {
-        auto button = ui::Button::create( "res/texture/" + button_photo );//ボタン画像
+        auto button = ui::Button::create( "res/texture/item/" + button_photo );//ボタン画像
 
         button->setScale9Enabled( true );
         button->setPosition( Vec2( 600, 1150 - 180 * text_number ) );
@@ -385,10 +382,10 @@ namespace User
         switch ( change )
         {
         case meal:
-			if (food_gain[text_number] == true) w = 150;
+			if (food_gain[text_number] == false) w = 150;
             break;
         case dressClothes:
-            if ( dress_gain[text_number] == true ) w = 180;
+            if ( dress_gain[text_number] == false ) w = 180;
             break;
         default:
             break;
@@ -507,7 +504,6 @@ namespace User
     void Layer_meal::loadData( )
     {
         auto item = UserDefault::getInstance();
-
 
         food_gain.push_back(item->getBoolForKey(u8"角砂糖"));
         food_gain.push_back(item->getBoolForKey(u8"花"));

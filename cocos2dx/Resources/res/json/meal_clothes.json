@@ -1,19 +1,19 @@
 {
   "button_texture": 
   [
-    { "texture": "ringo.png" },
-    { "texture": "ichigo.png" },
-    { "texture": "kiwi.png" },
-    { "texture": "charry.png" },
-    { "texture": "kinkan.png" }
+    { "texture": "角砂糖.png" },
+    { "texture": "花.png" },
+    { "texture": "果物.png" },
+    { "texture": "コンペイトウ.png" },
+    { "texture": "宝石.png" }
   ],
 
   "dress_texture": 
   [
-    { "clothes": "dress_A.png" },
-    { "clothes": "dress_B.png" },
-    { "clothes": "dress_C.png" },
-    { "clothes": "dress_D.png" },
-    { "clothes": "dress_E.png" }
+    { "clothes": "服A.png" },
+    { "clothes": "服B.png" },
+    { "clothes": "服C.png" },
+    { "clothes": "服D.png" },
+    { "clothes": "服E.png" }
   ]
 }

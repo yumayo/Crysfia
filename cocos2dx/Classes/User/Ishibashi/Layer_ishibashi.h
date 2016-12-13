@@ -64,13 +64,13 @@ namespace User
         std::vector<std::string> food_button;
 
         //H‚×•¨æ“¾—L–³
-        std::vector<bool> food_gain;
+        std::vector<bool> food_gain;//false‚Å–¢æ“¾
 
         //ˆß‘•‰æ‘œ
         std::vector<std::string> dress_button;
 
         //ˆß‘•‚Ì—L–³
-        std::vector<bool> dress_gain;
+        std::vector<bool> dress_gain;//false‚Å–¢æ“¾
 
         //ˆß‘•‰ğà
         std::vector<std::string> dress_commentary
