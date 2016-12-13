@@ -517,6 +517,7 @@ namespace User
         dress_gain.push_back(item->getBoolForKey(u8"•žE"));
     }
 
+	//–¢Šm”F
 	void Layer_meal::loveMetor()
 	{
 		int love_gauge;
