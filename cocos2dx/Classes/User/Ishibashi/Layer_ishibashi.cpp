@@ -34,7 +34,7 @@ namespace User
         mealDressVolume( 1.0f );
         Menu( );
         eatText( );
-        character( );
+        character(fashion_show[0]);
         //mealTutorial( );
         //heart();
 
@@ -62,7 +62,6 @@ namespace User
         sprite->setTextureRect( Rect( 0, 0, 600, 200 ) );
         sprite->setColor( Color3B::WHITE );
         sprite->setName( "Text" );
-
 
         float x = 365;
         float y = 225;
@@ -111,6 +110,7 @@ namespace User
                     break;
                 case dressClothes:
                     //着替え用アクション
+					dressAnimetion(0, 1);
                     break;
                 default:
                     break;
@@ -347,13 +347,19 @@ namespace User
         this->addChild( text );
     }
 
-    void Layer_meal::character( )
+    void Layer_meal::character(std::string chara_texture)
     {
-        cocos2d::Sprite * kuroe = Sprite::create( u8"res/texture/novel/クロエ普通.png" );
+        cocos2d::Sprite * kuroe = Sprite::create( "res/texture/novel/" + chara_texture);
         kuroe->setScale( 0.3 );
+		kuroe->setName("KUROE");
         kuroe->setPosition( Vec2( 285, 600 ) );
         this->addChild( kuroe );
     }
+
+	void Layer_meal::eraseCharacter()
+	{
+		removeChildByName("KUROE");
+	}
 
     void Layer_meal::animation( int anime_num )
     {
@@ -365,10 +371,25 @@ namespace User
         CCFiniteTimeAction* move = CCMoveTo::create( 1.0f, ccp( 280, 850 ) );
         food->runAction( move );
 
-        //フェード 1秒で、100%へ  
-        CCFiniteTimeAction* fade = CCFadeTo::create( 1.0f, 0 );
+		//フェード 1秒で、100%へ  
+		CCFiniteTimeAction* fade = CCFadeTo::create(1.0f, 0);
         food->runAction( fade );
     }
+
+	//12/15 まだ、失敗　遅延必要
+	void Layer_meal::dressAnimetion(int my_dress, int dress_num)
+	{
+		eraseCharacter();
+
+		cocos2d::Sprite * kuroe = Sprite::create("res/texture/novel/" + fashion_show[my_dress]);
+		kuroe->setScale(0.3);
+		kuroe->setName("fashion");
+		kuroe->setPosition(Vec2(285, 600));
+		this->addChild(kuroe);
+
+
+		removeChildByName("fashion");
+	}
 
     void Layer_meal::normalButton( int text_number, std::string button_photo, int normalButtonTag )
     {
