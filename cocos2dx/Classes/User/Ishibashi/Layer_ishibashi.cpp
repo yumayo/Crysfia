@@ -34,7 +34,7 @@ namespace User
         mealDressVolume( 1.0f );
         Menu( );
         eatText( );
-        character( );
+        character(fashion_show[0]);
         //mealTutorial( );
         //heart();
 
@@ -62,7 +62,6 @@ namespace User
         sprite->setTextureRect( Rect( 0, 0, 600, 200 ) );
         sprite->setColor( Color3B::WHITE );
         sprite->setName( "Text" );
-
 
         float x = 365;
         float y = 225;
@@ -106,10 +105,12 @@ namespace User
                     //食事用アクション（暫定）
                     animation( animation_num );
                     this->removeChildByName( "delite" );
+					loveMetor();
                     reside = false;
                     break;
                 case dressClothes:
                     //着替え用アクション
+					dressAnimetion(0, 1);
                     break;
                 default:
                     break;
@@ -257,10 +258,6 @@ namespace User
             }
         }
 
-
-        food_gain.push_back( true );
-
-
         switch ( change )
         {
         case meal:
@@ -350,17 +347,23 @@ namespace User
         this->addChild( text );
     }
 
-    void Layer_meal::character( )
+    void Layer_meal::character(std::string chara_texture)
     {
-        cocos2d::Sprite * kuroe = Sprite::create( u8"res/texture/novel/クロエ普通.png" );
+        cocos2d::Sprite * kuroe = Sprite::create( "res/texture/novel/" + chara_texture);
         kuroe->setScale( 0.3 );
+		kuroe->setName("KUROE");
         kuroe->setPosition( Vec2( 285, 600 ) );
         this->addChild( kuroe );
     }
 
+	void Layer_meal::eraseCharacter()
+	{
+		removeChildByName("KUROE");
+	}
+
     void Layer_meal::animation( int anime_num )
     {
-        food = Sprite::create( "res/texture/" + food_button[anime_num] );
+        food = Sprite::create( "res/texture/item/" + food_button[anime_num] );
         food->setPosition( Vec2( 280, 1050 ) );
         food->setScale( 0.5 );
         this->addChild( food );
@@ -368,14 +371,29 @@ namespace User
         CCFiniteTimeAction* move = CCMoveTo::create( 1.0f, ccp( 280, 850 ) );
         food->runAction( move );
 
-        //フェード 1秒で、100%へ  
-        CCFiniteTimeAction* fade = CCFadeTo::create( 1.0f, 0 );
+		//フェード 1秒で、100%へ  
+		CCFiniteTimeAction* fade = CCFadeTo::create(1.0f, 0);
         food->runAction( fade );
     }
 
+	//12/15 まだ、失敗　遅延必要
+	void Layer_meal::dressAnimetion(int my_dress, int dress_num)
+	{
+		eraseCharacter();
+
+		cocos2d::Sprite * kuroe = Sprite::create("res/texture/novel/" + fashion_show[my_dress]);
+		kuroe->setScale(0.3);
+		kuroe->setName("fashion");
+		kuroe->setPosition(Vec2(285, 600));
+		this->addChild(kuroe);
+
+
+		removeChildByName("fashion");
+	}
+
     void Layer_meal::normalButton( int text_number, std::string button_photo, int normalButtonTag )
     {
-        auto button = ui::Button::create( "res/texture/" + button_photo );//ボタン画像
+        auto button = ui::Button::create( "res/texture/item/" + button_photo );//ボタン画像
 
         button->setScale9Enabled( true );
         button->setPosition( Vec2( 600, 1150 - 180 * text_number ) );
@@ -385,10 +403,10 @@ namespace User
         switch ( change )
         {
         case meal:
-			if (food_gain[text_number] == true) w = 150;
+			if (food_gain[text_number] == false) w = 150;
             break;
         case dressClothes:
-            if ( dress_gain[text_number] == true ) w = 180;
+            if ( dress_gain[text_number] == false ) w = 180;
             break;
         default:
             break;
@@ -508,7 +526,6 @@ namespace User
     {
         auto item = UserDefault::getInstance();
 
-
         food_gain.push_back(item->getBoolForKey(u8"角砂糖"));
         food_gain.push_back(item->getBoolForKey(u8"花"));
         food_gain.push_back(item->getBoolForKey(u8"果物"));
@@ -521,6 +538,7 @@ namespace User
         dress_gain.push_back(item->getBoolForKey(u8"服E"));
     }
 
+	//未確認
 	void Layer_meal::loveMetor()
 	{
 		int love_gauge;

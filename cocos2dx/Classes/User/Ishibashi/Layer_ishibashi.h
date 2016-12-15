@@ -25,9 +25,11 @@ namespace User
 
         void eatTime( std::string eatTime );//時間表示？
 
-        void character( );//キャラクター描画
+        void character(std::string chara_texture);//キャラクター描画
 
-        void animation( int anime_num );//アニメーション
+		void eraseCharacter();
+
+        void animation( int anime_num );//食事アニメーション
 
         void normalButton( int text_number, std::string button_photo, int normalButtonTag );//ボタン汎用用
 
@@ -44,6 +46,8 @@ namespace User
         void loadData( );
 
 		void loveMetor();
+
+		void dressAnimetion(int my_dress, int dress_num);//現在のドレス番号、着替えのドレス番号
 
     public:
         bool exist;//食べ物画像用
@@ -64,13 +68,13 @@ namespace User
         std::vector<std::string> food_button;
 
         //食べ物取得有無
-        std::vector<bool> food_gain;
+        std::vector<bool> food_gain;//falseで未取得
 
         //衣装画像
         std::vector<std::string> dress_button;
 
         //衣装の有無
-        std::vector<bool> dress_gain;
+        std::vector<bool> dress_gain;//falseで未取得
 
         //衣装解説
         std::vector<std::string> dress_commentary
@@ -91,6 +95,16 @@ namespace User
             u8"金平糖",
             u8"宝石",
         };
+
+		//クロエちゃんファッションショー
+		std::vector<std::string> fashion_show
+		{
+			u8"クロエ普通.png",
+			u8"クロエ喜び.png",
+			u8"クロエ驚き.png",
+			u8"クロエ怒り.png",
+			u8"クロエ普通.png",
+		};
 
         CREATE_ARGS_FUNC( Layer_meal );
 		Layer_meal();
