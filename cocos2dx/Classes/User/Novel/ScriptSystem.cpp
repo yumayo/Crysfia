@@ -57,6 +57,7 @@ namespace User
         REGIST_FUNC( ScriptSystem, noveloff );
         REGIST_FUNC( ScriptSystem, novelswitch );
         REGIST_FUNC( ScriptSystem, item );
+        REGIST_FUNC( ScriptSystem, autosave );
     }
     ScriptSystem::~ScriptSystem( )
     {
@@ -167,6 +168,11 @@ namespace User
         {
             ptr->make( args[0] );
         }
+    }
+    SCRIPT( ScriptSystem::autosave )
+    {
+        utils::captureScreen( [ ] ( bool succeed, const std::string &filePath ) { }, "screenshot.autosave.png" );
+        stop( { u8"0.016F" } );
     }
 
     SCRIPT( ScriptSystem::name )

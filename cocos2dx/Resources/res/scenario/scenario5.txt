@@ -21,6 +21,8 @@
 
 @sys:heart(クロエ)
 
+@sys:bgm( kokyou.wav )
+
 //ここから
 @背景娯楽の島:fadein(1)
 @bgm娯楽の島:in
@@ -281,7 +283,9 @@
     すめの場所聞いてみようか」@sys:l
     @名前クロエ:in
     @rasyasu.1:play(19)
-    「うん！」@sys:l
+    「うん！」
+    @sys:l
+    @sys:autosave
     @crysfia立ち絵喜び:fadeout(1)
     @背景噴水広場:fadeout(1)
     @bgm娯楽の島:out

@@ -110,11 +110,13 @@ namespace User
         };
         textChunkManager.novelEndCallBack = [ this ]
         {
+            systemRead.off( );
+
             if ( auto sprite = Sprite::create( ) )
             {
                 sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
                 sprite->setAnchorPoint( Vec2( 0, 0 ) );
-                sprite->setColor( Color3B(0, 0, 0) );
+                sprite->setColor( Color3B( 0, 0, 0 ) );
                 sprite->setOpacity( 0 );
                 sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
                 sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ ]

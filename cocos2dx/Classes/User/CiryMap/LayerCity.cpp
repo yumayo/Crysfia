@@ -101,6 +101,8 @@ namespace User
         loadTextureNormal( dir + "scenario.sub.png" );
 
         LayerCityMark::pasteMap( map, data );
+
+        setScale( getScale( ) * 0.5 );
     }
 
     Calendar* Calendar::make( )

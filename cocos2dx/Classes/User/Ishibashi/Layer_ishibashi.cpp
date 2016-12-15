@@ -3,20 +3,22 @@
 #include "cocos2d/external/json/document.h"
 #include "audio/include/AudioEngine.h"
 
+#include "../SceneManager.h"
+
 USING_NS_CC;
 using namespace experimental;
 
 namespace User
 {
-	Layer_meal::Layer_meal()
-	{
-		setLayer(meal);
-	}
-	Layer_meal::Layer_meal(int layer)
-	{
-		setLayer(layer);
-	}
-	Layer_meal::~Layer_meal( )
+    Layer_meal::Layer_meal( )
+    {
+        setLayer( meal );
+    }
+    Layer_meal::Layer_meal( int layer )
+    {
+        setLayer( layer );
+    }
+    Layer_meal::~Layer_meal( )
     {
     }
     bool Layer_meal::init( )
@@ -35,8 +37,24 @@ namespace User
         Menu( );
         eatText( );
         character( );
-        mealTutorial( );
+       // mealTutorial( );
         //heart();
+
+        {
+            auto scale = Director::getInstance( )->getContentScaleFactor( );
+
+            auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
+            addChild( button );
+            button->setScale( 0.5, 0.5 );
+            button->setAnchorPoint( Vec2( 0, 0 ) );
+            button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
+            {
+                if ( type == ui::Widget::TouchEventType::ENDED )
+                {
+                    SceneManager::createBreeding( );
+                }
+            } );
+        }
 
         return true;
     }

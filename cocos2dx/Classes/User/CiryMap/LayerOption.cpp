@@ -52,6 +52,9 @@ namespace User
             listView->setAnchorPoint( Vec2( 0.5, 0.5 ) );
             listView->setPosition( pixel * 0.5F );
 
+            /**
+             * BGM
+             */
             {
                 auto bar = SlideBar::create( u8"bgm" );
                 auto layout = ui::Layout::create( );
@@ -70,6 +73,9 @@ namespace User
                 label->setAnchorPoint( Vec2( 0, 0 ) );
             }
 
+            /**
+             * SE
+             */
             {
                 auto bar = SlideBar::create( u8"se" );
                 auto layout = ui::Layout::create( );
@@ -88,6 +94,30 @@ namespace User
                 label->setAnchorPoint( Vec2( 0, 0 ) );
             }
 
+            /**
+             * ボイスの音量
+             */
+            {
+                auto bar = SlideBar::create( u8"voice" );
+                auto layout = ui::Layout::create( );
+                listView->addChild( layout );
+                layout->setContentSize( Size( bar->getContentSize( ).width, bar->getContentSize( ).height * 2 ) );
+                layout->addChild( bar );
+
+                // スライダーラベルを生成
+                auto label = Label::createWithTTF( u8"VOICE", u8"res/fonts/HGRGE.TTC", 64 );
+                // ラベルの色
+                label->setColor( Color3B::WHITE );
+                // ラベルの設置
+                label->setPosition( Vec2( 0, bar->getContentSize( ).height ) );
+                // ラベルタイトルを追加
+                layout->addChild( label );
+                label->setAnchorPoint( Vec2( 0, 0 ) );
+            }
+
+            /**
+             * 表示速度
+             */
             {
                 auto bar = SlideBar::create( u8"novel.speed" );
                 bar->slider->setMaxPercent( 30 );
@@ -185,6 +215,8 @@ namespace User
                     }
                 };
             }
+
+            
         }
 
         return true;

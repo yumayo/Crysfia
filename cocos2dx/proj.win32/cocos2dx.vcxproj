@@ -187,6 +187,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\Novel\NameLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\NovelLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\OptionalValues.cpp" />
+    <ClCompile Include="..\Classes\User\Novel\SaveLayer.cpp" />
     <ClCompile Include="..\Classes\User\Novel\SceneNovel.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptBackground.cpp" />
     <ClCompile Include="..\Classes\User\Novel\ScriptBase.cpp" />
@@ -281,6 +282,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Novel\NameLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\NovelLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\OptionalValues.h" />
+    <ClInclude Include="..\Classes\User\Novel\SaveLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\SceneNovel.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptBackground.h" />
     <ClInclude Include="..\Classes\User\Novel\ScriptBase.h" />

@@ -321,6 +321,9 @@
     <ClCompile Include="..\Classes\User\Breeding\UIManager.cpp">
       <Filter>src\User\Breeding</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Novel\SaveLayer.cpp">
+      <Filter>src\User\Novel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -604,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Breeding\VariousStatus.h">
       <Filter>src\User\Breeding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\SaveLayer.h">
+      <Filter>src\User\Novel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
