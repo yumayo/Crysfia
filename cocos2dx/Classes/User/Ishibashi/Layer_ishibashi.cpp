@@ -258,6 +258,15 @@ namespace User
             }
         }
 
+		if (!doc.HasParseError())
+		{
+			const rapidjson::Value& buttonsData = doc["princess_texture"];
+			for (int k = 0; k < 5; k++)
+			{
+				fashion_show.push_back(buttonsData[k]["princess"].GetString());
+			}
+		}
+
         switch ( change )
         {
         case meal:
@@ -276,7 +285,7 @@ namespace User
     void Layer_meal::foodText( std::string commentary, int y )
     {
         auto text = Label::createWithSystemFont( commentary, "Arial", 48 );
-        text->setPosition( Point( 300, 225 ) );
+        text->setPosition( Point( 300, 225 + y * 48) );
         text->setColor( ccc3( 255, 0, 0 ) );
         text->setName( "commentary_text" );
         this->addChild( text );
@@ -352,8 +361,13 @@ namespace User
         cocos2d::Sprite * kuroe = Sprite::create( "res/texture/novel/" + chara_texture);
         kuroe->setScale( 0.3 );
 		kuroe->setName("KUROE");
+		kuroe->setOpacity(0);
         kuroe->setPosition( Vec2( 285, 600 ) );
         this->addChild( kuroe );
+
+		//フェード 1秒で、100%へ  
+		CCFiniteTimeAction* fade = FadeIn::create(2);
+		kuroe->runAction(fade);
     }
 
 	void Layer_meal::eraseCharacter()
@@ -381,14 +395,17 @@ namespace User
 	{
 		eraseCharacter();
 
-		cocos2d::Sprite * kuroe = Sprite::create("res/texture/novel/" + fashion_show[my_dress]);
+		Sprite * kuroe = Sprite::create("res/texture/novel/" + fashion_show[my_dress]);
 		kuroe->setScale(0.3);
 		kuroe->setName("fashion");
 		kuroe->setPosition(Vec2(285, 600));
 		this->addChild(kuroe);
 
+		//フェード 1秒で、100%へ  
+		CCFiniteTimeAction* fade = FadeOut::create(1);
+		kuroe->runAction(fade);
 
-		removeChildByName("fashion");
+		character(fashion_show[dress_num]);
 	}
 
     void Layer_meal::normalButton( int text_number, std::string button_photo, int normalButtonTag )
@@ -431,7 +448,7 @@ namespace User
 							animation_num = text_number;
 
 							eraseFoodText();
-							foodText(food_commentary[text_number], 1);
+							foodText(food_commentary[text_number], 0);
 						}
 					}
                     break;
@@ -443,9 +460,13 @@ namespace User
 
 							//着替える動作を入れる
 							eraseFoodText();
-							foodText(dress_commentary[text_number], 1);
+							foodText(dress_commentary[text_number], 0);
 						}
 					}
+
+					
+					removeChildByName("fashion");
+
                     break;
                 default:
                     break;
