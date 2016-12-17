@@ -97,14 +97,14 @@ namespace User
         };
 
 		//クロエちゃんファッションショー
-		std::vector<std::string> fashion_show
-		{
+		std::vector<std::string> fashion_show;
+		/*{
 			u8"クロエ普通.png",
 			u8"クロエ喜び.png",
 			u8"クロエ驚き.png",
 			u8"クロエ怒り.png",
 			u8"クロエ普通.png",
-		};
+		};*/
 
         CREATE_ARGS_FUNC( Layer_meal );
 		Layer_meal();
