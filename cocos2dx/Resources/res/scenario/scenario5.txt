@@ -11,7 +11,7 @@
 @sys:background(背景娯楽の島)
 @sys:background(背景商店街)
 @sys:background(背景噴水広場)
-@sys:bgm(娯楽の島)
+@sys:bgm(kokyou)
 @sys:se(ガヤ)
 
 @sys:live2d(crysfia)
@@ -20,8 +20,6 @@
 @sys:voice(rasyasu.1)
 
 @sys:heart(クロエ)
-
-@sys:bgm( kokyou.wav )
 
 //ここから
 @背景娯楽の島:fadein(1)

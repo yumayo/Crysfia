@@ -8,7 +8,7 @@
 
 #include "ScriptStaticData.h"
 
-#include "../../Lib/Utility/Utilitys.h"
+#include "../../Lib/Utilitys.h"
 
 USING_NS_CC;
 

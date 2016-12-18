@@ -5,7 +5,7 @@
 
 # include "ui/CocosGUI.h"
 
-#include "../../Lib/Json/json.h"
+#include "../../Lib/json.h"
 
 namespace User
 {
