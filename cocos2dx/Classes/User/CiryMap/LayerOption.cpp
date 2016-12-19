@@ -90,7 +90,7 @@ namespace User
 
             {
                 auto bar = SlideBar::create( u8"novel.speed" );
-                bar->slider->setMaxPercent( 30 );
+
 
                 auto layout = ui::Layout::create( );
                 listView->addChild( layout );
