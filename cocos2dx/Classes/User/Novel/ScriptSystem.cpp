@@ -25,11 +25,10 @@
 
 #include "ui/CocosGUI.h"
 
-#include "SimpleAudioEngine.h"
-
 #include "StringUtil.h"
 
-#include "../../Lib/Utility/Utilitys.h"
+#include "../../Lib/Utilitys.h"
+#include "../../Lib/AudioManager.h"
 
 USING_NS_CC;
 
@@ -57,6 +56,7 @@ namespace User
         REGIST_FUNC( ScriptSystem, noveloff );
         REGIST_FUNC( ScriptSystem, novelswitch );
         REGIST_FUNC( ScriptSystem, item );
+        REGIST_FUNC( ScriptSystem, autosave );
     }
     ScriptSystem::~ScriptSystem( )
     {
@@ -168,6 +168,11 @@ namespace User
             ptr->make( args[0] );
         }
     }
+    SCRIPT( ScriptSystem::autosave )
+    {
+        utils::captureScreen( [ ] ( bool succeed, const std::string &filePath ) { }, "screenshot.autosave.png" );
+        stop( { u8"0.016F" } );
+    }
 
     SCRIPT( ScriptSystem::name )
     {
@@ -209,17 +214,14 @@ namespace User
         {
         case 1:
         {
-            std::string file = u8"res/bgm/" + args[0];
-            auto audio = CocosDenshion::SimpleAudioEngine::getInstance( );
-            audio->playBackgroundMusic( file.c_str( ) );
+            auto audio = AudioManager::getInstance( );
+            audio->playBgm( args[0] );
         }
         break;
         case 2:
         {
-            std::string file = u8"res/bgm/" + args[0];
-            bool loop = StringUtil::string_value<bool>( args[1] );
-            auto audio = CocosDenshion::SimpleAudioEngine::getInstance( );
-            audio->playBackgroundMusic( file.c_str( ), loop );
+            auto audio = AudioManager::getInstance( );
+            audio->playBgm( args[0], StringUtil::string_value<bool>( args[1] ) );
         }
         break;
         default:
@@ -232,9 +234,8 @@ namespace User
         {
         case 1:
         {
-            std::string file = u8"res/se/" + args[0];
-            auto audio = CocosDenshion::SimpleAudioEngine::getInstance( );
-            audio->playEffect( file.c_str( ) );
+            auto audio = AudioManager::getInstance( );
+            audio->playSe( args[0] );
         }
         break;
         default:
