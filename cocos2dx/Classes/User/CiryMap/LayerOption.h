@@ -21,6 +21,9 @@ namespace User
         std::string key;
     };
 
+    /**
+     * モーダルレイヤーになっているので、そのままcreateするだけで大丈夫です。
+     */
     class LayerOption : public LayerBase
     {
     public:
@@ -31,6 +34,10 @@ namespace User
         void setup( ) override;
     private:
         cocos2d::ui::Button* createBackButton( );
+        cocos2d::ui::Button* createDeleteButton( );
+        cocos2d::Node* createModal( );
+        cocos2d::ui::Layout* createSlider( std::string const& str, std::function<void( float )> const& move = nullptr, std::function<void( float )> const& ended = nullptr );
+        cocos2d::ui::Layout* createDialog( std::string const& str, std::function<void( )>const& yes, std::function<void( )>const& no );
     };
 }
 

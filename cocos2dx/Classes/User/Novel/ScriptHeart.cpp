@@ -8,6 +8,11 @@
 
 USING_NS_CC;
 
+Vec2 operator*( Vec2 const& left, Vec2 const& right )
+{
+    return Vec2( left.x * right.x, left.y * right.y );
+}
+
 namespace User
 {
     HeartGauge* HeartGauge::make( )
@@ -19,39 +24,75 @@ namespace User
             setPosition( origin + Vec2( 0, size.height ) );
         }
 
-        auto anchor = Vec2( 0, 1 );
-        if ( auto frame = Sprite::create( u8"res/texture/system/heart.frame.png" ) )
-        {
-            addChild( frame, 1 );
-            auto frameSize = frame->getContentSize( );
-            setContentSize( frameSize );
-            frame->setAnchorPoint( anchor );
+        // ハートアイコン
+        auto icon = Sprite::create( u8"res/texture/system/heart.icon.png" ); if ( !icon ) return this;
+        // 親愛度のゲージ
+        auto frame = Sprite::create( u8"res/texture/system/heart.frame.png" ); if ( !frame ) return this;
 
+
+        // よって、レイアウトのサイズは、アイコンの横と、ゲージの横を足した値。
+        // 縦はアイコンの方を使います。
+        setContentSize( Size( icon->getContentSize( ).width + frame->getContentSize( ).width,
+                              std::max( icon->getContentSize( ).height, frame->getContentSize( ).height ) ) );
+
+        // アイコンの設定
+        {
+            icon->setAnchorPoint( Vec2( 0, 0.5 ) );
+            icon->setPosition( 0, getContentSize( ).height * 0.5 );
+            addChild( icon );
+        }
+
+        // ゲージの設定
+        {
+            frame->setAnchorPoint( Vec2( 0, 0.5 ) );
+            frame->setPosition( icon->getContentSize( ).width, getContentSize( ).height * 0.5 );
+            addChild( frame );
+        }
+
+        // 画像のピクセル数を登録しておきます。
+        {
             size = frame->getTexture( )->getContentSizeInPixels( );
         }
 
+        // 現在の親愛度を登録。
         now = UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" );
-        start = 7;
-        end = size.width - 9;
 
+        // マスクを取る位置を決めます。
+        // startはゲージの左端の大きさ。
+        start = 5;
+        // endはゲージの右端までの長さ。
+        end = size.width - 5;
+
+        // ここからマスクの処理を書きます。
         if ( auto clipping = ClippingNode::create( ) )
         {
-            addChild( clipping );
+            {
+                // クリッピングノードはゲージの子供とします。
+                frame->addChild( clipping );
+                // ただしそのときに、原点を合わせるため以下の数値を代入しておきます。
+                clipping->setPosition( frame->getAnchorPoint( ) * frame->getContentSize( ) );
+            }
+
+            // 実際に書き込むのは色のある部分です。
             clipping->setInverted( false );
+            // 透明部分をマスクします。
             clipping->setAlphaThreshold( 0.0 );
 
+            // マスク画像を用意します。
             if ( auto mask = Sprite::create( "res/texture/system/heart.mask.png" ) )
             {
                 clipping->setStencil( mask );
-                mask->setAnchorPoint( anchor );
+                mask->setAnchorPoint( Vec2( 0, 0.5 ) );
             }
 
+            // 塗りつぶすイメージを用意します。
+            // ここでループ画像として使うので、サイズは2のべき乗固定です。
             if ( auto background = Sprite::create( u8"res/texture/system/favoritegauge.png",
                                                    Rect( 0, 0, ( start + getWidth( now ) ) * scale, size.height * scale ) ) )
             {
                 this->background = background;
                 clipping->addChild( background );
-                background->setAnchorPoint( anchor );
+                background->setAnchorPoint( Vec2( 0, 0.5 ) );
                 background->getTexture( )->setTexParameters( { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT } );
             }
         }

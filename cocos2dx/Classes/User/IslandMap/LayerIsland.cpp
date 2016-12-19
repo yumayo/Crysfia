@@ -10,7 +10,7 @@
 #include <vector>
 #include <functional>
 
-#include "../../Lib/Utility/Utilitys.h"
+#include "../../Lib/Utilitys.h"
 
 USING_NS_CC;
 

@@ -1,19 +1,25 @@
 {
-  "button_texture": 
-  [
-    { "texture": "ringo.png" },
-    { "texture": "ichigo.png" },
-    { "texture": "kiwi.png" },
-    { "texture": "charry.png" },
-    { "texture": "kinkan.png" }
+  "button_texture": [
+    { "texture": "角砂糖.png" },
+    { "texture": "花.png" },
+    { "texture": "果物.png" },
+    { "texture": "コンペイトウ.png" },
+    { "texture": "宝石.png" }
   ],
 
-  "dress_texture": 
-  [
-    { "clothes": "dress_A.png" },
-    { "clothes": "dress_B.png" },
-    { "clothes": "dress_C.png" },
-    { "clothes": "dress_D.png" },
-    { "clothes": "dress_E.png" }
+  "dress_texture": [
+    { "clothes": "服A.png" },
+    { "clothes": "服B.png" },
+    { "clothes": "服C.png" },
+    { "clothes": "服D.png" },
+    { "clothes": "服E.png" }
+  ],
+
+  "princess_texture": [
+    { "princess": "クロエ普通.png" },
+    { "princess": "クロエ喜び.png" },
+    { "princess": "クロエ驚き.png" },
+    { "princess": "クロエ怒り.png" },
+    { "princess": "クロエ普通.png" }
   ]
 }

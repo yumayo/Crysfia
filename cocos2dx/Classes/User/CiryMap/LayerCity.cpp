@@ -9,13 +9,15 @@
 
 #include "../Novel/ScriptHeart.h"
 
-#include "../../Lib/Utility/Utilitys.h"
+#include "../../Lib/Utilitys.h"
 
-#include "../../Lib/Json/json.h"
+#include "../../Lib/json.h"
 
 #include "../System/DataSettings.h"
 
 #include "LayerOption.h"
+
+#include "../../Lib/AudioManager.h"
 
 USING_NS_CC;
 
@@ -97,6 +99,8 @@ namespace User
         loadTextureNormal( dir + "scenario.sub.png" );
 
         LayerCityMark::pasteMap( map, data );
+
+        setScale( getScale( ) * 0.5 );
     }
 
     Calendar* Calendar::make( )
@@ -207,7 +211,7 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-
+        AudioManager::getInstance( )->playBgm( "city", 1.5f );
 
         jsonRead( );
 
@@ -223,19 +227,23 @@ namespace User
             board->setPosition( Vec2( vo + Vec2( 0, vs.height ) ) );
             addChild( board );
 
+            auto width = boardPixel.width - 10 * 2;
             auto height = boardPixel.height - 10 * 2;
-            if ( auto calendar = Calendar::create( )->make( ) )
+            auto calendar = Calendar::create( )->make( );
+            if ( calendar )
             {
                 board->addChild( calendar );
                 calendar->setScale( fitHeight( calendar, height * scale ), fitHeight( calendar, height * scale ) );
                 calendar->setPosition( Vec2( boardPixel ) * scale + Vec2( -10, -10 ) * scale );
             }
 
-            if ( auto heart = HeartGauge::create( )->make( ) )
+            auto heart = HeartGauge::create( )->make( );
+            if ( heart )
             {
+                heart->setAnchorPoint( Vec2( 0, 0.5 ) );
+                heart->setScale( fitWidth( heart, board->getContentSize( ).width - calendar->getContentSize( ).width ) );
+                heart->setPosition( Vec2( 0, boardPixel.height * 0.5 ) * scale + Vec2( 10, 0 ) * scale );
                 board->addChild( heart );
-                heart->setScale( fitHeight( heart, height * scale ), fitHeight( heart, height * scale ) );
-                heart->setPosition( Vec2( 0, boardPixel.height ) * scale + Vec2( 10, -10 ) * scale );
             }
         }
 
@@ -285,12 +293,15 @@ namespace User
     }
     void LayerCity::jsonRead( )
     {
+        removeChildByName( u8"background" );
+
         Json::Reader reader;
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( path, u8"res/data/" ) ), root ) )
         {
             auto map = root[u8"background"].asString( );
             auto background = CityMap::create( )->make( map );
-            addChild( background );
+            background->setName( u8"background" );
+            addChild( background, -1 );
 
             std::vector<ScenarioPointData> main;
             for ( auto& value : root[u8"point.main"] )
