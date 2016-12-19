@@ -49,10 +49,15 @@ namespace User
 
 		void dressAnimetion(int my_dress, int dress_num);//現在のドレス番号、着替えのドレス番号
 
+		void dressChange();
+
     public:
         bool exist;//食べ物画像用
         bool reside;//決定の有無用
         int change;//食事と着替え
+		cocos2d::UserDefault * now;
+		int now_dress;//今の服
+		int next_dress = 0;//着替えた後の服
 		int love_degrees = 0;//親愛度受け渡し用
         int audio_volume = 1.0f;
         int animation_num = 0;//アニメーション番号

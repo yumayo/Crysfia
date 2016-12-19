@@ -36,7 +36,7 @@ namespace User
         mealDressVolume( 1.0f );
         Menu( );
         eatText( );
-        character(fashion_show[0]);
+        character(fashion_show[now_dress]);
         //mealTutorial( );
         //heart();
 
@@ -76,14 +76,11 @@ namespace User
     void Layer_meal::eatText( )
     {
 
-        Sprite* sprite = Sprite::create( );
-        sprite->setTextureRect( Rect( 0, 0, 600, 200 ) );
-        sprite->setColor( Color3B::WHITE );
+        Sprite* sprite = Sprite::create("res/texture/item/message_window_life.png");
+        //sprite->setTextureRect( Rect( 0, 0, 600, 200 ) );
+        //sprite->setColor( Color3B::WHITE );
         sprite->setName( "Text" );
-
-        float x = 365;
-        float y = 225;
-        sprite->setPosition( Point( x, y ) );
+        sprite->setPosition( Point( 365, 225 ) );
         this->addChild( sprite );
 
         confirmButton( );
@@ -128,7 +125,8 @@ namespace User
                     break;
                 case dressClothes:
                     //着替え用アクション
-					dressAnimetion(0, 1);
+					dressAnimetion(now_dress, next_dress);
+					dressChange();
                     break;
                 default:
                     break;
@@ -284,6 +282,9 @@ namespace User
 				fashion_show.push_back(buttonsData[k]["princess"].GetString());
 			}
 		}
+
+		now = UserDefault::getInstance();
+		now_dress = now->getIntegerForKey(u8"現在の服");
 
         switch ( change )
         {
@@ -479,6 +480,7 @@ namespace User
 							//着替える動作を入れる
 							eraseFoodText();
 							foodText(dress_commentary[text_number], 0);
+							next_dress = text_number;
 						}
 					}
 
@@ -576,6 +578,11 @@ namespace User
         dress_gain.push_back(item->getBoolForKey(u8"服D"));
         dress_gain.push_back(item->getBoolForKey(u8"服E"));
     }
+
+	void Layer_meal::dressChange()
+	{
+		now->setIntegerForKey(u8"現在の服", next_dress);
+	}
 
 	//未確認
 	void Layer_meal::loveMetor()

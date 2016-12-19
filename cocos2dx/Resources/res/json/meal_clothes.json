@@ -17,9 +17,9 @@
 
   "princess_texture": [
     { "princess": "クロエ普通.png" },
-    { "princess": "クロエ喜び.png" },
+    { "princess": "クロエ怒り.png"},
     { "princess": "クロエ驚き.png" },
-    { "princess": "クロエ怒り.png" },
+    { "princess": "クロエ喜び.png" },
     { "princess": "クロエ普通.png" }
   ]
 }
