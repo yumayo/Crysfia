@@ -11,11 +11,13 @@
 @sys:background(背景娯楽の島)
 @sys:background(背景商店街)
 @sys:background(背景噴水広場)
-@sys:bgm(娯楽の島)
+@sys:bgm(kokyou)
 @sys:se(ガヤ)
 
 @sys:live2d(crysfia)
 @crysfia:touchoff
+
+@sys:voice(rasyasu.1)
 
 @sys:heart(クロエ)
 
@@ -45,6 +47,7 @@
 @crysfia:in
     @crysfia:怒る
     @名前クロエ:in
+    @rasyasu.1:play(01)
     「別に、クロエは機嫌悪くなんかないもん。」@sys:l
     「アレンが勝手にそう思ってるだけだもん」@sys:l
     @名前アレン:in
@@ -86,17 +89,20 @@
 @crysfia:in
     @crysfia:普通
     @名前クロエ:in
+    @rasyasu.1:play(02)
     「アレン、ストリートパフォーマンスって何？」@sys:l
     @名前アレン:in
     「路上で大道芸でもするんだろうね。ピエロ
     っていうと、玉乗りとか？」@sys:l
     @名前クロエ:in
+    @rasyasu.1:play(03)
     「ふーん……それって面白いんだ？」@sys:l
     @名前アレン:in
     「僕も子供の頃に一度見たきりだけど、面白
     かったよ」@sys:l
     @crysfia:喜ぶ
     @名前クロエ:in
+    @rasyasu.1:play(04)
     「そっか。じゃあ、クロエも見てみたいな」@sys:l
 @crysfia:out
 @背景娯楽の島:fadeout(1)
@@ -109,6 +115,7 @@
 @名前アレン:in
 「つまらなそうだね。クロエも興味ないだろう？」@sys:l
 @名前クロエ:in
+@rasyasu.1:play(05)
 「でも、あの子頑張ってチラシ配ってたよ。」@sys:l
 「クロエ、あの子のパフォーマンス見てみたいな」@sys:l
 @名前アレン:in
@@ -116,6 +123,7 @@
 @crysfia:in
     @crysfia:喜ぶ
     @名前クロエ:in
+    @rasyasu.1:play(06)
     「うん！」@sys:l
 @crysfia:out
 @背景商店街:fadeout(1)
@@ -129,6 +137,7 @@
 @crysfia:in
     @crysfia:怒る
     @名前クロエ:in
+    @rasyasu.1:play(07)
     「ねー、ここからじゃ見えないよ」@sys:l
     @名前クロエ:out
     クロエが不満そうに言うので、彼女が入った
@@ -137,6 +146,7 @@
     「ほら、これで見える？」@sys:l
     @crysfia:喜ぶ
     @名前クロエ:in
+    @rasyasu.1:play(08)
     「うん、ありがとー」@sys:l
     @名前アレン:in
     「どういたしまして。あ、始まるみたいだよ」@sys:l
@@ -161,17 +171,21 @@
 @crysfia:in
     @crysfia:驚く
     @名前クロエ:in
+    @rasyasu.1:play(10)
     「わあ、すごい！」@sys:l
     @名前クロエ:out
     クロエは目を輝かせながら少年のパフォーマンスに
     見入っている。@sys:l
     @名前クロエ:in
+    // 11と13が同じ音声ファイルです。
+    @rasyasu.1:play(13) 
     「ねぇ、アレンもああいうのできるの？」@sys:l
     @名前アレン:in
     「できないよ。あれはあの子が一生懸命練習
     したからできるんだ」@sys:l
     @crysfia:喜ぶ
     @名前クロエ:in
+    @rasyasu.1:play(12)
     「そっか……沢山練習したんだね」@sys:l
     @名前アレン:in
     「そうだね」@sys:l
@@ -214,6 +228,7 @@
 @crysfia:in
     @crysfia:普通
     @名前クロエ:in
+    @rasyasu.1:play(14)
     「クロエもそれ作ってほしい！」@sys:l
     @名前クロエ:out
     クロエの大声は少年に届いたようで、彼はこ
@@ -222,6 +237,7 @@
     「もちろんです、可愛いお嬢さん。あなたは
     何をご所望ですか？」@sys:l
     @名前クロエ:in
+    @rasyasu.1:play(15)
     「クロエはねー、お花が欲しいな。ピンクの
     お花！」@sys:l
     @名前ピエロの少年:in
@@ -232,6 +248,7 @@
     @名前ピエロの少年:in
     「はい、どうぞ」@sys:l
     @名前クロエ:in
+    @rasyasu.1:play(16)
     @crysfia:喜ぶ
     「わぁ、ありがと！」@sys:l
     @名前クロエ:out
@@ -250,10 +267,12 @@
 @crysfia:in
     @crysfia:普通
     @名前クロエ:in
+    @rasyasu.1:play(17)
     「アレン、あの男の子すごかったね！」@sys:l
     @名前アレン:in
     「そうだね。楽しかった？」@sys:l
     @名前クロエ:in
+    @rasyasu.1:play(18)
     @crysfia:喜ぶ
     「楽しかった！しばらくはこの島にいるんだ
     よね？明日はどこに行く？」@sys:l
@@ -261,7 +280,10 @@
     「うーん……船に戻ったら、船長さんにおす
     すめの場所聞いてみようか」@sys:l
     @名前クロエ:in
-    「うん！」@sys:l
+    @rasyasu.1:play(19)
+    「うん！」
+    @sys:l
+    @sys:autosave
     @crysfia立ち絵喜び:fadeout(1)
     @背景噴水広場:fadeout(1)
     @bgm娯楽の島:out

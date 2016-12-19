@@ -17,6 +17,7 @@ namespace User
         TextChunkManager( );
         ~TextChunkManager( );
     public:
+        bool isNovelFinished( );
         void make( std::string const& novelPath );
         void select( std::string const& selectName );
         void textRead( );

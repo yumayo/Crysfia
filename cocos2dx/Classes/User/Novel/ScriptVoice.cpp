@@ -1,6 +1,6 @@
 #include "ScriptVoice.h"
 
-#include "SimpleAudioEngine.h"
+#include "../../Lib/AudioManager.h"
 
 USING_NS_CC;
 
@@ -18,9 +18,7 @@ namespace User
         {
         case 1:
         {
-            std::string file = dir + args[0] + u8".mp3";
-            if( id != 0 ) CocosDenshion::SimpleAudioEngine::getInstance( )->stopEffect( id );
-            id = CocosDenshion::SimpleAudioEngine::getInstance( )->playEffect( file.c_str( ) );
+            AudioManager::getInstance( )->playVoice( dir + args[0] + u8".mp3", AudioManager::Chunk::_15 );
         }
         break;
         default:
