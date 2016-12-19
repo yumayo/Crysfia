@@ -25,9 +25,11 @@ namespace User
 
         void eatTime( std::string eatTime );//時間表示？
 
-        void character( );//キャラクター描画
+        void character(std::string chara_texture);//キャラクター描画
 
-        void animation( int anime_num );//アニメーション
+		void eraseCharacter();
+
+        void animation( int anime_num );//食事アニメーション
 
         void normalButton( int text_number, std::string button_photo, int normalButtonTag );//ボタン汎用用
 
@@ -43,10 +45,15 @@ namespace User
 
         void loadData( );
 
+		void loveMetor();
+
+		void dressAnimetion(int my_dress, int dress_num);//現在のドレス番号、着替えのドレス番号
+
     public:
         bool exist;//食べ物画像用
         bool reside;//決定の有無用
         int change;//食事と着替え
+		int love_degrees = 0;//親愛度受け渡し用
         int audio_volume = 1.0f;
         int animation_num = 0;//アニメーション番号
         cocos2d::Sprite * food;//アニメーション用画像
@@ -61,22 +68,22 @@ namespace User
         std::vector<std::string> food_button;
 
         //食べ物取得有無
-        std::vector<bool> food_gain;
+        std::vector<bool> food_gain;//falseで未取得
 
         //衣装画像
         std::vector<std::string> dress_button;
 
         //衣装の有無
-        std::vector<bool> dress_gain;
+        std::vector<bool> dress_gain;//falseで未取得
 
         //衣装解説
         std::vector<std::string> dress_commentary
         {
-            u8"普段着",
-            u8"dress_B.png",
-            u8"dress_C.png",
-            u8"dress_D.png",
-            u8"dress_E.png",
+            u8"ワンピース",
+            u8"ドレス",
+            u8"着ぐるみ",
+            u8"シスター服",
+            u8"セーラー服",
         };
 
         //食べ物解説
@@ -88,6 +95,16 @@ namespace User
             u8"金平糖",
             u8"宝石",
         };
+
+		//クロエちゃんファッションショー
+		std::vector<std::string> fashion_show;
+		/*{
+			u8"クロエ普通.png",
+			u8"クロエ喜び.png",
+			u8"クロエ驚き.png",
+			u8"クロエ怒り.png",
+			u8"クロエ普通.png",
+		};*/
 
         CREATE_ARGS_FUNC( Layer_meal );
 		Layer_meal();

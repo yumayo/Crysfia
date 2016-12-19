@@ -269,7 +269,7 @@ namespace User
 		auto size = Director::getInstance()->getVisibleSize();
 		auto moveOut = MoveBy::create(0.3f, Vec2(size.width, 0));
 		moveOutObj->runAction(moveOut);
-
+		
 		auto moveIn = MoveBy::create(0.3f, Vec2(-size.width, 0));
 		auto delay = DelayTime::create(0.5f);
 		moveInObj->runAction(Sequence::create(delay, moveIn, nullptr));
