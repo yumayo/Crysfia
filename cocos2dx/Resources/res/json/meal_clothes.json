@@ -8,18 +8,26 @@
   ],
 
   "dress_texture": [
-    { "clothes": "服A.png" },
-    { "clothes": "服B.png" },
-    { "clothes": "服C.png" },
-    { "clothes": "服D.png" },
-    { "clothes": "服E.png" }
+    { "clothes": "dress_icon/ワンピース.png" },
+    { "clothes": "dress_icon/服B.png" },
+    { "clothes": "dress_icon/着ぐるみ.png" },
+    { "clothes": "dress_icon/服D.png" },
+    { "clothes": "dress_icon/セーラー服.png" }
   ],
 
   "princess_texture": [
-    { "princess": "クロエ普通.png" },
-    { "princess": "クロエ怒り.png"},
-    { "princess": "クロエ驚き.png" },
-    { "princess": "クロエ喜び.png" },
-    { "princess": "クロエ普通.png" }
+    { "princess": "着ぐるみ(うさぎ)クロエ(透明化済み).png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" }
+  ],
+
+  "clear_texture": [
+    { "clear": "novel/クロエ普通.png" },
+    { "clear": "novel/クロエ普通.png" },
+    { "clear": "item/dress_setup/クロエ短髪.png" },
+    { "clear": "novel/クロエ普通.png" },
+    { "clear": "novel/クロエ普通.png" }
   ]
 }
