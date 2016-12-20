@@ -24,7 +24,7 @@
   ],
 
   "clear_texture": [
-    { "clear": "novel/クロエ普通.png" },
+    { "clear": "item/dress_setup/クロエ短髪.png" },
     { "clear": "novel/クロエ普通.png" },
     { "clear": "item/dress_setup/クロエ短髪.png" },
     { "clear": "novel/クロエ普通.png" },
