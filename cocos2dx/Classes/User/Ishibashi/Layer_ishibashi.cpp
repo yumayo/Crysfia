@@ -2,6 +2,7 @@
 #include "cocos2d/external/json/rapidjson.h"
 #include "cocos2d/external/json/document.h"
 #include "audio/include/AudioEngine.h"
+#include "../Novel/ScriptHeart.h"
 
 #include "../SceneManager.h"
 
@@ -33,11 +34,12 @@ namespace User
         reside = true;
 
         loadData( );
-        mealDressVolume( 1.0f );
+        mealDressVolume();
         Menu( );
         eatText( );
-        character(fashion_show[0]);
+        character(fashion_show[now_dress], clear[now_dress]);
         //mealTutorial( );
+		decoration();
         //heart();
 
         {
@@ -55,6 +57,16 @@ namespace User
                 }
             } );
         }
+
+		auto heart = HeartGauge::create()->make();
+		if (heart)
+		{
+
+			heart->setAnchorPoint(Vec2(0, 1));
+			heart->setPosition(Director::getInstance()->getVisibleOrigin() + Vec2(0, Director::getInstance()->getVisibleSize().height - 50));
+			heart->setScale(0.85f);
+			this->addChild(heart);
+		}
 
         return true;
     }
@@ -76,14 +88,17 @@ namespace User
     void Layer_meal::eatText( )
     {
 
-        Sprite* sprite = Sprite::create( );
-        sprite->setTextureRect( Rect( 0, 0, 600, 200 ) );
-        sprite->setColor( Color3B::WHITE );
-        sprite->setName( "Text" );
+		auto board = Sprite::create();
+		board->setTextureRect(Rect( 0, 0, 640, 200));
+		board->setColor(Color3B::WHITE);
+		board->setPosition(Point(365, 225));
+		this->addChild(board);
 
-        float x = 365;
-        float y = 225;
-        sprite->setPosition( Point( x, y ) );
+        Sprite* sprite = Sprite::create("res/texture/item/message_window_life.png");
+        //sprite->setTextureRect( Rect( 0, 0, 600, 200 ) );
+        //sprite->setColor( Color3B::WHITE );
+        //sprite->setName( "Text" );
+        sprite->setPosition( Point( 365, 225 ) );
         this->addChild( sprite );
 
         confirmButton( );
@@ -128,7 +143,8 @@ namespace User
                     break;
                 case dressClothes:
                     //着替え用アクション
-					dressAnimetion(0, 1);
+					dressAnimetion(now_dress, next_dress);
+					dressChange();
                     break;
                 default:
                     break;
@@ -138,115 +154,6 @@ namespace User
 
         addChild( button );
     }
-
-    //ホームボタン
-    //void Layer_meal::backButton()
-    //{
-    //	//ボタンを作成する
-    //	ui::Button * button = ui::Button::create("res/texture/button.png");
-    //	button->setTouchEnabled(true);
-
-    //	//ボタンの位置設定
-    //	button->setPosition(Vec2(125, 1100));
-
-    //	//ボタンに表示する文字
-    //	// テキスト
-    //	button->setTitleText("Back");
-    //	// フォント
-    //	button->setTitleFontName("Arial");
-    //	// フォントサイズ
-    //	button->setTitleFontSize(20);
-    //	// フォントカラー
-    //	button->setTitleColor(Color3B::BLACK);
-
-    //	//ホームボタン内容
-    //	button->addTouchEventListener([this](Ref* button, ui::Widget::TouchEventType type)
-    //	{
-    //		
-    //	});
-
-    //	addChild(button);
-    //}
-
-
-    //void Layer_meal::Menu()
-    //{
-    //	Size visibleSize = Director::getInstance()->getVisibleSize();
-    //	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-    //	auto listView = ui::ListView::create();
-    //	listView->setContentSize(Size(700, 400));
-    //	listView->setPosition(Vec2(50, 500));
-    //	listView->setDirection(ui::ScrollView::Direction::HORIZONTAL);
-    //	listView->setBounceEnabled(true);
-    //	this->addChild(listView);
-
-    //	//jsonファイルの読み込み
-    //	auto fileUtils = FileUtils::getInstance();
-    //	auto path = fileUtils->getStringFromFile("res/json/meal_clothes.json");
-    //	rapidjson::Document doc;
-
-    //	//jsonファイルをパース
-    //	doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
-
-    //	if (!doc.HasParseError())
-    //	{
-    //		const rapidjson::Value& buttonsData = doc["button_texture"];
-    //		for (int k = 0; k < food_name.size(); k++)
-    //		{
-    //			food_button.push_back(buttonsData[k]["texture"].GetString());
-    //		}
-    //	}
-
-    //	if (!doc.HasParseError())
-    //	{
-    //		const rapidjson::Value& buttonsData = doc["dress_texture"];
-    //		for (int k = 0; k < food_name.size(); k++)
-    //		{
-    //			dress_button.push_back(buttonsData[k]["clothes"].GetString());
-    //		}
-    //	}
-
-    //	switch (change)
-    //	{
-    //	case meal:
-    //		//5つのコンテンツの作成
-    //		for (int i = 0; i < food_name.size(); ++i)
-    //		{
-    //			//レイアウトに表示するボタンを作成
-    //			cocos2d::Sprite * button = cocos2d::Sprite::create("res/texture/" + food_button[i]);//ボタン画像
-    //			//button->setScale9Enabled(true);
-    //			button->setPosition(button->getContentSize() / 2);
-    //			button->setTag(i);
-
-    //			//レイアウトを作成
-    //			auto layout = ui::Layout::create();
-    //			layout->setContentSize(button->getContentSize());
-    //			layout->addChild(button);
-    //			listView->addChild(layout);
-    //		}
-    //		break;
-    //	case dressClothes:
-    //		//5つのコンテンツの作成
-    //		for (int i = 0; i < food_name.size(); ++i)
-    //		{
-    //			//レイアウトに表示するボタンを作成
-    //			cocos2d::Sprite * button = cocos2d::Sprite::create("res/texture/" + dress_button[i]);//ボタン画像
-    //			//button->setScale9Enabled(true);
-    //			button->setPosition(button->getContentSize() / 2);
-    //			button->setTag(5 + i);
-
-    //			//レイアウトを作成
-    //			auto layout = ui::Layout::create();
-    //			layout->setContentSize(button->getContentSize());
-    //			layout->addChild(button);
-    //			listView->addChild(layout);
-    //		}
-    //		break;
-    //	default:
-    //		break;
-    //	}
-    //}
 
     void Layer_meal::Menu( )
     {
@@ -284,6 +191,24 @@ namespace User
 				fashion_show.push_back(buttonsData[k]["princess"].GetString());
 			}
 		}
+
+		if (!doc.HasParseError())
+		{
+			const rapidjson::Value& buttonsData = doc["clear_texture"];
+			for (int k = 0; k < 5; k++)
+			{
+				clear.push_back(buttonsData[k]["clear"].GetString());
+			}
+		}
+
+		now = UserDefault::getInstance();
+		now_dress = now->getIntegerForKey(u8"現在の服");
+
+		auto sprite = Sprite::create();
+		sprite->setTextureRect(Rect(0, 0, 150, 900));
+		sprite->setColor(Color3B::WHITE);
+		sprite->setPosition(Point(600, 800));
+		this->addChild(sprite);
 
         switch ( change )
         {
@@ -335,30 +260,6 @@ namespace User
         }
     }
 
-    //void Layer_meal::eatButton(int food_num)
-    //{
-    //	//jsonファイルの読み込み
-    //	auto fileUtils = FileUtils::getInstance();
-    //	auto path = fileUtils->getStringFromFile("res/json/meal_clothes.json");
-    //	rapidjson::Document doc;
-
-    //	//jsonファイルをパース
-    //	doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
-
-    //	if (!doc.HasParseError())
-    //	{
-    //		const rapidjson::Value& buttonsData = doc["button_texture"];
-    //		for (int k = 0; k < 5; k++)
-    //		{
-    //			food_button.push_back(buttonsData[k]["texture"].GetString());
-    //		}
-    //	}
-
-    //	food = Sprite::create("res/texture/" + food_button[food_num]);
-    //	food->setPosition(Vec2(285, 800));
-    //	this->addChild(food);
-    //}
-
     void Layer_meal::eatTime( std::string eatTime )
     {
         Sprite* sprite = Sprite::create( );
@@ -374,23 +275,33 @@ namespace User
         this->addChild( text );
     }
 
-    void Layer_meal::character(std::string chara_texture)
+    void Layer_meal::character(std::string chara_texture, std::string puppet)
     {
-        cocos2d::Sprite * kuroe = Sprite::create( "res/texture/novel/" + chara_texture);
+        cocos2d::Sprite * kuroe = Sprite::create( "res/texture/" + puppet);
         kuroe->setScale( 0.3 );
 		kuroe->setName("KUROE");
 		kuroe->setOpacity(0);
-        kuroe->setPosition( Vec2( 285, 600 ) );
+        kuroe->setPosition( Vec2( 285, 700 ) );
         this->addChild( kuroe );
+
+		auto dress = Sprite::create("res/texture/item/dress_setup/" + chara_texture);
+		dress->setScale(0.3);
+		dress->setName("costume");
+		dress->setOpacity(0);
+		dress->setPosition(Vec2(285, 700));
+		this->addChild(dress);
 
 		//フェード 1秒で、100%へ  
 		CCFiniteTimeAction* fade = FadeIn::create(2);
 		kuroe->runAction(fade);
+		CCFiniteTimeAction* fade2 = FadeIn::create(2);
+		dress->runAction(fade2);
     }
 
 	void Layer_meal::eraseCharacter()
 	{
 		removeChildByName("KUROE");
+		removeChildByName("costume");
 	}
 
     void Layer_meal::animation( int anime_num )
@@ -408,22 +319,29 @@ namespace User
         food->runAction( fade );
     }
 
-	//12/15 まだ、失敗　遅延必要
 	void Layer_meal::dressAnimetion(int my_dress, int dress_num)
 	{
 		eraseCharacter();
 
-		Sprite * kuroe = Sprite::create("res/texture/novel/" + fashion_show[my_dress]);
+		Sprite * kuroe = Sprite::create("res/texture/" + clear[my_dress]);
 		kuroe->setScale(0.3);
 		kuroe->setName("fashion");
-		kuroe->setPosition(Vec2(285, 600));
+		kuroe->setPosition(Vec2(285, 700));
 		this->addChild(kuroe);
+
+		auto dress = Sprite::create("res/texture/item/dress_setup/" + fashion_show[my_dress]);
+		dress->setScale(0.3);
+		dress->setName("changeCostume");
+		dress->setPosition(Vec2(285, 700));
+		this->addChild(dress);
 
 		//フェード 1秒で、100%へ  
 		CCFiniteTimeAction* fade = FadeOut::create(1);
 		kuroe->runAction(fade);
+		CCFiniteTimeAction* fade2 = FadeIn::create(2);
+		dress->runAction(fade2);
 
-		character(fashion_show[dress_num]);
+		character(fashion_show[dress_num], clear[dress_num]);
 	}
 
     void Layer_meal::normalButton( int text_number, std::string button_photo, int normalButtonTag )
@@ -479,11 +397,13 @@ namespace User
 							//着替える動作を入れる
 							eraseFoodText();
 							foodText(dress_commentary[text_number], 0);
+							next_dress = text_number;
 						}
 					}
 
 					
 					removeChildByName("fashion");
+					removeChildByName("changeCostume");
 
                     break;
                 default:
@@ -509,9 +429,11 @@ namespace User
         experimental::AudioEngine::setVolume( id, volume );
     }
 
-    void Layer_meal::mealDressVolume( int set )
+    void Layer_meal::mealDressVolume()
     {
-        audio_volume = set;
+		auto volume = UserDefault::getInstance();
+
+        audio_volume = volume->getFloatForKey("se");
     }
 
     void Layer_meal::mealTutorial( )
@@ -544,6 +466,8 @@ namespace User
         under_line->setName( "under" );
         this->addChild( under_line );
 
+
+		//説明板
         auto text_board = Sprite::create( );
         text_board->setTextureRect( Rect( 0, 0, 200, 400 ) );
         text_board->setColor( Color3B::WHITE );
@@ -561,6 +485,31 @@ namespace User
         this->removeChildByName( "text_broard" );
     }
 
+	void Layer_meal::decoration()
+	{
+		auto left_line = Sprite::create("res/texture/item/b_ornament_100_0M.png");
+		//left_line->setTextureRect(Rect(0, 0, 10, 900));
+		left_line->setRotation(90);
+		left_line->setPosition(Point(500, 800));
+		this->addChild(left_line);
+
+		auto right_line = Sprite::create("res/texture/item/b_ornament_100_0M.png");
+		//right_line->setTextureRect(Rect(0, 0, 10, 900));
+		right_line->setRotation(270);
+		right_line->setPosition(Point(700, 800));
+		this->addChild(right_line);
+
+		auto top_line = Sprite::create();
+		top_line->setTextureRect(Rect(0, 0, 210, 10));
+		top_line->setPosition(600, 1250);
+		this->addChild(top_line);
+
+		auto under_line = Sprite::create();
+		under_line->setTextureRect(Rect(0, 0, 210, 10));
+		under_line->setPosition(600, 350);
+		this->addChild(under_line);
+	}
+
     void Layer_meal::loadData( )
     {
         auto item = UserDefault::getInstance();
@@ -576,6 +525,11 @@ namespace User
         dress_gain.push_back(item->getBoolForKey(u8"服D"));
         dress_gain.push_back(item->getBoolForKey(u8"服E"));
     }
+
+	void Layer_meal::dressChange()
+	{
+		now->setIntegerForKey(u8"現在の服", next_dress);
+	}
 
 	//未確認
 	void Layer_meal::loveMetor()

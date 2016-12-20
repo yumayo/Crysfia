@@ -25,7 +25,7 @@ namespace User
 
         void eatTime( std::string eatTime );//時間表示？
 
-        void character(std::string chara_texture);//キャラクター描画
+        void character(std::string chara_texture, std::string puppet);//キャラクター描画
 
 		void eraseCharacter();
 
@@ -37,7 +37,7 @@ namespace User
 
         void buttonAudio( std::string audio_name, int volume );//効果音読み込み用 volume 0.0~1.0
 
-        void mealDressVolume( int set );//音量調節用
+        void mealDressVolume();//音量調節用
 
         void mealTutorial( );//チュートリアル用?
 
@@ -49,10 +49,17 @@ namespace User
 
 		void dressAnimetion(int my_dress, int dress_num);//現在のドレス番号、着替えのドレス番号
 
+		void dressChange();
+
+		void decoration();//装飾用
+
     public:
         bool exist;//食べ物画像用
         bool reside;//決定の有無用
         int change;//食事と着替え
+		cocos2d::UserDefault * now;
+		int now_dress;//今の服
+		int next_dress = 0;//着替えた後の服
 		int love_degrees = 0;//親愛度受け渡し用
         int audio_volume = 1.0f;
         int animation_num = 0;//アニメーション番号
@@ -98,13 +105,9 @@ namespace User
 
 		//クロエちゃんファッションショー
 		std::vector<std::string> fashion_show;
-		/*{
-			u8"クロエ普通.png",
-			u8"クロエ喜び.png",
-			u8"クロエ驚き.png",
-			u8"クロエ怒り.png",
-			u8"クロエ普通.png",
-		};*/
+
+		//短髪クロエ
+		std::vector<std::string> clear;
 
         CREATE_ARGS_FUNC( Layer_meal );
 		Layer_meal();
