@@ -20,6 +20,7 @@ enum class tabLayer
 	CLEANING,
 	FOREGROUND,
 	LAYER_MANAGER = -1,
+	DIARY,
 
 	MAX
 };
