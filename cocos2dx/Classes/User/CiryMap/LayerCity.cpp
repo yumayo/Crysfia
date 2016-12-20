@@ -38,7 +38,7 @@ namespace User
         map->addChild( this );
 
         setPosition( Vec2( position.x, pixel.height - position.y ) * scale );
-        setScale( Lib::fitWidth( this, 64 * scale ), Lib::fitWidth( this, 64 * scale ) );
+        setScale( Lib::fitWidth( this, 128 * scale ), Lib::fitWidth( this, 128 * scale ) );
         if ( data.visit ) setEnabled( false );
 
         addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
@@ -63,7 +63,7 @@ namespace User
                     auto kuroePixel = kuroe->getContentSize( ) / scale;
                     node->addChild( kuroe );
 
-                    auto fitButton = Lib::fitWidth( kuroe, 64 * scale );
+                    auto fitButton = Lib::fitWidth( kuroe, 128 * scale );
                     node->setScale( fitButton );
 
                     auto ok = ui::Button::create( dir + u8"ok.png" );
@@ -74,8 +74,8 @@ namespace User
                     {
                         if ( type == ui::Widget::TouchEventType::ENDED )
                         {
-                            if ( buttonEnd ) buttonEnd( );
                             map->pause( );
+                            if ( buttonEnd ) buttonEnd( );
                         }
                     } );
                 }
@@ -193,8 +193,8 @@ namespace User
         return this;
     }
 
-    LayerCity::LayerCity( std::string const& path )
-        : path( path )
+    LayerCity::LayerCity( std::string const& island_name )
+        : island_name( island_name )
     {
 
     }
@@ -209,7 +209,7 @@ namespace User
 
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto vs = Director::getInstance( )->getVisibleSize( );
-        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
 
         AudioManager::getInstance( )->playBgm( "city", 1.5f );
 
@@ -273,6 +273,12 @@ namespace User
                 button->setScale( fitHeight( button, height * scale ), fitHeight( button, height * scale ) );
                 button->setPosition( Vec2( boardPixel.width - 10, 10 ) * scale );
             }
+
+            if ( auto label = createLabel( island_name ) )
+            {
+                board->addChild( label );
+                label->setPosition( Vec2( 0, board->getContentSize( ).height ) );
+            }
         }
 
         if ( auto sprite = Sprite::create( ) )
@@ -293,86 +299,120 @@ namespace User
     }
     void LayerCity::jsonRead( )
     {
+        save_name = u8"island.json";
+
         removeChildByName( u8"background" );
 
         Json::Reader reader;
-        if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( path, u8"res/data/" ) ), root ) )
+        if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
         {
-            auto map = root[u8"background"].asString( );
+            /**
+             * 強制イベントを読み込みます。
+             */
+            for ( auto& value : root[island_name][u8"point.force"] )
+            {
+                auto scenario = value[u8"scenario"].asString( );
+                auto visit = value[u8"visit"].asBool( );
+
+                /**
+                 * 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
+                 */
+                if ( !visit )
+                {
+                    value[u8"visit"] = true;
+                    Json::StyledWriter writer;
+                    writeUserLocal( writer.write( root ), save_name );
+                    scheduleOnce( [ = ] ( float d ) { SceneManager::createNovel( scenario ); }, 0.016F, std::string( u8"scene" ) );
+                    return;
+                }
+            }
+
+            /**
+             * 貼り付けるための背景を作成します。
+             */
+            auto map = root[island_name][u8"background"].asString( );
             auto background = CityMap::create( )->make( map );
             background->setName( u8"background" );
             addChild( background, -1 );
 
-            std::vector<ScenarioPointData> main;
-            for ( auto& value : root[u8"point.main"] )
+            /**
+             * メインシナリオを読み込んで貼り付けていきます。
+             */
+            for ( auto& value : root[island_name][u8"point.main"] )
             {
-                ScenarioPointData temp;
-                temp.scenario = value[u8"scenario"].asString( );
-                temp.visit = value[u8"visit"].asBool( );
-                temp.position = Vec2( value[u8"position"][0].asInt( ),
+                ScenarioPointData data;
+                data.scenario = value[u8"scenario"].asString( );
+                data.visit = value[u8"visit"].asBool( );
+                data.position = Vec2( value[u8"position"][0].asInt( ),
                                       value[u8"position"][1].asInt( ) );
-                main.emplace_back( temp );
-            }
-            std::vector<ScenarioPointData> sub;
-            for ( auto& value : root[u8"point.sub"] )
-            {
-                ScenarioPointData temp;
-                temp.scenario = value[u8"scenario"].asString( );
-                temp.visit = value[u8"visit"].asBool( );
-                temp.position = Vec2( value[u8"position"][0].asInt( ),
-                                      value[u8"position"][1].asInt( ) );
-                sub.emplace_back( temp );
-            }
 
-            int i = 0;
-            for ( auto& obj : main )
-            {
                 auto mark = MainMark::create( );
-                mark->pasteMap( background, obj );
+                mark->pasteMap( background, data );
 
-                mark->setButtonEndCallBack( [ this, i ]
+                mark->setButtonEndCallBack( [ this, &value ]
                 {
-                    root[u8"point.main"][i][u8"visit"] = true;
-                    Json::StyledWriter writer;
-                    writeUserLocal( writer.write( root ), u8"island.json" );
-
                     if ( auto sprite = Sprite::create( ) )
                     {
                         sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
                         sprite->setAnchorPoint( Vec2( 0, 0 ) );
                         sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
                         sprite->setOpacity( 0 );
-                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ i, this ] { SceneManager::createNovel( root[u8"point.main"][i][u8"scenario"].asString( ) ); } ), RemoveSelf::create( ), nullptr ) );
+                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ this, &value ] 
+                        {
+                            value[u8"visit"] = true;
+                            Json::StyledWriter writer;
+                            writeUserLocal( writer.write( root ), save_name );
+                            SceneManager::createNovel( value[u8"scenario"].asString( ) ); 
+                        } ), RemoveSelf::create( ), nullptr ) );
                         addChild( sprite );
                     }
                 } );
-                ++i;
             }
-            i = 0;
-            for ( auto& obj : sub )
+
+            /**
+             * サブシナリオを読み込んで貼り付けていきます。
+             */
+            for ( auto& value : root[island_name][u8"point.sub"] )
             {
+                ScenarioPointData data;
+                data.scenario = value[u8"scenario"].asString( );
+                data.visit = value[u8"visit"].asBool( );
+                data.position = Vec2( value[u8"position"][0].asInt( ),
+                                      value[u8"position"][1].asInt( ) );
+
                 auto mark = SubMark::create( );
-                mark->pasteMap( background, obj );
+                mark->pasteMap( background, data );
 
-                mark->setButtonEndCallBack( [ this, i ]
+                mark->setButtonEndCallBack( [ this, &value ]
                 {
-                    root[u8"point.sub"][i][u8"visit"] = true;
-                    Json::StyledWriter writer;
-                    writeUserLocal( writer.write( root ), u8"island.json" );
-
                     if ( auto sprite = Sprite::create( ) )
                     {
                         sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
                         sprite->setAnchorPoint( Vec2( 0, 0 ) );
                         sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
                         sprite->setOpacity( 0 );
-                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ i, this ] { SceneManager::createNovel( root[u8"point.sub"][i][u8"scenario"].asString( ) ); } ), RemoveSelf::create( ), nullptr ) );
+                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ this, &value ]
+                        {
+                            value[u8"visit"] = true;
+                            Json::StyledWriter writer;
+                            writeUserLocal( writer.write( root ), save_name );
+                            SceneManager::createNovel( value[u8"scenario"].asString( ) );
+                        } ), RemoveSelf::create( ), nullptr ) );
                         addChild( sprite );
                     }
                 } );
-                ++i;
             }
         }
+    }
+    cocos2d::Label * LayerCity::createLabel( std::string const& title )
+    {
+        auto font = Label::createWithTTF( title,
+                                          u8"res/fonts/HGRGE.TTC",
+                                          64 );
+        font->setAnchorPoint( Vec2( 0.5F, 0 ) );
+        font->setAnchorPoint( Vec2( 0, 0 ) );
+        font->setTextColor( Color4B( 39, 39, 39, 255 ) );
+        return font;
     }
     cocos2d::ui::Button * LayerCity::createBackButton( )
     {

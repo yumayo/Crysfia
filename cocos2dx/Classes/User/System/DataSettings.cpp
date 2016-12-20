@@ -117,6 +117,12 @@ namespace User
                 for ( auto& value : tag )
                     data->setFloatForKey( value.first.c_str( ), StringUtil::string_value<float>( value.second ) );
             } } );
+            calls.insert( { u8"string", [ ] ( std::map< std::string, std::string > tag )
+            {
+                auto data = UserDefault::getInstance( );
+                for ( auto& value : tag )
+                    data->setStringForKey( value.first.c_str( ), StringUtil::string_value<std::string>( value.second ) );
+            } } );
 
             for ( auto& tag : reader.getData( ) )
             {

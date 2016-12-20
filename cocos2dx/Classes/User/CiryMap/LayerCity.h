@@ -113,18 +113,24 @@ namespace User
     {
     public:
         CREATE_ARGS_FUNC( LayerCity );
-        LayerCity( std::string const& path );
+        LayerCity( std::string const& name );
         ~LayerCity( );
         bool init( ) override;
         void setup( ) override;
         void jsonRead( );
+        cocos2d::Label* createLabel(  std::string const& title);
         cocos2d::ui::Button* createBackButton( );
         cocos2d::ui::Button* createOptionButton( );
     private:
         /**
-         *  jsonデータへのパスを保存します。
+         *  セーブデータの名前を保存します。
          */
-        std::string path;
+        std::string save_name;
+
+        /**
+         *  この島の名前を保存します。
+         */
+        std::string island_name;
 
         /**
          * 次の行動目的を表示するためのデータ。
