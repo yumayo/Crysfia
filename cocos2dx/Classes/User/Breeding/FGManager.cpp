@@ -19,11 +19,12 @@ namespace User
         
     }
 
-	void FGManager::fading()
+	void FGManager::fading(float _fadeTime)
 	{
-		mask->runAction(Sequence::create( ScaleTo::create(1, 0),
-			DelayTime::create(1),
-			ScaleTo::create(1,0.8), 
+		float intervalTime = _fadeTime / 3;
+		mask->runAction(Sequence::create( ScaleTo::create(intervalTime, 0),
+			DelayTime::create(intervalTime),
+			ScaleTo::create(intervalTime,0.8),
 			nullptr ));
 	}
 

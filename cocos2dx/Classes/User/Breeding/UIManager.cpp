@@ -253,20 +253,21 @@ namespace User
 	//日記画面へ移動
 	void UIManager::changeToDiaryWindow()
 	{
+		float fadeTime(3);
 		auto p = this->getParent();
 		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
-		f->fading();
 		
-		/*auto layer = LayerDiary::create();
-		layer->setName(typeid(LayerDiary).name());
-		layer->setPosition(Vec2(winSize * 0.f));
-		this->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY);*/
 
-		/*this->getParent()->removeChildByTag((int)tabLayer::CHARACTER);
-		this->getParent()->removeChildByTag((int)tabLayer::BACKGROUND);
-		this->getParent()->removeChildByTag((int)tabLayer::UI_MANAGER);*/
+		f->fading(fadeTime);
+
+		this->runAction(Sequence::create(DelayTime::create(fadeTime / 2),
+										 CallFunc::create( [this] {
+											auto layer = LayerDiary::create();
+											layer->setName(typeid(LayerDiary).name());
+											layer->setPosition(Vec2(winSize * 0.f));
+											this->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY); } ),
+										 nullptr) );
 		
-		//TODO: 遷移時の演出はあとからFGManagerで作る
 	}
 
 	//掃除画面のレイヤーに貼り替え
@@ -321,49 +322,5 @@ namespace User
 	{
 		auto p = getParent();
 		p->addChild(LayerOption::create(),4);
-
-		//Size winSize = Size(Director::getInstance()->getVisibleSize().width + 80,
-		//	Director::getInstance()->getVisibleSize().height);
-		//Size contentWinSize = Size(500, 600);
-
-		//auto list = ui::ListView::create();
-		//list->setContentSize(winSize);
-		//this->addChild(list, (int)zOder::OPTION, (int)tabMenu::OPTION);
-
-		//auto layout = ui::Layout::create();
-		//layout->setContentSize(list->getContentSize());
-		//list->addChild(layout);
-		//auto layoutSize = layout->getContentSize();
-
-		//auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_59.png",
-		//	Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
-		//		120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
-		//	Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
-		//		64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
-
-		////オプションウィンドウの位置。修正した値
-		//auto winPos = Vec2(list->getContentSize().width / 2 - 40, list->getContentSize().height / 2);
-		//menuImage->setPosition(winPos);
-		//menuImage->setContentSize(contentWinSize);
-		//layout->addChild(menuImage);
-
-		////CloseButton（仮置き）
-		//auto closeButton = ui::Button::create("res/Image/WindowBase/WinBase_18.png");
-		//closeButton->setTitleFontSize(48);
-		//closeButton->setTitleText("CLO\n SE");
-		//closeButton->setScaleX(0.7f);
-		//closeButton->setScaleY(0.6f);
-		//closeButton->setPosition(Vec2(winPos.x, winPos.y - 200));
-		//layout->addChild(closeButton);
-
-		////CloseButtonの処理
-		////ボタンを押したときにLayerに追加されているOptionタグを持つ子ノードを取得しLayerから外している
-		//closeButton->addTouchEventListener([&](Ref* pSender, ui::Widget::TouchEventType type) {
-		//	auto option = this->getChildByTag((int)tabMenu::OPTION);
-		//	if (type == ui::Widget::TouchEventType::ENDED)
-		//	{
-		//		this->removeChild(option);
-		//	}
-		//});
 	}
 }
