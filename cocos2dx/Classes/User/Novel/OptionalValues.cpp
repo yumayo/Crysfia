@@ -13,11 +13,14 @@ namespace User
     cocos2d::Vec2 OptionalValues::stringViewSize;
     cocos2d::Vec2 OptionalValues::messageViewSize;
     float OptionalValues::readOutSpeed;
+    float OptionalValues::maxReadOutSpeed;
     std::string OptionalValues::fontName;
+    cocos2d::Color4B OptionalValues::fontColor;
+    cocos2d::Color4B OptionalValues::fontShadowColor;
 
     void OptionalValues::setup( )
     {
-        auto scale = 810.0F / 1080;
+        auto scale = 614.0F / 720;
 
         auto vs = Director::getInstance( )->getVisibleSize( );
 
@@ -25,7 +28,8 @@ namespace User
 
         auto user = UserDefault::getInstance( );
 
-        readOutSpeed = user->getFloatForKey( u8"novel.speed" );
+        maxReadOutSpeed = 0.2;
+        readOutSpeed = maxReadOutSpeed - user->getFloatForKey( u8"novel.speed" );
         stringSize = 20;
         fontSize = stringViewWidth / stringSize;
         lineSpaceSize = fontSize * 0.7;
@@ -33,5 +37,7 @@ namespace User
         stringViewSize = Vec2( stringViewWidth, lineViewSize * lineSize );
         messageViewSize = Vec2( stringViewSize.x, stringViewSize.y + lineViewSize );
         fontName = u8"res/fonts/F910MinchoW3.otf";
+        fontColor = Color4B( 245, 245, 245, 255 );
+        fontShadowColor = Color4B( 39, 39, 39, 255 );
     }
 }

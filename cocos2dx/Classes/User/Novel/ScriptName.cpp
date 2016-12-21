@@ -22,8 +22,8 @@ namespace User
         auto size = Sprite::create( u8"res/texture/system/message.window.png" )->getContentSize( );
         auto mul = size.width / visibleSize.width;
 
-        position = origin + Vec2( 0, 330.0F / mul * scale );
-        slideSize = 270.0F / mul * scale;
+        position = origin + Vec2( 0, 480.0F / mul * scale - OptionalValues::fontSize / 2 );
+        slideSize = 220.0F / mul * scale;
 
         REGIST_FUNC( ScriptName, in );
         REGIST_FUNC( ScriptName, out );
@@ -63,8 +63,9 @@ namespace User
         if ( !label ) return nullptr;
 
         label->setTag( (int)Tag::Name );
-        label->setTextColor( Color4B( 39, 39, 39, 255 ) );
+        label->setTextColor( OptionalValues::fontColor );
         label->setPosition( position );
+        label->enableShadow( OptionalValues::fontShadowColor, Size( 2, -2 ), 2 );
         layer->addChild( label );
 
         return label;
