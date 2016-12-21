@@ -12,12 +12,17 @@ namespace User
         FGManager( );
         ~FGManager( );
 
-		void fadeInForeground();
-		void fadeOutForeground();
-		
+		void fading();
+
     private:
+
 		cocos2d::Size winSize;
 		bool init();
+
+		cocos2d::Sprite* mask;
+		
+		bool isFadeIn;
+		bool isFadeOut;
     };
 }
 

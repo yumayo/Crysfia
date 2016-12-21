@@ -121,6 +121,8 @@ namespace User
                 sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
                 sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ ]
                 {
+                    auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+                    UserDefault::getInstance( )->setIntegerForKey( u8"日", day + 1 );
                     SceneManager::createIslandMap( );
                 } ), RemoveSelf::create( ), nullptr ) );
                 Director::getInstance( )->getRunningScene( )->addChild( sprite, 20000 );
@@ -186,10 +188,11 @@ namespace User
         // テキストデータを読み込み終わったらラベルに貼り付ける。
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
         textLabels.setStrings( textChunkManager.getNovelData( ),
                                origin +
                                Vec2( ( visibleSize.width - OptionalValues::stringViewSize.x ) * 0.5F,
-                                     OptionalValues::stringViewSize.y + OptionalValues::fontSize + OptionalValues::lineSpaceSize ) );
+                                     311 * scale - OptionalValues::fontSize + OptionalValues::lineSpaceSize ) );
     }
     void NovelLayer::readingProceedUpdate( )
     {

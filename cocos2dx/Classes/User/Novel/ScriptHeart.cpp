@@ -6,6 +6,8 @@
 
 #include "INIWriter.h"
 
+#include "../../Lib/Utilitys.h"
+
 USING_NS_CC;
 
 Vec2 operator*( Vec2 const& left, Vec2 const& right )
@@ -34,6 +36,7 @@ namespace User
         // 縦はアイコンの方を使います。
         setContentSize( Size( icon->getContentSize( ).width + frame->getContentSize( ).width,
                               std::max( icon->getContentSize( ).height, frame->getContentSize( ).height ) ) );
+        setAnchorPoint( Vec2( 0, 1 ) );
 
         // アイコンの設定
         {
@@ -105,7 +108,7 @@ namespace User
         auto value = StringUtil::string_value<int>( str );
         if ( value < 1 ) return nullptr;
         runAction( createInValueStopOutExitAction( value ) );
-        setScale( 0.5, 0.5 );
+        setScale( Lib::fitWidth( this, Director::getInstance( )->getVisibleSize( ).width / 2 ) );
         return this;
     }
 
@@ -114,21 +117,21 @@ namespace User
         auto value = StringUtil::string_value<int>( str );
         if ( value < 1 ) return nullptr;
         runAction( createInValueStopOutExitAction( -value ) );
-        setScale( 0.5, 0.5 );
+        setScale( Lib::fitWidth( this, Director::getInstance( )->getVisibleSize( ).width / 2 ) );
         return this;
     }
 
     HeartGauge * HeartGauge::up( int value )
     {
         if ( value < 1 ) return nullptr;
-        runAction( createInValueStopOutExitAction( value ) );
+        runAction( createValueAction( value ) );
         return this;
     }
 
     HeartGauge * HeartGauge::down( int value )
     {
         if ( value < 1 ) return nullptr;
-        runAction( createInValueStopOutExitAction( -value ) );
+        runAction( createValueAction( -value ) );
         return this;
     }
 
@@ -161,7 +164,7 @@ namespace User
     cocos2d::Sequence* HeartGauge::createInValueStopOutExitAction( int value )
     {
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-        auto pixel = size / scale;
+        auto pixel = getContentSize( ) / scale;
         setPosition( getPosition( ) + Vec2( 0, pixel.height ) * scale );
         auto movein = EaseExponentialOut::create( MoveBy::create( 0.5, Vec2( 0, -pixel.height ) * scale ) );
         auto moveout = EaseExponentialOut::create( MoveBy::create( 0.5, Vec2( 0, pixel.height ) * scale ) );
