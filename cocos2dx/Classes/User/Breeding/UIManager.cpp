@@ -43,8 +43,6 @@ namespace User
 		createSubMenuWindow();
 		createMainMenuWindow();
 
-		//this->runAction( Sequence::create( DelayTime::create(3), CallFunc::create( this, callfunc_selector(UIManager::createBackButton) ),nullptr ) );
-		//changeToDiaryWindow();
 		return true;
 	}
 
@@ -144,12 +142,6 @@ namespace User
 	}
 
 	//各メニューボタンの処理
-	/**************************************************
-	TODO:
-	残りの各ボタン移行の処理を書く。終わったら下のリストを消す
-	日記
-	設定
-	***************************************************/
 	void UIManager::touchEventOfMainMenu(Ref * pSender, ui::Widget::TouchEventType type)
 	{
 		switch (type)
@@ -247,11 +239,8 @@ namespace User
 		float fadeTime(3);
 		auto p = this->getParent();
 		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
-		
-
-		f->fading(fadeTime);
-
-		this->runAction(Sequence::create(DelayTime::create(fadeTime / 2),
+		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
+										 DelayTime::create(fadeTime / 2),
 										 CallFunc::create( [this] {
 											auto p = this->getParent();
 											auto layer = LayerDiary::create();
@@ -260,7 +249,6 @@ namespace User
 											p->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY); 
 											p->removeChildByTag((int)tabLayer::UI_MANAGER); }),
 										 nullptr) );
-		
 	}
 
 	//掃除画面のレイヤーに貼り替え
@@ -270,18 +258,22 @@ namespace User
 		p->removeChildByTag((int)tabLayer::CHARACTER);
 		p->removeChildByTag((int)tabLayer::UI_MANAGER);
 		p->removeChildByTag((int)tabLayer::BACKGROUND);
-
 		p->addChild(LayerCleaning::create(), 0, (int)tabLayer::CLEANING);
 	}
 
 	//食事画面及び着替え画面へ移動----------------------------------------------------------------------
 	void UIManager::changeToBreeding(int _menuId)
 	{
+		float fadeTime(2);
 		auto p = this->getParent();
-		p->removeChildByTag((int)tabLayer::CHARACTER);
-		p->removeChildByTag((int)tabLayer::UI_MANAGER);
-
-		p->addChild(Layer_meal::create(1), 0, (int)tabLayer::CLEANING);
+		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
+		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
+			DelayTime::create(fadeTime / 2),
+			CallFunc::create([=] {
+			p->removeChildByTag((int)tabLayer::CHARACTER);
+			p->removeChildByTag((int)tabLayer::UI_MANAGER);
+			p->addChild(Layer_meal::create(_menuId), 0, (int)tabLayer::CLEANING); }),
+			nullptr));
 	}
 
 	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです
@@ -297,23 +289,17 @@ namespace User
 		moveInObj->runAction(Sequence::create(delay, moveIn, nullptr));
 	}
 
-	//-------------------------------------------------------------------------------
-	void UIManager::createBackButton()
-	{
-		auto layer = Layer::create();
-		layer->setContentSize(Size(120, 120));
-		//layer->setPosition(Vec2(winSize.x * 0.15f, winSize.y * 0.05f));
-		layer->setPosition(winSize / 2);
-		this->addChild(layer);
-		auto button = ui::Button::create("res/Image/WindowBase/WinBase_1.png");
-		layer->addChild(button);
-	}
-
 	//オプションウィンドウの生成
 	//TODO:Pos指定、Size指定、画像指定をできるようにする。
 	void UIManager::setOptionWindow()
 	{
-		auto p = getParent();
-		p->addChild(LayerOption::create(),4);
+		float fadeTime(2);
+		auto p = this->getParent();
+		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
+		this->runAction(Sequence::create(	CallFunc::create([=] {f->fading(fadeTime); }),
+											DelayTime::create(fadeTime / 2),
+											CallFunc::create([=] {
+											p->addChild(LayerOption::create(), 4); } ),
+											nullptr ));
 	}
 }
