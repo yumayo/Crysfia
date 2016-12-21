@@ -51,7 +51,6 @@ namespace User
 
 		void createMainMenuWindow();
 		void createSubMenuWindow();
-		void createDiaryWindow();
 		void setOptionWindow();
 	};
 }

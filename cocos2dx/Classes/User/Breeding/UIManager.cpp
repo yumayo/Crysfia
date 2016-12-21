@@ -40,7 +40,6 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
-		createDiaryWindow();
 		createSubMenuWindow();
 		createMainMenuWindow();
 
@@ -127,7 +126,7 @@ namespace User
 			const rapidjson::Value& buttonsData = doc["Button"];
 			for (rapidjson::SizeType i = (int)SubButtonType::BACK; i < buttonsData.Size(); i++)
 			{
-				subButtons.push_back(ui::Button::create(buttonsData[i]["res"].GetString(),"", buttonsData[i]["res"].GetString()));
+				subButtons.push_back(ui::Button::create(buttonsData[i]["res"].GetString()));
 				subButtons[i]->setTitleText(buttonsData[i]["name"].GetString());
 				subButtons[i]->setTitleFontSize(42);
 				subButtons[i]->setTitleColor(Color3B::WHITE);
@@ -142,14 +141,6 @@ namespace User
 			}
 		}
 		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::BREEDING_MENU);
-	}
-
-	void UIManager::createDiaryWindow()
-	{
-		auto layout = ui::Layout::create();
-		layout->setPosition(Vec2(pos.x, pos.y * 0));
-		layout->setContentSize(Size(winSize.x, 150));
-		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::DIARY_MENU);
 	}
 
 	//各メニューボタンの処理
@@ -262,10 +253,12 @@ namespace User
 
 		this->runAction(Sequence::create(DelayTime::create(fadeTime / 2),
 										 CallFunc::create( [this] {
+											auto p = this->getParent();
 											auto layer = LayerDiary::create();
 											layer->setName(typeid(LayerDiary).name());
 											layer->setPosition(Vec2(winSize * 0.f));
-											this->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY); } ),
+											p->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY); 
+											p->removeChildByTag((int)tabLayer::UI_MANAGER); }),
 										 nullptr) );
 		
 	}
