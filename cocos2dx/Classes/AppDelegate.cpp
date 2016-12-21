@@ -144,9 +144,9 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
 
     register_all_packages( );
 
-    User::SceneManager::createSystemAppDelegateStart( );
-
     User::userDefaultSetup( );
+
+    User::SceneManager::createSystemAppDelegateStart( );
 
     return true;
 }

@@ -17,7 +17,10 @@ namespace User
         static cocos2d::Vec2 stringViewSize;
         static cocos2d::Vec2 messageViewSize;
         static float readOutSpeed;
+        static float maxReadOutSpeed;
         static std::string fontName;
+        static cocos2d::Color4B fontColor;
+        static cocos2d::Color4B fontShadowColor;
     };
 }
 

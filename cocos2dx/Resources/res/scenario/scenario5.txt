@@ -11,7 +11,7 @@
 @sys:background(背景娯楽の島)
 @sys:background(背景商店街)
 @sys:background(背景噴水広場)
-@sys:bgm(kokyou)
+@sys:bgm(故郷)
 @sys:se(ガヤ)
 
 @sys:live2d(crysfia)
