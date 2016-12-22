@@ -8,6 +8,8 @@
 
 #include "ScriptStaticData.h"
 
+#include "../TouchiEvent/EventListenerGesture.h"
+
 #include "../../Lib/Utilitys.h"
 
 USING_NS_CC;
@@ -37,7 +39,7 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_F5 )
             {
-                //textData.makeData( novelPath );
+                textChunkManager.make( novelPath );
             }
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
@@ -55,25 +57,29 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
 
-        auto multiTouchEvent = EventListenerTouchAllAtOnce::create( );
-        multiTouchEvent->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        auto touch = EventListenerTouchOneByOne::create( );
+        touch->onTouchBegan = [ this ] ( Touch* touch, Event* event )
         {
-            for ( auto& touch : touches )
-            {
-                click( );
-            }
-        };
-        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( multiTouchEvent, this );
+            tap_began = true;
 
-        //auto mouseEvent = EventListenerMouse::create( );
-        //mouseEvent->onMouseDown = [ this ] ( EventMouse* event )
-        //{
-        //    if ( event->getMouseButton( ) == MOUSE_BUTTON_LEFT )
-        //    {
-        //        textUpdate( );
-        //    }
-        //};
-        //this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( mouseEvent, this );
+            return true;
+        };
+        touch->onTouchEnded = [ this ] ( Touch* touch, Event* event )
+        {
+            if ( automode )
+            {
+                removeChild( automode );
+                automode = nullptr;
+            }
+            click( );
+
+            readProceed.off( );
+
+            tap_began = false;
+            long_tap_began = false;
+            tap_time = 0.0F;
+        };
+        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( touch, this );
 
         return true;
     }
@@ -100,6 +106,11 @@ namespace User
             auto icon = NovelReadedPointer::create( )->make( );
             icon->setPosition( position );
             novelWindow->addChild( icon );
+
+            if ( automode )
+            {
+                if ( !systemStop ) automode->restart( );
+            }
         };
         textChunkManager.readEndCallBack = [ this ]
         {
@@ -110,7 +121,9 @@ namespace User
         };
         textChunkManager.novelEndCallBack = [ this ]
         {
+            systemStop.on( );
             systemRead.off( );
+            textChunkManager.novelEndCallBack = nullptr;
 
             if ( auto sprite = Sprite::create( ) )
             {
@@ -133,6 +146,13 @@ namespace User
     }
     void NovelLayer::update( float delta )
     {
+        // ロングタップ
+        if ( ( tap_began ) && ( !long_tap_began ) && ( 0.3F < ( tap_time += delta ) ) )
+        {
+            readProceed.on( );
+            long_tap_began = true;
+        }
+
         textChunkManager.updateDelay( delta );
 
         // 高速読み込みのアップデート
@@ -142,15 +162,6 @@ namespace User
         // テキストの読み込み。
         // delayが0である限り、テキストを読み込み続けます。
         readNextNovel( );
-    }
-    void NovelLayer::delayOn( )
-    {
-        this->scheduleOnce( [ this ] ( float delay )
-        {
-            this->resume( );
-        }, 0.016F, std::string( "novel.layer.delay" ) );
-
-        this->setVisible( true );
     }
     void NovelLayer::on( )
     {
@@ -162,9 +173,46 @@ namespace User
         this->pause( );
         this->setVisible( false );
     }
+    void NovelLayer::stop( )
+    {
+        readProceed.off( );
+
+        tap_began = false;
+        long_tap_began = false;
+        tap_time = 0.0F;
+
+        pause( );
+    }
+    void NovelLayer::restart( )
+    {
+        resume( );
+    }
+    void NovelLayer::addAuto( )
+    {
+        if ( automode )
+        {
+            removeChild( automode );
+            automode = nullptr;
+        }
+
+        // すでに停止状態
+        if ( textLabels.getIsReadOuted( ) )
+        {
+            // すぐに、次のアニメーションに映る。
+            click( );
+            automode = AutoMode::create( [ this ] { click( ); } );
+            addChild( automode );
+        }
+        else
+        {
+            automode = AutoMode::create( [ this ] { click( ); } );
+            addChild( automode );
+        }
+    }
     void NovelLayer::select( std::string const & name )
     {
         systemStop.off( );
+        resume( );
 
         auto selectLayer = this->getLayer<SelectLayer>( );
 
@@ -206,6 +254,13 @@ namespace User
     }
     void NovelLayer::click( )
     {
+        if ( systemStop ) return;
+
+        if ( automode )
+        {
+            automode->stop( );
+        }
+
         if ( textLabels.getIsReadOuted( ) )
         {
             novelWindow->removeChildByName( u8"novelReadedAnimation" );
@@ -215,6 +270,19 @@ namespace User
         {
             textActionStop( );
         }
+    }
+    void NovelLayer::next( )
+    {
+        if ( systemStop ) return;
+
+        if ( automode )
+        {
+            automode->stop( );
+        }
+
+        textActionStop( );
+        novelWindow->removeChildByName( u8"novelReadedAnimation" );
+        makeLoadingFeatureOn( );
     }
     //　テキストのアニメーションが終わっている場合
     void NovelLayer::makeLoadingFeatureOn( )
@@ -270,5 +338,29 @@ namespace User
         setAnchorPoint( Vec2( 1, 0 ) );
 
         return this;
+    }
+    AutoMode::AutoMode( std::function<void( )> tick )
+        :tick( tick )
+    {
+        pause( );
+        setName( typeid( this ).name( ) );
+        scheduleUpdate( );
+    }
+    void AutoMode::update( float t )
+    {
+        if ( 3.0F < ( timer += t ) )
+        {
+            if ( tick )tick( );
+            timer = 0.0F;
+        }
+    }
+    void AutoMode::stop( )
+    {
+        pause( );
+    }
+    void AutoMode::restart( )
+    {
+        resume( );
+        timer = 0.0F;
     }
 }

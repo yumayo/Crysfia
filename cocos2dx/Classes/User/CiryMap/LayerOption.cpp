@@ -236,7 +236,8 @@ namespace User
                 addChild( message );
 
                 auto test = Label::createWithTTF( u8"読み上げのテスト、速度はこんな感じです。", OptionalValues::fontName, OptionalValues::fontSize / message->getScale( ) );
-                test->setTextColor( Color4B( 39, 39, 39, 255 ) );
+                test->setTextColor( OptionalValues::fontColor );
+                test->enableShadow( OptionalValues::fontShadowColor, Size( 2, -2 ), 2 );
                 {
                     test->setPosition( message->getContentSize( ) * 0.5 );
                     test->setAnchorPoint( Vec2( 0.5, 0 ) );

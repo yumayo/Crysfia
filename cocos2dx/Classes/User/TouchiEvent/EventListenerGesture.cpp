@@ -10,8 +10,8 @@
 
 using namespace cocos2d;
 
-constexpr float DefaultLongTapThresholdSeconds = 0.1f;
-constexpr float DefaultSwipeThresholdDistance = 10.0f;
+constexpr float DefaultLongTapThresholdSeconds = 0.3f;
+constexpr float DefaultSwipeThresholdDistance = 30.0f;
 
 EventListenerGesture::EventListenerGesture()
 	: _longTapThresholdSeconds(DefaultLongTapThresholdSeconds)
@@ -39,6 +39,8 @@ bool EventListenerGesture::init()
 
 	onTouchBegan = [this](Touch* touch, Event* event) -> bool
 	{
+        log( "onTouchBegan" );
+
 		if (_isTouched)
 		{
 			return false;
@@ -49,7 +51,8 @@ bool EventListenerGesture::init()
 		_touchStartPos = touch->getLocation();
 		_touchNowPos = touch->getLocation();
 
-		Director::getInstance()->getScheduler()->schedule(schedule_selector(EventListenerGesture::_updateInTouch), this, 0.05f, false);
+		Director::getInstance()->getScheduler()->schedule(schedule_selector(EventListenerGesture::_updateInTouch), this, 0.0F, false);
+
 		return true;
 	};
 
@@ -93,13 +96,15 @@ bool EventListenerGesture::init()
 
 	onTouchEnded = [this](Touch* touch, Event* event)
 	{
+        log( "onTouchEnded" );
+
 		if (_gestureType == GestureType::NONE)
 		{
-			if (onTap) onTap(touch->getDelta());
+			if (onTap) onTap(touch->getLocation());
 		}
 		else if (_gestureType == GestureType::LONG_TAP)
 		{
-			if (onLongTapEnded) onLongTapEnded(touch->getDelta());
+			if (onLongTapEnded) onLongTapEnded(touch->getLocation());
 		}
 
 		Director::getInstance()->getScheduler()->
@@ -186,6 +191,8 @@ void EventListenerGesture::_updateInTouch(float)
 {
 	if (_gestureType != GestureType::NONE)
 	{
+        log( "unschedule" );
+
 		Director::getInstance()->getScheduler()->
 			unschedule(schedule_selector(EventListenerGesture::_updateInTouch), this);
 		return;

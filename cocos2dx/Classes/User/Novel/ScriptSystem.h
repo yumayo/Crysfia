@@ -47,6 +47,7 @@ namespace User
         cocos2d::Layer* live2dLayer = nullptr;
         cocos2d::Layer* itemLayer = nullptr;
         cocos2d::Layer* voiceLayer = nullptr;
+        cocos2d::Layer* flickFunctionLayer = nullptr;
 
         /**
          *  現在のメッセージウィンドウの行数を保存しておきます。

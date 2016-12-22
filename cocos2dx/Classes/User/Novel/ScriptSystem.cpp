@@ -14,6 +14,7 @@
 #include "Live2dLayer.h"
 #include "ItemLayer.h"
 #include "VoiceLayer.h"
+#include "FlickFunctionLayer.h"
 
 #include "ScriptHuman.h"
 #include "ScriptBackground.h"
@@ -80,6 +81,7 @@ namespace User
         live2dLayer = systemLayer->getLayer<Live2dLayer>( );
         itemLayer = systemLayer->getLayer<ItemLayer>( );
         voiceLayer = systemLayer->getLayer<ItemLayer>( );
+        flickFunctionLayer = systemLayer->getLayer<FlickFunctionLayer>( );
     }
     SCRIPT( ScriptSystem::l )
     {
@@ -90,19 +92,24 @@ namespace User
         l( args );
 
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
+        novel->pause( );
         novel->systemStop.on( );
 
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
-
 
         Vector<MenuItem*> buttons;
         for ( size_t i = 0; i < args.size( ); ++i )
         {
             auto menuitem = MenuItemImage::create( u8"res/texture/system/select.base.png", u8"res/texture/system/select.select.png", [ = ] ( Ref* p )
             {
+                if ( auto flick = dynamic_cast<FlickFunctionLayer*>( flickFunctionLayer ) )
+                {
+                    flick->end( );
+                }
+
                 novel->select( args[i] );
-                novel->click( );
+                novel->next( );
             } );
 
             auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );

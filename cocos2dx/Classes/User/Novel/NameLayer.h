@@ -14,6 +14,8 @@ namespace User
         bool init( ) override;
         void setup( ) override;
     public:
+        void addNovelWinodowSwitch( );
+    public:
         void on( );
         void off( );
     };

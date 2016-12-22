@@ -13,6 +13,8 @@
 
 #include "../../Lib/Utilitys.h"
 
+#include "../TouchiEvent/EventListenerGesture.h"
+
 USING_NS_CC;
 
 namespace User
@@ -52,8 +54,6 @@ namespace User
         isBacklog = true;
 
         auto novelLayer = getLayer<NovelLayer>( );
-        auto flickFunctionLayer = getLayer<FlickFunctionLayer>( );
-        flickFunctionLayer->pause( );
 
         ScriptStaticData::run( { "sys", "noveloff" } );
 
@@ -72,7 +72,7 @@ namespace User
                                                    Rect( 32 / contentScale, 32 / contentScale,
                                                          64 / contentScale, 64 / contentScale ) );
         layout->addChild( menuImage );
-        menuImage->setContentSize( Size( visibleSize.width * 0.9, visibleSize.height * 0.9 ) );
+        menuImage->setContentSize( visibleSize );
         menuImage->setPosition( origin + visibleSize * 0.5 );
         auto menuImageSize = menuImage->getContentSize( );
 
@@ -119,29 +119,18 @@ namespace User
         }
         listView->jumpToBottom( );
 
-        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-        auto closeButton = ui::Button::create( u8"res/texture/system/backlog.button.png" );
-        layout->addChild( closeButton );
-        closeButton->setAnchorPoint( Vec2( 0, 0 ) );
-        closeButton->setScale( Lib::fitWidth( closeButton, visibleSize.width ), Lib::fitWidth( closeButton, visibleSize.width ) );
-        closeButton->addTouchEventListener( [ = ] ( Ref* pSender, ui::Widget::TouchEventType type )
+        auto touchevent = EventListenerGesture::create( );
+        touchevent->onTap = [ this, layout, touchevent ] ( Vec2 pos )
         {
-            if ( type == ui::Widget::TouchEventType::ENDED )
-            {
-                this->removeChild( layout );
-                isBacklog = false;
-                flickFunctionLayer->resume( );
+            removeChild( layout );
+            isBacklog = false;
 
-                if ( auto ptr = getLayer<NovelLayer>( ) )
-                {
-                    ptr->delayOn( );
-                }
-                if ( auto ptr = getLayer<NameLayer>( ) )
-                {
-                    ptr->resume( );
-                    ptr->setVisible( true );
-                }
-            }
-        } );
+            scheduleOnce( [ this, touchevent ] ( float delay )
+            {
+                ScriptStaticData::run( { "sys", "novelon" } );
+                getEventDispatcher( )->removeEventListener( touchevent );
+            }, 0.0F, typeid( this ).name( ) );
+        };
+        getEventDispatcher( )->addEventListenerWithFixedPriority( touchevent, -1 );
     }
 }

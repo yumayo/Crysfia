@@ -14,9 +14,11 @@ namespace User
         SwitchBoolean( ) : frag( false ) { }
         SwitchBoolean( bool frag ) : frag( frag ) { }
     public:
-        void on( ) { frag = true; }
-        void off( ) { frag = false; }
+        void on( ) { frag = true; if ( onCall ) onCall( ); }
+        void off( ) { frag = false; if ( offCall ) offCall( ); }
     public:
+        std::function<void( )> onCall;
+        std::function<void( )> offCall;
         operator bool( ) { return frag; }
         bool operator!( ) { return !frag; }
     private:
@@ -30,6 +32,18 @@ namespace User
         NovelReadedPointer* make( );
     };
 
+    class AutoMode : public cocos2d::Node
+    {
+        float timer = 0.0F;
+        std::function<void( )> tick;
+    public:
+        CREATE_ARGS_FUNC( AutoMode );
+        AutoMode( std::function<void( )> tick );
+        void update( float t ) override;
+        void stop( );
+        void restart( );
+    };
+
     class NovelLayer : public LayerBase
     {
     public:
@@ -40,15 +54,18 @@ namespace User
         void setup( ) override;
         void update( float delta )override;
     public:
-        void delayOn( );
         void on( );
         void off( );
+        void stop( );
+        void restart( );
     public:
+        void addAuto( );
         void select( std::string const& name );
         void setDelayTime( double delayTime ) { textChunkManager.setDelayTime( delayTime ); }
         // 選択肢でシナリオの読み込み停止機能のスイッチ
         SwitchBoolean systemStop;
         void click( );
+        void next( );
         TextChunkManager& getTextChunkManager( ) { return textChunkManager; }
     private:
         std::string novelPath;
@@ -68,6 +85,12 @@ namespace User
         SwitchBoolean readProceed;
         TextLabels textLabels;
         TextChunkManager textChunkManager;
+
+        bool tap_began = false;
+        bool long_tap_began = false;
+        float tap_time = 0.0F;
+
+        AutoMode* automode = nullptr;
 
         /**
          *  ノベルを表示をする画像を保存します。

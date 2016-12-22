@@ -4,67 +4,84 @@
 
 #include "BackLogLayer.h"
 
+#include "NameLayer.h"
+
 #include "ScriptStaticData.h"
 
 #include "../SceneManager.h"
 
 #include "ScriptSystem.h"
 
+#include "../TouchiEvent/EventListenerGesture.h"
+
+#include "../../Lib/Utilitys.h"
+
 USING_NS_CC;
+
+#define LAMBDA_TOUCH cocos2d::Ref* ref, cocos2d::ui::Widget::TouchEventType type
 
 namespace User
 {
-    int Menu::maxMenuNumber = 0;
-    float Menu::circleRadius = 0.0F;
-
-    void Menu::update( bool touch )
+    Functions::Functions( std::vector<std::pair<std::string, std::function<void( )>>> functions )
     {
-        prevOnTouch = onTouch;
-        onTouch = touch;
+        const auto vo = Director::getInstance( )->getVisibleOrigin( );
+        const auto vs = Director::getInstance( )->getVisibleSize( );
 
-        const std::string dir = u8"res/texture/system/";
+        auto width = vs.width;
+        icon_size = width / functions.size( );
+        auto tartgetSize = Vec2( icon_size, icon_size );
 
-        if ( isIn( ) )
+        setContentSize( Size( width, icon_size ) );
+        setAnchorPoint( Vec2( 0, 0 ) );
+        setPosition( Vec2( 0, -icon_size ) );
+        setName( u8"functions" );
+
+        for ( int i = 0, is = functions.size( ); i < is; ++i )
         {
-            initWithFile( dir + u8"base.true.png" );
-        }
-        else if ( isStay( ) )
-        {
-            if ( auto parent = getParent( ) )
+            const auto vo = Director::getInstance( )->getVisibleOrigin( );
+            const auto vs = Director::getInstance( )->getVisibleSize( );
+            auto button = ui::Button::create( u8"res/texture/system/icon." + functions[i].first + u8".png" );
+            button->setName( functions[i].first );
+            button->setAnchorPoint( Vec2( 0, 0 ) );
+            button->setPosition( vo + Vec2( icon_size * i, 0 ) );
+            button->setScale( Lib::fitWidth( button, icon_size ) );
+
+            button->addTouchEventListener( [ this, functions, i ] ( LAMBDA_TOUCH )
             {
-                parent->setName( getName( ) );
-            }
+                switch ( type )
+                {
+                case cocos2d::ui::Widget::TouchEventType::BEGAN:
+                    break;
+                case cocos2d::ui::Widget::TouchEventType::MOVED:
+                    break;
+                case cocos2d::ui::Widget::TouchEventType::ENDED:
+                    functions[i].second( );
+                    end( );
+                    break;
+                case cocos2d::ui::Widget::TouchEventType::CANCELED:
+                    break;
+                default:
+                    break;
+                }
+            } );
+            addChild( button );
         }
-        else if ( isOut( ) )
-        {
-            if ( auto parent = getParent( ) )
-            {
-                parent->setName( "" );
-            }
-            initWithFile( dir + u8"base.false.png" );
-        }
     }
-    bool Menu::isHit( cocos2d::Vec2 touchPos )
+    void Functions::begin( )
     {
-        auto pos = convertToWorldSpaceAR( cocos2d::Point::ZERO );
-
-        return pos.distance( touchPos ) < circleRadius;
+        runAction( EaseExponentialOut::create( MoveTo::create( 0.3F, Vec2( 0, 0 ) ) ) );
     }
-    bool Menu::isIn( )
+    void Functions::cancel( )
     {
-        return !prevOnTouch && onTouch;
+        runAction( Sequence::create( EaseExponentialOut::create( MoveTo::create( 0.3F, Vec2( 0, -icon_size ) ) ), CallFunc::create( canceled ), RemoveSelf::create( ), nullptr ) );
     }
-    bool Menu::isStay( )
+    void Functions::end( )
     {
-        return prevOnTouch && onTouch;
+        runAction( Sequence::create( EaseExponentialOut::create( MoveTo::create( 0.3F, Vec2( 0, -icon_size ) ) ), CallFunc::create( ended ), RemoveSelf::create( ), nullptr ) );
     }
-    bool Menu::isOut( )
-    {
-        return prevOnTouch && !onTouch;
-    }
-
     FlickFunctionLayer::FlickFunctionLayer( )
     {
+
 
     }
     FlickFunctionLayer::~FlickFunctionLayer( )
@@ -75,172 +92,106 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        this->scheduleUpdate( );
-
-        auto multiTouchEvent = EventListenerTouchAllAtOnce::create( );
-        multiTouchEvent->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        auto touch = EventListenerGesture::create( );
+        touch->onTap = [ this ] ( Vec2 pos )
         {
-            for ( auto& touch : touches )
+            bool hit = false;
+            enumerateChildren( "//.*", [ pos, &hit ] ( cocos2d::Node* node )
             {
-                began( touch );
+                hit = hit || node->getBoundingBox( ).containsPoint( pos );
+                return hit;
+            } );
+            if ( !hit )
+            {
+                if ( functions )
+                {
+                    functions->cancel( );
+                }
             }
         };
-        multiTouchEvent->onTouchesMoved = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        touch->onSwipe = [ this ] ( EventListenerGesture::SwipeDirection direction )
         {
-            for ( auto& touch : touches )
+            switch ( direction )
             {
-                moved( touch );
+            case EventListenerGesture::SwipeDirection::NONE:
+                break;
+            case EventListenerGesture::SwipeDirection::UP:
+                /**
+                 * スワイプが上方向にされたときのみ、メニューを表示させる。
+                 * すでに表示されている場合は表示しない。
+                 */
+                if ( !functions )
+                {
+                    createFlickCircle( );
+                }
+                break;
+            case EventListenerGesture::SwipeDirection::DOWN:
+                break;
+            case EventListenerGesture::SwipeDirection::LEFT:
+                break;
+            case EventListenerGesture::SwipeDirection::RIGHT:
+                break;
+            default:
+                break;
             }
         };
-        multiTouchEvent->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
-        {
-            for ( auto& touch : touches )
-            {
-                ended( touch );
-            }
-        };
-        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( multiTouchEvent, this );
-
-
+        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( touch, this );
 
         return true;
     }
     void FlickFunctionLayer::setup( )
     {
-        baglogLayer = getLayer<BackLogLayer>( );
+        backlogLayer = getLayer<BackLogLayer>( );
         novelLayer = getLayer<NovelLayer>( );
+        nameLayer = getLayer<NameLayer>( );
     }
-    void FlickFunctionLayer::update( float delta )
+    void FlickFunctionLayer::end( )
     {
-        if ( isTap && !isLongTap( ) ) holdTapTime += delta;
-
-        if ( isLongTap( ) && !circle ) createFlickCircle( );
-
-        if ( isFunction )
-        {
-            if ( circle )
-            {
-                for ( auto& obj : circle->getChildren( ) )
-                {
-                    if ( auto item = dynamic_cast<Menu*>( obj ) )
-                    {
-                        item->update( item->isHit( tapLastPosition ) );
-                    }
-                }
-            }
-        }
-    }
-    void FlickFunctionLayer::began( cocos2d::Touch * touch )
-    {
-        isTap = true;
-
-        isFunction = false;
-
-        isSuccessLongTap = true;
-
-        holdTapTime = 0.0F;
-
-        tapBeganPosition = touch->getLocation( );
-
-        tapLastPosition = tapBeganPosition;
-    }
-    void FlickFunctionLayer::moved( cocos2d::Touch * touch )
-    {
-        tapLastPosition = touch->getLocation( );
-
-        if ( !isLongTap( ) )
-        {
-            if ( longTapShiftLength <= tapBeganPosition.distance( tapLastPosition ) ) isSuccessLongTap = false;
-        }
-    }
-    void FlickFunctionLayer::ended( cocos2d::Touch * touch )
-    {
-        isTap = false;
-        isFunction = false;
-
-        // 機能のすべてをしまう
-        if ( circle )
-        {
-            if ( circle->getName( ).empty( ) )
-                if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->delayOn( );
-
-            auto children = circle->getChildren( );
-            int i = 0;
-            for ( int size = children.size( ); i < size; ++i )
-            {
-                auto move = MoveTo::create( 1.0F, Vec2::ZERO );
-                auto easing = EaseExponentialOut::create( move );
-                children.at( i )->stopAllActions( );
-                children.at( i )->runAction( Sequence::create( easing, nullptr ) );
-            }
-
-            auto scale = ScaleTo::create( 1.0F, 0.0F );
-            auto easeScale = EaseElasticOut::create( scale );
-            auto modeShift = CallFunc::create( [ this ]
-            {
-                if ( !circle->getName( ).empty( ) )
-                    if ( auto item = dynamic_cast<Menu*>( circle->getChildByName( circle->getName( ) ) ) )
-                    {
-                        item->menuCallBack( );
-                    }
-            } );
-            circle->stopAllActions( );
-            circle->runAction( Sequence::create( modeShift, easeScale, RemoveSelf::create( ), CallFunc::create( [ this ] { circle = nullptr; } ), nullptr ) );
-        }
+        if ( functions ) functions->end( );
     }
     void FlickFunctionLayer::createFlickCircle( )
     {
-        if ( novelLayer ) novelLayer->pause( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->stop( );
 
-        Menu::maxMenuNumber = numberMenu;
-        Menu::circleRadius = menuCircleRadius;
-
-        // 中央の丸
-        circle = Node::create( );
-        this->addChild( circle );
-        circle->setPosition( tapLastPosition );
-        circle->setScale( 0.0F );
-        auto scale = ScaleTo::create( 1.0F, 1.0F );
-        auto easing = EaseElasticOut::create( scale );
-        circle->runAction( Sequence::create( easing, DelayTime::create( longTapShiftTime ), CallFunc::create( [ this ] { isFunction = true; } ), nullptr ) );
-
-        addMenu( "backlog", [ this ]
+        std::vector<std::pair<std::string, std::function<void( )>>> args;
+        args.emplace_back( std::make_pair( "auto", [ this ]
         {
-            if ( auto baglog = dynamic_cast<BackLogLayer*>( baglogLayer ) )
+            if ( auto layer = dynamic_cast<NovelLayer*>( novelLayer ) )
             {
-                baglog->showBacklog( );
+                layer->addAuto( );
+                scheduleOnce( [ this ] ( float delay )
+                {
+                    novelLayer->resume( );
+                }, 0.0F, typeid( this ).name( ) );
             }
-        } );
-        addMenu( "novelswitch", [ this ]
+        } ) );
+        args.emplace_back( std::make_pair( "skip", [ this ]
         {
-            ScriptStaticData::run( { "sys", "novelswitch" } );
-        } );
-        addMenu( "save", [ this ]
+            novelLayer->resume( );
+        } ) );
+        args.emplace_back( std::make_pair( "log", [ this ]
         {
-            
-        } );
-        addMenu( "load", [ this ]
+            if ( auto layer = dynamic_cast<BackLogLayer*>( backlogLayer ) )
+            {
+                layer->showBacklog( );
+            }
+        } ) );
+        args.emplace_back( std::make_pair( "window", [ this ]
         {
+            if ( auto layer = dynamic_cast<NameLayer*>( nameLayer ) )
+            {
+                layer->addNovelWinodowSwitch( );
+            }
+        } ) );
 
-        } );
-    }
-    void FlickFunctionLayer::addMenu( std::string name, std::function<void( )> const & lambda )
-    {
-        const std::string dir = u8"res/texture/system/";
-        const float selfAngle = M_PI * 2 / Menu::maxMenuNumber;
-
-        auto menu = Menu::create( );
-        menu->initWithFile( dir + u8"base.false.png" );
-        circle->addChild( menu );
-        menu->menuCallBack = lambda;
-        menu->setName( name );
-        auto move = MoveTo::create( 1.0F, Vec2( cos( selfAngle * circle->getChildrenCount( ) ) * ( menuLength + Menu::circleRadius ),
-                                                sin( selfAngle * circle->getChildrenCount( ) ) * ( menuLength + Menu::circleRadius ) ) );
-        auto easing = EaseExponentialOut::create( move );
-        menu->runAction( Sequence::create( easing, nullptr ) );
-
-        auto icon = Sprite::create( dir + name + u8".png" );
-        menu->addChild( icon );
-        icon->setAnchorPoint( Vec2( 0, 0 ) );
+        functions = Functions::create( args );
+        functions->begin( );
+        functions->ended = [ this ] { functions = nullptr; };
+        functions->canceled = [ this ]
+        {
+            functions = nullptr;
+            if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->restart( );
+        };
+        addChild( functions );
     }
 }
