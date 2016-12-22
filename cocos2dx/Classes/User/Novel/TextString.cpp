@@ -70,7 +70,8 @@ namespace User
     {
         this->text = text;
         label = Label::createWithTTF( text, OptionalValues::fontName, OptionalValues::fontSize );
-        label->setTextColor( Color4B( 39, 39, 39, 255 ) );
+        label->enableShadow( OptionalValues::fontShadowColor, Size( 2, -2 ), 2 );
+        label->setTextColor( OptionalValues::fontColor );
         label->setTag( (int)Tag::Novel );
         for ( int i = 0; i < label->getStringLength( ); i++ )
         {
@@ -79,10 +80,11 @@ namespace User
         }
 
         auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
+        auto win_size = Director::getInstance( )->getWinSize( );
         auto contentWidth = label->getContentSize( ).width;
-        if ( visibleWidth * 0.9 <= contentWidth )
+        if ( visibleWidth * ( 614.0F / 720 ) <= contentWidth )
         {
-            label->setScaleX( ( visibleWidth * 0.9 ) / contentWidth );
+            label->setScaleX( ( visibleWidth * ( 614.0F / 720 ) ) / contentWidth );
         }
     }
     void TextString::setDrawPosition( cocos2d::Vec2 position )
@@ -90,7 +92,7 @@ namespace User
         float width;
         auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
         auto contentSize = label->getContentSize( );
-        if ( visibleWidth * 0.9 <= contentSize.width ) width = visibleWidth * 0.9 * 0.5;
+        if ( visibleWidth * ( 614.0F / 720 ) <= contentSize.width ) width = visibleWidth * ( 614.0F / 720 )  * 0.5;
         else width = contentSize.width * 0.5;
 
         label->setPosition( position + Vec2( width, -contentSize.height ) );

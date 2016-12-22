@@ -47,6 +47,7 @@ namespace User
 		void changeToCreaning();
 		void changeToBreeding(int _menuId);
 		void swapWindow(Node* moveOutObj, Node* moveInObj);
+		void createBackButton();
 
 		void createMainMenuWindow();
 		void createSubMenuWindow();
@@ -56,7 +57,3 @@ namespace User
 }
 
 # endif // __UIControl__
-
-
-
-
