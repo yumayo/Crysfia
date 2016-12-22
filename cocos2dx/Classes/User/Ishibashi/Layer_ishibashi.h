@@ -15,7 +15,7 @@ namespace User
 
         void eatText( );//食材説明用ウィンドウ
 
-        void foodText( std::string commentary, int y );//食材説明
+        void foodText( std::string commentary, int x, int y, int size);//食材説明
         void eraseFoodText( );
 
         //void eatButton(int food_num);//食材描画用 仮引数で描画するものを変更
@@ -93,15 +93,51 @@ namespace User
             u8"セーラー服",
         };
 
+		std::vector<std::string> dress_text2
+		{
+			u8"四角い形のお砂糖。",
+			u8"白くて小さいお花。",
+			u8"甘酸っぱい果物。",
+			u8"カラフルでかわいい形をしたお砂糖。",
+			u8"クリスフィアが食べられる特別な食べ物。",
+		};
+
+		std::vector<std::string> dress_text3
+		{
+			u8"食べ物としては少し物足りないかも。",
+			u8"香りが強くいい匂いがする。",
+			u8"ジャムにしてもおいしい。",
+			u8"とてもかわいらしい。",
+			u8"不思議と元気があふれてくる。",
+		};
+
         //食べ物解説
         std::vector<std::string> food_commentary
         {
             u8"角砂糖",
-            u8"花",
-            u8"果物",
-            u8"金平糖",
-            u8"宝石",
+            u8"スズラン",
+            u8"ブルーベリー",
+            u8"こんぺいとう",
+            u8"シトリン宝石",
         };
+
+		std::vector<std::string> food_text2
+		{
+			u8"四角い形のお砂糖。",
+			u8"白くて小さいお花。",
+			u8"甘酸っぱい果物。",
+			u8"カラフルでかわいい形をしたお砂糖。",
+			u8"クリスフィアが食べられる特別な食べ物。",
+		};
+
+		std::vector<std::string> food_text3
+		{
+			u8"食べ物としては少し物足りないかも。",
+			u8"香りが強くいい匂いがする。",
+			u8"ジャムにしてもおいしい。",
+			u8"とてもかわいらしい。",
+			u8"不思議と元気があふれてくる。",
+		};
 
 		//クロエちゃんファッションショー
 		std::vector<std::string> fashion_show;

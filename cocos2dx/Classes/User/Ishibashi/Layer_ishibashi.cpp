@@ -112,7 +112,7 @@ namespace User
         button->setTouchEnabled( true );
 
         //ボタンの位置設定
-        button->setPosition( Vec2( 600, 225 ) );
+        button->setPosition( Vec2( 600, 275 ) );
 
         //ボタンに表示する文字
         // テキスト
@@ -225,10 +225,10 @@ namespace User
         }
     }
 
-    void Layer_meal::foodText( std::string commentary, int y )
+    void Layer_meal::foodText( std::string commentary, int x, int y, int size )
     {
-        auto text = Label::createWithSystemFont( commentary, "Arial", 48 );
-        text->setPosition( Point( 300, 225 + y * 48) );
+        auto text = Label::createWithSystemFont( commentary, "Arial", size );
+        text->setPosition( Point( 400 - x * 48, 210 + y) );
         text->setColor( ccc3( 255, 0, 0 ) );
         text->setName( "commentary_text" );
         this->addChild( text );
@@ -260,7 +260,7 @@ namespace User
         }
     }
 
-    void Layer_meal::eatTime( std::string eatTime )
+   /* void Layer_meal::eatTime( std::string eatTime )
     {
         Sprite* sprite = Sprite::create( );
         sprite->setTextureRect( Rect( 0, 0, 100, 50 ) );
@@ -273,7 +273,7 @@ namespace User
         text->setColor( ccc3( 0, 0, 0 ) );
         text->setName( "time_text" );
         this->addChild( text );
-    }
+    }*/
 
     void Layer_meal::character(std::string chara_texture, std::string puppet)
     {
@@ -384,7 +384,11 @@ namespace User
 							animation_num = text_number;
 
 							eraseFoodText();
-							foodText(food_commentary[text_number], 0);
+							eraseFoodText();
+							eraseFoodText();
+							foodText(food_commentary[text_number], 3, 70, 48);
+							foodText(food_text2[text_number], 0, 0, 36);
+							foodText(food_text3[text_number], 0, -48, 36);
 						}
 					}
                     break;
@@ -396,7 +400,11 @@ namespace User
 
 							//着替える動作を入れる
 							eraseFoodText();
-							foodText(dress_commentary[text_number], 0);
+							eraseFoodText();
+							eraseFoodText();
+							foodText(dress_commentary[text_number], 3, 70, 48);
+							foodText(dress_text2[text_number], 0, 0, 36);
+							foodText(dress_text3[text_number], 0, -48, 36);
 							next_dress = text_number;
 						}
 					}
