@@ -40,12 +40,9 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
-		createDiaryWindow();
 		createSubMenuWindow();
 		createMainMenuWindow();
 
-		//this->runAction( Sequence::create( DelayTime::create(3), CallFunc::create( this, callfunc_selector(UIManager::createBackButton) ),nullptr ) );
-		//changeToDiaryWindow();
 		return true;
 	}
 
@@ -127,7 +124,7 @@ namespace User
 			const rapidjson::Value& buttonsData = doc["Button"];
 			for (rapidjson::SizeType i = (int)SubButtonType::BACK; i < buttonsData.Size(); i++)
 			{
-				subButtons.push_back(ui::Button::create(buttonsData[i]["res"].GetString(),"", buttonsData[i]["res"].GetString()));
+				subButtons.push_back(ui::Button::create(buttonsData[i]["res"].GetString()));
 				subButtons[i]->setTitleText(buttonsData[i]["name"].GetString());
 				subButtons[i]->setTitleFontSize(42);
 				subButtons[i]->setTitleColor(Color3B::WHITE);
@@ -144,21 +141,7 @@ namespace User
 		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::BREEDING_MENU);
 	}
 
-	void UIManager::createDiaryWindow()
-	{
-		auto layout = ui::Layout::create();
-		layout->setPosition(Vec2(pos.x, pos.y * 0));
-		layout->setContentSize(Size(winSize.x, 150));
-		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::DIARY_MENU);
-	}
-
 	//各メニューボタンの処理
-	/**************************************************
-	TODO:
-	残りの各ボタン移行の処理を書く。終わったら下のリストを消す
-	日記
-	設定
-	***************************************************/
 	void UIManager::touchEventOfMainMenu(Ref * pSender, ui::Widget::TouchEventType type)
 	{
 		switch (type)
@@ -253,20 +236,19 @@ namespace User
 	//日記画面へ移動
 	void UIManager::changeToDiaryWindow()
 	{
+		float fadeTime(3);
 		auto p = this->getParent();
 		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
-		f->fading();
-		
-		/*auto layer = LayerDiary::create();
-		layer->setName(typeid(LayerDiary).name());
-		layer->setPosition(Vec2(winSize * 0.f));
-		this->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY);*/
-
-		/*this->getParent()->removeChildByTag((int)tabLayer::CHARACTER);
-		this->getParent()->removeChildByTag((int)tabLayer::BACKGROUND);
-		this->getParent()->removeChildByTag((int)tabLayer::UI_MANAGER);*/
-		
-		//TODO: 遷移時の演出はあとからFGManagerで作る
+		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
+										 DelayTime::create(fadeTime / 2),
+										 CallFunc::create( [this] {
+											auto p = this->getParent();
+											auto layer = LayerDiary::create();
+											layer->setName(typeid(LayerDiary).name());
+											layer->setPosition(Vec2(winSize * 0.f));
+											p->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY); 
+											p->removeChildByTag((int)tabLayer::UI_MANAGER); }),
+										 nullptr) );
 	}
 
 	//掃除画面のレイヤーに貼り替え
@@ -276,18 +258,22 @@ namespace User
 		p->removeChildByTag((int)tabLayer::CHARACTER);
 		p->removeChildByTag((int)tabLayer::UI_MANAGER);
 		p->removeChildByTag((int)tabLayer::BACKGROUND);
-
 		p->addChild(LayerCleaning::create(), 0, (int)tabLayer::CLEANING);
 	}
 
 	//食事画面及び着替え画面へ移動----------------------------------------------------------------------
 	void UIManager::changeToBreeding(int _menuId)
 	{
+		float fadeTime(2);
 		auto p = this->getParent();
-		p->removeChildByTag((int)tabLayer::CHARACTER);
-		p->removeChildByTag((int)tabLayer::UI_MANAGER);
-
-		p->addChild(Layer_meal::create(1), 0, (int)tabLayer::CLEANING);
+		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
+		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
+			DelayTime::create(fadeTime / 2),
+			CallFunc::create([=] {
+			p->removeChildByTag((int)tabLayer::CHARACTER);
+			p->removeChildByTag((int)tabLayer::UI_MANAGER);
+			p->addChild(Layer_meal::create(_menuId), 0, (int)tabLayer::CLEANING); }),
+			nullptr));
 	}
 
 	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです
@@ -303,67 +289,17 @@ namespace User
 		moveInObj->runAction(Sequence::create(delay, moveIn, nullptr));
 	}
 
-	//-------------------------------------------------------------------------------
-	void UIManager::createBackButton()
-	{
-		auto layer = Layer::create();
-		layer->setContentSize(Size(120, 120));
-		//layer->setPosition(Vec2(winSize.x * 0.15f, winSize.y * 0.05f));
-		layer->setPosition(winSize / 2);
-		this->addChild(layer);
-		auto button = ui::Button::create("res/Image/WindowBase/WinBase_1.png");
-		layer->addChild(button);
-	}
-
 	//オプションウィンドウの生成
 	//TODO:Pos指定、Size指定、画像指定をできるようにする。
 	void UIManager::setOptionWindow()
 	{
-		auto p = getParent();
-		p->addChild(LayerOption::create(),4);
-
-		//Size winSize = Size(Director::getInstance()->getVisibleSize().width + 80,
-		//	Director::getInstance()->getVisibleSize().height);
-		//Size contentWinSize = Size(500, 600);
-
-		//auto list = ui::ListView::create();
-		//list->setContentSize(winSize);
-		//this->addChild(list, (int)zOder::OPTION, (int)tabMenu::OPTION);
-
-		//auto layout = ui::Layout::create();
-		//layout->setContentSize(list->getContentSize());
-		//list->addChild(layout);
-		//auto layoutSize = layout->getContentSize();
-
-		//auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_59.png",
-		//	Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
-		//		120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
-		//	Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
-		//		64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
-
-		////オプションウィンドウの位置。修正した値
-		//auto winPos = Vec2(list->getContentSize().width / 2 - 40, list->getContentSize().height / 2);
-		//menuImage->setPosition(winPos);
-		//menuImage->setContentSize(contentWinSize);
-		//layout->addChild(menuImage);
-
-		////CloseButton（仮置き）
-		//auto closeButton = ui::Button::create("res/Image/WindowBase/WinBase_18.png");
-		//closeButton->setTitleFontSize(48);
-		//closeButton->setTitleText("CLO\n SE");
-		//closeButton->setScaleX(0.7f);
-		//closeButton->setScaleY(0.6f);
-		//closeButton->setPosition(Vec2(winPos.x, winPos.y - 200));
-		//layout->addChild(closeButton);
-
-		////CloseButtonの処理
-		////ボタンを押したときにLayerに追加されているOptionタグを持つ子ノードを取得しLayerから外している
-		//closeButton->addTouchEventListener([&](Ref* pSender, ui::Widget::TouchEventType type) {
-		//	auto option = this->getChildByTag((int)tabMenu::OPTION);
-		//	if (type == ui::Widget::TouchEventType::ENDED)
-		//	{
-		//		this->removeChild(option);
-		//	}
-		//});
+		float fadeTime(2);
+		auto p = this->getParent();
+		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
+		this->runAction(Sequence::create(	CallFunc::create([=] {f->fading(fadeTime); }),
+											DelayTime::create(fadeTime / 2),
+											CallFunc::create([=] {
+											p->addChild(LayerOption::create(), 4); } ),
+											nullptr ));
 	}
 }

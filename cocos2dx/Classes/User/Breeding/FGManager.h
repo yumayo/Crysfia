@@ -12,7 +12,7 @@ namespace User
         FGManager( );
         ~FGManager( );
 
-		void fading();
+		void fading(float _totalTime);
 
     private:
 

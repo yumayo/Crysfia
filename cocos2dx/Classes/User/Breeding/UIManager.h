@@ -27,6 +27,7 @@ namespace User
 		~UIManager();
 	
 	private:
+
 		BGManager* bgManager;
 		cocos2d::ui::ListView*	menuWindow;
 		cocos2d::ui::ListView*	optionWindow;
@@ -47,11 +48,9 @@ namespace User
 		void changeToCreaning();
 		void changeToBreeding(int _menuId);
 		void swapWindow(Node* moveOutObj, Node* moveInObj);
-		void createBackButton();
 
 		void createMainMenuWindow();
 		void createSubMenuWindow();
-		void createDiaryWindow();
 		void setOptionWindow();
 	};
 }
