@@ -41,6 +41,11 @@ namespace User
         return string_float( str );
     }
     template<>
+    inline std::string StringUtil::string_value<std::string>( std::string const & str )
+    {
+        return str;
+    }
+    template<>
     inline std::string StringUtil::value_string<bool>( bool value )
     {
         if ( value )

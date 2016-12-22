@@ -259,7 +259,7 @@ namespace User
 
                 bar->move = [ = ] ( float t )
                 {
-                    OptionalValues::readOutSpeed = t;
+                    OptionalValues::readOutSpeed = 0.2 - t;
                     for ( int i = 0, size = test->getStringLength( ); i < size; ++i )
                     {
                         auto oneString = test->getLetter( i );
@@ -405,11 +405,41 @@ namespace User
         slider = ui::Slider::create( );
         addChild( slider );
 
+        auto left = ui::Button::create( u8"res/texture/system/slider.left.png" );
+        left->setAnchorPoint( Vec2( 0, 0 ) );
+        addChild( left );
+        auto translate = left->getContentSize( ).width;
+        left->addTouchEventListener( [ this ] ( Ref* ref, ui::Widget::TouchEventType type )
+        {
+            switch ( type )
+            {
+            case cocos2d::ui::Widget::TouchEventType::BEGAN:
+            {
+                int value = clampf( slider->getPercent( ) - 1.0F, 0.0F, slider->getMaxPercent( ) );
+                slider->setPercent( value );
+                float percent = slider->getPercent( ) / 100.0F;
+                if ( move ) move( percent );
+                if ( ended ) ended( percent );
+                if ( !key.empty( ) ) UserDefault::getInstance( )->setFloatForKey( key.c_str( ), percent );
+            }
+            break;
+            case cocos2d::ui::Widget::TouchEventType::MOVED:
+                break;
+            case cocos2d::ui::Widget::TouchEventType::ENDED:
+                break;
+            case cocos2d::ui::Widget::TouchEventType::CANCELED:
+                break;
+            default:
+                break;
+            }
+        } );
+
+
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
         slider->loadBarTexture( dir + u8"slider.process.base.png" );
         slider->loadProgressBarTexture( dir + u8"slider.process.bar.png" );
-        slider->loadSlidBallTextures( dir + u8"slider.button.base.png", dir + u8"slider.button.selected.png" );
+        //slider->loadSlidBallTextures( dir + u8"slider.button.base.png", dir + u8"slider.button.selected.png" );
         slider->addEventListener( [ this ] ( Ref* ref, ui::Slider::EventType type )
         {
             ui::Slider* slider = dynamic_cast<ui::Slider*>( ref );
@@ -421,8 +451,43 @@ namespace User
                 if ( !key.empty( ) ) UserDefault::getInstance( )->setFloatForKey( key.c_str( ), percent );
             }
         } );
-        slider->setAnchorPoint( Vec2( -128.0F / 2 / 800, -128.0F / 2 / 41 ) );
-        setContentSize( slider->getContentSize( ) + Size( 128 * 2, 128 ) * scale );
+        slider->setAnchorPoint( Vec2( 0, 0 ) );
+        slider->setContentSize( slider->getContentSize( ) + Size( 128 * 2, 128 ) * scale );
+        slider->setPosition( Vec2( translate, 0 ) );
+        translate += slider->getContentSize( ).width;
+
+        auto right = ui::Button::create( u8"res/texture/system/slider.right.png" );
+        addChild( right );
+        right->setAnchorPoint( Vec2( 0, 0 ) );
+        right->setPosition( Vec2( translate, 0 ) );
+        translate += right->getContentSize( ).width;
+        right->addTouchEventListener( [ this ] ( Ref* ref, ui::Widget::TouchEventType type )
+        {
+            switch ( type )
+            {
+            case cocos2d::ui::Widget::TouchEventType::BEGAN:
+            {
+                float max = slider->getMaxPercent( );
+                int value = clampf( slider->getPercent( ) + 1.0F, 0.0F, slider->getMaxPercent( ) );
+                slider->setPercent( value ); 
+                float percent = slider->getPercent( ) / 100.0F;
+                if ( move ) move( percent );
+                if ( ended ) ended( percent );
+                if ( !key.empty( ) ) UserDefault::getInstance( )->setFloatForKey( key.c_str( ), percent );
+            }
+            break;
+            case cocos2d::ui::Widget::TouchEventType::MOVED:
+                break;
+            case cocos2d::ui::Widget::TouchEventType::ENDED:
+                break;
+            case cocos2d::ui::Widget::TouchEventType::CANCELED:
+                break;
+            default:
+                break;
+            }
+        } );
+
+        setContentSize( Size( translate, slider->getContentSize( ).height ) );
     }
     SlideBar::SlideBar( float t )
         : SlideBar( )

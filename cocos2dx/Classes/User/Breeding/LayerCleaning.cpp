@@ -131,7 +131,6 @@ namespace User
 		listener->onTouchEnded = [=](Touch* touch, Event* event) {
 			mask->stopAllActions();
 		};
-
 	}
 
 	//‘|œƒŒƒCƒ„[“à‚Å‚ÌUIˆ—
