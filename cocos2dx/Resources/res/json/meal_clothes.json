@@ -1,10 +1,10 @@
 {
   "button_texture": [
     { "texture": "角砂糖.png" },
-    { "texture": "スズラン.png" },
+    { "texture": "すずらん.png" },
     { "texture": "ブルーベリー.png" },
-    { "texture": "コンペイトウ.png" },
-    { "texture": "宝石.png" }
+    { "texture": "金平糖.png" },
+    { "texture": "シトリン宝石.png" }
   ],
 
   "dress_texture": [
