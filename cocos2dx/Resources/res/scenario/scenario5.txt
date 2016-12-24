@@ -283,10 +283,8 @@
     @rasyasu.1:play(19)
     「うん！」
     @sys:l
-    @sys:autosave
     @crysfia立ち絵喜び:fadeout(1)
     @背景噴水広場:fadeout(1)
     @bgm娯楽の島:out
 @crysfia:out
-@sys:stop(1)
 //ここまで

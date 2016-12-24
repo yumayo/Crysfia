@@ -67,6 +67,11 @@ namespace User
         void click( );
         void next( );
         TextChunkManager& getTextChunkManager( ) { return textChunkManager; }
+
+        /**
+        * 最後にクリックしたときの画面を保存しておきます。
+        */
+        static cocos2d::Image* screen;
     private:
         std::string novelPath;
         // 読み込み機能を停止するかどうか。

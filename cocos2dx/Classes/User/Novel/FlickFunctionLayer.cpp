@@ -18,8 +18,6 @@
 
 USING_NS_CC;
 
-#define LAMBDA_TOUCH cocos2d::Ref* ref, cocos2d::ui::Widget::TouchEventType type
-
 namespace User
 {
     Functions::Functions( std::vector<std::pair<std::string, std::function<void( )>>> functions )

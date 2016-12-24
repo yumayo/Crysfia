@@ -89,10 +89,10 @@ namespace User
     }
     SCRIPT( ScriptSystem::select )
     {
-        l( args );
+        l( { } );
 
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
-        novel->pause( );
+        novel->stop( );
         novel->systemStop.on( );
 
         auto origin = Director::getInstance( )->getVisibleOrigin( );
@@ -177,7 +177,7 @@ namespace User
     }
     SCRIPT( ScriptSystem::autosave )
     {
-        utils::captureScreen( [ ] ( bool succeed, const std::string &filePath ) { }, "screenshot.autosave.png" );
+        utils::captureScreen( [ ] ( bool succeed, const std::string &filePath ) { }, "autosave.png" );
         stop( { u8"0.016F" } );
     }
 

@@ -169,6 +169,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp" />
     <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp" />
     <ClCompile Include="..\Classes\User\LayerBase.cpp" />
+    <ClCompile Include="..\Classes\User\LayerSave\LayerSave.cpp" />
     <ClCompile Include="..\Classes\User\Live2d\LAppLive2DManager.cpp" />
     <ClCompile Include="..\Classes\User\Live2d\LAppModel.cpp" />
     <ClCompile Include="..\Classes\User\Live2d\LAppTextureDesc.cpp" />
@@ -261,6 +262,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h" />
     <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h" />
     <ClInclude Include="..\Classes\User\LayerBase.h" />
+    <ClInclude Include="..\Classes\User\LayerSave\LayerSave.h" />
     <ClInclude Include="..\Classes\User\Live2d\AppMacros.h" />
     <ClInclude Include="..\Classes\User\Live2d\LAppDefine.h" />
     <ClInclude Include="..\Classes\User\Live2d\LAppLive2DManager.h" />

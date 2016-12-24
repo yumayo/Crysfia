@@ -16,6 +16,8 @@ USING_NS_CC;
 
 namespace User
 {
+    cocos2d::Image* NovelLayer::screen = nullptr;
+
     NovelLayer::NovelLayer( std::string const & novelPath )
         : textLabels( this )
         , novelPath( novelPath )
@@ -98,6 +100,10 @@ namespace User
 
         textLabels.animationEndCallBack = [ this ]
         {
+            // ‚±‚±‚ÅƒXƒNƒVƒ‡‚ðŽB‚é
+            delete screen;
+            screen = utils::captureNode( Director::getInstance( )->getRunningScene( ) );
+
             auto visibleSize = Director::getInstance( )->getVisibleSize( );
             auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
             auto size = novelWindow->getContentSize( );
@@ -212,7 +218,7 @@ namespace User
     void NovelLayer::select( std::string const & name )
     {
         systemStop.off( );
-        resume( );
+        restart( );
 
         auto selectLayer = this->getLayer<SelectLayer>( );
 
@@ -268,6 +274,8 @@ namespace User
         }
         else
         {
+            auto action = Director::getInstance( )->getActionManager( );
+            action->update( 10.0F );
             textActionStop( );
         }
     }

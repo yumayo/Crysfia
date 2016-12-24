@@ -78,7 +78,7 @@ namespace User
     {
     public:
         CREATE_FUNC( Calendar );
-        Calendar* make( );
+        bool init( );
     private:
         /**
          *  カレンダーに表示する日にち。

@@ -12,6 +12,10 @@
 
 #include "../../Lib/AudioManager.h"
 
+#include "../LayerSave/LayerSave.h"
+
+#include "../System/DataSettings.h"
+
 USING_NS_CC;
 
 namespace User
@@ -55,17 +59,27 @@ namespace User
 
             auto height = boardPixel.height - 10 * 2;
 
-            if ( auto button = createBackButton( ) )
+            auto back_button = createBackButton( );
+            if ( back_button )
             {
-                board->addChild( button );
-                button->setScale( Lib::fitHeight( button, height * scale ), Lib::fitHeight( button, height * scale ) );
-                button->setPosition( Vec2( 10, 10 ) * scale );
+                board->addChild( back_button );
+                back_button->setScale( Lib::fitHeight( back_button, height * scale ) );
+                back_button->setPosition( Vec2( 10, 10 ) * scale );
             }
-            if ( auto button = createDeleteButton( ) )
+            auto delete_button = createDeleteButton( );
+            if ( delete_button )
             {
-                board->addChild( button );
-                button->setScale( Lib::fitHeight( button, height * scale ), Lib::fitHeight( button, height * scale ) );
-                button->setPosition( Vec2( boardPixel.width - 10, 10 ) * scale );
+                board->addChild( delete_button );
+                delete_button->setScale( Lib::fitHeight( delete_button, height * scale ) );
+                delete_button->setPosition( Vec2( boardPixel.width - 10, 10 ) * scale );
+            }
+            auto savemenu_button = createSaveMenuButton( );
+            if ( savemenu_button )
+            {
+                board->addChild( savemenu_button );
+                savemenu_button->setScale( Lib::fitHeight( savemenu_button, height * scale ) );
+                savemenu_button->setPosition( Vec2( boardPixel.width - 10 -
+                                                    delete_button->getContentSize( ).width * delete_button->getScale( ) - 10, 10 ) * scale );
             }
         }
 
@@ -321,8 +335,16 @@ namespace User
             {
                 addChild( createDialog( u8"データを消しますか？", [ ]
                 {
-                    auto path = FileUtils::getInstance( )->getWritablePath( ) + u8"island.json";
-                    remove( path.c_str( ) );
+                    {
+                        userDefaultForceSetup( );
+
+                        UserDefault::getInstance( )->flush( );
+                    }
+                    {
+                        auto data = FileUtils::getInstance( )->getDataFromFile( u8"res/data/autosave.json" );
+                        writeDataUserLocal( data, u8"autosave.json" );
+                    }
+                    SceneManager::createTitle( );
                 }, [ ]
                 {
 
@@ -400,6 +422,32 @@ namespace User
 
         return layout;
     }
+    cocos2d::ui::Button * User::LayerOption::createSaveMenuButton( )
+    {
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+
+        auto button = ui::Button::create( u8"res/texture/system/icon.save.edge.png" );
+        button->setAnchorPoint( Vec2( 1, 0 ) );
+        button->setScale( Lib::fitHeight( button, 128 / scale ) );
+        button->addTouchEventListener( [ this ] ( LAMBDA_TOUCH )
+        {
+            switch ( type )
+            {
+            case cocos2d::ui::Widget::TouchEventType::BEGAN:
+                break;
+            case cocos2d::ui::Widget::TouchEventType::MOVED:
+                break;
+            case cocos2d::ui::Widget::TouchEventType::ENDED:
+                addChild( LayerSave::create( ) );
+                break;
+            case cocos2d::ui::Widget::TouchEventType::CANCELED:
+                break;
+            default:
+                break;
+            }
+        } );
+        return button;
+    }
     SlideBar::SlideBar( )
     {
         std::string dir = u8"res/texture/system/";
@@ -470,7 +518,7 @@ namespace User
             {
                 float max = slider->getMaxPercent( );
                 int value = clampf( slider->getPercent( ) + 1.0F, 0.0F, slider->getMaxPercent( ) );
-                slider->setPercent( value ); 
+                slider->setPercent( value );
                 float percent = slider->getPercent( ) / 100.0F;
                 if ( move ) move( percent );
                 if ( ended ) ended( percent );

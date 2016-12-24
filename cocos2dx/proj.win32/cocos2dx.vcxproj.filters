@@ -55,6 +55,9 @@
     <Filter Include="live2d">
       <UniqueIdentifier>{f4114573-fdac-47a6-94c8-29cbf1332d32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\User\LayerSave">
+      <UniqueIdentifier>{f5927665-b9fb-473d-8d2a-3fc22bb026e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="..\live2d\framework\Live2DFramework.cpp">
       <Filter>live2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\LayerSave\LayerSave.cpp">
+      <Filter>src\User\LayerSave</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -607,6 +613,9 @@
     </ClInclude>
     <ClInclude Include="..\live2d\framework\Live2DFramework.h">
       <Filter>live2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\LayerSave\LayerSave.h">
+      <Filter>src\User\LayerSave</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

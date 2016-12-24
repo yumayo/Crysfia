@@ -103,47 +103,26 @@ namespace User
         setScale( getScale( ) * 0.5 );
     }
 
-    Calendar* Calendar::make( )
+
+    bool Calendar::init( )
     {
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto vs = Director::getInstance( )->getVisibleSize( );
         setPosition( vo + vs );
 
-        const std::string dir = u8"res/texture/system/";
+        const std::string dir = u8"res/texture/days/";
 
-        if ( auto calendar = Sprite::create( dir + "calendar.png" ) )
+        day = UserDefault::getInstance( )->getIntegerForKey( u8"“ú" );
+
+        std::string path = dir + u8"calendar(" + StringUtils::toString( day ) + u8").png";
+        if ( auto calendar = Sprite::create( path ) )
         {
             addChild( calendar );
             setContentSize( calendar->getContentSize( ) );
-            calendar->setAnchorPoint( Vec2( 1, 1 ) );
-
-            auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-
-            auto pixel = calendar->getContentSize( ) / scale;
-
-            day = UserDefault::getInstance( )->getIntegerForKey( u8"“ú" );
-
-            {
-                auto font = Label::createWithTTF( StringUtils::toString( day ),
-                                                  u8"res/fonts/HGRGE.TTC",
-                                                  130 * scale );
-                calendar->addChild( font );
-                font->setAnchorPoint( Vec2( 0.5F, 0 ) );
-                font->setPosition( Vec2( 90, ( pixel.height - 230 ) ) * scale );
-                font->setColor( Color3B( 39, 39, 39 ) );
-            }
-
-            {
-                auto font = Label::createWithTTF( u8"“ú–Ú",
-                                                  u8"res/fonts/HGRGE.TTC",
-                                                  40 * scale );
-                calendar->addChild( font );
-                font->setPosition( Vec2( 203, ( pixel.height - 134 ) ) * scale );
-                font->setColor( Color3B( 39, 39, 39 ) );
-            }
+            calendar->setAnchorPoint( Vec2( 0, 0 ) );
+            setAnchorPoint( Vec2( 1, 1 ) );
         }
-
-        return this;
+        return true;
     }
 
     CityMap* CityMap::make( std::string const& backgroundfile )
@@ -229,7 +208,7 @@ namespace User
 
             auto width = boardPixel.width - 10 * 2;
             auto height = boardPixel.height - 10 * 2;
-            auto calendar = Calendar::create( )->make( );
+            auto calendar = Calendar::create( );
             if ( calendar )
             {
                 board->addChild( calendar );
@@ -241,7 +220,8 @@ namespace User
             if ( heart )
             {
                 heart->setAnchorPoint( Vec2( 0, 0.5 ) );
-                heart->setScale( fitWidth( heart, board->getContentSize( ).width - calendar->getContentSize( ).width ) );
+                heart->setScale( fitWidth( heart, ( board->getContentSize( ).width - calendar->getContentSize( ).width * 
+                                                    calendar->getScale( ) - 20/*‰º‚Ì‚¸‚ç‚µ‚Ä‚¢‚é•ª‚Ì10‚ÆAŠÔ‚É10pixelŠJ‚¯‚é‚½‚ß‚Å‚·B*/ * scale) ) );
                 heart->setPosition( Vec2( 0, boardPixel.height * 0.5 ) * scale + Vec2( 10, 0 ) * scale );
                 board->addChild( heart );
             }
@@ -267,12 +247,12 @@ namespace User
                 button->setPosition( Vec2( 10, 10 ) * scale );
             }
 
-            if ( auto button = createOptionButton( ) )
+            /*if ( auto button = createOptionButton( ) )
             {
                 board->addChild( button );
                 button->setScale( fitHeight( button, height * scale ), fitHeight( button, height * scale ) );
                 button->setPosition( Vec2( boardPixel.width - 10, 10 ) * scale );
-            }
+            }*/
 
             if ( auto label = createLabel( island_name ) )
             {
@@ -299,7 +279,7 @@ namespace User
     }
     void LayerCity::jsonRead( )
     {
-        save_name = u8"island.json";
+        save_name = u8"autosave.json";
 
         removeChildByName( u8"background" );
 
@@ -357,12 +337,12 @@ namespace User
                         sprite->setAnchorPoint( Vec2( 0, 0 ) );
                         sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
                         sprite->setOpacity( 0 );
-                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ this, &value ] 
+                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ this, &value ]
                         {
                             value[u8"visit"] = true;
                             Json::StyledWriter writer;
                             writeUserLocal( writer.write( root ), save_name );
-                            SceneManager::createNovel( value[u8"scenario"].asString( ) ); 
+                            SceneManager::createNovel( value[u8"scenario"].asString( ) );
                         } ), RemoveSelf::create( ), nullptr ) );
                         addChild( sprite );
                     }

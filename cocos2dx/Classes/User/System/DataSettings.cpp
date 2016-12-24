@@ -32,62 +32,13 @@ namespace User
             reader.read( defalutDirectory + name );
         }
     }
-    void userDefaultLoading( )
+    void userDefaultLoading( std::string const& name )
     {
-        INIReader reader;
-        iniDataRead( reader, u8"userDefault.ini", u8"res/data/" );
-
-        std::map<std::string, std::function<void( std::map<std::string, std::string> )>> calls;
-
-        calls.insert( { u8"bool", [ ] ( std::map< std::string, std::string > tag )
-        {
-            auto data = UserDefault::getInstance( );
-            for ( auto& value : tag )
-                data->setBoolForKey( value.first.c_str( ), StringUtil::string_value<bool>( value.second ) );
-        } } );
-        calls.insert( { u8"int", [ ] ( std::map< std::string, std::string > tag )
-        {
-             auto data = UserDefault::getInstance( );
-             for ( auto& value : tag )
-                 data->setIntegerForKey( value.first.c_str( ), StringUtil::string_value<int>( value.second ) );
-        } } );
-        calls.insert( { u8"float", [ ] ( std::map< std::string, std::string > tag )
-        {
-            auto data = UserDefault::getInstance( );
-            for ( auto& value : tag )
-                data->setFloatForKey( value.first.c_str( ), StringUtil::string_value<float>( value.second ) );
-        } } );
-
-        for ( auto& tag : reader.getData( ) )
-        {
-            auto itr = calls.find( tag.first );
-            if ( itr != calls.end( ) )
-            {
-                itr->second( tag.second );
-            }
-        }
+        CC_ASSERT( !"ñ¢é¿ëïÅB" );
     }
-    void userDefaultSaveing( )
+    void userDefaultSaveing( std::string const& name )
     {
-        INIReader reader;
-        iniDataRead( reader, u8"system.ini", u8"res/data/" );
-
-        auto data = UserDefault::getInstance( );
-        for ( auto& tag : reader.getData( ) )
-        {
-            if ( tag.first == u8"bool" )
-            {
-                for ( auto& value : tag.second )
-                    reader[tag.first][value.first] = StringUtil::value_string<bool>( data->getBoolForKey( value.first.c_str( ) ) );
-            }
-            else if ( tag.first == u8"int" )
-            {
-                for ( auto& value : tag.second )
-                    reader[tag.first][value.first] = StringUtil::value_string<int>( data->getIntegerForKey( value.first.c_str( ) ) );
-            }
-        }
-
-        INIWriter::write( u8"system.ini", reader );
+        CC_ASSERT( !"ñ¢é¿ëïÅB" );
     }
     void userDefaultSetup( )
     {
@@ -95,7 +46,7 @@ namespace User
         if ( !data->getBoolForKey( u8"INITDATA", false ) )
         {
             INIReader reader;
-            iniDataRead( reader, u8"userDefault.ini", u8"res/data/" );
+            iniDataRead( reader, u8"res/data/userDefault.ini" );
 
             std::map<std::string, std::function<void( std::map<std::string, std::string> )>> calls;
 
@@ -135,6 +86,11 @@ namespace User
             data->setBoolForKey( u8"INITDATA", true );
         }
     }
+    void userDefaultForceSetup( )
+    {
+        UserDefault::getInstance( )->setBoolForKey( u8"INITDATA", false );
+        userDefaultSetup( );
+    }
     std::string getLocalReadPath( std::string const & name )
     {
         auto file = FileUtils::getInstance( );
@@ -173,6 +129,26 @@ namespace User
         if ( !path.empty( ) )
         {
             fileUtil->writeStringToFile( data, path + directory + name );
+        }
+    }
+    void writeDataUserLocal( cocos2d::Data const & data, std::string const & name )
+    {
+        auto fileUtil = FileUtils::getInstance( );
+
+        auto path = fileUtil->getWritablePath( );
+        if ( !path.empty( ) )
+        {
+            fileUtil->writeDataToFile( data, path + name );
+        }
+    }
+    void writeDataUserLocal( cocos2d::Data const & data, std::string const & name, std::string const & directory )
+    {
+        auto fileUtil = FileUtils::getInstance( );
+
+        auto path = fileUtil->getWritablePath( );
+        if ( !path.empty( ) )
+        {
+            fileUtil->writeDataToFile( data, path + directory + name );
         }
     }
 }
