@@ -40,9 +40,6 @@
     <Filter Include="src\User\Live2d">
       <UniqueIdentifier>{02a43562-b573-4160-8a74-72187f9d3386}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\User\ishibashi">
-      <UniqueIdentifier>{56fd8090-a36b-4c7e-9cb7-2bd76c9b2651}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\User\Diary">
       <UniqueIdentifier>{547d4680-e421-43c7-a00a-b3cd3850c051}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,9 @@
     </Filter>
     <Filter Include="src\User\LayerSave">
       <UniqueIdentifier>{f5927665-b9fb-473d-8d2a-3fc22bb026e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\Ishibashi">
+      <UniqueIdentifier>{56fd8090-a36b-4c7e-9cb7-2bd76c9b2651}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -91,10 +91,10 @@
       <Filter>src\User\Diary</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Ishibashi\Layer_ishibashi.cpp">
-      <Filter>src\User\ishibashi</Filter>
+      <Filter>src\User\Ishibashi</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp">
-      <Filter>src\User\ishibashi</Filter>
+      <Filter>src\User\Ishibashi</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp">
       <Filter>src\User\IslandMap</Filter>
@@ -357,10 +357,10 @@
       <Filter>src\User\Diary</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Ishibashi\Layer_ishibashi.h">
-      <Filter>src\User\ishibashi</Filter>
+      <Filter>src\User\Ishibashi</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h">
-      <Filter>src\User\ishibashi</Filter>
+      <Filter>src\User\Ishibashi</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h">
       <Filter>src\User\IslandMap</Filter>
