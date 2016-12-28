@@ -7,7 +7,6 @@
 #include "../SceneManager.h"
 
 USING_NS_CC;
-using namespace experimental;
 
 namespace User
 {
@@ -433,7 +432,7 @@ namespace User
 
     void Layer_meal::buttonAudio( std::string audio_name, int volume )
     {
-        int id = AudioEngine::play2d( "res/sound/SE" + audio_name );
+        int id = experimental::AudioEngine::play2d( "res/sound/SE" + audio_name );
         experimental::AudioEngine::setVolume( id, volume );
     }
 
