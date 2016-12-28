@@ -24,7 +24,7 @@ namespace User
         NovelScript novelScript;
         FunctionScript functionScript;
         VariableScript variableScript;
-        // もらってきたデータを一時的に保存します。
+        // 繧ゅｉ縺｣縺ｦ縺阪◆繝�繝ｼ繧ｿ繧剃ｸ譎ら噪縺ｫ菫晏ｭ倥＠縺ｾ縺吶�
         TagWithData tagWithData;
     };
 }

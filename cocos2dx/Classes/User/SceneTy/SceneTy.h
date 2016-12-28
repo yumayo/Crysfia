@@ -10,7 +10,7 @@ namespace User
     class SceneTy : public SceneBase
     {
     public:
-        cocos2d::Scene* create( ) override;
+        cocos2d::Scene* create( );
     };
 }
 

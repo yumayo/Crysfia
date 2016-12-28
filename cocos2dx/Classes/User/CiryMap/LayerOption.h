@@ -22,7 +22,7 @@ namespace User
     };
 
     /**
-     * ���[�_�����C���[�ɂȂ��Ă���̂ŁA���̂܂�create���邾���ő��v�ł��B
+     * モーダルレイヤーになっているので、そのままcreateするだけで大丈夫です。
      */
     class LayerOption : public LayerBase
     {

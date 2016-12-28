@@ -25,25 +25,25 @@ namespace User
         void makeData( std::string fileName );
         void setNextChild( std::string const& selectName );
     private:
-        // �s���쐬���Ƀm�x���f�[�^�ƃX�N���v�g�f�[�^�����݂��Ă���s���o�Ă����ꍇ�ɁA
-        // �����𕪂��č쐬������A�R�����g���}�����Ă���s��A��s�Ȃǂ�r�����܂��B
+        // 行を作成中にノベルデータとスクリプトデータが混在している行が出てきた場合に、
+        // それらを分けて作成したり、コメントが挿入している行や、空行などを排除します。
         void tidydiness( std::string lineString, size_t lineNumber );
-        // �v���v���Z�b�T���� sys:import(fileName) �̏ꍇ�̂݁A���荞�݂ŕʃt�@�C���������N���܂��B
+        // プリプロセッサ命令 sys:import(fileName) の場合のみ、割り込みで別ファイルをリンクします。
         bool isPreprocess( DebugWithLineData const& debugWithLineData );
     private:
         void import( ArgumentList const& args );
         void beginland( ArgumentList const& args );
         void endland( ArgumentList const& args );
     private:
-        // make���ꂽ�Ƃ��̃t�@�C������ۑ����Ă����܂��B
+        // makeされたときのファイル名を保存しておきます。
         std::string fileName;
-        // �����ɁA�ǂݍ���ł����t�@�C���̒��g���W�J����܂��B
+        // ここに、読み込んできたファイルの中身が展開されます。
         TextChankData chunk;
-        // �����s���Ă���f�[�^���w���܂��B
-        // �`�����N�f�[�^�͊K�w�\���ɂȂ��Ă���̂ŃJ�����g�f�B���N�g����ێ����܂��B
+        // 今実行しているデータを指します。
+        // チャンクデータは階層構造になっているのでカレントディレクトリを保持します。
         TextChankData* work;
     private:
-        // �v���v���Z�X�Ŏ��s�����֐���ۑ����Ă����܂��B
+        // プリプロセスで実行される関数を保存しておきます。
         std::map<std::string, std::function<void( ArgumentList const& )>> preprocess;
     };
 }

@@ -52,7 +52,7 @@ namespace User
         background->setPosition( vo + vs * 0.5 );
 
         /**
-        *  ��ʉ����̃��j���[
+        *  画面下部のメニュー
         */
         auto board = Sprite::create( u8"res/texture/system/board.png" );
         addChild( board );
@@ -73,27 +73,27 @@ namespace User
         }
 
 
-        // �^�C�g���{�^���̐ݒu
+        // タイトルボタンの設置
         auto title = Sprite::create( dir + u8"save.title.png" );
         title->setPosition( background->getContentSize( ).width * 0.5, background->getContentSize( ).height - 140 * scale );
         background->addChild( title );
 
-        // �Z�[�u�Q�[�W������������ׂ�
+        // セーブゲージをたくさん並べる
         auto list = ui::ListView::create( );
         list->setAnchorPoint( Vec2( 0.5, 0.5 ) );
         list->setPosition( vo + background->getContentSize( ) * 0.5 );
         list->setContentSize( Size( panelSize.width * 2,
                                     background->getContentSize( ).height
-                                    - board->getContentSize( ).height * board->getScale( ) //  ���̃��j���[�̕�
-                                    - title->getContentSize( ).height * title->getScale( ) // ��̃^�C�g���̕�
-                                    - 140 * scale // �^�C�g����̌��Ԃ̕�
+                                    - board->getContentSize( ).height * board->getScale( ) //  下のメニューの分
+                                    - title->getContentSize( ).height * title->getScale( ) // 上のタイトルの分
+                                    - 140 * scale // タイトル上の隙間の分
 
         ) );
         background->addChild( list );
 
-        // �Ƃ肠����10�񕪕��ׂ܂��B
-        // ����2����̂�20���̃Z�[�u�f�[�^���쐬�ł��܂��B
-        // 20 + �I�[�g�Z�[�u����21�m�ۂ��Ă����܂��傤�B
+        // とりあえず10列分並べます。
+        // 横に2つあるので20個分のセーブデータを作成できます。
+        // 20 + オートセーブ分で21確保しておきましょう。
         const std::string default_name = u8"system.save.";
         for ( int i = 0, save = 1; i < 10; ++i, save += 2 )
         {
@@ -130,8 +130,8 @@ namespace User
     }
     cocos2d::Node * LayerSave::createModal( )
     {
-        // �ȈՓI�ȃ��[�_�����C���[�ł��B
-        // �����ȉ摜����ʂ����ς��ɓ\�邱�Ƃŋ@�\���Ă��܂��B
+        // 簡易的なモーダルレイヤーです。
+        // 透明な画像を画面いっぱいに貼ることで機能しています。
         std::string dir = u8"res/texture/system/";
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto vo = Director::getInstance( )->getVisibleOrigin( );
@@ -154,7 +154,7 @@ namespace User
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
-        //���j���[�̔w�i
+        //メニューの背景
         auto menuImage = ui::Scale9Sprite::create( u8"res/Image/WindowBase/WinBase_61.png",
                                                    Rect( 0 / scale, 0 / scale,
                                                          120 / scale, 120 / scale ),
@@ -243,9 +243,9 @@ namespace User
             case cocos2d::ui::Widget::TouchEventType::MOVED:
                 break;
             case cocos2d::ui::Widget::TouchEventType::ENDED:
-                addChild( createDialog( u8"�Z�[�u���܂����H",
+                addChild( createDialog( u8"セーブしますか？",
                                         [ name, reload ] {
-                    if ( NovelLayer::screen ) // �T���l�C���摜�������Ԃł����Z�[�u�ł��܂���B
+                    if ( NovelLayer::screen ) // サムネイル画像がある状態でしかセーブできません。
                     {
                         {
                             auto data = FileUtils::getInstance( )->getDataFromFile( FileUtils::getInstance( )->getWritablePath( ) + u8"autosave.json" );
@@ -258,10 +258,10 @@ namespace User
                                 ptr->saveToFile( FileUtils::getInstance( )->getWritablePath( ) + name + u8".png" );
                             }
                         }
-                        {
+                        /*{
                             auto data = FileUtils::getInstance( )->getDataFromFile( FileUtils::getInstance( )->getWritablePath( ) + u8"UserDefault.xml" );
                             writeDataUserLocal( data, name + u8".xml" );
-                        }
+                        }*/
                         reload( );
                     }
 
@@ -285,7 +285,7 @@ namespace User
             case cocos2d::ui::Widget::TouchEventType::MOVED:
                 break;
             case cocos2d::ui::Widget::TouchEventType::ENDED:
-                addChild( createDialog( u8"���[�h���܂����H",
+                addChild( createDialog( u8"ロードしますか？",
                                         [ name, reload ] {
 
                     if ( FileUtils::getInstance( )->isFileExist( FileUtils::getInstance( )->getWritablePath( ) + name + u8".json" ) )

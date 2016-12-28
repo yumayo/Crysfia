@@ -13,17 +13,17 @@ namespace User
         void makeNovelData( );
     private:
         void makeScriptData( );
-        // ���@�`�F�b�N
+        // 文法チェック
         void syntaxCheck( StringArray const& scriptParts );
     private:
-        // �S�Ẵo�b�t�@�[����ɂ��ĕK�v�ȃf�[�^������n���܂��B
+        // 全てのバッファーを空にして必要なデータだけを渡します。
         TagWithData getCleanedData( );
         void cleanUp( );
     private:
-        // ������Ă����f�[�^�����ƂɁA�X�N���v�g�f�[�^��A�m�x���f�[�^�A�f�o�b�O�f�[�^���l�߂��\���̂����܂��B
+        // もらってきたデータをもとに、スクリプトデータや、ノベルデータ、デバッグデータを詰めた構造体を作ります。
         TagWithData tagWithData;
     private:
-        // ������Ă����f�[�^���ꎞ�I�ɕۑ����܂��B
+        // もらってきたデータを一時的に保存します。
         DebugWithLineData debugWithLineData;
     };
 }
