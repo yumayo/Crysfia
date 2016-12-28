@@ -112,7 +112,7 @@ namespace User
 
         const std::string dir = u8"res/texture/days/";
 
-        day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        day = UserDefault::getInstance( )->getIntegerForKey( u8"��" );
 
         std::string path = dir + u8"calendar(" + StringUtils::toString( day ) + u8").png";
         if ( auto calendar = Sprite::create( path ) )
@@ -195,7 +195,7 @@ namespace User
         jsonRead( );
 
         /**
-         *  画面上部のメニュー
+         *  ��ʏ㕔�̃��j���[
          */
         {
             auto board = Sprite::create( u8"res/texture/system/board.png" );
@@ -221,14 +221,14 @@ namespace User
             {
                 heart->setAnchorPoint( Vec2( 0, 0.5 ) );
                 heart->setScale( fitWidth( heart, ( board->getContentSize( ).width - calendar->getContentSize( ).width * 
-                                                    calendar->getScale( ) - 20/*下のずらしている分の10と、間に10pixel開けるためです。*/ * scale) ) );
+                                                    calendar->getScale( ) - 20/*���̂��炵�Ă��镪��10�ƁA�Ԃ�10pixel�J���邽�߂ł��B*/ * scale) ) );
                 heart->setPosition( Vec2( 0, boardPixel.height * 0.5 ) * scale + Vec2( 10, 0 ) * scale );
                 board->addChild( heart );
             }
         }
 
         /**
-         *  画面下部のメニュー
+         *  ��ʉ����̃��j���[
          */
         {
             auto board = Sprite::create( u8"res/texture/system/board.png" );
@@ -287,7 +287,7 @@ namespace User
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
         {
             /**
-             * 強制イベントを読み込みます。
+             * �����C�x���g��ǂݍ��݂܂��B
              */
             for ( auto& value : root[island_name][u8"point.force"] )
             {
@@ -295,7 +295,7 @@ namespace User
                 auto visit = value[u8"visit"].asBool( );
 
                 /**
-                 * 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
+                 * �����C�x���g�̒��ŁA���ǂ̂��̂��������玟�̃t���[���ŁA�����I�Ƀm�x���̃V�[���ɔ�΂��܂��B
                  */
                 if ( !visit )
                 {
@@ -308,7 +308,7 @@ namespace User
             }
 
             /**
-             * 貼り付けるための背景を作成します。
+             * �\��t���邽�߂̔w�i���쐬���܂��B
              */
             auto map = root[island_name][u8"background"].asString( );
             auto background = CityMap::create( )->make( map );
@@ -316,7 +316,7 @@ namespace User
             addChild( background, -1 );
 
             /**
-             * メインシナリオを読み込んで貼り付けていきます。
+             * ���C���V�i���I��ǂݍ���œ\��t���Ă����܂��B
              */
             for ( auto& value : root[island_name][u8"point.main"] )
             {
@@ -350,7 +350,7 @@ namespace User
             }
 
             /**
-             * サブシナリオを読み込んで貼り付けていきます。
+             * �T�u�V�i���I��ǂݍ���œ\��t���Ă����܂��B
              */
             for ( auto& value : root[island_name][u8"point.sub"] )
             {

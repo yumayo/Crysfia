@@ -40,8 +40,8 @@ public:
     void setMotion( std::string name, int no );
     void createModel( std::string dirPath, std::string jsonPath );
     void enableModel( bool enable );
-    // ãƒ¢ãƒ‡ãƒ«ãŒå­˜åœ¨ã™ã‚‹ãªã‚‰ true
-    // å­˜åœ¨ã—ãªã„ãªã‚‰ false
+    // ƒ‚ƒfƒ‹‚ª‘¶İ‚·‚é‚È‚ç true
+    // ‘¶İ‚µ‚È‚¢‚È‚ç false
     bool isExist( );
 private:
     LAppLive2DManager( );

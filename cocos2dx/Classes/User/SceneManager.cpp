@@ -1,22 +1,22 @@
 #include "SceneManager.h"
 #include "LayerBase.h"
 
-// scenarioに使われる変数のサイズなどの初期化。
+// scenario�Ɏg����ϐ��̃T�C�Y�Ȃǂ̏������B
 #include "Novel/OptionalValues.h"
 
-// ユーマヨが管理するシーンを作成します。
+// ���[�}�����Ǘ�����V�[�����쐬���܂��B
 #include "Novel/SceneNovel.h"
 #include "IslandMap/SceneIslandMap.h"
 #include "CiryMap/SceneCityMap.h"
 
-// 小松さんが管理するシーンを作成します。
+// �������񂪊Ǘ�����V�[�����쐬���܂��B
 #include "Breeding/SceneBreeding.h"
 #include "Title/SceneTitle.h"
 
-// 石橋くんが管理するシーンを作成します。
+// �΋����񂪊Ǘ�����V�[�����쐬���܂��B
 #include "Ishibashi/Scene_ishibashi.h"
 
-// 畠山くんが管理するシーンを作成します。
+// ���R���񂪊Ǘ�����V�[�����쐬���܂��B
 #include "Diary/SceneDiary.h"
 
 USING_NS_CC;

@@ -45,13 +45,13 @@ public:
     void draw( live2d::framework::L2DMatrix44& matrix );
     void setViewMatrix( float matrix[16] );
 
-    // 全てのモーションデータを設定する。
+    // �S�Ẵ��[�V�����f�[�^��ݒ肷��B
     int startMotion( std::string group, int no, int priority );
     int startRandomMotion( std::string name, int priority );
 
-    // 表情のアニメーションデータを設定する。
-    // 上のstartMotionと競合はしない。
-    // 一緒のフレームでやっても特に破綻したりはしない。
+    // �\��̃A�j���[�V�����f�[�^��ݒ肷��B
+    // ���startMotion�Ƌ����͂��Ȃ��B
+    // �ꏏ�̃t���[���ł���Ă����ɔj�]������͂��Ȃ��B
     void setExpression( std::string name );
     void setRandomExpression( );
 

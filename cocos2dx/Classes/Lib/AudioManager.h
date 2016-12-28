@@ -27,7 +27,7 @@ private:
 
 public:
     /**
-     * ãƒãƒ£ãƒ³ã‚¯ç•ªå·ã‚’æ•°å­—ã§å…¥åŠ›ã™ã‚‹ã®ã¯ã„ã‘å¥½ã‹ãªã„æ„Ÿã˜ãŒã™ã‚‹ã®ã§enumã§
+     * ƒ`ƒƒƒ“ƒN”Ô†‚ğ”š‚Å“ü—Í‚·‚é‚Ì‚Í‚¢‚¯D‚©‚È‚¢Š´‚¶‚ª‚·‚é‚Ì‚Åenum‚Å
      */
     enum Chunk
     {
@@ -54,38 +54,38 @@ private:
     AudioManager( );
     static AudioManager* _instance;
 
-    // updateå®Ÿè¡Œç”¨
+    // updateÀs—p
     static cocos2d::Scheduler* _scheduler;
 
-    // BGMãƒ•ã‚¡ã‚¤ãƒ«ãƒªã‚¹ãƒˆ
+    // BGMƒtƒ@ƒCƒ‹ƒŠƒXƒg
     std::map<std::string, std::string> _bgmList;
-    // BGMãƒ•ã‚¡ã‚¤ãƒ«åŒºé–“è¨­å®šãƒªã‚¹ãƒˆ
+    // BGMƒtƒ@ƒCƒ‹‹æŠÔİ’èƒŠƒXƒg
     struct BgmLoopParams {
         float startPos;
         float endPos;
         bool isLoopInterval;
     };
     std::map<std::string, BgmLoopParams> _bgmLoopList;
-    // SEãƒ•ã‚¡ã‚¤ãƒ«ãƒªã‚¹ãƒˆ
+    // SEƒtƒ@ƒCƒ‹ƒŠƒXƒg
     std::map<std::string, std::string> _seList;
 
-    // SEç”¨ãƒãƒ£ãƒ³ã‚¯
+    // SE—pƒ`ƒƒƒ“ƒN
     int _chunk[Chunk::End];
 
-    // BGMã¯1ç¨®é¡ã®ã¿
+    // BGM‚Í1í—Ş‚Ì‚İ
     int _bgmId = -1;
-    // åŒã˜ãƒ•ã‚¡ã‚¤ãƒ«åã®å ´åˆã¯ç„¡è¦–
+    // “¯‚¶ƒtƒ@ƒCƒ‹–¼‚Ìê‡‚Í–³‹
     std::string _bgmFileName = "";
 
-    // ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªç®¡ç†ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã¯ãã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+    // ƒI[ƒfƒBƒIŠÇ—ƒtƒ@ƒCƒ‹‚ğg—p‚·‚éê‡‚Í‚»‚Ìƒtƒ@ƒCƒ‹ƒpƒX
     CC_SYNTHESIZE( std::string, _audioListFile, AudioListFile );
 
-    // BGMéŸ³é‡
+    // BGM‰¹—Ê
     float  _bgmVolume;
-    // SEéŸ³é‡
+    // SE‰¹—Ê
     float _seVolume;
 
-    // BGMãƒ•ã‚§ãƒ¼ãƒ‰é–¢é€£
+    // BGMƒtƒF[ƒhŠÖ˜A
     FadeType _fadeCondition;
     float _bgmFadeVolumeFrom;
     float _bgmFadeVolumeTo;
@@ -101,95 +101,95 @@ public:
     static AudioManager* getInstance( );
     static void deleteInstance( );
 
-    // æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å®Ÿè¡Œ
+    // –ˆƒtƒŒ[ƒ€Às
     virtual void update( float dt );
 
-    // ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªç®¡ç†ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
+    // ƒI[ƒfƒBƒIŠÇ—ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
     bool readAudioListFile( std::string const& fileName );
-    // AudioEngineå…¨ã¦ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’å‰Šé™¤ã™ã‚‹
+    // AudioEngine‘S‚Ä‚ÌƒLƒƒƒbƒVƒ…‚ğíœ‚·‚é
     void releaseAll( );
 
-    // BGMã¨SEã®éŸ³é‡ã®åˆæœŸåŒ–
+    // BGM‚ÆSE‚Ì‰¹—Ê‚Ì‰Šú‰»
     void initVolume( float bgmVolume, float seVolume );
 
-    // BGMã®PreLoad
+    // BGM‚ÌPreLoad
     void preloadBgm( std::string const& baseName );
-    // BGMã®å†ç”Ÿ
+    // BGM‚ÌÄ¶
     int playBgm( std::string const& baseName, float fadeTime = 0, bool loop = true );
     int playBgm( std::string const& baseName, float fadeTime, bool loop, float volume );
-    // BGMã‚’ä¸€æ™‚åœæ­¢ã™ã‚‹
+    // BGM‚ğˆê’â~‚·‚é
     void pauseBgm( float fadeTime = 0 );
-    // BGMã‚’ãƒªã‚¸ãƒ¥ãƒ¼ãƒ å†ç”Ÿã™ã‚‹
+    // BGM‚ğƒŠƒWƒ…[ƒ€Ä¶‚·‚é
     void resumeBgm( float fadeTime = 0 );
-    // BGMã‚’åœæ­¢ã™ã‚‹
-    // Arg2 - release : ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ç ´æ£„ã™ã‚‹å ´åˆã¯true
+    // BGM‚ğ’â~‚·‚é
+    // Arg2 - release : ƒLƒƒƒbƒVƒ…‚ğ”jŠü‚·‚éê‡‚Ítrue
     void stopBgm( float fadeTime = 0, bool release = true );
-    // BGMãŒå†ç”Ÿã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹
+    // BGM‚ªÄ¶‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
     bool isPlayingBgm( );
-    // BGMã®éŸ³é‡ã‚’å¤‰æ›´ã™ã‚‹
-    // Arg2 - save : å¤‰æ•°_bgmVolumeã«ä¿å­˜ã™ã‚‹å ´åˆã¯true
+    // BGM‚Ì‰¹—Ê‚ğ•ÏX‚·‚é
+    // Arg2 - save : •Ï”_bgmVolume‚É•Û‘¶‚·‚éê‡‚Ítrue
     void setBgmVolume( float volume, bool save = true );
-    // BGMã®éŸ³é‡ã‚’å–å¾—ã™ã‚‹
+    // BGM‚Ì‰¹—Ê‚ğæ“¾‚·‚é
     float getBgmVolume( );
-    // BGMã®ã‚­ãƒ£ã‚·ãƒ¥ã‚’è§£æ”¾ã™ã‚‹
+    // BGM‚ÌƒLƒƒƒVƒ…‚ğ‰ğ•ú‚·‚é
     void releaseBgm( );
 
-    // åŠ¹æœéŸ³ã®PreLoad
+    // Œø‰Ê‰¹‚ÌPreLoad
     void preloadSe( std::string const& baseName );
-    // åŠ¹æœéŸ³ã‚’å†ç”Ÿã™ã‚‹
-    // Args2 - chunkNo : ãƒãƒ£ãƒ³ã‚¯ã‚’æŒ‡å®šã™ã‚‹ã¨åŒã˜ãƒãƒ£ãƒ³ã‚¯ç•ªå·ãŒæŒ‡å®šã•ã‚ŒãŸå ´åˆã¯ã€å‰ã®éŸ³ã‚’ä¸Šæ›¸ãã™ã‚‹
+    // Œø‰Ê‰¹‚ğÄ¶‚·‚é
+    // Args2 - chunkNo : ƒ`ƒƒƒ“ƒN‚ğw’è‚·‚é‚Æ“¯‚¶ƒ`ƒƒƒ“ƒN”Ô†‚ªw’è‚³‚ê‚½ê‡‚ÍA‘O‚Ì‰¹‚ğã‘‚«‚·‚é
     int playSe( std::string const& baseName, int chunkNo );
     int playSe( std::string const& baseName, int chunkNo, bool loop, float volume );
     int playSe( std::string const& baseName, bool loop = false );
     int playSe( std::string const& baseName, bool loop, float volume );
-    // åŠ¹æœéŸ³ã‚’åœæ­¢ã™ã‚‹
+    // Œø‰Ê‰¹‚ğ’â~‚·‚é
     void stopSe( int soundId );
-    // åŠ¹æœéŸ³ã®éŸ³é‡ã‚’å¤‰æ›´ã™ã‚‹
+    // Œø‰Ê‰¹‚Ì‰¹—Ê‚ğ•ÏX‚·‚é
     void setSeVolume( float volume );
-    // åŠ¹æœéŸ³ã®éŸ³é‡ã‚’å–å¾—ã™ã‚‹
+    // Œø‰Ê‰¹‚Ì‰¹—Ê‚ğæ“¾‚·‚é
     float getSeVolume( );
-    // åŠ¹æœéŸ³ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’è§£æ”¾ã™ã‚‹
+    // Œø‰Ê‰¹‚ÌƒLƒƒƒbƒVƒ…‚ğ‰ğ•ú‚·‚é
     void releaseSe( std::string const& baseName );
 
-    // AudioEngineã‚’è§£æ”¾ã™ã‚‹
+    // AudioEngine‚ğ‰ğ•ú‚·‚é
     void endAudioEngine( );
 
     /**
-     * VOICEã®è¿½åŠ 
-     * SEã¨æ©Ÿæ§‹ã¯åŒã˜
-     * åŸºæœ¬çš„ã«ã¯ãƒœãƒªãƒ¥ãƒ¼ãƒ å·®åˆ¥åŒ–ã‚’å›³ã‚‹ãŸã‚ã®ã‚‚ã®
-     * <!--chunkã¯seã®ã‚‚ã®ã¨å…±æœ‰ã—ã¦ä½¿ã‚ã‚Œã¦ã„ã‚‹ã®ã§æ³¨æ„-->
+     * VOICE‚Ì’Ç‰Á
+     * SE‚Æ‹@\‚Í“¯‚¶
+     * Šî–{“I‚É‚Íƒ{ƒŠƒ…[ƒ€·•Ê‰»‚ğ}‚é‚½‚ß‚Ì‚à‚Ì
+     * <!--chunk‚Íse‚Ì‚à‚Ì‚Æ‹¤—L‚µ‚Äg‚í‚ê‚Ä‚¢‚é‚Ì‚Å’ˆÓ-->
      */
     float _voiceVolume;
     std::map<std::string, std::string> _voiceList;
-     // åŠ¹æœéŸ³ã®PreLoad
+     // Œø‰Ê‰¹‚ÌPreLoad
     void preloadVoice( std::string const& baseName );
-    // åŠ¹æœéŸ³ã‚’å†ç”Ÿã™ã‚‹
-    // Args2 - chunkNo : ãƒãƒ£ãƒ³ã‚¯ã‚’æŒ‡å®šã™ã‚‹ã¨åŒã˜ãƒãƒ£ãƒ³ã‚¯ç•ªå·ãŒæŒ‡å®šã•ã‚ŒãŸå ´åˆã¯ã€å‰ã®éŸ³ã‚’ä¸Šæ›¸ãã™ã‚‹
+    // Œø‰Ê‰¹‚ğÄ¶‚·‚é
+    // Args2 - chunkNo : ƒ`ƒƒƒ“ƒN‚ğw’è‚·‚é‚Æ“¯‚¶ƒ`ƒƒƒ“ƒN”Ô†‚ªw’è‚³‚ê‚½ê‡‚ÍA‘O‚Ì‰¹‚ğã‘‚«‚·‚é
     int playVoice( std::string const& baseName, Chunk chunkNo );
     int playVoice( std::string const& baseName, Chunk chunkNo, bool loop, float volume );
     int playVoice( std::string const& baseName, bool loop = false );
     int playVoice( std::string const& baseName, bool loop, float volume );
-    // åŠ¹æœéŸ³ã‚’åœæ­¢ã™ã‚‹
+    // Œø‰Ê‰¹‚ğ’â~‚·‚é
     void stopVoice( int soundId );
-    // åŠ¹æœéŸ³ã®éŸ³é‡ã‚’å¤‰æ›´ã™ã‚‹
+    // Œø‰Ê‰¹‚Ì‰¹—Ê‚ğ•ÏX‚·‚é
     void setVoiceVolume( float volume );
-    // åŠ¹æœéŸ³ã®éŸ³é‡ã‚’å–å¾—ã™ã‚‹
+    // Œø‰Ê‰¹‚Ì‰¹—Ê‚ğæ“¾‚·‚é
     float getVoiceVolume( );
-    // åŠ¹æœéŸ³ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’è§£æ”¾ã™ã‚‹
+    // Œø‰Ê‰¹‚ÌƒLƒƒƒbƒVƒ…‚ğ‰ğ•ú‚·‚é
     void releaseVoice( std::string const& baseName );
 
 private:
-    // ç’°å¢ƒã«å¿œã˜ã¦æ‹¡å¼µå­ä»˜ããƒ•ã‚¡ã‚¤ãƒ«åã«å¤‰æ›ã™ã‚‹
+    // ŠÂ‹«‚É‰‚¶‚ÄŠg’£q•t‚«ƒtƒ@ƒCƒ‹–¼‚É•ÏŠ·‚·‚é
     std::string getFileName( AudioType type, std::string baseName );
 
-    // pauseBgmã®å®Ÿè¡Œ(fadeãªã—ã€ã¾ãŸã¯updateã«ã‚ˆã‚‹ãƒ•ã‚§ãƒ¼ãƒ‰å¾Œã«å®Ÿè¡Œã•ã‚Œã‚‹)
+    // pauseBgm‚ÌÀs(fade‚È‚µA‚Ü‚½‚Íupdate‚É‚æ‚éƒtƒF[ƒhŒã‚ÉÀs‚³‚ê‚é)
     void pauseBgmEngine( );
 
-    // stopBgmã®å®Ÿè¡Œ(fadeãªã—ã€ã¾ãŸã¯updateã«ã‚ˆã‚‹ãƒ•ã‚§ãƒ¼ãƒ‰å¾Œã«å®Ÿè¡Œã•ã‚Œã‚‹)
+    // stopBgm‚ÌÀs(fade‚È‚µA‚Ü‚½‚Íupdate‚É‚æ‚éƒtƒF[ƒhŒã‚ÉÀs‚³‚ê‚é)
     void stopBgmEngine( bool release = true );
 
-    // ãƒ¢ãƒã‚¤ãƒ«ãƒ‡ãƒã‚¤ã‚¹ã‹ã©ã†ã‹
+    // ƒ‚ƒoƒCƒ‹ƒfƒoƒCƒX‚©‚Ç‚¤‚©
     bool isMobileDevice( );
 };
 

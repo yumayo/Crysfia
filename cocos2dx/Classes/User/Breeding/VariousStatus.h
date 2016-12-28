@@ -1,6 +1,6 @@
 #pragma once
 
-//描画順用ステータス
+//�`�揇�p�X�e�[�^�X
 enum class zOder {
 	BACKGROUND = 0,
 	CHARACTER,
@@ -25,8 +25,8 @@ enum class tabLayer
 	MAX
 };
 
-//メニューステータス
-//追加するときはMAXの上に記述すること
+//���j���[�X�e�[�^�X
+//�ǉ�����Ƃ���MAX�̏�ɋL�q���邱��
 enum class ButtonType {
 	STORY = 0,
 	BREEDING,

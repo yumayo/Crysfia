@@ -62,31 +62,31 @@ namespace User
         void addAuto( );
         void select( std::string const& name );
         void setDelayTime( double delayTime ) { textChunkManager.setDelayTime( delayTime ); }
-        // é¸æŠè‚¢ã§ã‚·ãƒŠãƒªã‚ªã®èª­ã¿è¾¼ã¿åœæ­¢æ©Ÿèƒ½ã®ã‚¹ã‚¤ãƒƒãƒ
+        // ‘I‘ğˆ‚ÅƒVƒiƒŠƒI‚Ì“Ç‚İ‚İ’â~‹@”\‚ÌƒXƒCƒbƒ`
         SwitchBoolean systemStop;
         void click( );
         void next( );
         TextChunkManager& getTextChunkManager( ) { return textChunkManager; }
 
         /**
-        * æœ€å¾Œã«ã‚¯ãƒªãƒƒã‚¯ã—ãŸã¨ãã®ç”»é¢ã‚’ä¿å­˜ã—ã¦ãŠãã¾ã™ã€‚
+        * ÅŒã‚ÉƒNƒŠƒbƒN‚µ‚½‚Æ‚«‚Ì‰æ–Ê‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
         */
         static cocos2d::Image* screen;
     private:
         std::string novelPath;
-        // èª­ã¿è¾¼ã¿æ©Ÿèƒ½ã‚’åœæ­¢ã™ã‚‹ã‹ã©ã†ã‹ã€‚
-        // ãƒ†ã‚­ã‚¹ãƒˆã‚’èª­ã¿è¾¼ã¿é€”ä¸­ã®å ´åˆã¯trueã«ãªã‚Šã¾ã™ã€‚
+        // “Ç‚İ‚İ‹@”\‚ğ’â~‚·‚é‚©‚Ç‚¤‚©B
+        // ƒeƒLƒXƒg‚ğ“Ç‚İ‚İ“r’†‚Ìê‡‚Ítrue‚É‚È‚è‚Ü‚·B
         void readingProceedUpdate( );
         void makeLoadingFeatureOn( );
         void readNextNovel( );
         void textActionStop( );
-        // ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ç©ºã«ã™ã‚‹ã€‚
+        // ƒeƒLƒXƒgƒf[ƒ^‚ğ‹ó‚É‚·‚éB
         void textClear( );
-        // èª­ã¿è¾¼ã‚“ã ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ãƒãƒ™ãƒ«ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è²¼ã‚Šä»˜ã‘ã‚‹ã€‚
+        // “Ç‚İ‚ñ‚¾ƒeƒLƒXƒgƒf[ƒ^‚ğƒmƒxƒ‹ƒŒƒCƒ„[‚É“\‚è•t‚¯‚éB
         void textPasting( );
-        // èª­ã¿è¾¼ã¿ãŒåœæ­¢ã•ã‚Œã‚‹ã¾ã§èª­ã¿è¾¼ã‚€ã‹ã®ã‚¹ã‚¤ãƒƒãƒ
+        // “Ç‚İ‚İ‚ª’â~‚³‚ê‚é‚Ü‚Å“Ç‚İ‚Ş‚©‚ÌƒXƒCƒbƒ`
         SwitchBoolean systemRead;
-        // é«˜é€Ÿã«èª­ã¿é£›ã°ã™æ©Ÿèƒ½ã®ã‚¹ã‚¤ãƒƒãƒ
+        // ‚‘¬‚É“Ç‚İ”ò‚Î‚·‹@”\‚ÌƒXƒCƒbƒ`
         SwitchBoolean readProceed;
         TextLabels textLabels;
         TextChunkManager textChunkManager;
@@ -98,7 +98,7 @@ namespace User
         AutoMode* automode = nullptr;
 
         /**
-         *  ãƒãƒ™ãƒ«ã‚’è¡¨ç¤ºã‚’ã™ã‚‹ç”»åƒã‚’ä¿å­˜ã—ã¾ã™ã€‚
+         *  ƒmƒxƒ‹‚ğ•\¦‚ğ‚·‚é‰æ‘œ‚ğ•Û‘¶‚µ‚Ü‚·B
          */
         cocos2d::Sprite* novelWindow = nullptr;
     };

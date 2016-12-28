@@ -28,7 +28,7 @@ USING_NS_CC;
 LAppModel::LAppModel( )
     :L2DBaseModel( ), modelSetting( nullptr )
 {
-    // ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã®é–‹å§‹æ™‚ã¨çµ‚äº†æ™‚ã®ãƒ­ã‚°ã‚’å‡ºã™ã“ã¨ãŒã§ãã¾ã™
+    // ƒ‚[ƒVƒ‡ƒ“‚ÌŠJn‚ÆI—¹‚ÌƒƒO‚ğo‚·‚±‚Æ‚ª‚Å‚«‚Ü‚·
     //mainMotionMgr->setMotionDebugMode(true);
 
     if ( LAppDefine::DEBUG_LOG )
@@ -212,56 +212,56 @@ void LAppModel::update( )
     dragY = dragMgr->getY( );
 
     //-----------------------------------------------------------------
-    live2DModel->loadParam( );// å‰å›ã‚»ãƒ¼ãƒ–ã•ã‚ŒãŸçŠ¶æ…‹ã‚’ãƒ­ãƒ¼ãƒ‰
+    live2DModel->loadParam( );// ‘O‰ñƒZ[ƒu‚³‚ê‚½ó‘Ô‚ğƒ[ƒh
     if ( mainMotionMgr->isFinished( ) )
     {
-        // ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã®å†ç”ŸãŒãªã„å ´åˆã€å¾…æ©Ÿãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã®ä¸­ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã§å†ç”Ÿã™ã‚‹
+        // ƒ‚[ƒVƒ‡ƒ“‚ÌÄ¶‚ª‚È‚¢ê‡A‘Ò‹@ƒ‚[ƒVƒ‡ƒ“‚Ì’†‚©‚çƒ‰ƒ“ƒ_ƒ€‚ÅÄ¶‚·‚é
         startRandomMotion( MOTION_GROUP_IDLE, PRIORITY_IDLE );
     }
     else
     {
         mainMotionMgr->updateParam( live2DModel );
     }
-    live2DModel->saveParam( );// çŠ¶æ…‹ã‚’ä¿å­˜
+    live2DModel->saveParam( );// ó‘Ô‚ğ•Û‘¶
     //-----------------------------------------------------------------
 
 
-    if ( expressionMgr != nullptr )expressionMgr->updateParam( live2DModel );// è¡¨æƒ…ã§ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æ›´æ–°ï¼ˆç›¸å¯¾å¤‰åŒ–ï¼‰
+    if ( expressionMgr != nullptr )expressionMgr->updateParam( live2DModel );// •\î‚Åƒpƒ‰ƒ[ƒ^XVi‘Š‘Î•Ï‰»j
 
-    //ãƒ‰ãƒ©ãƒƒã‚°ã«ã‚ˆã‚‹å¤‰åŒ–
-    //ãƒ‰ãƒ©ãƒƒã‚°ã«ã‚ˆã‚‹é¡”ã®å‘ãã®èª¿æ•´
-    live2DModel->addToParamFloat( PARAM_ANGLE_X, dragX * 30 );// -30ã‹ã‚‰30ã®å€¤ã‚’åŠ ãˆã‚‹
+    //ƒhƒ‰ƒbƒO‚É‚æ‚é•Ï‰»
+    //ƒhƒ‰ƒbƒO‚É‚æ‚éŠç‚ÌŒü‚«‚Ì’²®
+    live2DModel->addToParamFloat( PARAM_ANGLE_X, dragX * 30 );// -30‚©‚ç30‚Ì’l‚ğ‰Á‚¦‚é
     live2DModel->addToParamFloat( PARAM_ANGLE_Y, dragY * 30 );
     live2DModel->addToParamFloat( PARAM_ANGLE_Z, ( dragX * dragY ) * -30 );
 
-    //ãƒ‰ãƒ©ãƒƒã‚°ã«ã‚ˆã‚‹ä½“ã®å‘ãã®èª¿æ•´
-    live2DModel->addToParamFloat( PARAM_BODY_ANGLE_X, dragX * 10 );// -10ã‹ã‚‰10ã®å€¤ã‚’åŠ ãˆã‚‹
+    //ƒhƒ‰ƒbƒO‚É‚æ‚é‘Ì‚ÌŒü‚«‚Ì’²®
+    live2DModel->addToParamFloat( PARAM_BODY_ANGLE_X, dragX * 10 );// -10‚©‚ç10‚Ì’l‚ğ‰Á‚¦‚é
 
-    //ãƒ‰ãƒ©ãƒƒã‚°ã«ã‚ˆã‚‹ç›®ã®å‘ãã®èª¿æ•´
-    live2DModel->addToParamFloat( PARAM_EYE_BALL_X, dragX );// -1ã‹ã‚‰1ã®å€¤ã‚’åŠ ãˆã‚‹
+    //ƒhƒ‰ƒbƒO‚É‚æ‚é–Ú‚ÌŒü‚«‚Ì’²®
+    live2DModel->addToParamFloat( PARAM_EYE_BALL_X, dragX );// -1‚©‚ç1‚Ì’l‚ğ‰Á‚¦‚é
     live2DModel->addToParamFloat( PARAM_EYE_BALL_Y, dragY );
 
-    // å‘¼å¸ãªã©
+    // ŒÄ‹z‚È‚Ç
     long timeMSec = UtSystem::getUserTimeMSec( ) - startTimeMSec;
     double t = ( timeMSec / 1000.0 ) * 2 * 3.14159;//2*Pi*t
 
-    live2DModel->addToParamFloat( PARAM_ANGLE_X, (float)( 15 * sin( t / 6.5345 ) ), 0.5f );// -15 ~ +15 ã¾ã§å‘¨æœŸçš„ã«åŠ ç®—ã€‚å‘¨æœŸã¯ä»–ã¨ãšã‚‰ã™ã€‚
+    live2DModel->addToParamFloat( PARAM_ANGLE_X, (float)( 15 * sin( t / 6.5345 ) ), 0.5f );// -15 ~ +15 ‚Ü‚ÅüŠú“I‚É‰ÁZBüŠú‚Í‘¼‚Æ‚¸‚ç‚·B
     live2DModel->addToParamFloat( PARAM_ANGLE_Y, (float)( 8 * sin( t / 3.5345 ) ), 0.5f );
     live2DModel->addToParamFloat( PARAM_ANGLE_Z, (float)( 10 * sin( t / 5.5345 ) ), 0.5f );
     live2DModel->addToParamFloat( PARAM_BODY_ANGLE_X, (float)( 4 * sin( t / 15.5345 ) ), 0.5f );
-    live2DModel->setParamFloat( PARAM_BREATH, (float)( 0.5f + 0.5f * sin( t / 3.2345 ) ), 1 );// 0~1 ã¾ã§å‘¨æœŸçš„ã«è¨­å®šã€‚ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ä¸Šæ›¸ãã€‚
+    live2DModel->setParamFloat( PARAM_BREATH, (float)( 0.5f + 0.5f * sin( t / 3.2345 ) ), 1 );// 0~1 ‚Ü‚ÅüŠú“I‚Éİ’èBƒ‚[ƒVƒ‡ƒ“‚ğã‘‚«B
 
 
-    if ( physics != nullptr )physics->updateParam( live2DModel );// ç‰©ç†æ¼”ç®—ã§ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æ›´æ–°
+    if ( physics != nullptr )physics->updateParam( live2DModel );// •¨—‰‰Z‚Åƒpƒ‰ƒ[ƒ^XV
 
-    // ãƒªãƒƒãƒ—ã‚·ãƒ³ã‚¯ã®è¨­å®š
+    // ƒŠƒbƒvƒVƒ“ƒN‚Ìİ’è
     if ( lipSync )
     {
-        float value = 0;// ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ ã§ãƒªãƒƒãƒ—ã‚·ãƒ³ã‚¯ã‚’è¡Œã†å ´åˆã€ã‚·ã‚¹ãƒ†ãƒ ã‹ã‚‰éŸ³é‡ã‚’å–å¾—ã—ã¦0ï½1ã®ç¯„å›²ã§å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚
+        float value = 0;// ƒŠƒAƒ‹ƒ^ƒCƒ€‚ÅƒŠƒbƒvƒVƒ“ƒN‚ğs‚¤ê‡AƒVƒXƒeƒ€‚©‚ç‰¹—Ê‚ğæ“¾‚µ‚Ä0`1‚Ì”ÍˆÍ‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B
         live2DModel->setParamFloat( PARAM_MOUTH_OPEN_Y, value, 0.8f );
     }
 
-    // ãƒãƒ¼ã‚ºã®è¨­å®š
+    // ƒ|[ƒY‚Ìİ’è
     if ( pose != nullptr )pose->updateParam( live2DModel );
 
     live2DModel->update( );
@@ -296,7 +296,7 @@ int LAppModel::startMotion( std::string group, int no, int priority )
         path = modelHomeDir + path;
         motion = loadMotion( nullptr, path.c_str( ) );
 
-        autoDelete = true;// çµ‚äº†æ™‚ã«ãƒ¡ãƒ¢ãƒªã‹ã‚‰å‰Šé™¤
+        autoDelete = true;// I—¹‚Éƒƒ‚ƒŠ‚©‚çíœ
     }
 
     motion->setFadeIn( modelSetting->getMotionFadeIn( group, no ) );
@@ -349,26 +349,26 @@ void LAppModel::draw( live2d::framework::L2DMatrix44& matrix )
 
 
 /*
- * å½“ãŸã‚Šåˆ¤å®šã¨ã®ç°¡æ˜“ãƒ†ã‚¹ãƒˆã€‚
- * æŒ‡å®šIDã®é ‚ç‚¹ãƒªã‚¹ãƒˆã‹ã‚‰ãã‚Œã‚‰ã‚’å«ã‚€æœ€å¤§ã®çŸ©å½¢ã‚’è¨ˆç®—ã—ã€ç‚¹ãŒãã“ã«å«ã¾ã‚Œã‚‹ã‹åˆ¤å®š
+ * “–‚½‚è”»’è‚Æ‚ÌŠÈˆÕƒeƒXƒgB
+ * w’èID‚Ì’¸“_ƒŠƒXƒg‚©‚ç‚»‚ê‚ç‚ğŠÜ‚ŞÅ‘å‚Ì‹éŒ`‚ğŒvZ‚µA“_‚ª‚»‚±‚ÉŠÜ‚Ü‚ê‚é‚©”»’è
  *
  */
 bool LAppModel::hitTest( std::string pid, float testX, float testY )
 {
-    if ( alpha < 1 )return false;// é€æ˜æ™‚ã¯å½“ãŸã‚Šåˆ¤å®šãªã—ã€‚
+    if ( alpha < 1 )return false;// “§–¾‚Í“–‚½‚è”»’è‚È‚µB
     int len = modelSetting->getHitAreasNum( );
 
-    // å…¨ã¦ã®å½“ãŸã‚Šåˆ¤å®šã¨ç·å½“ã‚Šã§åˆ¤æ–­ã—ã¾ã™ã€‚
+    // ‘S‚Ä‚Ì“–‚½‚è”»’è‚Æ‘“–‚è‚Å”»’f‚µ‚Ü‚·B
     for ( int i = 0; i < len; i++ )
     {
-        // ãƒ’ãƒƒãƒˆåˆ¤å®šã®åå‰ã¨ä¸€è‡´ã™ã‚‹ã¨ã“ã‚ã¨
+        // ƒqƒbƒg”»’è‚Ì–¼‘O‚Æˆê’v‚·‚é‚Æ‚±‚ë‚Æ
         if ( modelSetting->getHitAreaName( i ) == pid )
         {
             std::string drawID = modelSetting->getHitAreaID( i );
             return hitTestSimple( drawID.c_str( ), testX, testY );
         }
     }
-    return false;// å­˜åœ¨ã—ãªã„å ´åˆã¯false
+    return false;// ‘¶İ‚µ‚È‚¢ê‡‚Ífalse
 }
 
 

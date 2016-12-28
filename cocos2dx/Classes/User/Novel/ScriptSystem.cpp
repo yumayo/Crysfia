@@ -189,8 +189,8 @@ namespace User
         {
             std::string variable = args[0];
             std::string humanName = variable;
-            auto pos = variable.find( u8"åå‰" );
-            if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"åå‰" ).size( ) );
+            auto pos = variable.find( u8"–¼‘O" );
+            if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"–¼‘O" ).size( ) );
 
             REGIST_VARIABLE( variable, new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" ) );
         }

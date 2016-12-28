@@ -17,11 +17,11 @@ namespace User
         REGIST_FUNC( ScriptLive2d, in );
         REGIST_FUNC( ScriptLive2d, out );
 
-        REGIST_FUNC_NAME( ScriptLive2d, normal, u8"æ™®é€š" );
-        REGIST_FUNC_NAME( ScriptLive2d, rejoice, u8"å–œã¶" );
-        REGIST_FUNC_NAME( ScriptLive2d, sorrow, u8"æ³£ã" );
-        REGIST_FUNC_NAME( ScriptLive2d, getSurprise, u8"é©šã" );
-        REGIST_FUNC_NAME( ScriptLive2d, getAngry, u8"æ€’ã‚‹" );
+        REGIST_FUNC_NAME( ScriptLive2d, normal, u8"•’Ê" );
+        REGIST_FUNC_NAME( ScriptLive2d, rejoice, u8"Šì‚Ô" );
+        REGIST_FUNC_NAME( ScriptLive2d, sorrow, u8"‹ƒ‚­" );
+        REGIST_FUNC_NAME( ScriptLive2d, getSurprise, u8"‹Á‚­" );
+        REGIST_FUNC_NAME( ScriptLive2d, getAngry, u8"“{‚é" );
 
         REGIST_FUNC( ScriptLive2d, touchon );
         REGIST_FUNC( ScriptLive2d, touchoff );
@@ -49,31 +49,31 @@ namespace User
     SCRIPT( ScriptLive2d::normal )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"æ™®é€š" );
+        manager->setExpression( u8"•’Ê" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 7 );
     }
     SCRIPT( ScriptLive2d::rejoice )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"ãƒ‹ã‚³ãƒ‹ã‚³" );
+        manager->setExpression( u8"ƒjƒRƒjƒR" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 8 );
     }
     SCRIPT( ScriptLive2d::sorrow )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"ã—ã‚‡ã‚“ã¼ã‚Š" );
+        manager->setExpression( u8"‚µ‚å‚ñ‚Ú‚è" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 5 );
     }
     SCRIPT( ScriptLive2d::getSurprise )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"é©šã" );
+        manager->setExpression( u8"‹Á‚­" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 0 );
     }
     SCRIPT( ScriptLive2d::getAngry )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"æ€’ã‚‹" );
+        manager->setExpression( u8"“{‚é" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 4 );
     }
     SCRIPT( ScriptLive2d::touchon )

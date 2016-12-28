@@ -24,14 +24,14 @@ namespace User
     {
         while ( delayTime == 0.0 )
         {
-            // ãƒ†ã‚­ã‚¹ãƒˆã‚’èª­ã¿å§‹ã‚ã¾ã™ã€‚
+            // ƒeƒLƒXƒg‚ð“Ç‚ÝŽn‚ß‚Ü‚·B
             if ( !textPartyRead( ) )
             {
                 if ( novelEndCallBack ) novelEndCallBack( );
                 break;
             }
 
-            // èª­ã¿è¾¼ã¿çµ‚äº†ãªã‚‰
+            // “Ç‚Ýž‚ÝI—¹‚È‚ç
             if ( work->isReadFinished( ) )
             {
                 if ( readEndCallBack ) readEndCallBack( );

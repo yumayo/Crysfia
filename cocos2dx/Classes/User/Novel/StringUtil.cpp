@@ -15,7 +15,7 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0.0 == ret && s == endptr ) )
         {
-            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
+            throw( "–³Œø‚È”’l‚Å‚·B" );
         }
         return ret;
     }
@@ -30,7 +30,7 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0 == ret && s == endptr ) )
         {
-            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
+            throw( "–³Œø‚È”’l‚Å‚·B" );
         }
         return ret;
     }
@@ -61,7 +61,7 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0.0F == ret && s == endptr ) )
         {
-            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
+            throw( "–³Œø‚È”’l‚Å‚·B" );
         }
         return ret;
     }

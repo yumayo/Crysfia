@@ -3,7 +3,7 @@
 
 # include "cocos2d.h"
 #include "../LayerBase.h"
-//繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ莉ｮ鄂ｮ縺咲畑繝ｬ繧､繝､繝ｼ
+//キャラクター仮置き用レイヤー
 namespace User
 {
     class TemporaryCharacter : public LayerBase
