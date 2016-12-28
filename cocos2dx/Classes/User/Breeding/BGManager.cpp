@@ -1,6 +1,6 @@
 #include "BGManager.h"
-#include "cocos2d/external/json/rapidjson.h"
-#include "cocos2d/external/json/document.h"
+#include "external/json/rapidjson.h"
+#include "external/json/document.h"
 #include "audio/include/AudioEngine.h"
 USING_NS_CC;
 using namespace experimental;

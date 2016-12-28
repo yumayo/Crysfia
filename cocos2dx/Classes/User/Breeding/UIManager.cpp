@@ -4,8 +4,8 @@
 #include "FGManager.h"
 
 #include "../SceneManager.h"
-#include "cocos2d/external/json/rapidjson.h"
-#include "cocos2d/external/json/document.h"
+#include "external/json/rapidjson.h"
+#include "external/json/document.h"
 
 #include "LayerCleaning.h"
 #include "../Diary/LayerDiary.h"

@@ -26,7 +26,7 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        Islands staying_island = (Islands)UserDefault::getInstance( )->getIntegerForKey( u8"滞在中の島" );
+        Islands staying_island = (Islands)UserDefault::getInstance( )->getIntegerForKey( u8"貊槫惠荳ｭ縺ｮ蟲ｶ" );
 
         std::vector<int> days =
         {
@@ -34,15 +34,15 @@ namespace User
         };
         std::vector<std::string> point =
         {
-            u8"無名の島",
-            u8"ラシャス島",
-            u8"ヒャルキシ島",
-            u8"アイクラ島",
+            u8"辟｡蜷阪�ｮ蟲ｶ",
+            u8"繝ｩ繧ｷ繝｣繧ｹ蟲ｶ",
+            u8"繝偵Ε繝ｫ繧ｭ繧ｷ蟲ｶ",
+            u8"繧｢繧､繧ｯ繝ｩ蟲ｶ",
         };
 
         int sum = 0;
         for ( int i = Islands::none; i <= staying_island; ++i ) sum += days[i];
-        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"譌･" );
         if ( day <= sum )
         {
             /* nothing */
@@ -50,7 +50,7 @@ namespace User
         else if ( staying_island < Islands::aikura )
         {
             staying_island = Islands( staying_island + 1 );
-            UserDefault::getInstance( )->setIntegerForKey( u8"滞在中の島", staying_island );
+            UserDefault::getInstance( )->setIntegerForKey( u8"貊槫惠荳ｭ縺ｮ蟲ｶ", staying_island );
         }
 
         scheduleOnce( [ = ] ( float d ) { SceneManager::createCityMap( point[staying_island] ); }, 0.016F, std::string( u8"scene" ) );

@@ -115,9 +115,10 @@ namespace User
                 break;
             case EventListenerGesture::SwipeDirection::UP:
                 /**
-                 * �X���C�v��������ɂ��ꂽ�Ƃ��̂݁A���j���[��\��������B
-                 * ���łɕ\������Ă���ꍇ�͕\�����Ȃ��B
+                 * スワイプが上方向にされたときのみ、メニューを表示させる。
+                 * すでに表示されている場合は表示しない。
                  */
+
                 if ( !functions )
                 {
                     createFlickCircle( );

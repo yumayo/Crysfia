@@ -5,8 +5,8 @@
 
 # include <string>
 
-// �ϒ��z��ɑΉ�����create�֐������܂��B
-// ���g��CREATE_FUNC�Ɠ����ł��B
+// 可変長配列に対応したcreate関数を作ります。
+// 中身はCREATE_FUNCと同じです。
 #define CREATE_ARGS_FUNC(__TYPE__) \
 template <class... Args> \
 static __TYPE__* create(Args... args) \
@@ -34,11 +34,11 @@ namespace User
     public:
         LayerBase( );
         virtual ~LayerBase( );
-        // init�֐��̌�ɌĂ΂�܂��B
-        // setup����getLayer���g����悤�ɂȂ�܂��B
+        // init関数の後に呼ばれます。
+        // setupからgetLayerが使えるようになります。
         virtual void setup( );
     public:
-        // ���̊֐��ŃV�[���ɒǉ�����Ă���S�Ẵ��C���[�ɃA�N�Z�X�ł��܂��B
+        // この関数でシーンに追加されている全てのレイヤーにアクセスできます。
         template<class LayerClass>
         LayerClass* getLayer( );
     };

@@ -1,4 +1,4 @@
-﻿#include "TextChunk.h"
+#include "TextChunk.h"
 
 #include "ScriptStaticData.h"
 #include "ScriptSystem.h"

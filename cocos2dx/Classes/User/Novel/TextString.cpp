@@ -21,29 +21,29 @@ namespace User
     }
     void TextString::actionAndCallfuncStart( std::function<void( )> const & actionCallfunc )
     {
-         // —áŠOˆ—
-         // ‹ós‚¾‚Á‚½ê‡•¶š—ñ©‘Ì‚ª‚È‚¢‚½‚ß‚»‚ÌŸ‚Ìs‚ª‘¶İ‚µ‚Ä‚¢‚Ä‚àAƒR[ƒ‹ƒoƒbƒNŒÄ‚Ño‚µ‚ª‚Å‚«‚¸•\¦‚Å‚«‚È‚¢‚½‚ßB
+         // ä¾‹å¤–å‡¦ç†
+         // ç©ºè¡Œã ã£ãŸå ´åˆæ–‡å­—åˆ—è‡ªä½“ãŒãªã„ãŸã‚ãã®æ¬¡ã®è¡ŒãŒå­˜åœ¨ã—ã¦ã„ã¦ã‚‚ã€ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‘¼ã³å‡ºã—ãŒã§ããšè¡¨ç¤ºã§ããªã„ãŸã‚ã€‚
         if ( text == u8"" )
         {
             actionCallfunc( );
             return;
         }
 
-        // •¶š”(ÅŒã‚Ì•¶š‚ğŠÜ‚Ü‚È‚¢)
+        // æ–‡å­—æ•°(æœ€å¾Œã®æ–‡å­—ã‚’å«ã¾ãªã„)
         int stringIndex = label->getStringLength( ) - 1;
 
-        // ÅŒã‚Ì•¶šˆÈŠO‚Í’Êí‚Ìˆ—B
+        // æœ€å¾Œã®æ–‡å­—ä»¥å¤–ã¯é€šå¸¸ã®å‡¦ç†ã€‚
         setActionStart( stringIndex );
 
-        // ˆê”ÔÅŒã‚Ì•¶š‚¾‚¯“Á•Êˆ—
-        // Ÿ‚Ì•¶š—ñ‚ÌƒAƒNƒVƒ‡ƒ“‚ğÅŒã‚Ì•¶š‚ª•\¦‚³‚ê‚½Œã‚Én‚ß‚Ü‚·B
+        // ä¸€ç•ªæœ€å¾Œã®æ–‡å­—ã ã‘ç‰¹åˆ¥å‡¦ç†
+        // æ¬¡ã®æ–‡å­—åˆ—ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’æœ€å¾Œã®æ–‡å­—ãŒè¡¨ç¤ºã•ã‚ŒãŸå¾Œã«å§‹ã‚ã¾ã™ã€‚
         auto oneString = label->getLetter( stringIndex );
         if ( oneString )
         {
             oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * stringIndex ),
                                                     FadeIn::create( OptionalValues::readOutSpeed ),
                                                     CallFunc::create( [ = ] { actionCallfunc( ); } ),
-                                                    nullptr ) )->setTag( stringIndex ); // action‚É‚Í‰½•¶š–Ú‚©‚Ìî•ñ‚ğ“ü‚ê‚Ä‚¨‚«‚Ü‚·B
+                                                    nullptr ) )->setTag( stringIndex ); // actionã«ã¯ä½•æ–‡å­—ç›®ã‹ã®æƒ…å ±ã‚’å…¥ã‚Œã¦ãŠãã¾ã™ã€‚
         }
     }
     void TextString::actionStop( )

@@ -16,14 +16,14 @@ namespace User
         SCRIPT( in );
         SCRIPT( out );
     public:
-        // �\��Ɋւ��X�N���v�g�ł��B
+        // 表情に関わるスクリプトです。
         SCRIPT( normal );
         SCRIPT( rejoice );
         SCRIPT( sorrow );
         SCRIPT( getSurprise );
         SCRIPT( getAngry );
-        SCRIPT( �^�ʖڂȊ� );
-        SCRIPT( �Y��ł�� );
+        SCRIPT( 真面目な顔 );
+        SCRIPT( 悩んでる顔 );
     public:
         SCRIPT( touchon );
         SCRIPT( touchoff );

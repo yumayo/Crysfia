@@ -34,11 +34,11 @@ namespace User
     }
     void userDefaultLoading( std::string const& name )
     {
-        CC_ASSERT( !"–¢À‘•B" );
+        CC_ASSERT( !"æœªå®Ÿè£…ã€‚" );
     }
     void userDefaultSaveing( std::string const& name )
     {
-        CC_ASSERT( !"–¢À‘•B" );
+        CC_ASSERT( !"æœªå®Ÿè£…ã€‚" );
     }
     void userDefaultSetup( )
     {
