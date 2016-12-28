@@ -12,6 +12,8 @@
 #include "BackLogLayer.h"
 #include "HeartLayer.h"
 #include "Live2dLayer.h"
+#include "FlickFunctionLayer.h"
+#include "ItemLayer.h"
 
 #include "ScriptSystem.h"
 
@@ -33,6 +35,8 @@ namespace User
         scene->addChild( createLayer<NameLayer>( ), (int)Tag::Name );
         scene->addChild( createLayer<HeartLayer>( ), (int)Tag::Heart );
         scene->addChild( createLayer<SelectLayer>( ), (int)Tag::Select );
+        scene->addChild( createLayer<ItemLayer>( ), (int)Tag::ItemLayer );
+        scene->addChild( createLayer<FlickFunctionLayer>( ), (int)Tag::FlickFunction );
         scene->addChild( createLayer<BackLogLayer>( ), (int)Tag::BackLog );
 
         // システムレイヤーの登録
@@ -40,8 +44,17 @@ namespace User
         auto system = createLayer<SystemLayer>( );
         scene->addChild( system, (int)Tag::System );
         auto script = new ScriptSystem( system );
-        REGIST_VARIABLE( u8"sys", script );
         script->setup( );
+        REGIST_VARIABLE( u8"sys", script );
+
+        if ( auto sprite = Sprite::create( ) )
+        {
+            sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
+            sprite->setAnchorPoint( Vec2( 0, 0 ) );
+            sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
+            sprite->runAction( Sequence::create( FadeOut::create( 1.0F ), RemoveSelf::create( ), nullptr ) );
+            scene->addChild( sprite, 20000 );
+        }
 
         return scene;
     }

@@ -1,0 +1,9 @@
+@sys:l
+@sys:item(服A)
+@sys:l
+@sys:voice(first)
+@first:play(01)
+@first:play(02)
+@first:play(03)
+@sys:bgm( kokyou.wav )
+@sys:l

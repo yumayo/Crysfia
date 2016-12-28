@@ -8,20 +8,19 @@ using namespace std;
 
 namespace User
 {
-    LayerDiary::LayerDiary( )
-    {
-        
-    }
-    LayerDiary::~LayerDiary( )
-    {
-		
-    }
+	LayerDiary::LayerDiary()
+	{
+
+	}
+	LayerDiary::~LayerDiary()
+	{
+
+	}
 
 	bool LayerDiary::init() {
 		if (!Layer::init()) {
 			return false;
 		}
-
 
 		// 画面サイズを取得
 		Size winSize = Director::getInstance()->getVisibleSize();
@@ -32,149 +31,122 @@ namespace User
 		// バックグランドカラー第2引数は表示順
 		this->addChild(background, 0);
 
-		// ゲームスタートボタン
-		createGameStartButton();
-
-
 		// リストビューの作成
 		Size visibleSize = Director::getInstance()->getVisibleSize();
 		Vec2 origin = Director::getInstance()->getVisibleSize();
-		
-		auto listView = cocos2d::ui::ListView::create();
-		listView->setContentSize(Size(250, 500));
+
+		listView = cocos2d::ui::ListView::create();
+		listView->setContentSize(Size(700, 800));
 		listView->setPosition((visibleSize - listView->getContentSize()) / 2);
 		listView->setDirection(ui::ScrollView::Direction::VERTICAL);
 		listView->setBounceEnabled(true);
+		listView->setTag(0);
 		this->addChild(listView);
-		
-		// 30つのコンテンツを作成
-		for (int i = 0; i <= 30; i++) {
-			// レイアウトに表示するボタンを作成
-			
-			menuButtons.push_back(ui::Button::create("res/image/WindowBase/WinBase_8.png", "res/image/WindowBase/WinBase_9.png"));
-			menuButtons[i]->setScale9Enabled(true);
-			menuButtons[i]->setContentSize(Size(240, 60));
-			menuButtons[i]->setPosition(menuButtons[i]->getContentSize() / 2);
-			menuButtons[i]->setTitleFontSize(20);
-			menuButtons[i]->setTitleText(StringUtils::format("Button No: %d", i));
 
-			menuButtons[i]->addTouchEventListener([=](Ref* pSender, ui::Button::TouchEventType type) {
-			
-				switch (type)
-				{
-				case cocos2d::ui::Widget::TouchEventType::BEGAN:
-					if (pSender == menuButtons[i]) {
-						selectDiary(i + 1);
-					}
-					break;
-				case cocos2d::ui::Widget::TouchEventType::MOVED:
-					break;
-				case cocos2d::ui::Widget::TouchEventType::ENDED:
-					break;
-				case cocos2d::ui::Widget::TouchEventType::CANCELED:
-					break;
-				default:
-					break;
-				}
-			});
+		// ボタンの生成
+		for (int i = 0; i < 6; ++i)
+		{
+			auto node = ui::Layout::create();
+			node->setTag(i);
+			for (int k = 0; k < 3; k++)
+			{
+				auto button = ui::Button::create("res/Image/WindowBase/WinBase_8.png", "res/Image/WindowBase/WinBase_9.png");
+				node->addChild(button);
+				button->setTag(i);
+				button->setName(StringUtils::format("miku_%d", k));
+				button->setPosition(Vec2(150 + k * 200, 100));
+				button->addTouchEventListener(CC_CALLBACK_2(LayerDiary::touchEvent, this));
 
-			//menuButtons[i]->setScale(0.5);
-			// x,y座標をi * とかして調整する
-			//menuButtons[i]->setPosition(Vec2(250, 800 - (150 * i)));
-			//this->addChild(menuButtons[i]);
-
-			// レイアウトを作成
-			auto layout = ui::Layout::create();
-			layout->setContentSize(menuButtons[i]->getContentSize());
-			layout->addChild(menuButtons[i],1,i);
-			listView->addChild(layout);
-
-
-			//menuButtons[i]->addTouchEventListener(CC_CALLBACK_2(touchEvent, this));
-			Sprite* bgsprite = Sprite::create("res/Image/bg.jpg");
-			bgsprite->setContentSize(winSize);
-			bgsprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-			this->addChild(bgsprite);
+				node->setContentSize(Size(visibleSize.width, button->getContentSize().height + 100));
+			}
+			listView->addChild(node);
 		}
 
-		//listView->addEventListener(CC_CALLBACK_2(LayerDiary::touchEvent, this));
+		// 日記を開いているかどうか
+		flagDiary = false;
 
-        {
-            auto visibleSize = Director::getInstance( )->getVisibleSize( );
-            auto origin = Director::getInstance( )->getVisibleOrigin( );
 
-            auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
-            this->addChild( button );
+		// 戻るボタンの生成
+		{
+			auto scale = Director::getInstance()->getContentScaleFactor();
 
-            auto tar = Size( 128, 128 );
-            auto con = button->getContentSize( );
-            auto sca = tar.height / con.height;
-            button->setScale( sca, sca );
-            button->setPosition( origin + tar / 2.0 );
-            button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
-            {
-                if ( type == ui::Widget::TouchEventType::ENDED )
-                {
-                    SceneManager::createBreeding( );
-                }
-            } );
-
-        }
+			auto button = ui::Button::create(u8"res/texture/system/backbutton.png");
+			addChild(button);
+			button->setScale(0.5, 0.5);
+			button->setAnchorPoint(Vec2(0, 0));
+			button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type)
+			{
+				if (type == ui::Widget::TouchEventType::ENDED)
+				{
+					SceneManager::createBreeding();
+					
+				}
+			});
+		}
 
 		return true;
 	}
 
-	void LayerDiary::createGameStartButton() {
-		// 画面サイズを取得
-		//auto winSize = Director::getInstance()->getVisibleSize();
+	// ボタンをタッチしたときの反応
+	void LayerDiary::touchEvent(Ref *pSender, ui::Widget::TouchEventType type) {
 
-		//for (int i = 0; i < MenuType::MAX; i++) {
-		//	menuButtons.push_back(ui::Button::create("res/miku_off.png"));
-		//	menuButtons[i]->setScale(0.5);
-		//	// x,y座標をi * とかして調整する
-		//	menuButtons[i]->setPosition(Vec2(250, 800 - (150 * i)));
-		//	this->addChild(menuButtons[i]);
+		if (type == ui::Widget::TouchEventType::BEGAN) {
+			auto button = ui::Button::create("res/Image/WindowBase/WinBase_8.png");
+			auto leftButton = ui::Button::create("res/texture/left-button.png");
+			auto rightButton = ui::Button::create("res/texture/left-button.png");
+			auto l = getChildByTag(0);
+			for (int i = 0; i < 6; i++)
+			{
+				auto n = l->getChildByTag(i);
+				for (int k = 0; k < 3; k++)
+				{
+					auto c = n->getChildByTag(k);
+					//log("%d", n->getTag());
+					//log("%d", c->getTag());
+					if (pSender == c) {
+						selectDiary(c->getName());
+						log("%s", c->getName());
+					}
+				}
+			}
 
-		//}
+			if (!flagDiary) {
 
-	}
+				button->setPosition(Vec2(150, 100));
+				button->setTitleText("return");
+				button->setTitleFontSize(60);
+				button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type)
+				{
+					if (type == ui::Widget::TouchEventType::ENDED)
+					{
+						SceneManager::createDiary();
+					}
+				});
+				this->addChild(button);
 
-	void LayerDiary::selectedItemEvent(Ref* pSender, cocos2d::ui::ListView::EventType type) {
-		switch (type)
-		{
-		case cocos2d::ui::ListView::EventType::ON_SELECTED_ITEM_START:
-		{
-			auto listView = static_cast<ui::ListView*>(pSender);
-			CCLOG("Select Item Start Index = %d", listView->getCurSelectedIndex());
-			break;
+				leftButton->setPosition(Vec2(350, 100));
+				leftButton->setScale(0.1);
+				this->addChild(leftButton);
+
+				rightButton->setPosition(Vec2(600, 100));
+				rightButton->setScale(0.1);
+				rightButton->setRotation(180);
+				this->addChild(rightButton);
+
+				flagDiary = true;
+			}
 		}
-		case cocos2d::ui::ListView::EventType::ON_SELECTED_ITEM_END:
-		{
-			auto listView = static_cast<ui::ListView*>(pSender);
-			CCLOG("Select Child End Index = %d", listView->getCurSelectedIndex());
-			break;
-		}
-		default:
-			break;
-		}
-
 	}
 
-	void LayerDiary::touch_feature() {
+	// ボタンをタッチされたらこれで画像を描画
+	void LayerDiary::selectDiary(std::string _name) {
 
-	}
-
-	void LayerDiary::touchEvent(Ref * pSneder, cocos2d::ui::TouchEventType type) {
-		//menuButtons[0]->setTitleText("Touch");
-
-			
-	}
-
-	void LayerDiary::selectDiary(int num) {
-		auto sprite = Sprite::create(StringUtils::format("res/Image/WindowBase/WinBase_%d.png", num));
+		auto sprite = Sprite::create(StringUtils::format("res/texture/home/%s.png", _name.c_str() ));
+		sprite->setPosition(Vec2(200, 500));
 		this->addChild(sprite);
+
+		flagDiary = false;
 	}
 
-
-
+	
 }

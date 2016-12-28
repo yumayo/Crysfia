@@ -2,6 +2,10 @@
 
 #include "OptionalValues.h"
 
+#include "../TouchiEvent/EventListenerGesture.h"
+
+#include "ScriptStaticData.h"
+
 USING_NS_CC;
 
 namespace User
@@ -22,16 +26,24 @@ namespace User
     }
     void NameLayer::setup( )
     {
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
-        auto visibleSize = Director::getInstance( )->getVisibleSize( );
-        Rect rect = Rect( 0, 0, visibleSize.width, OptionalValues::lineViewSize );
-        Sprite* square = Sprite::create( );
-        square->setColor( Color3B( 0, 0, 0 ) );
-        square->setOpacity( 128 );
-        square->setTextureRect( rect );
-        auto pos = origin + Vec2( 0, OptionalValues::lineViewSize + OptionalValues::stringViewSize.y );
-        square->setPosition( pos + rect.size / 2 );
-        this->addChild( square );
+
+    }
+    void NameLayer::addNovelWinodowSwitch( )
+    {
+        ScriptStaticData::run( { "sys", "noveloff" } );
+
+        auto touchevent = EventListenerGesture::create( );
+        touchevent->setSwallowTouches( true );
+
+        touchevent->onTap = [ this, touchevent ] ( Vec2 pos )
+        {
+            scheduleOnce( [ this, touchevent ] ( float delay )
+            {
+                ScriptStaticData::run( { "sys", "novelon" } );
+                getEventDispatcher( )->removeEventListener( touchevent );
+            }, 0.01F, typeid( this ).name( ) );
+        };
+        getEventDispatcher( )->addEventListenerWithFixedPriority( touchevent, -1 );
     }
     void NameLayer::on( )
     {

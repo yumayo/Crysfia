@@ -10,8 +10,7 @@ namespace User
     public:
         SceneTitle( );
         ~SceneTitle( );
-		cocos2d::Scene* create()override;
-    private:
+        static cocos2d::Scene* create( );
     };
 }
 

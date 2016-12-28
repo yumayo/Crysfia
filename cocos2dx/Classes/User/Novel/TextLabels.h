@@ -19,6 +19,7 @@ namespace User
 
         void actionStop( );
         bool getIsReadOuted( );
+        std::function<void( )> animationEndCallBack;
     private:
         cocos2d::Layer* layer;
         std::array<TextString, lineSize> textStrings;

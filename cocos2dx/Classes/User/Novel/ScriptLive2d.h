@@ -10,7 +10,7 @@ namespace User
     class ScriptLive2d : public ScriptBase
     {
     public:
-        ScriptLive2d( cocos2d::Layer* layer, std::string dirPath, std::string jsonPath );
+        ScriptLive2d( cocos2d::Layer* layer, std::string model, std::string dir );
         ~ScriptLive2d( );
     public:
         SCRIPT( in );
@@ -22,6 +22,8 @@ namespace User
         SCRIPT( sorrow );
         SCRIPT( getSurprise );
         SCRIPT( getAngry );
+        SCRIPT( ê^ñ ñ⁄Ç»äÁ );
+        SCRIPT( îYÇÒÇ≈ÇÈäÁ );
     public:
         SCRIPT( touchon );
         SCRIPT( touchoff );

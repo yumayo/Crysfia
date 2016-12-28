@@ -1,0 +1,33 @@
+{
+  "button_texture": [
+    { "texture": "角砂糖.png" },
+    { "texture": "すずらん.png" },
+    { "texture": "ブルーベリー.png" },
+    { "texture": "金平糖.png" },
+    { "texture": "シトリン宝石.png" }
+  ],
+
+  "dress_texture": [
+    { "clothes": "dress_icon/ワンピース.png" },
+    { "clothes": "dress_icon/服B.png" },
+    { "clothes": "dress_icon/着ぐるみ.png" },
+    { "clothes": "dress_icon/服D.png" },
+    { "clothes": "dress_icon/セーラー服.png" }
+  ],
+
+  "princess_texture": [
+    { "princess": "着ぐるみ(うさぎ)クロエ(透明化済み).png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" }
+  ],
+
+  "clear_texture": [
+    { "clear": "item/dress_setup/クロエ短髪.png" },
+    { "clear": "novel/クロエ普通.png" },
+    { "clear": "item/dress_setup/クロエ短髪.png" },
+    { "clear": "novel/クロエ普通.png" },
+    { "clear": "novel/クロエ普通.png" }
+  ]
+}

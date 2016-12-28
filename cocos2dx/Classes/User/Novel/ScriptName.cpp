@@ -2,6 +2,8 @@
 
 #include "OptionalValues.h"
 
+#include "../../Lib/Utilitys.h"
+
 USING_NS_CC;
 
 namespace User
@@ -15,8 +17,13 @@ namespace User
     {
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto origin = Director::getInstance( )->getVisibleOrigin( );
-        position = origin + Vec2( 0, OptionalValues::lineViewSize + OptionalValues::stringViewSize.y + OptionalValues::lineViewSize );
-        slideSize = visibleSize.width * 0.1;
+
+        auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        auto size = Sprite::create( u8"res/texture/system/message.window.png" )->getContentSize( );
+        auto mul = size.width / visibleSize.width;
+
+        position = origin + Vec2( 0, 480.0F / mul * scale - OptionalValues::fontSize / 2 );
+        slideSize = 220.0F / mul * scale;
 
         REGIST_FUNC( ScriptName, in );
         REGIST_FUNC( ScriptName, out );
@@ -56,7 +63,9 @@ namespace User
         if ( !label ) return nullptr;
 
         label->setTag( (int)Tag::Name );
-        label->setPosition( position + Vec2( slideSize, -label->getContentSize( ).height ) );
+        label->setTextColor( OptionalValues::fontColor );
+        label->setPosition( position );
+        label->enableShadow( OptionalValues::fontShadowColor, Size( 2, -2 ), 2 );
         layer->addChild( label );
 
         return label;

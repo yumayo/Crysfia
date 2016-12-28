@@ -15,21 +15,30 @@ namespace User
         ~LayerIsland( );
         bool init( ) override;
         void setup( ) override;
-        void update( float delta ) override;
+        /**
+         *  滞在中の島
+         */
+        enum Islands
+        {
+            none,
+            rashasu,
+            hyarukisi,
+            aikura,
+            END,
+        };
+
+        /**
+         *  今の時間。
+         */
+        enum Times
+        {
+            morning,
+            daytime,
+            night
+        };
     private:
-        void initBackground( );
-        void initCountry( );
-        void initListener( );
-        cocos2d::ui::Button* createBackButton( );
-    private:
-        bool isDebug = false;
-        cocos2d::ui::Button* createDebugButton( );
-    private:
-        // 背景画像をウィンドウの縦にピッタリと合わせるサイズ
-        float backgroundWindowHeightFitScale;
-        cocos2d::Vec2 translate;
-        cocos2d::Size targetSize;
-        cocos2d::Sprite* background;
+        Islands islands = Islands::rashasu;
+        Times times = Times::morning;
     };
 }
 

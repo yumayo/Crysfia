@@ -1,0 +1,173 @@
+{
+  "無名の島": {
+    "background": "res/texture/system/island.none.png",
+    "point.main": [
+      {
+        "position": [ 360, 640 ],
+        "scenario": "scenario1.txt",
+        "visit": false
+      }
+    ],
+    "point.sub": [
+    ]
+  },
+  "ラシャス島": {
+    "background": "res/texture/system/island.rasyasu.png",
+    "point.main": [
+      {
+        "position": [ 360, 200 ],
+        "scenario": "scenario1.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 400 ],
+        "scenario": "scenario2.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 600 ],
+        "scenario": "scenario3.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 800 ],
+        "scenario": "scenario4.txt",
+        "visit": false
+      }
+    ],
+    "point.sub": [
+      {
+        "position": [ 160, 200 ],
+        "scenario": "live2d.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 400 ],
+        "scenario": "debug.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 600 ],
+        "scenario": "kuroe.live2d.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 800 ],
+        "scenario": "scenario5.txt",
+        "visit": false
+      }
+    ],
+    "point.force": [
+      {
+        "scenario": "scenario5.txt",
+        "visit": false
+      }
+    ]
+  },
+  "ヒャルキシ島": {
+    "background": "res/texture/system/island.hyarukisi.png",
+    "point.main": [
+      {
+        "position": [ 360, 200 ],
+        "scenario": "scenario1.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 400 ],
+        "scenario": "scenario2.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 600 ],
+        "scenario": "scenario3.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 800 ],
+        "scenario": "scenario4.txt",
+        "visit": false
+      }
+    ],
+    "point.sub": [
+      {
+        "position": [ 160, 200 ],
+        "scenario": "live2d.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 400 ],
+        "scenario": "debug.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 600 ],
+        "scenario": "kuroe.live2d.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 800 ],
+        "scenario": "scenario5.txt",
+        "visit": false
+      }
+    ],
+    "point.force": [
+      {
+        "scenario": "scenario5.txt",
+        "visit": false
+      }
+    ]
+  },
+  "アイクラ島": {
+    "background": "res/texture/system/island.aikura.png",
+    "point.main": [
+      {
+        "position": [ 360, 200 ],
+        "scenario": "scenario1.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 400 ],
+        "scenario": "scenario2.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 600 ],
+        "scenario": "scenario3.txt",
+        "visit": false
+      },
+      {
+        "position": [ 360, 800 ],
+        "scenario": "scenario4.txt",
+        "visit": false
+      }
+    ],
+    "point.sub": [
+      {
+        "position": [ 160, 200 ],
+        "scenario": "live2d.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 400 ],
+        "scenario": "debug.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 600 ],
+        "scenario": "kuroe.live2d.txt",
+        "visit": false
+      },
+      {
+        "position": [ 160, 800 ],
+        "scenario": "scenario5.txt",
+        "visit": false
+      }
+    ],
+    "point.force": [
+      {
+        "scenario": "scenario5.txt",
+        "visit": false
+      }
+    ]
+  }
+}

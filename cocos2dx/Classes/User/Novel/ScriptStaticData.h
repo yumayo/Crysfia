@@ -20,7 +20,6 @@ namespace User
         static void run( FunctionScript const& functionScript );
         static void addData( std::pair<std::string, std::unique_ptr<ScriptBase>>&& pairData );
     private:
-        static cocos2d::Scene* scene;
         static std::map<std::string, std::unique_ptr<ScriptBase>> data;
     };
 }

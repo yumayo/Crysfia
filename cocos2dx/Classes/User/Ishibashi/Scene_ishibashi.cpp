@@ -6,10 +6,10 @@ USING_NS_CC;
 
 namespace User
 {
-	cocos2d::Scene * Scene_ishibashi::create()
-	{
-		auto scene = Scene::create();
-		scene->addChild(createLayer<Layer_ishibashi>());
-		return scene;
-	}
+    cocos2d::Scene * Scene_ishibashi::create( )
+    {
+        auto scene = Scene::create( );
+        scene->addChild( createLayer<Layer_meal>( ) );
+        return scene;
+    }
 }
