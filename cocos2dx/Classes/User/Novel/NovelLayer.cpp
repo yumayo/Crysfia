@@ -243,10 +243,13 @@ namespace User
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
+
+        auto size = Sprite::create( u8"res/texture/system/message.window.png" )->getContentSize( );
+        auto mul = size.width / visibleSize.width;
         textLabels.setStrings( textChunkManager.getNovelData( ),
                                origin +
                                Vec2( ( visibleSize.width - OptionalValues::stringViewSize.x ) * 0.5F,
-                                     311 * scale - OptionalValues::fontSize + OptionalValues::lineSpaceSize ) );
+                                     297 / mul / scale ) );
     }
     void NovelLayer::readingProceedUpdate( )
     {

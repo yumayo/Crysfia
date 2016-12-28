@@ -75,7 +75,7 @@ namespace User
 
         // タイトルボタンの設置
         auto title = Sprite::create( dir + u8"save.title.png" );
-        title->setPosition( background->getContentSize( ).width * 0.5, background->getContentSize( ).height - 140 * scale );
+        title->setPosition( background->getContentSize( ).width * 0.5, background->getContentSize( ).height - 70 / scale );
         background->addChild( title );
 
         // セーブゲージをたくさん並べる
@@ -86,7 +86,7 @@ namespace User
                                     background->getContentSize( ).height
                                     - board->getContentSize( ).height * board->getScale( ) //  下のメニューの分
                                     - title->getContentSize( ).height * title->getScale( ) // 上のタイトルの分
-                                    - 140 * scale // タイトル上の隙間の分
+                                    - 70 / scale // タイトル上の隙間の分
 
         ) );
         background->addChild( list );
@@ -146,6 +146,7 @@ namespace User
     }
     cocos2d::ui::Layout* LayerSave::createDialog( std::string const& str, std::function<void( )> const & yes, std::function<void( )> const & no )
     {
+
         auto layout = ui::Layout::create( );
 
         layout->addChild( createModal( ) );
@@ -161,19 +162,19 @@ namespace User
                                                    Rect( 32 / scale, 32 / scale,
                                                          64 / scale, 64 / scale ) );
 
-        auto content_size = Size( 640, 640 ) * scale;
+        auto content_size = Size( 640, 640 );
         menuImage->setContentSize( content_size );
         menuImage->setPosition( vo + vs * 0.5 );
         layout->addChild( menuImage );
 
-        auto label = Label::createWithTTF( str, u8"res/fonts/HGRGE.TTC", 36 );
+        auto label = Label::createWithTTF( str, u8"res/fonts/HGRGE.TTC", 48 * scale );
         label->setPosition( content_size * 0.5 );
         menuImage->addChild( label );
 
         auto yes_button = ui::Button::create( u8"res/texture/system/yes.button.base.png", u8"res/texture/system/yes.button.push.png" );
         yes_button->setPosition( Vec2( content_size.width * 0.25, content_size.height * 0.1 ) );
-        yes_button->setScale( 0.5 );
-        yes_button->setAnchorPoint( Vec2( 0, 0 ) );
+        yes_button->setScale( Lib::fitWidth( yes_button, 150 * scale ) );
+        yes_button->setAnchorPoint( Vec2( 0.5, 0 ) );
         menuImage->addChild( yes_button );
         yes_button->addTouchEventListener( [ = ] ( Ref* ref, ui::Widget::TouchEventType type )
         {
@@ -184,8 +185,8 @@ namespace User
         } );
         auto no_button = ui::Button::create( u8"res/texture/system/no.button.base.png", u8"res/texture/system/no.button.push.png" );
         no_button->setPosition( Vec2( content_size.width * 0.75, content_size.height * 0.1 ) );
-        no_button->setAnchorPoint( Vec2( 1, 0 ) );
-        no_button->setScale( 0.5 );
+        no_button->setAnchorPoint( Vec2( 0.5, 0 ) );
+        no_button->setScale( Lib::fitWidth( no_button, 150 * scale ) );
         menuImage->addChild( no_button );
         no_button->addTouchEventListener( [ = ] ( Ref* ref, ui::Widget::TouchEventType type )
         {

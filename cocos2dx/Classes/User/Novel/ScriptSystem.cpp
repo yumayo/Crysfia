@@ -112,12 +112,12 @@ namespace User
                 novel->next( );
             } );
 
-            auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-            menuitem->setScale( Lib::fitWidth( menuitem, 500 * scale ) );
+            auto scale = Director::getInstance( )->getContentScaleFactor( );
+            menuitem->setScale( Lib::fitWidth( menuitem, visibleSize.width * 0.9 ) );
             auto label = Label::createWithTTF( args[i], OptionalValues::fontName, OptionalValues::fontSize );
             label->setColor( Color3B( 39, 39, 39 ) );
             label->setPosition( menuitem->getContentSize( ) * 0.5 );
-            label->setScale( 1.0 / Lib::fitWidth( menuitem, 500 * scale ) );
+            label->setScale( 1.0 / Lib::fitWidth( menuitem, visibleSize.width * 0.9 ) );
             menuitem->addChild( label );
             buttons.pushBack( menuitem );
         }
