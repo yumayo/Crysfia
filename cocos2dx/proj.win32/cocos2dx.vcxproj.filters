@@ -321,6 +321,9 @@
     <ClCompile Include="..\Classes\User\LayerSave\LayerSave.cpp">
       <Filter>src\User\LayerSave</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\LayerNovelView.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -613,6 +616,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\LayerSave\LayerSave.h">
       <Filter>src\User\LayerSave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\LayerNovelView.h">
+      <Filter>src\User\CityMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

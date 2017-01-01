@@ -19,6 +19,8 @@
 
 #include "../../Lib/AudioManager.h"
 
+#include "LayerNovelView.h"
+
 USING_NS_CC;
 
 namespace User
@@ -78,6 +80,16 @@ namespace User
                             if ( buttonEnd ) buttonEnd( );
                         }
                     } );
+
+                    // ボタンが押された瞬間に、そのボタンの情報を上に出したい。
+                    // しかし、貼るレイヤーまでが遠い。
+                    if ( auto layer = parent->getParent( ) )
+                    {
+                        // 親の親がレイヤーなはずなので。
+                        // button->background->layer
+
+                        layer->addChild( LayerNovelView::create( scenario ) );
+                    }
                 }
             }
         } );
@@ -142,7 +154,7 @@ namespace User
         auto listener = EventListenerTouchAllAtOnce::create( );
         listener->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
-
+            removeChildByName( u8"ok.button" );
         };
         listener->onTouchesMoved = [ this, backgroundWindowHeightFitScale ] ( const std::vector<Touch*>& touches, Event* event )
         {
@@ -179,6 +191,7 @@ namespace User
     }
     LayerCity::~LayerCity( )
     {
+        AudioManager::getInstance( )->stopBgm( 1.5F );
     }
     bool LayerCity::init( )
     {
@@ -191,7 +204,6 @@ namespace User
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
         AudioManager::getInstance( )->playBgm( "city", 1.5f );
-        AudioManager::getInstance( )->playBgm( u8"res/bgm/bラシャス.mp3" );
 
         jsonRead( );
 
@@ -221,8 +233,8 @@ namespace User
             if ( heart )
             {
                 heart->setAnchorPoint( Vec2( 0, 0.5 ) );
-                heart->setScale( fitWidth( heart, ( board->getContentSize( ).width - calendar->getContentSize( ).width * 
-                                                    calendar->getScale( ) - 20/*下のずらしている分の10と、間に10pixel開けるためです。*/ * scale) ) );
+                heart->setScale( fitWidth( heart, ( board->getContentSize( ).width - calendar->getContentSize( ).width *
+                                                    calendar->getScale( ) - 20/*下のずらしている分の10と、間に10pixel開けるためです。*/ * scale ) ) );
                 heart->setPosition( Vec2( 0, boardPixel.height * 0.5 ) * scale + Vec2( 10, 0 ) * scale );
                 board->addChild( heart );
             }
@@ -257,7 +269,7 @@ namespace User
 
             if ( auto label = createLabel( island_name ) )
             {
-                board->addChild( label );
+                addChild( label );
                 label->setPosition( Vec2( 0, board->getContentSize( ).height ) );
             }
         }
