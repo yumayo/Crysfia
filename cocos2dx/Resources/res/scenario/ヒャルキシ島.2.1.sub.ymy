@@ -1,0 +1,107 @@
+//ヒャルキシ島2日目サブ１
+
+@sys:name(nアレン)
+@sys:name(nクロエ)
+@sys:background(hヒャルキシ島)
+@sys:bgm(bシリアス)
+@sys:live2d(crysfia)
+@crysfia:touchoff
+//@crysfia:in
+//@crysfia:out
+//@sys:novelon
+//@sys:noveloff
+//@sys:stop(1)
+//@sys:l
+
+@hヒャルキシ島:fadein(1)
+@bシリアス:in
+@sys:stop(1)
+@sys:novelon
+@crysfia:in
+@crysfia:喜ぶ
+
+@nクロエ:in
+「あ、アレン！可愛い花が咲いてるよ」@sys:l
+@nアレン:in
+「え？どれどれ」@sys:l
+@nクロエ:in
+「ほら、あの青くて小さいの！」@sys:l
+@nアレン:in
+「あぁ、ワスレナグサだね」@sys:l
+
+@crysfia:普通
+
+@nクロエ:in
+「ワスレナグサ？」@sys:l
+@nアレン:in
+「そう。僕の故郷にも結構生えてたよ」@sys:l
+
+@crysfia:喜ぶ
+
+@nクロエ:in
+「いいなー。こんな可愛いお花が毎日見れた
+  ら、毎日幸せな気分になれるね」@sys:l
+@nアレン:in
+「そんなに？大げさじゃない？」@sys:l
+@nクロエ:in
+「そんなことないよー」@sys:l
+@nアレン:in
+「あ、そうだ。クロエは花言葉って知ってる
+  ？」@sys:l
+
+@crysfia:普通
+
+@nクロエ:in
+「んーん。何それ？」@sys:l
+@nアレン:in
+
+
+@crysfia:喜ぶ
+「花はそれぞれ、花言葉を持っているんだ。
+  例えばユリなら、”純粋”とか”無垢”とか
+  ね」@sys:l
+
+@nクロエ:in
+「へぇ、面白いね！ワスレナグサにもあるの
+ ？」@sys:l
+@nアレン:in
+「あるよ。知りたい？」@sys:l
+@nクロエ:in
+「うん！」
+@nアレン:in
+「ワスレナグサの花言葉はね、”私を忘れな
+  いで”」@sys:l
+
+
+@crysfia:驚く
+
+@nクロエ:in
+クロエ「……え？」@sys:l
+@nアレン:in
+「名前の通りではあるけど、何だか悲しい花
+  言葉だよね。……クロエ？どうかした？」@sys:l
+
+
+@crysfia:普通
+
+@nクロエ:in
+「え？ううん。何でも無いよ」@sys:l
+@nアレン:in
+アレン「そう？」@sys:l
+@nクロエ:in
+「こんなに可愛い見た目なのに、意外と切な
+  い花言葉だったから、ちょっとびっくりし
+  ただけ」@sys:l
+@nアレン:in
+「ならいいんだ。そろそろ行こうか」@sys:l
+@nクロエ:in
+「うん」@sys:l
+
+@crysfia:悲しむ
+（クロエにぴったりの花言葉だ、なんて言え
+  ないもんね）@sys:l
+
+@crysfia:out
+@sys:noveloff
+@hヒャルキシ島:fadeout(1)
+@bシリアス:fadeout(1)

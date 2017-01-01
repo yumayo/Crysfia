@@ -191,6 +191,7 @@ namespace User
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
         AudioManager::getInstance( )->playBgm( "city", 1.5f );
+        AudioManager::getInstance( )->playBgm( u8"res/bgm/bƒ‰ƒVƒƒƒX.mp3" );
 
         jsonRead( );
 
@@ -282,6 +283,8 @@ namespace User
         save_name = u8"autosave.json";
 
         removeChildByName( u8"background" );
+
+        std::string extension = u8".ymy";
 
         Json::Reader reader;
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )

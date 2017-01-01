@@ -77,6 +77,7 @@ namespace User
     void TextData::makeData( std::string fileName )
     {
         clear( );
+
         this->fileName = fileName;
         work = &chunk;
 

@@ -32,13 +32,109 @@ namespace User
             reader.read( defalutDirectory + name );
         }
     }
-    void userDefaultLoading( std::string const& name )
+
+    void setUserDefault( INIReader& iniReader )
     {
-        CC_ASSERT( !"未実装。" );
+        auto userDefault = UserDefault::getInstance( );
+
+        using Type = std::string; // bool, int, float, stringの文字列を入れます。
+        using Key = std::string; // 変数に付けた名前を格納します。
+        using Value = std::string; // 変数の実態を格納します。
+        using ValueMap = std::map<Key, Value>; // 変数の名前を変数の実体をまとめた一覧を格納します。
+
+        {
+            Type type = u8"bool";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setBoolForKey( key.c_str( ), StringUtil::string_value<bool>( value ) );
+            }
+        }
+        {
+            Type type = u8"int";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setIntegerForKey( key.c_str( ), StringUtil::string_value<int>( value ) );
+            }
+        }
+        {
+            Type type = u8"float";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setFloatForKey( key.c_str( ), StringUtil::string_value<float>( value ) );
+            }
+        }
+        {
+            Type type = u8"string";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setStringForKey( key.c_str( ), StringUtil::string_value<std::string>( value ) );
+            }
+        }
     }
-    void userDefaultSaveing( std::string const& name )
+    // ユーザーデフォルトの中身をINI型にして返します。
+    // ユーザーデフォルトでは、中身を列挙することが出来ないので、
+    // データを取り出す際に、キーの元となるINIファイルを提示しないといけません。
+    INIReader getUserDefault( INIReader& iniReader )
     {
-        CC_ASSERT( !"未実装。" );
+        INIReader ret;
+
+        // INIデータのキーから一致するユーザーデフォルトの中身を取り出したい。
+        using Type = std::string; // bool, int, float, stringの文字列を入れます。
+        using Key = std::string; // 変数に付けた名前を格納します。
+        using Value = std::string; // 変数の実態を格納します。
+        using ValueMap = std::map<Key, Value>; // 変数の名前を変数の実体をまとめた一覧を格納します。
+
+        auto userDefault = UserDefault::getInstance( );
+
+        {
+            Type type = u8"bool";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto velue = userDefault->getBoolForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( velue );
+            }
+        }
+        {
+            Type type = u8"int";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getIntegerForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        {
+            Type type = u8"float";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getFloatForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        {
+            Type type = u8"string";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getStringForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        return ret;
     }
     void userDefaultSetup( )
     {
@@ -46,7 +142,7 @@ namespace User
         if ( !data->getBoolForKey( u8"INITDATA", false ) )
         {
             INIReader reader;
-            iniDataRead( reader, u8"res/data/userDefault.ini" );
+            iniDataRead( reader, u8"res/data/saveLayout.ini" );
 
             std::map<std::string, std::function<void( std::map<std::string, std::string> )>> calls;
 

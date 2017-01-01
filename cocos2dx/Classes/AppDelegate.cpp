@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching( ) {
 
     auto env = Env::getInstance( );
 
-    auto size = Size( 1080, 1920 ) * 1;
+    auto size = Size( 1080, 1920 ) * 0.5;
 
     // initialize director
     auto director = Director::getInstance( );

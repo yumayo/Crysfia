@@ -349,25 +349,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Resources\res\scenario\debug.txt" />
-    <Text Include="..\Resources\res\scenario\first.txt" />
-    <Text Include="..\Resources\res\scenario\kuroe.live2d.txt" />
-    <Text Include="..\Resources\res\scenario\live2d.txt" />
-    <Text Include="..\Resources\res\scenario\past.txt" />
-    <Text Include="..\Resources\res\scenario\scenario.1.txt" />
-    <Text Include="..\Resources\res\scenario\scenario.2.txt" />
-    <Text Include="..\Resources\res\scenario\scenario.3.txt" />
-    <Text Include="..\Resources\res\scenario\scenario.4.txt" />
-    <Text Include="..\Resources\res\scenario\scenario.5.txt" />
-    <Text Include="..\Resources\res\scenario\scenario.6.txt" />
-    <Text Include="..\Resources\res\scenario\scenario1.txt" />
-    <Text Include="..\Resources\res\scenario\scenario2.txt" />
-    <Text Include="..\Resources\res\scenario\scenario3.txt" />
-    <Text Include="..\Resources\res\scenario\scenario4.txt" />
-    <Text Include="..\Resources\res\scenario\scenario5.txt" />
-    <Text Include="..\Resources\res\scenario\variable.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

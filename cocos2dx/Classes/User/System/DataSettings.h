@@ -12,8 +12,8 @@ namespace User
 {
     void iniDataRead( INIReader& reader, std::string const& name );
     void iniDataRead( INIReader& reader, std::string const& name, std::string const& defalutDirectory );
-    void userDefaultLoading( std::string const& name );
-    void userDefaultSaveing( std::string const& name );
+    void setUserDefault( INIReader& iniReader );
+    INIReader getUserDefault( INIReader& iniReader );
     void userDefaultSetup( );
     void userDefaultForceSetup( );
     std::string getLocalReadPath( std::string const& name );

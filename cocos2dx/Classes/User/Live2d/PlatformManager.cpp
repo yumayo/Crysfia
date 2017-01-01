@@ -40,6 +40,7 @@ ALive2DModel* PlatformManager::loadLive2DModel(const char* path)
 {
 	size_t size;
 	unsigned char* buf = loadBytes(path,&size);
+    if ( !buf ) return nullptr;
 	
 	//Create Live2D Model Instance
 	ALive2DModel* live2DModel = Live2DModelOpenGL::loadModel(buf,(int)size);

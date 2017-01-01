@@ -4,7 +4,7 @@
     "point.main": [
       {
         "position": [ 360, 640 ],
-        "scenario": "scenario1.txt",
+        "scenario": "無名のスクリプト.ymy",
         "visit": false
       }
     ],
@@ -16,50 +16,64 @@
     "point.main": [
       {
         "position": [ 360, 200 ],
-        "scenario": "scenario1.txt",
+        "scenario": "ラシャス島.1.1.main.ymy",
         "visit": false
       },
       {
         "position": [ 360, 400 ],
-        "scenario": "scenario2.txt",
+        "scenario": "ラシャス島.2.1.main.ymy",
         "visit": false
       },
       {
         "position": [ 360, 600 ],
-        "scenario": "scenario3.txt",
+        "scenario": "ラシャス島.3.1.main.ymy",
         "visit": false
       },
       {
         "position": [ 360, 800 ],
-        "scenario": "scenario4.txt",
+        "scenario": "ラシャス島.4.1.main.ymy",
         "visit": false
       }
     ],
     "point.sub": [
       {
         "position": [ 160, 200 ],
-        "scenario": "live2d.txt",
+        "scenario": "ラシャス島.1.1.sub.ymy",
         "visit": false
       },
       {
-        "position": [ 160, 400 ],
-        "scenario": "debug.txt",
+        "position": [ 160, 350 ],
+        "scenario": "ラシャス島.2.1.sub.ymy",
         "visit": false
       },
       {
-        "position": [ 160, 600 ],
-        "scenario": "kuroe.live2d.txt",
+        "position": [ 160, 500 ],
+        "scenario": "ラシャス島.3.1.sub.ymy",
+        "visit": false
+      },
+      {
+        "position": [ 160, 650 ],
+        "scenario": "ラシャス島.5.1.sub.ymy",
         "visit": false
       },
       {
         "position": [ 160, 800 ],
-        "scenario": "scenario5.txt",
+        "scenario": "ラシャス島.7.1.sub.ymy",
+        "visit": false
+      },
+      {
+        "position": [ 560, 800 ],
+        "scenario": "ラシャス島.8.1.sub.ymy",
         "visit": false
       }
     ],
     "point.force": [
       {
-        "scenario": "scenario5.txt",
+        "scenario": "冒頭編.ymy",
+        "visit": false
+      },
+      {
+        "scenario": "過去編.ymy",
         "visit": false
       }
     ]
@@ -69,52 +83,33 @@
     "point.main": [
       {
         "position": [ 360, 200 ],
-        "scenario": "scenario1.txt",
+        "scenario": "ヒャルキシ島.1.1.main.ymy",
         "visit": false
       },
       {
         "position": [ 360, 400 ],
-        "scenario": "scenario2.txt",
-        "visit": false
-      },
-      {
-        "position": [ 360, 600 ],
-        "scenario": "scenario3.txt",
-        "visit": false
-      },
-      {
-        "position": [ 360, 800 ],
-        "scenario": "scenario4.txt",
+        "scenario": "ヒャルキシ島.2.1.main.ymy",
         "visit": false
       }
     ],
     "point.sub": [
       {
         "position": [ 160, 200 ],
-        "scenario": "live2d.txt",
+        "scenario": "ヒャルキシ島.1.1.sub.ymy",
         "visit": false
       },
       {
         "position": [ 160, 400 ],
-        "scenario": "debug.txt",
+        "scenario": "ヒャルキシ島.2.1.sub.ymy",
         "visit": false
       },
       {
         "position": [ 160, 600 ],
-        "scenario": "kuroe.live2d.txt",
-        "visit": false
-      },
-      {
-        "position": [ 160, 800 ],
-        "scenario": "scenario5.txt",
+        "scenario": "ヒャルキシ島.4.1.sub.ymy",
         "visit": false
       }
     ],
     "point.force": [
-      {
-        "scenario": "scenario5.txt",
-        "visit": false
-      }
     ]
   },
   "アイクラ島": {
@@ -122,52 +117,13 @@
     "point.main": [
       {
         "position": [ 360, 200 ],
-        "scenario": "scenario1.txt",
-        "visit": false
-      },
-      {
-        "position": [ 360, 400 ],
-        "scenario": "scenario2.txt",
-        "visit": false
-      },
-      {
-        "position": [ 360, 600 ],
-        "scenario": "scenario3.txt",
-        "visit": false
-      },
-      {
-        "position": [ 360, 800 ],
-        "scenario": "scenario4.txt",
+        "scenario": "アイクラ島.1.1.main.ymy",
         "visit": false
       }
     ],
     "point.sub": [
-      {
-        "position": [ 160, 200 ],
-        "scenario": "live2d.txt",
-        "visit": false
-      },
-      {
-        "position": [ 160, 400 ],
-        "scenario": "debug.txt",
-        "visit": false
-      },
-      {
-        "position": [ 160, 600 ],
-        "scenario": "kuroe.live2d.txt",
-        "visit": false
-      },
-      {
-        "position": [ 160, 800 ],
-        "scenario": "scenario5.txt",
-        "visit": false
-      }
     ],
     "point.force": [
-      {
-        "scenario": "scenario5.txt",
-        "visit": false
-      }
     ]
   }
 }

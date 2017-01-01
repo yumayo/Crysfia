@@ -25,6 +25,8 @@ namespace User
         SCRIPT( novelswitch );
         SCRIPT( item );
         SCRIPT( autosave );
+        SCRIPT( heartup );
+        SCRIPT( heartdown );
     public: // 変数の登録に使います。
             // 全てのクラスはシステムを経由してでないと作成できません。
         SCRIPT( name );

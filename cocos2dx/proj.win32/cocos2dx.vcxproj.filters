@@ -46,9 +46,6 @@
     <Filter Include="src\User\System">
       <UniqueIdentifier>{3e129644-97b0-4177-82b7-15154879f80a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource\Scenario">
-      <UniqueIdentifier>{6cd43fdb-48ea-438d-83f9-71b0060832cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="live2d">
       <UniqueIdentifier>{f4114573-fdac-47a6-94c8-29cbf1332d32}</UniqueIdentifier>
     </Filter>
@@ -622,58 +619,5 @@
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Resources\res\scenario\scenario.1.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\debug.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\first.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\live2d.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\past.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.2.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.3.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.4.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.5.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.6.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario1.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario2.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario3.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario4.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\variable.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\kuroe.live2d.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario5.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
   </ItemGroup>
 </Project>

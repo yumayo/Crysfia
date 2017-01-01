@@ -397,7 +397,7 @@ namespace User
 
         auto yes_button = ui::Button::create( u8"res/texture/system/yes.button.base.png", u8"res/texture/system/yes.button.push.png" );
         yes_button->setPosition( Vec2( content_size.width * 0.25, content_size.height * 0.1 ) );
-        yes_button->setScale( Lib::fitWidth( yes_button, 150 * scale ) );
+        yes_button->setScale( Lib::fitWidth( yes_button, 150 ) );
         yes_button->setAnchorPoint( Vec2( 0.5, 0 ) );
         menuImage->addChild( yes_button );
         yes_button->addTouchEventListener( [ = ] ( Ref* ref, ui::Widget::TouchEventType type )
@@ -410,7 +410,7 @@ namespace User
         auto no_button = ui::Button::create( u8"res/texture/system/no.button.base.png", u8"res/texture/system/no.button.push.png" );
         no_button->setPosition( Vec2( content_size.width * 0.75, content_size.height * 0.1 ) );
         no_button->setAnchorPoint( Vec2( 0.5, 0 ) );
-        no_button->setScale( Lib::fitWidth( no_button, 150 * scale ) );
+        no_button->setScale( Lib::fitWidth( no_button, 150 ) );
         menuImage->addChild( no_button );
         no_button->addTouchEventListener( [ = ] ( Ref* ref, ui::Widget::TouchEventType type )
         {

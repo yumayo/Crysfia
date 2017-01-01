@@ -65,7 +65,7 @@ namespace User
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
 
-		auto backGround = Sprite::create("res/texture/novel/”wŒiŒâŠy‚Ì“‡.png");
+		auto backGround = Sprite::create(u8"res/texture/novel/”wŒiŒâŠy‚Ì“‡.png");
 		backGround->setPosition(winSize / 2);
 		this->addChild(backGround);
 

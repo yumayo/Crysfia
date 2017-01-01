@@ -181,16 +181,57 @@ namespace User
         stop( { u8"0.016F" } );
     }
 
+    SCRIPT( ScriptSystem::heartup )
+    {
+        switch ( args.size( ) )
+        {
+        case 1:
+        {
+
+            auto heart = HeartGauge::create( )->make( );
+            heart->scriptUpAction( args[0] );
+            heartLayer->addChild( heart );
+        }
+        default:
+            break;
+        }
+    }
+
+    SCRIPT( ScriptSystem::heartdown )
+    {
+        switch ( args.size( ) )
+        {
+        case 1:
+        {
+            auto heart = HeartGauge::create( )->make( );
+            heart->scriptDownAction( args[0] );
+            heartLayer->addChild( heart );
+        }
+        default:
+            break;
+        }
+    }
+
     SCRIPT( ScriptSystem::name )
     {
         switch ( args.size( ) )
         {
         case 1:
         {
+            std::vector<std::string> names = { u8"–¼‘O", u8"n" };
+
             std::string variable = args[0];
             std::string humanName = variable;
-            auto pos = variable.find( u8"–¼‘O" );
-            if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"–¼‘O" ).size( ) );
+
+            for ( auto& name : names )
+            {
+                auto pos = variable.find( name );
+                if ( pos != std::string::npos )
+                {
+                    humanName = variable.substr( pos + std::string( name ).size( ) );
+                    break;
+                }
+            }
 
             REGIST_VARIABLE( variable, new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" ) );
         }
@@ -222,13 +263,13 @@ namespace User
         case 1:
         {
             auto audio = AudioManager::getInstance( );
-            audio->playBgm( args[0] );
+            audio->playBgm( u8"res/bgm/" + args[0] + u8".mp3" );
         }
         break;
         case 2:
         {
             auto audio = AudioManager::getInstance( );
-            audio->playBgm( args[0], StringUtil::string_value<bool>( args[1] ) );
+            audio->playBgm( u8"res/bgm/" + args[0] + u8".mp3", 0.0F, StringUtil::string_value<bool>( args[1] ) );
         }
         break;
         default:
@@ -242,7 +283,7 @@ namespace User
         case 1:
         {
             auto audio = AudioManager::getInstance( );
-            audio->playSe( args[0] );
+            audio->playSe( u8"res/se/" + args[0] + u8".mp3" );
         }
         break;
         default:

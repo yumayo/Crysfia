@@ -1,0 +1,65 @@
+//ラシャス島5日目サブ1
+
+@sys:name(nアレン)
+@sys:name(nクロエ)
+@sys:background(h娯楽の島)
+@sys:bgm(bサブ2)
+@sys:live2d(crysfia)
+@crysfia:touchoff
+//@crysfia:in
+//@crysfia:out
+//@sys:novelon
+//@sys:noveloff
+//@sys:stop(1)
+//@sys:l
+
+//ここから
+
+@h商店街:fadein(1)
+@bサブ2:in
+@crysfia:in
+@sys:stop(1)
+@sys:novelon
+
+@nアレン:in
+「なあ、今まで普通にクロエのご飯あげてた
+  けどさ。」@sys:l
+@nクロエ:in
+「うん。どうしたの？」@sys:l
+@nアレン:in
+「こんぺいとうとかはわかるけどさ、あの宝
+  石みたいなやつはどう食べてるんだ？なに
+  よりあれって美味しいの？」
+@nクロエ:in
+「すっごくおいしいよ！それでねー、食べる
+  時はこうやって大きく口を開けて……」@sys:l
+@nアレン:in
+「大きく口をあけて？」@sys:l
+
+@crysfia:喜ぶ
+
+@nクロエ:in
+「ゴリゴリゴリー！って食べるんだよ」@sys:l
+@nアレン:in
+「ファ！？」@sys:l
+「いやあれって固いとかそういうレベルじゃ
+  ないよ…。本当にかじって食べてるの？」
+@nクロエ:in
+「ほんとだよー。ねえ、ちょっと人差し指向け
+  てよ」@sys:l
+@nアレン:in
+「え？いいけど」@sys:l
+@nクロエ:in
+「あ～ん…」
+@nアレン:in
+「ちょ、待って！なんか怖い！ホントだったら
+  冗談じゃすまないから！」@sys:l
+@nクロエ:in
+「んふふ～」@sys:l
+
+@crysfia:out
+@sys:noveloff
+@h娯楽の島:fadeout(1)
+@bサブ2:fadeout(1)
+
+//ここまで
