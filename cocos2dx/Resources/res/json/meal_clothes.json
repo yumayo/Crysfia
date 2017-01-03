@@ -16,18 +16,18 @@
   ],
 
   "princess_texture": [
+    { "princess": "修道服.png" },
+    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
     { "princess": "着ぐるみ(うさぎ)クロエ(透明化済み).png" },
-    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
-    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
-    { "princess": "着ぐるみ(うさぎ)クロエ.png" },
-    { "princess": "着ぐるみ(うさぎ)クロエ.png" }
+    { "princess": "修道服.png" },
+    { "princess": "セーラー服.png" }
   ],
 
   "clear_texture": [
+    { "clear": "item/dress_setup/クロエ素体.png" },
+    { "clear": "item/dress_setup/クロエ普通.png" },
     { "clear": "item/dress_setup/クロエ短髪.png" },
-    { "clear": "novel/クロエ普通.png" },
-    { "clear": "item/dress_setup/クロエ短髪.png" },
-    { "clear": "novel/クロエ普通.png" },
-    { "clear": "novel/クロエ普通.png" }
+    { "clear": "item/dress_setup/クロエ素体.png" },
+    { "clear": "item/dress_setup/クロエ素体.png" }
   ]
 }
