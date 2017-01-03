@@ -1,6 +1,6 @@
 #include "Layer_ishibashi.h"
-#include "json/rapidjson.h"
-#include "json/document.h"
+#include "cocos2d/external/json/rapidjson.h"
+#include "cocos2d/external/json/document.h"
 #include "audio/include/AudioEngine.h"
 #include "../Novel/ScriptHeart.h"
 
@@ -266,6 +266,7 @@ namespace User
         sprite->setColor( Color3B::WHITE );
         sprite->setPosition( Point( 300, 1100 ) );
         this->addChild( sprite );
+
         auto text = Label::createWithSystemFont( eatTime, "Arial", 24 );
         text->setPosition( Point( 300, 1100 ) );
         text->setColor( ccc3( 0, 0, 0 ) );
@@ -289,7 +290,7 @@ namespace User
 		dress->setPosition(Vec2(285, 700));
 		this->addChild(dress);
 
-		//フェード 1秒で、100%へ
+		//フェード 1秒で、100%へ  
 		CCFiniteTimeAction* fade = FadeIn::create(2);
 		kuroe->runAction(fade);
 		CCFiniteTimeAction* fade2 = FadeIn::create(2);
@@ -312,7 +313,7 @@ namespace User
         CCFiniteTimeAction* move = CCMoveTo::create( 1.0f, ccp( 280, 850 ) );
         food->runAction( move );
 
-		//フェード 1秒で、100%へ
+		//フェード 1秒で、100%へ  
 		CCFiniteTimeAction* fade = CCFadeTo::create(1.0f, 0);
         food->runAction( fade );
     }
@@ -333,7 +334,7 @@ namespace User
 		dress->setPosition(Vec2(285, 700));
 		this->addChild(dress);
 
-		//フェード 1秒で、100%へ
+		//フェード 1秒で、100%へ  
 		CCFiniteTimeAction* fade = FadeOut::create(1);
 		kuroe->runAction(fade);
 		CCFiniteTimeAction* fade2 = FadeIn::create(2);
@@ -407,7 +408,7 @@ namespace User
 						}
 					}
 
-
+					
 					removeChildByName("fashion");
 					removeChildByName("changeCostume");
 
@@ -505,13 +506,14 @@ namespace User
 		right_line->setPosition(Point(700, 800));
 		this->addChild(right_line);
 
-		auto top_line = Sprite::create();
-		top_line->setTextureRect(Rect(0, 0, 210, 10));
+		auto top_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
+		//top_line->setTextureRect(Rect(0, 0, 210, 10));
+		top_line->setRotation(180);
 		top_line->setPosition(600, 1250);
 		this->addChild(top_line);
 
-		auto under_line = Sprite::create();
-		under_line->setTextureRect(Rect(0, 0, 210, 10));
+		auto under_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
+		//under_line->setTextureRect(Rect(0, 0, 210, 10));
 		under_line->setPosition(600, 350);
 		this->addChild(under_line);
 	}
