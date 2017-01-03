@@ -506,13 +506,14 @@ namespace User
 		right_line->setPosition(Point(700, 800));
 		this->addChild(right_line);
 
-		auto top_line = Sprite::create();
-		top_line->setTextureRect(Rect(0, 0, 210, 10));
+		auto top_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
+		//top_line->setTextureRect(Rect(0, 0, 210, 10));
+		top_line->setRotation(180);
 		top_line->setPosition(600, 1250);
 		this->addChild(top_line);
 
-		auto under_line = Sprite::create();
-		under_line->setTextureRect(Rect(0, 0, 210, 10));
+		auto under_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
+		//under_line->setTextureRect(Rect(0, 0, 210, 10));
 		under_line->setPosition(600, 350);
 		this->addChild(under_line);
 	}
