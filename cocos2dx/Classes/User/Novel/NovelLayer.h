@@ -6,6 +6,8 @@
 # include "TextLabels.h"
 # include "TextChunkManager.h"
 
+# include "../../Lib/json.h"
+
 namespace User
 {
     class SwitchBoolean
@@ -37,8 +39,8 @@ namespace User
         float timer = 0.0F;
         std::function<void( )> tick;
     public:
-        CREATE_ARGS_FUNC( AutoMode );
-        AutoMode( std::function<void( )> tick );
+        static AutoMode* create( std::function<void( )> const& tick );
+        bool init( std::function<void( )> const& tick );
         void update( float t ) override;
         void stop( );
         void restart( );
@@ -48,12 +50,14 @@ namespace User
     {
     public:
         CREATE_ARGS_FUNC( NovelLayer );
-        NovelLayer( std::string const& novelPath );
+        NovelLayer( std::string const& scenario, std::function<void( )> const& saveCallFunc );
         ~NovelLayer( );
         bool init( ) override;
         void setup( ) override;
         void update( float delta )override;
     public:
+        void in( );
+        void out( );
         void on( );
         void off( );
         void stop( );
@@ -73,6 +77,8 @@ namespace User
         */
         static cocos2d::Image* screen;
     private:
+        std::function<void( )> saveCallFunc;
+
         std::string novelPath;
         // 読み込み機能を停止するかどうか。
         // テキストを読み込み途中の場合はtrueになります。

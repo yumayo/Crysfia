@@ -12,19 +12,23 @@
 
 #include "../../Lib/Utilitys.h"
 
+#include "../System/DataSettings.h"
+
 USING_NS_CC;
 
 namespace User
 {
     cocos2d::Image* NovelLayer::screen = nullptr;
 
-    NovelLayer::NovelLayer( std::string const & novelPath )
+    NovelLayer::NovelLayer( std::string const& scenario, std::function<void( )> const& saveCallFunc )
         : textLabels( this )
-        , novelPath( novelPath )
+        , novelPath( scenario )
+        , saveCallFunc( saveCallFunc )
         , readProceed( false )
         , systemRead( true )
         , systemStop( false )
     {
+
     }
     NovelLayer::~NovelLayer( )
     {
@@ -138,13 +142,25 @@ namespace User
                 sprite->setColor( Color3B( 0, 0, 0 ) );
                 sprite->setOpacity( 0 );
                 sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
-                sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ ]
+                sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ this ]
                 {
-                    auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
-                    UserDefault::getInstance( )->setIntegerForKey( u8"日", day + 1 );
+                    // ここで、オートセーブデータを書き込みます。
+                    if ( saveCallFunc )saveCallFunc( );
+
+                    // 次に、時間を一段階進めます。
+                    // 朝→夕→夜
+                    auto time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
+                    if ( 3 <= ( time + 1 ) ) // 繰り上がったら
+                    {
+                        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+                        UserDefault::getInstance( )->setIntegerForKey( u8"日", day + 1 );
+                    }
+                    time = ( time + 1 ) % 3;
+                    UserDefault::getInstance( )->setIntegerForKey( u8"時刻", time );
+
                     SceneManager::createIslandMap( );
                 } ), RemoveSelf::create( ), nullptr ) );
-                Director::getInstance( )->getRunningScene( )->addChild( sprite, 20000 );
+                Director::getInstance( )->getRunningScene( )->addChild( sprite );
             }
         };
 
@@ -168,6 +184,22 @@ namespace User
         // テキストの読み込み。
         // delayが0である限り、テキストを読み込み続けます。
         readNextNovel( );
+    }
+    void NovelLayer::in( )
+    {
+        enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
+        {
+            node->runAction( FadeIn::create( 0.3F ) );
+            return false;
+        } );
+    }
+    void NovelLayer::out( )
+    {
+        enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
+        {
+            node->runAction( FadeOut::create( 0.3F ) );
+            return false;
+        } );
     }
     void NovelLayer::on( )
     {
@@ -208,6 +240,7 @@ namespace User
             click( );
             automode = AutoMode::create( [ this ] { click( ); } );
             addChild( automode );
+            automode->stop( );
         }
         else
         {
@@ -350,12 +383,29 @@ namespace User
 
         return this;
     }
-    AutoMode::AutoMode( std::function<void( )> tick )
-        :tick( tick )
+    AutoMode * AutoMode::create( std::function<void( )> const & tick )
     {
-        pause( );
+        AutoMode *pRet = new( std::nothrow ) AutoMode( );
+        if ( pRet && pRet->init( tick ) )
+        {
+            pRet->autorelease( );
+            return pRet;
+        }
+        else
+        {
+            delete pRet;
+            pRet = nullptr;
+            return nullptr;
+        }
+    }
+    bool AutoMode::init( std::function<void( )> const & tick )
+    {
+        if ( !Node::init( ) ) return false;
+        this->tick = tick;
         setName( typeid( this ).name( ) );
+        stop( );
         scheduleUpdate( );
+        return true;
     }
     void AutoMode::update( float t )
     {

@@ -53,4 +53,20 @@ namespace User
     {
         this->setVisible( false );
     }
+    void NameLayer::in( )
+    {
+        enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
+        {
+            node->runAction( FadeIn::create( 0.3F ) );
+            return false;
+        } );
+    }
+    void NameLayer::out( )
+    {
+        enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
+        {
+            node->runAction( FadeOut::create( 0.3F ) );
+            return false;
+        } );
+    }
 }

@@ -12,8 +12,8 @@
 @sys:touchoff
 //@crysfia:in
 //@crysfia:out
-//@sys:novelon
-//@sys:noveloff
+//@sys:novelin
+//@sys:novelout
 //@sys:stop(1)
 //@sys:l
 @sys:voice(boutou)
@@ -22,7 +22,7 @@
 //ここから
 @h白背景:fadein(1) 
 @sys:stop(1)
-@sys:novelon
+@sys:novelin
 
 @n？？？:in
 「クロエ、クロエ起きて。もうすぐ着くみたいだよ」@sys:l
@@ -45,7 +45,7 @@
 @sys:stop(1)
 @crysfia:in
 @sys:stop(1)
-@sys:novelon
+@sys:novelin
 
 @boutou:play(02)
 
@@ -66,14 +66,14 @@
 「ちゃんと間に合うように、連れて行ってあげる」@sys:l
 
 @crysfia:out
-@sys:noveloff
+@sys:novelout
 @h甲板:fadeout(1)
 @s波の音:out
 @sys:stop(1)
-@sys:novelon
+@sys:novelin
 
 最期の日に、間に合うように。@sys:l
 
-@sys:noveloff
+@sys:novelout
 //ここまで
 

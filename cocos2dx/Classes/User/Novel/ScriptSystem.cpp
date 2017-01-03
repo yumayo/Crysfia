@@ -53,6 +53,8 @@ namespace User
         REGIST_FUNC( ScriptSystem, still );
         REGIST_FUNC( ScriptSystem, live2d );
         REGIST_FUNC( ScriptSystem, voice );
+        REGIST_FUNC( ScriptSystem, novelin );
+        REGIST_FUNC( ScriptSystem, novelout );
         REGIST_FUNC( ScriptSystem, novelon );
         REGIST_FUNC( ScriptSystem, noveloff );
         REGIST_FUNC( ScriptSystem, novelswitch );
@@ -144,6 +146,16 @@ namespace User
         default:
             break;
         }
+    }
+    SCRIPT( ScriptSystem::novelin )
+    {
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->in( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->in( );
+    }
+    SCRIPT( ScriptSystem::novelout )
+    {
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->out( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->out( );
     }
     SCRIPT( ScriptSystem::novelon )
     {

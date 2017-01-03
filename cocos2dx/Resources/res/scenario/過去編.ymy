@@ -23,14 +23,14 @@
 //@crysfia:out
 //@sys:stop(1)
 //@sys:novelon
-//@sys:noveloff
+//@sys:novelout
 //@sus:l
 
 //ここから
 @h白背景:fadein(1)
 @hアイクラ島:fadein(2)
 @sys:stop(1)
-@sys:novelon
+@sys:novelin
 澄んだ湖。青々と茂った木々。@sys:l
 自然が溢れる、この場所はどこだろう。@sys:l
 とても美しく、どこか懐かしさも感じるこの
@@ -42,12 +42,12 @@
 @n？？？:in
 「どこ？」@sys:l
 
-@sys:noveloff
+@sys:novelout
 @sys:stop(1)
 @h研究所内部:fadein(2)
 @s水の音:in
 @sys:stop(1)
-@sys:novelon
+@sys:novelin
 
 目を開けると、瓶の中にいた。@sys:l
 冷たい液体が満ちた瓶の中で、息をしている。@sys:l
@@ -268,11 +268,11 @@
 「はぁ……。分かったよ」@sys:l
 
 @crysfia:out
-@sys:noveloff
+@sys:novelout
 @s扉の開閉音:in
 @h研究所外部:fadein(1)
 @b悲しい:fadeout(1)
-@sys:novelon
+@sys:novelin
 
 男性が部屋の扉を開けると、長い廊下に出た。
 しばらく廊下を進むと、「非常口」と書かれ
@@ -310,12 +310,12 @@
   も行こうか」@sys:l
 
 @crysfia:out
-@sys:noveloff
+@sys:novelout
 @h研究所外部:fadeout(1)
 @sys:stop(1)
 @hアレンの部屋:fadein(1)
 @bシリアス:in
-@sys:novelon
+@sys:novelin
 
 男性の家というのは、少し古びた集合住宅だ
 った。@sys:l
@@ -852,7 +852,7 @@
 なりそうだ。
 
 @crysfia:out
-@sys:noveloff
+@sys:novelout
 @hアレンの部屋:fadeout(1)
 //ここまで
 
