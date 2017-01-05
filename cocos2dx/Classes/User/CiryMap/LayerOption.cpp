@@ -192,7 +192,8 @@ namespace User
                 return sprite;
             };
 
-            auto button = ui::Button::create( u8"res/texture/system/button.samplevoice.png" );
+            auto button = ui::Button::create( u8"res/texture/system/button.samplevoice.png",
+                                              u8"res/texture/system/button.samplevoice.select.png" );
             button->setPosition( Vec2( logo->getContentSize( ).width, bar->getContentSize( ).height ) );
             button->setAnchorPoint( Vec2( 0, 0 ) );
             button->addTouchEventListener( [ ] ( Ref* ref, ui::Widget::TouchEventType type )
@@ -304,7 +305,8 @@ namespace User
     {
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
+        auto button = ui::Button::create( u8"res/texture/system/backbutton.png",
+                                          u8"res/texture/system/backbutton.select.png" );
 
         button->setScale( Lib::fitWidth( button, 128 * scale ), Lib::fitWidth( button, 128 * scale ) );
         button->setAnchorPoint( Vec2( 0, 0 ) );
@@ -454,7 +456,7 @@ namespace User
         slider = ui::Slider::create( );
         addChild( slider );
 
-        auto left = ui::Button::create( u8"res/texture/system/slider.left.png" );
+        auto left = ui::Button::create( u8"res/texture/system/slider.left.png", u8"res/texture/system/slider.left.select.png" );
         left->setAnchorPoint( Vec2( 0, 0 ) );
         addChild( left );
         auto translate = left->getContentSize( ).width;
@@ -483,12 +485,11 @@ namespace User
             }
         } );
 
-
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
         slider->loadBarTexture( dir + u8"slider.process.base.png" );
         slider->loadProgressBarTexture( dir + u8"slider.process.bar.png" );
-        //slider->loadSlidBallTextures( dir + u8"slider.button.base.png", dir + u8"slider.button.selected.png" );
+        slider->loadSlidBallTextures( dir + u8"slider.button.png", dir + u8"slider.button.select.png" );
         slider->addEventListener( [ this ] ( Ref* ref, ui::Slider::EventType type )
         {
             ui::Slider* slider = dynamic_cast<ui::Slider*>( ref );
@@ -505,7 +506,7 @@ namespace User
         slider->setPosition( Vec2( translate, 0 ) );
         translate += slider->getContentSize( ).width;
 
-        auto right = ui::Button::create( u8"res/texture/system/slider.right.png" );
+        auto right = ui::Button::create( u8"res/texture/system/slider.right.png", u8"res/texture/system/slider.right.select.png" );
         addChild( right );
         right->setAnchorPoint( Vec2( 0, 0 ) );
         right->setPosition( Vec2( translate, 0 ) );

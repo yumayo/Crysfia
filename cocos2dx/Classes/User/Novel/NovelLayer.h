@@ -56,8 +56,8 @@ namespace User
         void setup( ) override;
         void update( float delta )override;
     public:
-        void in( );
-        void out( );
+        void novelenable( );
+        void noveldisable( );
         void on( );
         void off( );
         void stop( );

@@ -185,7 +185,7 @@ namespace User
         // delayが0である限り、テキストを読み込み続けます。
         readNextNovel( );
     }
-    void NovelLayer::in( )
+    void NovelLayer::on( )
     {
         enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
         {
@@ -193,7 +193,7 @@ namespace User
             return false;
         } );
     }
-    void NovelLayer::out( )
+    void NovelLayer::off( )
     {
         enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
         {
@@ -201,12 +201,12 @@ namespace User
             return false;
         } );
     }
-    void NovelLayer::on( )
+    void NovelLayer::novelenable( )
     {
         this->resume( );
         this->setVisible( true );
     }
-    void NovelLayer::off( )
+    void NovelLayer::noveldisable( )
     {
         this->pause( );
         this->setVisible( false );

@@ -113,7 +113,8 @@ namespace User
     {
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
+        auto button = ui::Button::create( u8"res/texture/system/backbutton.png",
+                                          u8"res/texture/system/backbutton.select.png" );
 
         button->setScale( Lib::fitWidth( button, 128 * scale ), Lib::fitWidth( button, 128 * scale ) );
         button->setAnchorPoint( Vec2( 0, 0 ) );
@@ -228,11 +229,11 @@ namespace User
         reload( );
 
 
-        auto save = ui::Button::create( u8"res/texture/system/save.button.save.png" );
+        auto save = ui::Button::create( u8"res/texture/system/save.button.save.png", u8"res/texture/system/save.button.save.select.png" );
         save->setAnchorPoint( Vec2( 0, 0 ) );
         save->setPosition( Vec2( 12 / scale, panel->getContentSize( ).height - 255 / scale ) );
         ui->addChild( save );
-        auto load = ui::Button::create( u8"res/texture/system/save.button.load.png" );
+        auto load = ui::Button::create( u8"res/texture/system/save.button.load.png", u8"res/texture/system/save.button.load.select.png" );
         load->setAnchorPoint( Vec2( 0, 0 ) );
         load->setPosition( Vec2( 155 / scale, panel->getContentSize( ).height - 255 / scale ) );
         ui->addChild( load );

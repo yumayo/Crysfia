@@ -3,6 +3,7 @@
 # include "ui/CocosGUI.h"
 
 # include "../../Lib/json.h"
+# include "LayerCity.h"
 
 namespace User
 {
@@ -12,8 +13,8 @@ namespace User
     class LayerNovelView : public cocos2d::LayerColor
     {
     public:
-        static LayerNovelView* create( std::string const& scenario, std::function<void()> const& saveCallFunc );
-        bool init( std::string const& scenario, std::function<void( )> const& saveCallFunc );
+        static LayerNovelView* create( ScenarioPointData const& scenario, std::function<void()> const& saveCallFunc );
+        bool init( ScenarioPointData const& scenario, std::function<void( )> const& saveCallFunc );
     private:
         std::function<void( )> saveCallFunc;
         bool isNext = false;

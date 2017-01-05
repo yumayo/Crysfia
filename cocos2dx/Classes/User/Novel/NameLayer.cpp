@@ -30,7 +30,7 @@ namespace User
     }
     void NameLayer::addNovelWinodowSwitch( )
     {
-        ScriptStaticData::run( { "sys", "noveloff" } );
+        ScriptStaticData::run( { "sys", "noveldisable" } );
 
         auto touchevent = EventListenerGesture::create( );
         touchevent->setSwallowTouches( true );
@@ -39,21 +39,21 @@ namespace User
         {
             scheduleOnce( [ this, touchevent ] ( float delay )
             {
-                ScriptStaticData::run( { "sys", "novelon" } );
+                ScriptStaticData::run( { "sys", "novelenable" } );
                 getEventDispatcher( )->removeEventListener( touchevent );
             }, 0.01F, typeid( this ).name( ) );
         };
         getEventDispatcher( )->addEventListenerWithFixedPriority( touchevent, -1 );
     }
-    void NameLayer::on( )
-    {
-        this->setVisible( true );
-    }
-    void NameLayer::off( )
+    void NameLayer::noveldisable( )
     {
         this->setVisible( false );
     }
-    void NameLayer::in( )
+    void NameLayer::novelenable( )
+    {
+        this->setVisible( true );
+    }
+    void NameLayer::on( )
     {
         enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
         {
@@ -61,7 +61,7 @@ namespace User
             return false;
         } );
     }
-    void NameLayer::out( )
+    void NameLayer::off( )
     {
         enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
         {

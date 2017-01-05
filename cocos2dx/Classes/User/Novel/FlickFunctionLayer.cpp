@@ -38,7 +38,8 @@ namespace User
         {
             const auto vo = Director::getInstance( )->getVisibleOrigin( );
             const auto vs = Director::getInstance( )->getVisibleSize( );
-            auto button = ui::Button::create( u8"res/texture/system/icon." + functions[i].first + u8".png" );
+            auto button = ui::Button::create( u8"res/texture/system/icon." + functions[i].first + u8".png",
+                                              u8"res/texture/system/icon." + functions[i].first + u8".select.png" );
             button->setName( functions[i].first );
             button->setAnchorPoint( Vec2( 0, 0 ) );
             button->setPosition( vo + Vec2( icon_size * i, 0 ) );

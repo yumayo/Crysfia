@@ -20,8 +20,8 @@ namespace User
         SCRIPT( l ); // シナリオ読み込みをストップ
         SCRIPT( select ); // 選択肢の表示
         SCRIPT( stop );
-        SCRIPT( novelin );
-        SCRIPT( novelout );
+        SCRIPT( noveldisable );
+        SCRIPT( novelenable );
         SCRIPT( novelon );
         SCRIPT( noveloff );
         SCRIPT( novelswitch );

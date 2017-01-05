@@ -179,6 +179,7 @@ namespace User
                     itr->second( tag.second );
                 }
             }
+
             data->setBoolForKey( u8"INITDATA", true );
         }
     }

@@ -50,11 +50,13 @@ namespace User
         REGIST_FUNC( ScriptSystem, name );
         REGIST_FUNC( ScriptSystem, human );
         REGIST_FUNC( ScriptSystem, background );
+        REGIST_FUNC( ScriptSystem, heartup );
+        REGIST_FUNC( ScriptSystem, heartdown );
         REGIST_FUNC( ScriptSystem, still );
         REGIST_FUNC( ScriptSystem, live2d );
         REGIST_FUNC( ScriptSystem, voice );
-        REGIST_FUNC( ScriptSystem, novelin );
-        REGIST_FUNC( ScriptSystem, novelout );
+        REGIST_FUNC( ScriptSystem, noveldisable );
+        REGIST_FUNC( ScriptSystem, novelenable );
         REGIST_FUNC( ScriptSystem, novelon );
         REGIST_FUNC( ScriptSystem, noveloff );
         REGIST_FUNC( ScriptSystem, novelswitch );
@@ -147,15 +149,15 @@ namespace User
             break;
         }
     }
-    SCRIPT( ScriptSystem::novelin )
+    SCRIPT( ScriptSystem::noveldisable )
     {
-        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->in( );
-        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->in( );
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->noveldisable( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->noveldisable( );
     }
-    SCRIPT( ScriptSystem::novelout )
+    SCRIPT( ScriptSystem::novelenable )
     {
-        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->out( );
-        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->out( );
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->novelenable( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->novelenable( );
     }
     SCRIPT( ScriptSystem::novelon )
     {
