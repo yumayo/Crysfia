@@ -8,7 +8,7 @@
 namespace User
 {
     /**
-     * モーダルレイヤーになっているので、そのままcreateするだけで大丈夫です。
+     * ���[�_�����C���[�ɂȂ��Ă���̂ŁA���̂܂�create���邾���ő��v�ł��B
      */
     class LayerSave : public LayerBase
     {
@@ -24,7 +24,7 @@ namespace User
         cocos2d::ui::Layout* createDialog( std::string const& str, std::function<void( )> const & yes, std::function<void( )> const & no );
         cocos2d::ui::Layout* createSavePanel( std::string const& name );
         cocos2d::ui::Layout* createSavePanelSide( std::string const& left_name, std::string const& right_name );
-        cocos2d::Size panelSize; // セーブデータパネルの大きさを格納します。
+        cocos2d::Size panelSize; // �Z�[�u�f�[�^�p�l���̑傫�����i�[���܂��B
     };
 }
 

@@ -22,16 +22,16 @@ namespace User
 			return false;
 		}
 
-		// ç”»é¢ã‚µã‚¤ã‚ºã‚’å–å¾—
+		// ‰æ–ÊƒTƒCƒY‚ğæ“¾
 		Size winSize = Director::getInstance()->getVisibleSize();
 
-		// ãƒãƒƒã‚¯ã‚°ãƒ©ãƒ³ãƒ‰ã‚«ãƒ©ãƒ¼
+		// ƒoƒbƒNƒOƒ‰ƒ“ƒhƒJƒ‰[
 		auto background = LayerColor::create(Color4B::BLACK, winSize.width, winSize.height);
 
-		// ãƒãƒƒã‚¯ã‚°ãƒ©ãƒ³ãƒ‰ã‚«ãƒ©ãƒ¼ç¬¬2å¼•æ•°ã¯è¡¨ç¤ºé †
+		// ƒoƒbƒNƒOƒ‰ƒ“ƒhƒJƒ‰[‘æ2ˆø”‚Í•\¦‡
 		this->addChild(background, 0);
 
-		// ãƒªã‚¹ãƒˆãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
+		// ƒŠƒXƒgƒrƒ…[‚Ìì¬
 		Size visibleSize = Director::getInstance()->getVisibleSize();
 		Vec2 origin = Director::getInstance()->getVisibleSize();
 
@@ -43,7 +43,7 @@ namespace User
 		listView->setTag(0);
 		this->addChild(listView);
 
-		// ãƒœã‚¿ãƒ³ã®ç”Ÿæˆ
+		// ƒ{ƒ^ƒ“‚Ì¶¬
 		for (int i = 0; i < 6; ++i)
 		{
 			auto node = ui::Layout::create();
@@ -62,11 +62,11 @@ namespace User
 			listView->addChild(node);
 		}
 
-		// æ—¥è¨˜ã‚’é–‹ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹
+		// “ú‹L‚ğŠJ‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©
 		flagDiary = false;
 
 
-		// æˆ»ã‚‹ãƒœã‚¿ãƒ³ã®ç”Ÿæˆ
+		// –ß‚éƒ{ƒ^ƒ“‚Ì¶¬
 		{
 			auto scale = Director::getInstance()->getContentScaleFactor();
 
@@ -87,7 +87,7 @@ namespace User
 		return true;
 	}
 
-	// ãƒœã‚¿ãƒ³ã‚’ã‚¿ãƒƒãƒã—ãŸã¨ãã®åå¿œ
+	// ƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`‚µ‚½‚Æ‚«‚Ì”½‰
 	void LayerDiary::touchEvent(Ref *pSender, ui::Widget::TouchEventType type) {
 
 		if (type == ui::Widget::TouchEventType::BEGAN) {
@@ -138,7 +138,7 @@ namespace User
 		}
 	}
 
-	// ãƒœã‚¿ãƒ³ã‚’ã‚¿ãƒƒãƒã•ã‚ŒãŸã‚‰ã“ã‚Œã§ç”»åƒã‚’æç”»
+	// ƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`‚³‚ê‚½‚ç‚±‚ê‚Å‰æ‘œ‚ğ•`‰æ
 	void LayerDiary::selectDiary(std::string _name) {
 
 		auto sprite = Sprite::create(StringUtils::format("res/texture/home/%s.png", _name.c_str() ));

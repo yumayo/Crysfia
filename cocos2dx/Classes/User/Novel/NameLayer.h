@@ -18,6 +18,8 @@ namespace User
     public:
         void on( );
         void off( );
+        void novelenable( );
+        void noveldisable( );
     };
 }
 

@@ -1,6 +1,6 @@
 #include "Layer_ishibashi.h"
-#include "external/json/rapidjson.h"
-#include "external/json/document.h"
+#include "cocos2d/external/json/rapidjson.h"
+#include "cocos2d/external/json/document.h"
 #include "audio/include/AudioEngine.h"
 #include "../Novel/ScriptHeart.h"
 
@@ -71,7 +71,7 @@ namespace User
     }
     void Layer_meal::setup( )
     {
-        //ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨
+        //ƒƒjƒ…[•\
     }
     void Layer_meal::update( float delta )
     {
@@ -83,7 +83,7 @@ namespace User
         change = _layerName;
     }
 
-    //é£Ÿäº‹ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ã®èª¬æ˜æ–‡
+    //H–‚Ìƒƒjƒ…[—p‚Ìà–¾•¶
     void Layer_meal::eatText( )
     {
 
@@ -103,28 +103,28 @@ namespace User
         confirmButton( );
     }
 
-    //æ±ºå®šãƒœã‚¿ãƒ³
+    //Œˆ’èƒ{ƒ^ƒ“
     void Layer_meal::confirmButton( )
     {
-        //ãƒœã‚¿ãƒ³ã‚’ä½œæˆã™ã‚‹
+        //ƒ{ƒ^ƒ“‚ğì¬‚·‚é
         ui::Button * button = ui::Button::create( "res/texture/button.png" );
         button->setTouchEnabled( true );
 
-        //ãƒœã‚¿ãƒ³ã®ä½ç½®è¨­å®š
+        //ƒ{ƒ^ƒ“‚ÌˆÊ’uİ’è
         button->setPosition( Vec2( 600, 275 ) );
 
-        //ãƒœã‚¿ãƒ³ã«è¡¨ç¤ºã™ã‚‹æ–‡å­—
-        // ãƒ†ã‚­ã‚¹ãƒˆ
-        button->setTitleText( u8"æ±ºå®š" );
-        // ãƒ•ã‚©ãƒ³ãƒˆ
+        //ƒ{ƒ^ƒ“‚É•\¦‚·‚é•¶š
+        // ƒeƒLƒXƒg
+        button->setTitleText( u8"Œˆ’è" );
+        // ƒtƒHƒ“ƒg
         button->setTitleFontName( "Arial" );
-        // ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚º
+        // ƒtƒHƒ“ƒgƒTƒCƒY
         button->setTitleFontSize( 20 );
-        // ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼
+        // ƒtƒHƒ“ƒgƒJƒ‰[
         button->setTitleColor( Color3B::BLACK );
         button->setName( "delite" );
 
-        //æ±ºå®šãƒœã‚¿ãƒ³å†…å®¹
+        //Œˆ’èƒ{ƒ^ƒ““à—e
         button->addTouchEventListener( [ this ] ( Ref* button, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
@@ -134,14 +134,14 @@ namespace User
                 switch ( change )
                 {
                 case meal:
-                    //é£Ÿäº‹ç”¨ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ï¼ˆæš«å®šï¼‰
+                    //H–—pƒAƒNƒVƒ‡ƒ“ib’èj
                     animation( animation_num );
                     this->removeChildByName( "delite" );
 					loveMetor();
                     reside = false;
                     break;
                 case dressClothes:
-                    //ç€æ›¿ãˆç”¨ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+                    //’…‘Ö‚¦—pƒAƒNƒVƒ‡ƒ“
 					dressAnimetion(now_dress, next_dress);
 					dressChange();
                     break;
@@ -156,12 +156,12 @@ namespace User
 
     void Layer_meal::Menu( )
     {
-        //jsonãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
+        //jsonƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
         auto fileUtils = FileUtils::getInstance( );
         auto path = fileUtils->getStringFromFile( "res/json/meal_clothes.json" );
         rapidjson::Document doc;
 
-        //jsonãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‘ãƒ¼ã‚¹
+        //jsonƒtƒ@ƒCƒ‹‚ğƒp[ƒX
         doc.Parse<rapidjson::kParseDefaultFlags>( path.c_str( ) );
 
         if ( !doc.HasParseError( ) )
@@ -201,7 +201,7 @@ namespace User
 		}
 
 		now = UserDefault::getInstance();
-		now_dress = now->getIntegerForKey(u8"ç¾åœ¨ã®æœ");
+		now_dress = now->getIntegerForKey(u8"Œ»İ‚Ì•");
 
 		auto sprite = Sprite::create();
 		sprite->setTextureRect(Rect(0, 0, 150, 900));
@@ -266,6 +266,7 @@ namespace User
         sprite->setColor( Color3B::WHITE );
         sprite->setPosition( Point( 300, 1100 ) );
         this->addChild( sprite );
+
         auto text = Label::createWithSystemFont( eatTime, "Arial", 24 );
         text->setPosition( Point( 300, 1100 ) );
         text->setColor( ccc3( 0, 0, 0 ) );
@@ -289,7 +290,7 @@ namespace User
 		dress->setPosition(Vec2(285, 700));
 		this->addChild(dress);
 
-		//ãƒ•ã‚§ãƒ¼ãƒ‰ 1ç§’ã§ã€100%ã¸
+		//ƒtƒF[ƒh 1•b‚ÅA100%‚Ö  
 		CCFiniteTimeAction* fade = FadeIn::create(2);
 		kuroe->runAction(fade);
 		CCFiniteTimeAction* fade2 = FadeIn::create(2);
@@ -312,7 +313,7 @@ namespace User
         CCFiniteTimeAction* move = CCMoveTo::create( 1.0f, ccp( 280, 850 ) );
         food->runAction( move );
 
-		//ãƒ•ã‚§ãƒ¼ãƒ‰ 1ç§’ã§ã€100%ã¸
+		//ƒtƒF[ƒh 1•b‚ÅA100%‚Ö  
 		CCFiniteTimeAction* fade = CCFadeTo::create(1.0f, 0);
         food->runAction( fade );
     }
@@ -333,7 +334,7 @@ namespace User
 		dress->setPosition(Vec2(285, 700));
 		this->addChild(dress);
 
-		//ãƒ•ã‚§ãƒ¼ãƒ‰ 1ç§’ã§ã€100%ã¸
+		//ƒtƒF[ƒh 1•b‚ÅA100%‚Ö  
 		CCFiniteTimeAction* fade = FadeOut::create(1);
 		kuroe->runAction(fade);
 		CCFiniteTimeAction* fade2 = FadeIn::create(2);
@@ -344,7 +345,7 @@ namespace User
 
     void Layer_meal::normalButton( int text_number, std::string button_photo, int normalButtonTag )
     {
-        auto button = ui::Button::create( "res/texture/item/" + button_photo );//ãƒœã‚¿ãƒ³ç”»åƒ
+        auto button = ui::Button::create( "res/texture/item/" + button_photo );//ƒ{ƒ^ƒ“‰æ‘œ
 
         button->setScale9Enabled( true );
         button->setPosition( Vec2( 600, 1150 - 180 * text_number ) );
@@ -362,17 +363,17 @@ namespace User
         default:
             break;
         }
-        button->setOpacity( w );//é€æ˜åº¦0ã§å®Œå…¨é€æ˜ã€255ã§å®Ÿä½“åŒ–
+        button->setOpacity( w );//“§–¾“x0‚ÅŠ®‘S“§–¾A255‚ÅÀ‘Ì‰»
         button->setTag( normalButtonTag );
 
-        //ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã®åå¿œ
+        //ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Æ‚«‚Ì”½‰
         button->addTouchEventListener( [ this, text_number ] ( Ref* button, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
                 switch ( change )
                 {
-                case meal://é£Ÿäº‹ç”¨
+                case meal://H–—p
 					if (food_gain[text_number] == true) {
 						if (reside == true)
 						{
@@ -390,13 +391,13 @@ namespace User
 						}
 					}
                     break;
-                case dressClothes://ç€æ›¿ãˆç”¨
+                case dressClothes://’…‘Ö‚¦—p
 					if (dress_gain[text_number] == true) {
 						if (reside == true)
 						{
 							buttonAudio(".../button70.mp3", audio_volume);
 
-							//ç€æ›¿ãˆã‚‹å‹•ä½œã‚’å…¥ã‚Œã‚‹
+							//’…‘Ö‚¦‚é“®ì‚ğ“ü‚ê‚é
 							eraseFoodText();
 							eraseFoodText();
 							eraseFoodText();
@@ -407,7 +408,7 @@ namespace User
 						}
 					}
 
-
+					
 					removeChildByName("fashion");
 					removeChildByName("changeCostume");
 
@@ -473,7 +474,7 @@ namespace User
         this->addChild( under_line );
 
 
-		//èª¬æ˜æ¿
+		//à–¾”Â
         auto text_board = Sprite::create( );
         text_board->setTextureRect( Rect( 0, 0, 200, 400 ) );
         text_board->setColor( Color3B::WHITE );
@@ -505,13 +506,14 @@ namespace User
 		right_line->setPosition(Point(700, 800));
 		this->addChild(right_line);
 
-		auto top_line = Sprite::create();
-		top_line->setTextureRect(Rect(0, 0, 210, 10));
+		auto top_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
+		//top_line->setTextureRect(Rect(0, 0, 210, 10));
+		top_line->setRotation(180);
 		top_line->setPosition(600, 1250);
 		this->addChild(top_line);
 
-		auto under_line = Sprite::create();
-		under_line->setTextureRect(Rect(0, 0, 210, 10));
+		auto under_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
+		//under_line->setTextureRect(Rect(0, 0, 210, 10));
 		under_line->setPosition(600, 350);
 		this->addChild(under_line);
 	}
@@ -520,31 +522,31 @@ namespace User
     {
         auto item = UserDefault::getInstance();
 
-        food_gain.push_back(item->getBoolForKey(u8"è§’ç ‚ç³–"));
-        food_gain.push_back(item->getBoolForKey(u8"èŠ±"));
-        food_gain.push_back(item->getBoolForKey(u8"æœç‰©"));
-        food_gain.push_back(item->getBoolForKey(u8"ã‚³ãƒ³ãƒšã‚¤ãƒˆã‚¦"));
-        food_gain.push_back(item->getBoolForKey(u8"å®çŸ³"));
-        dress_gain.push_back(item->getBoolForKey(u8"æœA"));
-        dress_gain.push_back(item->getBoolForKey(u8"æœB"));
-        dress_gain.push_back(item->getBoolForKey(u8"æœC"));
-        dress_gain.push_back(item->getBoolForKey(u8"æœD"));
-        dress_gain.push_back(item->getBoolForKey(u8"æœE"));
+        food_gain.push_back(item->getBoolForKey(u8"Šp»“œ"));
+        food_gain.push_back(item->getBoolForKey(u8"‰Ô"));
+        food_gain.push_back(item->getBoolForKey(u8"‰Ê•¨"));
+        food_gain.push_back(item->getBoolForKey(u8"ƒRƒ“ƒyƒCƒgƒE"));
+        food_gain.push_back(item->getBoolForKey(u8"•óÎ"));
+        dress_gain.push_back(item->getBoolForKey(u8"•A"));
+        dress_gain.push_back(item->getBoolForKey(u8"•B"));
+        dress_gain.push_back(item->getBoolForKey(u8"•C"));
+        dress_gain.push_back(item->getBoolForKey(u8"•D"));
+        dress_gain.push_back(item->getBoolForKey(u8"•E"));
     }
 
 	void Layer_meal::dressChange()
 	{
-		now->setIntegerForKey(u8"ç¾åœ¨ã®æœ", next_dress);
+		now->setIntegerForKey(u8"Œ»İ‚Ì•", next_dress);
 	}
 
-	//æœªç¢ºèª
+	//–¢Šm”F
 	void Layer_meal::loveMetor()
 	{
 		int love_gauge;
 
 		auto love = UserDefault::getInstance();
-		love_gauge = love->getIntegerForKey(u8"è¦ªæ„›åº¦");
+		love_gauge = love->getIntegerForKey(u8"eˆ¤“x");
 		love_gauge += love_degrees;
-		love->setIntegerForKey(u8"è¦ªæ„›åº¦", love_gauge);
+		love->setIntegerForKey(u8"eˆ¤“x", love_gauge);
 	}
 }

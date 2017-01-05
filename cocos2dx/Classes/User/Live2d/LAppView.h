@@ -19,8 +19,8 @@
 
 #include <vector>
 
-// すべてを司るクラスです。
-// このクラスがaddChildされるとマネージャーなどが一斉に動き出します。
+// ���ׂĂ��i��N���X�ł��B
+// ���̃N���X��addChild�����ƃ}�l�[�W���[�Ȃǂ���Ăɓ����o���܂��B
 class LAppView :public cocos2d::DrawNode
 {    
 public:

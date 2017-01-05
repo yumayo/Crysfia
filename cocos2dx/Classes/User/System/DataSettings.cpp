@@ -32,13 +32,109 @@ namespace User
             reader.read( defalutDirectory + name );
         }
     }
-    void userDefaultLoading( std::string const& name )
+
+    void setUserDefault( INIReader& iniReader )
     {
-        CC_ASSERT( !"æœªå®Ÿè£…ã€‚" );
+        auto userDefault = UserDefault::getInstance( );
+
+        using Type = std::string; // bool, int, float, string‚Ì•¶š—ñ‚ğ“ü‚ê‚Ü‚·B
+        using Key = std::string; // •Ï”‚É•t‚¯‚½–¼‘O‚ğŠi”[‚µ‚Ü‚·B
+        using Value = std::string; // •Ï”‚ÌÀ‘Ô‚ğŠi”[‚µ‚Ü‚·B
+        using ValueMap = std::map<Key, Value>; // •Ï”‚Ì–¼‘O‚ğ•Ï”‚ÌÀ‘Ì‚ğ‚Ü‚Æ‚ß‚½ˆê——‚ğŠi”[‚µ‚Ü‚·B
+
+        {
+            Type type = u8"bool";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setBoolForKey( key.c_str( ), StringUtil::string_value<bool>( value ) );
+            }
+        }
+        {
+            Type type = u8"int";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setIntegerForKey( key.c_str( ), StringUtil::string_value<int>( value ) );
+            }
+        }
+        {
+            Type type = u8"float";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setFloatForKey( key.c_str( ), StringUtil::string_value<float>( value ) );
+            }
+        }
+        {
+            Type type = u8"string";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setStringForKey( key.c_str( ), StringUtil::string_value<std::string>( value ) );
+            }
+        }
     }
-    void userDefaultSaveing( std::string const& name )
+    // ƒ†[ƒU[ƒfƒtƒHƒ‹ƒg‚Ì’†g‚ğINIŒ^‚É‚µ‚Ä•Ô‚µ‚Ü‚·B
+    // ƒ†[ƒU[ƒfƒtƒHƒ‹ƒg‚Å‚ÍA’†g‚ğ—ñ‹“‚·‚é‚±‚Æ‚ªo—ˆ‚È‚¢‚Ì‚ÅA
+    // ƒf[ƒ^‚ğæ‚èo‚·Û‚ÉAƒL[‚ÌŒ³‚Æ‚È‚éINIƒtƒ@ƒCƒ‹‚ğ’ñ¦‚µ‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB
+    INIReader getUserDefault( INIReader& iniReader )
     {
-        CC_ASSERT( !"æœªå®Ÿè£…ã€‚" );
+        INIReader ret;
+
+        // INIƒf[ƒ^‚ÌƒL[‚©‚çˆê’v‚·‚éƒ†[ƒU[ƒfƒtƒHƒ‹ƒg‚Ì’†g‚ğæ‚èo‚µ‚½‚¢B
+        using Type = std::string; // bool, int, float, string‚Ì•¶š—ñ‚ğ“ü‚ê‚Ü‚·B
+        using Key = std::string; // •Ï”‚É•t‚¯‚½–¼‘O‚ğŠi”[‚µ‚Ü‚·B
+        using Value = std::string; // •Ï”‚ÌÀ‘Ô‚ğŠi”[‚µ‚Ü‚·B
+        using ValueMap = std::map<Key, Value>; // •Ï”‚Ì–¼‘O‚ğ•Ï”‚ÌÀ‘Ì‚ğ‚Ü‚Æ‚ß‚½ˆê——‚ğŠi”[‚µ‚Ü‚·B
+
+        auto userDefault = UserDefault::getInstance( );
+
+        {
+            Type type = u8"bool";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto velue = userDefault->getBoolForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( velue );
+            }
+        }
+        {
+            Type type = u8"int";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getIntegerForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        {
+            Type type = u8"float";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getFloatForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        {
+            Type type = u8"string";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getStringForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        return ret;
     }
     void userDefaultSetup( )
     {
@@ -46,7 +142,7 @@ namespace User
         if ( !data->getBoolForKey( u8"INITDATA", false ) )
         {
             INIReader reader;
-            iniDataRead( reader, u8"res/data/userDefault.ini" );
+            iniDataRead( reader, u8"res/data/saveLayout.ini" );
 
             std::map<std::string, std::function<void( std::map<std::string, std::string> )>> calls;
 
@@ -83,6 +179,7 @@ namespace User
                     itr->second( tag.second );
                 }
             }
+
             data->setBoolForKey( u8"INITDATA", true );
         }
     }

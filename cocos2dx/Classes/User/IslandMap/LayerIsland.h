@@ -16,7 +16,7 @@ namespace User
         bool init( ) override;
         void setup( ) override;
         /**
-         *  æ»åœ¨ä¸­ã®å³¶
+         *  ‘Øİ’†‚Ì“‡
          */
         enum Islands
         {
@@ -28,7 +28,7 @@ namespace User
         };
 
         /**
-         *  ä»Šã®æ™‚é–“ã€‚
+         *  ¡‚ÌŠÔB
          */
         enum Times
         {

@@ -15,7 +15,7 @@ namespace User
 		drawNode->setPosition(Point(0.0f, 0.0f));
 		this->addChild(drawNode);
 
-		// æç”»
+		// •`‰æ
 		std::array<Point, 4> vertexes = {
 			Point(0, 0),
 			Point(frameSize.x, 0),

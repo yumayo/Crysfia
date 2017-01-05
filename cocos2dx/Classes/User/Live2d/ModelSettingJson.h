@@ -8,7 +8,7 @@
 #include "ModelSetting.h"
 #include "util/Json.h"
 
-// JSONのキー
+// JSON�̃L�[
 const char NAME [ ] = "name";
 const char MODEL [ ] = "model";
 const char _ID [ ] = "id";
@@ -32,7 +32,7 @@ class ModelSettingJson : public ModelSetting
 {
 private:
     live2d::Json* json;
-    // キーが存在するかどうかのチェック
+    // �L�[�����݂��邩�ǂ����̃`�F�b�N
     bool existModelName( ) { return !json->getRoot( )[NAME].isNull( ); }
     bool existModelFile( ) { return !json->getRoot( )[MODEL].isNull( ); }
     bool existTextureFiles( ) { return !json->getRoot( )[TEXTURES].isNull( ); }
@@ -56,7 +56,7 @@ public:
         delete json;
     }
 
-    // モデルデータについて
+    // ���f���f�[�^�ɂ���
     std::string getModelName( )
     {
         if ( !existModelName( ) )return "";
@@ -70,7 +70,7 @@ public:
         return json->getRoot( )[MODEL].toString( ).c_str( );
     }
 
-    // テクスチャについて
+    // �e�N�X�`���ɂ���
     int getTextureNum( )
     {
         if ( !existTextureFiles( ) )return 0;
@@ -84,7 +84,7 @@ public:
 
     std::string getTextureFile( int n ) { return json->getRoot( )[TEXTURES][n].toString( ).c_str( ); }
 
-    // 初期パラメータについて
+    // �����p�����[�^�ɂ���
     int getInitParamNum( )
     {
         if ( !existInitParam( ) )return 0;
@@ -95,7 +95,7 @@ public:
     float getInitParamValue( int n ) { return json->getRoot( )[INIT_PARAM][n][VAL].toDouble( ); }
     std::string getInitParamID( int n ) { return json->getRoot( )[INIT_PARAM][n][_ID].toString( ).c_str( ); }
 
-    // 初期パーツ表示について
+    // �����p�[�c�\���ɂ���
     int getInitPartsVisibleNum( )
     {
         if ( !existInitPartsVisible( ) )return 0;
@@ -107,7 +107,7 @@ public:
     std::string getInitPartsVisibleID( int n ) { return json->getRoot( )[INIT_PARTS_VISIBLE][n][_ID].toString( ).c_str( ); }
 
 
-    // あたり判定について
+    // �����蔻��ɂ���
     int getHitAreasNum( )
     {
         if ( !existHitAreas( ) )return 0;
@@ -117,7 +117,7 @@ public:
     std::string getHitAreaID( int n ) { return json->getRoot( )[HIT_AREAS][n][_ID].toString( ).c_str( ); }
     std::string getHitAreaName( int n ) { return json->getRoot( )[HIT_AREAS][n][NAME].toString( ).c_str( ); }
 
-    // 物理演算、パーツ切り替え、表情ファイルについて
+    // �������Z�A�p�[�c�؂�ւ��A�\��t�@�C���ɂ���
     std::string getPhysicsFile( )
     {
         if ( !existPhysicsFile( ) )return "";
@@ -151,7 +151,7 @@ public:
     }
 
 
-    // モーションについて
+    // ���[�V�����ɂ���
     int getMotionNum( std::string name )
     {
         if ( !existMotionGroup( name ) )return 0;

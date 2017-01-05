@@ -18,6 +18,8 @@
 
 #include "../CiryMap/LayerOption.h"
 
+#include "../Novel/INIWriter.h"
+
 USING_NS_CC;
 
 namespace User
@@ -52,7 +54,7 @@ namespace User
         background->setPosition( vo + vs * 0.5 );
 
         /**
-        *  ç”»é¢ä¸‹éƒ¨ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼
+        *  ‰æ–Ê‰º•”‚Ìƒƒjƒ…[
         */
         auto board = Sprite::create( u8"res/texture/system/board.png" );
         addChild( board );
@@ -73,27 +75,27 @@ namespace User
         }
 
 
-        // ã‚¿ã‚¤ãƒˆãƒ«ãƒœã‚¿ãƒ³ã®è¨­ç½®
+        // ƒ^ƒCƒgƒ‹ƒ{ƒ^ƒ“‚Ìİ’u
         auto title = Sprite::create( dir + u8"save.title.png" );
-        title->setPosition( background->getContentSize( ).width * 0.5, background->getContentSize( ).height - 140 * scale );
+        title->setPosition( background->getContentSize( ).width * 0.5, background->getContentSize( ).height - 70 / scale );
         background->addChild( title );
 
-        // ã‚»ãƒ¼ãƒ–ã‚²ãƒ¼ã‚¸ã‚’ãŸãã•ã‚“ä¸¦ã¹ã‚‹
+        // ƒZ[ƒuƒQ[ƒW‚ğ‚½‚­‚³‚ñ•À‚×‚é
         auto list = ui::ListView::create( );
         list->setAnchorPoint( Vec2( 0.5, 0.5 ) );
         list->setPosition( vo + background->getContentSize( ) * 0.5 );
         list->setContentSize( Size( panelSize.width * 2,
                                     background->getContentSize( ).height
-                                    - board->getContentSize( ).height * board->getScale( ) //  ä¸‹ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆ†
-                                    - title->getContentSize( ).height * title->getScale( ) // ä¸Šã®ã‚¿ã‚¤ãƒˆãƒ«ã®åˆ†
-                                    - 140 * scale // ã‚¿ã‚¤ãƒˆãƒ«ä¸Šã®éš™é–“ã®åˆ†
+                                    - board->getContentSize( ).height * board->getScale( ) //  ‰º‚Ìƒƒjƒ…[‚Ì•ª
+                                    - title->getContentSize( ).height * title->getScale( ) // ã‚Ìƒ^ƒCƒgƒ‹‚Ì•ª
+                                    - 70 / scale // ƒ^ƒCƒgƒ‹ã‚ÌŒ„ŠÔ‚Ì•ª
 
         ) );
         background->addChild( list );
 
-        // ã¨ã‚Šã‚ãˆãš10åˆ—åˆ†ä¸¦ã¹ã¾ã™ã€‚
-        // æ¨ªã«2ã¤ã‚ã‚‹ã®ã§20å€‹åˆ†ã®ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã§ãã¾ã™ã€‚
-        // 20 + ã‚ªãƒ¼ãƒˆã‚»ãƒ¼ãƒ–åˆ†ã§21ç¢ºä¿ã—ã¦ãŠãã¾ã—ã‚‡ã†ã€‚
+        // ‚Æ‚è‚ ‚¦‚¸10—ñ•ª•À‚×‚Ü‚·B
+        // ‰¡‚É2‚Â‚ ‚é‚Ì‚Å20ŒÂ•ª‚ÌƒZ[ƒuƒf[ƒ^‚ğì¬‚Å‚«‚Ü‚·B
+        // 20 + ƒI[ƒgƒZ[ƒu•ª‚Å21Šm•Û‚µ‚Ä‚¨‚«‚Ü‚µ‚å‚¤B
         const std::string default_name = u8"system.save.";
         for ( int i = 0, save = 1; i < 10; ++i, save += 2 )
         {
@@ -111,7 +113,8 @@ namespace User
     {
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
+        auto button = ui::Button::create( u8"res/texture/system/backbutton.png",
+                                          u8"res/texture/system/backbutton.select.png" );
 
         button->setScale( Lib::fitWidth( button, 128 * scale ), Lib::fitWidth( button, 128 * scale ) );
         button->setAnchorPoint( Vec2( 0, 0 ) );
@@ -130,8 +133,8 @@ namespace User
     }
     cocos2d::Node * LayerSave::createModal( )
     {
-        // ç°¡æ˜“çš„ãªãƒ¢ãƒ¼ãƒ€ãƒ«ãƒ¬ã‚¤ãƒ¤ãƒ¼ã§ã™ã€‚
-        // é€æ˜ãªç”»åƒã‚’ç”»é¢ã„ã£ã±ã„ã«è²¼ã‚‹ã“ã¨ã§æ©Ÿèƒ½ã—ã¦ã„ã¾ã™ã€‚
+        // ŠÈˆÕ“I‚Èƒ‚[ƒ_ƒ‹ƒŒƒCƒ„[‚Å‚·B
+        // “§–¾‚È‰æ‘œ‚ğ‰æ–Ê‚¢‚Á‚Ï‚¢‚É“\‚é‚±‚Æ‚Å‹@”\‚µ‚Ä‚¢‚Ü‚·B
         std::string dir = u8"res/texture/system/";
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto vo = Director::getInstance( )->getVisibleOrigin( );
@@ -146,6 +149,7 @@ namespace User
     }
     cocos2d::ui::Layout* LayerSave::createDialog( std::string const& str, std::function<void( )> const & yes, std::function<void( )> const & no )
     {
+
         auto layout = ui::Layout::create( );
 
         layout->addChild( createModal( ) );
@@ -154,26 +158,26 @@ namespace User
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
-        //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®èƒŒæ™¯
+        //ƒƒjƒ…[‚Ì”wŒi
         auto menuImage = ui::Scale9Sprite::create( u8"res/Image/WindowBase/WinBase_61.png",
                                                    Rect( 0 / scale, 0 / scale,
                                                          120 / scale, 120 / scale ),
                                                    Rect( 32 / scale, 32 / scale,
                                                          64 / scale, 64 / scale ) );
 
-        auto content_size = Size( 640, 640 ) * scale;
+        auto content_size = Size( 640, 640 );
         menuImage->setContentSize( content_size );
         menuImage->setPosition( vo + vs * 0.5 );
         layout->addChild( menuImage );
 
-        auto label = Label::createWithTTF( str, u8"res/fonts/HGRGE.TTC", 36 );
+        auto label = Label::createWithTTF( str, u8"res/fonts/HGRGE.TTC", 48 * scale );
         label->setPosition( content_size * 0.5 );
         menuImage->addChild( label );
 
         auto yes_button = ui::Button::create( u8"res/texture/system/yes.button.base.png", u8"res/texture/system/yes.button.push.png" );
         yes_button->setPosition( Vec2( content_size.width * 0.25, content_size.height * 0.1 ) );
-        yes_button->setScale( 0.5 );
-        yes_button->setAnchorPoint( Vec2( 0, 0 ) );
+        yes_button->setScale( Lib::fitWidth( yes_button, 150 ) );
+        yes_button->setAnchorPoint( Vec2( 0.5, 0 ) );
         menuImage->addChild( yes_button );
         yes_button->addTouchEventListener( [ = ] ( Ref* ref, ui::Widget::TouchEventType type )
         {
@@ -184,8 +188,8 @@ namespace User
         } );
         auto no_button = ui::Button::create( u8"res/texture/system/no.button.base.png", u8"res/texture/system/no.button.push.png" );
         no_button->setPosition( Vec2( content_size.width * 0.75, content_size.height * 0.1 ) );
-        no_button->setAnchorPoint( Vec2( 1, 0 ) );
-        no_button->setScale( 0.5 );
+        no_button->setAnchorPoint( Vec2( 0.5, 0 ) );
+        no_button->setScale( Lib::fitWidth( no_button, 150 ) );
         menuImage->addChild( no_button );
         no_button->addTouchEventListener( [ = ] ( Ref* ref, ui::Widget::TouchEventType type )
         {
@@ -225,11 +229,11 @@ namespace User
         reload( );
 
 
-        auto save = ui::Button::create( u8"res/texture/system/save.button.save.png" );
+        auto save = ui::Button::create( u8"res/texture/system/save.button.save.png", u8"res/texture/system/save.button.save.select.png" );
         save->setAnchorPoint( Vec2( 0, 0 ) );
         save->setPosition( Vec2( 12 / scale, panel->getContentSize( ).height - 255 / scale ) );
         ui->addChild( save );
-        auto load = ui::Button::create( u8"res/texture/system/save.button.load.png" );
+        auto load = ui::Button::create( u8"res/texture/system/save.button.load.png", u8"res/texture/system/save.button.load.select.png" );
         load->setAnchorPoint( Vec2( 0, 0 ) );
         load->setPosition( Vec2( 155 / scale, panel->getContentSize( ).height - 255 / scale ) );
         ui->addChild( load );
@@ -243,9 +247,9 @@ namespace User
             case cocos2d::ui::Widget::TouchEventType::MOVED:
                 break;
             case cocos2d::ui::Widget::TouchEventType::ENDED:
-                addChild( createDialog( u8"ã‚»ãƒ¼ãƒ–ã—ã¾ã™ã‹ï¼Ÿ",
+                addChild( createDialog( u8"ƒZ[ƒu‚µ‚Ü‚·‚©H",
                                         [ name, reload ] {
-                    if ( NovelLayer::screen ) // ã‚µãƒ ãƒã‚¤ãƒ«ç”»åƒãŒã‚ã‚‹çŠ¶æ…‹ã§ã—ã‹ã‚»ãƒ¼ãƒ–ã§ãã¾ã›ã‚“ã€‚
+                    if ( NovelLayer::screen ) // ƒTƒ€ƒlƒCƒ‹‰æ‘œ‚ª‚ ‚éó‘Ô‚Å‚µ‚©ƒZ[ƒu‚Å‚«‚Ü‚¹‚ñB
                     {
                         {
                             auto data = FileUtils::getInstance( )->getDataFromFile( FileUtils::getInstance( )->getWritablePath( ) + u8"autosave.json" );
@@ -258,10 +262,13 @@ namespace User
                                 ptr->saveToFile( FileUtils::getInstance( )->getWritablePath( ) + name + u8".png" );
                             }
                         }
-                        /*{
-                            auto data = FileUtils::getInstance( )->getDataFromFile( FileUtils::getInstance( )->getWritablePath( ) + u8"UserDefault.xml" );
-                            writeDataUserLocal( data, name + u8".xml" );
-                        }*/
+                        {
+                            INIReader iniReader;
+                            iniReader.read( u8"res/data/saveLayout.ini" );
+                            auto userDefaultINI = getUserDefault( iniReader );
+
+                            INIWriter::write( name + u8".ini", userDefaultINI );
+                        }
                         reload( );
                     }
 
@@ -285,7 +292,7 @@ namespace User
             case cocos2d::ui::Widget::TouchEventType::MOVED:
                 break;
             case cocos2d::ui::Widget::TouchEventType::ENDED:
-                addChild( createDialog( u8"ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™ã‹ï¼Ÿ",
+                addChild( createDialog( u8"ƒ[ƒh‚µ‚Ü‚·‚©H",
                                         [ name, reload ] {
 
                     if ( FileUtils::getInstance( )->isFileExist( FileUtils::getInstance( )->getWritablePath( ) + name + u8".json" ) )
@@ -304,8 +311,10 @@ namespace User
                             auto novel_speed = user->getFloatForKey( u8"novel.speed" );
                             auto voice = user->getFloatForKey( u8"voice" );
 
-                            auto data = FileUtils::getInstance( )->getDataFromFile( FileUtils::getInstance( )->getWritablePath( ) + name + u8".xml" );
-                            writeDataUserLocal( data, u8"UserDefault.xml" );
+                            INIReader reader;
+                            reader.read( FileUtils::getInstance( )->getWritablePath( ) + name + u8".ini" );
+
+                            setUserDefault( reader );
 
                             UserDefault::getInstance( )->flush( );
 

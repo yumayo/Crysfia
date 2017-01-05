@@ -38,7 +38,8 @@ namespace User
         {
             const auto vo = Director::getInstance( )->getVisibleOrigin( );
             const auto vs = Director::getInstance( )->getVisibleSize( );
-            auto button = ui::Button::create( u8"res/texture/system/icon." + functions[i].first + u8".png" );
+            auto button = ui::Button::create( u8"res/texture/system/icon." + functions[i].first + u8".png",
+                                              u8"res/texture/system/icon." + functions[i].first + u8".select.png" );
             button->setName( functions[i].first );
             button->setAnchorPoint( Vec2( 0, 0 ) );
             button->setPosition( vo + Vec2( icon_size * i, 0 ) );
@@ -115,8 +116,8 @@ namespace User
                 break;
             case EventListenerGesture::SwipeDirection::UP:
                 /**
-                 * スワイプが上方向にされたときのみ、メニューを表示させる。
-                 * すでに表示されている場合は表示しない。
+                 * �X���C�v��������ɂ��ꂽ�Ƃ��̂݁A���j���[��\��������B
+                 * ���łɕ\������Ă���ꍇ�͕\�����Ȃ��B
                  */
 
                 if ( !functions )

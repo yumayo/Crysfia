@@ -1,0 +1,63 @@
+//ラシャス島1日目花入手
+//内容は使い回しです
+
+@sys:name(名前クロエ)
+@sys:name(名前お婆さん)
+@sys:background(hクリスフィア専門店)
+@sys:bgm(bサブ2)
+@sys:live2d(crysfia)
+@crysfia:touchoff
+//@crysfia:in
+//@crysfia:out
+//@sys:novelon
+//@sys:noveloff
+//@sys:stop(1)
+//@sys:l
+//@sys:item(花)
+
+//ここから
+
+@hクリスフィア専門店:fadein(1)
+@bサブ2:in
+@sys:stop(1)
+@crysfia:in
+@crysfia:喜ぶ
+@sys:novelon
+
+@名前クロエ:in
+「こんにちはー！」@sys:l
+@名前お婆さん:in
+「おや、アレン君にクロエちゃん。いらっし
+  ゃい」@sys:l
+
+@crysfia:普通
+
+@名前クロエ:in
+「わぁ、箱が一杯並んでるね！これどうした
+  の？」@sys:l
+@名前お婆さん:in
+「いやぁね、間違って売り物の食料をいつも
+  より多く発注しちゃったんだよ」@sys:l
+
+@crysfia:驚く
+
+@名前クロエ:in
+「え、この箱の中身全部、クリスフィアのご
+  飯なの！？」@sys:l
+@名前お婆さん:in
+「そうなんだよ。よかったら貰って行ってお
+  くれ」@sys:l
+
+@crysfia:喜ぶ
+
+@名前クロエ:in
+「本当！？ありがとう！」@sys:l
+
+@sys:item(花)
+
+@crysfia:out
+@sys:noveloff
+@hクリスフィア専門店:fadeout(1)
+@bサブ1:fadeout(1)
+
+//ここまで

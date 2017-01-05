@@ -11,42 +11,95 @@ namespace User
 {
     struct ScenarioPointData
     {
-        /**
-         *  ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–ã‚’è¡Œã„ã¾ã™ã€‚
-         *  æ§‹é€ ã«å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã‚’ä¸€ã¤ä¸€ã¤è©°ã‚ã¾ã™ã€‚
-         */
-        void initData( bool visit, cocos2d::Vec2 const& position, std::string const& scenario )
+        void initScenarioPointData( Json::Value const& root )
         {
-            this->visit = visit;
-            this->position = position;
-            this->scenario = scenario;
+            scenario = root[u8"scenario"].asString( );
+            visit = root[u8"visit"].asBool( );
+            position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
+                                  root[u8"position"][1].asInt( ) );
+            title = root[u8"title"].asString( );
+
+            auto& day = root[u8"day"];
+            switch ( day.size( ) )
+            {
+            case 1:
+                day_begin = day[0].asInt( );
+                day_end = day[0].asInt( );
+                break;
+            case 2:
+                day_begin = day[0].asInt( );
+                day_end = day[1].asInt( );
+                break;
+            default:
+                break;
+            }
+
+            auto& time = root[u8"time"];
+            switch ( time.size( ) )
+            {
+            case 1:
+                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
+                time_end = ( ScenarioPointData::Times )time[0].asInt( );
+                break;
+            case 2:
+                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
+                time_end = ( ScenarioPointData::Times )time[1].asInt( );
+                break;
+            default:
+                break;
+            }
+        }
+
+        void initScenarioPointData( ScenarioPointData const& data )
+        {
+            *this = data;
         }
 
         /**
-         *  ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–ã‚’è¡Œã„ã¾ã™ã€‚
-         *  ã‚³ãƒ”ãƒ¼ã‚’å–ã£ã¦ãã®ã¾ã¾ä»£å…¥ã—ã¾ã™ã€‚
+         * ‚Ç‚¤‚¢‚¤ƒCƒxƒ“ƒg‚È‚Ì‚©
          */
-        void initData( ScenarioPointData const& scenario ) { *this = scenario; }
+        enum Event
+        {
+            none,
+            force,
+            main,
+            sub
+        };
+        Event event = none;
 
         /**
-         *  ã™ã§ã«èª­ã‚“ã ã‚·ãƒŠãƒªã‚ªãªã®ã‹ã©ã†ã‹ã€‚
-         *  @true   èª­ã‚“ã§ã„ãŸã‚‰
-         *  @false  æœªèª­ãªã‚‰
+         *  ‚·‚Å‚É“Ç‚ñ‚¾ƒVƒiƒŠƒI‚È‚Ì‚©‚Ç‚¤‚©B
+         *  @true   “Ç‚ñ‚Å‚¢‚½‚ç
+         *  @false  –¢“Ç‚È‚ç
          */
-        bool visit;
+        bool visit = false;
+
+        int day_begin = -1;
+
+        int day_end = -1;
+
+        enum Times
+        {
+            morning,
+            daytime,
+            night
+        };
+        Times time_begin = Times::morning;
+
+        Times time_end = Times::night;
 
         /**
-         *  ãƒãƒƒãƒ—ç”»åƒä¸­ã®è¡¨ç¤ºä½ç½®ã€‚
+         *  ƒ}ƒbƒv‰æ‘œ’†‚Ì•\¦ˆÊ’uB
          */
         cocos2d::Vec2 position;
 
         /**
-         *  èª­ã¿è¾¼ã‚€ã‚·ãƒŠãƒªã‚ªãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã€‚
+         *  “Ç‚İ‚ŞƒVƒiƒŠƒIƒtƒ@ƒCƒ‹‚ÌƒpƒXB
          */
         std::string scenario;
 
         /**
-         *  ã“ã®ãƒãƒ™ãƒ«ã®ã‚¿ã‚¤ãƒˆãƒ«ã€‚
+         *  ‚±‚Ìƒmƒxƒ‹‚Ìƒ^ƒCƒgƒ‹B
          */
         std::string title;
     };
@@ -81,7 +134,7 @@ namespace User
         bool init( );
     private:
         /**
-         *  ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã«è¡¨ç¤ºã™ã‚‹æ—¥ã«ã¡ã€‚
+         *  ƒJƒŒƒ“ƒ_[‚É•\¦‚·‚é“ú‚É‚¿B
          */
         int day;
     };
@@ -93,7 +146,7 @@ namespace User
         CityMap* make( std::string const& backgroundfile );
     private:
         /**
-         *  ä»Šã®æ™‚é–“ã€‚
+         *  ¡‚ÌŠÔB
          */
         enum Times
         {
@@ -104,7 +157,7 @@ namespace User
         Times times;
 
         /**
-         *  ãƒãƒƒãƒ—ã‚’æ¨ªã«ã‚¹ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã¨ãã«ä½¿ã„ã¾ã™ã€‚
+         *  ƒ}ƒbƒv‚ğ‰¡‚ÉƒXƒ‰ƒCƒh‚·‚é‚Æ‚«‚Ég‚¢‚Ü‚·B
          */
         cocos2d::Vec2 translate;
     };
@@ -118,22 +171,24 @@ namespace User
         bool init( ) override;
         void setup( ) override;
         void jsonRead( );
-        cocos2d::Label* createLabel(  std::string const& title);
+        void time_next( );
+        cocos2d::Label* createLabel( std::string const& title );
         cocos2d::ui::Button* createBackButton( );
         cocos2d::ui::Button* createOptionButton( );
+        cocos2d::ui::Button* createTimeNextButton( );
     private:
         /**
-         *  ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã®åå‰ã‚’ä¿å­˜ã—ã¾ã™ã€‚
+         *  ƒZ[ƒuƒf[ƒ^‚Ì–¼‘O‚ğ•Û‘¶‚µ‚Ü‚·B
          */
         std::string save_name;
 
         /**
-         *  ã“ã®å³¶ã®åå‰ã‚’ä¿å­˜ã—ã¾ã™ã€‚
+         *  ‚±‚Ì“‡‚Ì–¼‘O‚ğ•Û‘¶‚µ‚Ü‚·B
          */
         std::string island_name;
 
         /**
-         * æ¬¡ã®è¡Œå‹•ç›®çš„ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚ã®ãƒ‡ãƒ¼ã‚¿ã€‚
+         * Ÿ‚Ìs“®–Ú“I‚ğ•\¦‚·‚é‚½‚ß‚Ìƒf[ƒ^B
          */
         std::map<std::string, cocos2d::Data> data;
 

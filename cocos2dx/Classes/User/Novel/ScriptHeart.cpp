@@ -26,62 +26,62 @@ namespace User
             setPosition( origin + Vec2( 0, size.height ) );
         }
 
-        // ãƒãƒ¼ãƒˆã‚¢ã‚¤ã‚³ãƒ³
+        // ƒn[ƒgƒAƒCƒRƒ“
         auto icon = Sprite::create( u8"res/texture/system/heart.icon.png" ); if ( !icon ) return this;
-        // è¦ªæ„›åº¦ã®ã‚²ãƒ¼ã‚¸
+        // eˆ¤“x‚ÌƒQ[ƒW
         auto frame = Sprite::create( u8"res/texture/system/heart.frame.png" ); if ( !frame ) return this;
 
 
-        // ã‚ˆã£ã¦ã€ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®ã‚µã‚¤ã‚ºã¯ã€ã‚¢ã‚¤ã‚³ãƒ³ã®æ¨ªã¨ã€ã‚²ãƒ¼ã‚¸ã®æ¨ªã‚’è¶³ã—ãŸå€¤ã€‚
-        // ç¸¦ã¯ã‚¢ã‚¤ã‚³ãƒ³ã®æ–¹ã‚’ä½¿ã„ã¾ã™ã€‚
+        // ‚æ‚Á‚ÄAƒŒƒCƒAƒEƒg‚ÌƒTƒCƒY‚ÍAƒAƒCƒRƒ“‚Ì‰¡‚ÆAƒQ[ƒW‚Ì‰¡‚ð‘«‚µ‚½’lB
+        // c‚ÍƒAƒCƒRƒ“‚Ì•û‚ðŽg‚¢‚Ü‚·B
         setContentSize( Size( icon->getContentSize( ).width + frame->getContentSize( ).width,
                               std::max( icon->getContentSize( ).height, frame->getContentSize( ).height ) ) );
         setAnchorPoint( Vec2( 0, 1 ) );
 
-        // ã‚¢ã‚¤ã‚³ãƒ³ã®è¨­å®š
+        // ƒAƒCƒRƒ“‚ÌÝ’è
         {
             icon->setAnchorPoint( Vec2( 0, 0.5 ) );
             icon->setPosition( 0, getContentSize( ).height * 0.5 );
             addChild( icon );
         }
 
-        // ã‚²ãƒ¼ã‚¸ã®è¨­å®š
+        // ƒQ[ƒW‚ÌÝ’è
         {
             frame->setAnchorPoint( Vec2( 0, 0.5 ) );
             frame->setPosition( icon->getContentSize( ).width, getContentSize( ).height * 0.5 );
             addChild( frame );
         }
 
-        // ç”»åƒã®ãƒ”ã‚¯ã‚»ãƒ«æ•°ã‚’ç™»éŒ²ã—ã¦ãŠãã¾ã™ã€‚
+        // ‰æ‘œ‚ÌƒsƒNƒZƒ‹”‚ð“o˜^‚µ‚Ä‚¨‚«‚Ü‚·B
         {
             size = frame->getTexture( )->getContentSizeInPixels( );
         }
 
-        // ç¾åœ¨ã®è¦ªæ„›åº¦ã‚’ç™»éŒ²ã€‚
-        now = UserDefault::getInstance( )->getIntegerForKey( u8"è¦ªæ„›åº¦" );
+        // Œ»Ý‚Ìeˆ¤“x‚ð“o˜^B
+        now = UserDefault::getInstance( )->getIntegerForKey( u8"eˆ¤“x" );
 
-        // ãƒžã‚¹ã‚¯ã‚’å–ã‚‹ä½ç½®ã‚’æ±ºã‚ã¾ã™ã€‚
-        // startã¯ã‚²ãƒ¼ã‚¸ã®å·¦ç«¯ã®å¤§ãã•ã€‚
+        // ƒ}ƒXƒN‚ðŽæ‚éˆÊ’u‚ðŒˆ‚ß‚Ü‚·B
+        // start‚ÍƒQ[ƒW‚Ì¶’[‚Ì‘å‚«‚³B
         start = 5;
-        // endã¯ã‚²ãƒ¼ã‚¸ã®å³ç«¯ã¾ã§ã®é•·ã•ã€‚
+        // end‚ÍƒQ[ƒW‚Ì‰E’[‚Ü‚Å‚Ì’·‚³B
         end = size.width - 5;
 
-        // ã“ã“ã‹ã‚‰ãƒžã‚¹ã‚¯ã®å‡¦ç†ã‚’æ›¸ãã¾ã™ã€‚
+        // ‚±‚±‚©‚çƒ}ƒXƒN‚Ìˆ—‚ð‘‚«‚Ü‚·B
         if ( auto clipping = ClippingNode::create( ) )
         {
             {
-                // ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ãƒŽãƒ¼ãƒ‰ã¯ã‚²ãƒ¼ã‚¸ã®å­ä¾›ã¨ã—ã¾ã™ã€‚
+                // ƒNƒŠƒbƒsƒ“ƒOƒm[ƒh‚ÍƒQ[ƒW‚ÌŽq‹Ÿ‚Æ‚µ‚Ü‚·B
                 frame->addChild( clipping );
-                // ãŸã ã—ãã®ã¨ãã«ã€åŽŸç‚¹ã‚’åˆã‚ã›ã‚‹ãŸã‚ä»¥ä¸‹ã®æ•°å€¤ã‚’ä»£å…¥ã—ã¦ãŠãã¾ã™ã€‚
+                // ‚½‚¾‚µ‚»‚Ì‚Æ‚«‚ÉAŒ´“_‚ð‡‚í‚¹‚é‚½‚ßˆÈ‰º‚Ì”’l‚ð‘ã“ü‚µ‚Ä‚¨‚«‚Ü‚·B
                 clipping->setPosition( frame->getAnchorPoint( ) * frame->getContentSize( ) );
             }
 
-            // å®Ÿéš›ã«æ›¸ãè¾¼ã‚€ã®ã¯è‰²ã®ã‚ã‚‹éƒ¨åˆ†ã§ã™ã€‚
+            // ŽÀÛ‚É‘‚«ž‚Þ‚Ì‚ÍF‚Ì‚ ‚é•”•ª‚Å‚·B
             clipping->setInverted( false );
-            // é€æ˜Žéƒ¨åˆ†ã‚’ãƒžã‚¹ã‚¯ã—ã¾ã™ã€‚
+            // “§–¾•”•ª‚ðƒ}ƒXƒN‚µ‚Ü‚·B
             clipping->setAlphaThreshold( 0.0 );
 
-            // ãƒžã‚¹ã‚¯ç”»åƒã‚’ç”¨æ„ã—ã¾ã™ã€‚
+            // ƒ}ƒXƒN‰æ‘œ‚ð—pˆÓ‚µ‚Ü‚·B
             if ( auto mask = Sprite::create( "res/texture/system/heart.mask.png" ) )
             {
                 clipping->setStencil( mask );
@@ -89,8 +89,8 @@ namespace User
 
             }
 
-            // å¡—ã‚Šã¤ã¶ã™ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ç”¨æ„ã—ã¾ã™ã€‚
-            // ã“ã“ã§ãƒ«ãƒ¼ãƒ—ç”»åƒã¨ã—ã¦ä½¿ã†ã®ã§ã€ã‚µã‚¤ã‚ºã¯2ã®ã¹ãä¹—å›ºå®šã§ã™ã€‚
+            // “h‚è‚Â‚Ô‚·ƒCƒ[ƒW‚ð—pˆÓ‚µ‚Ü‚·B
+            // ‚±‚±‚Åƒ‹[ƒv‰æ‘œ‚Æ‚µ‚ÄŽg‚¤‚Ì‚ÅAƒTƒCƒY‚Í2‚Ì‚×‚«æŒÅ’è‚Å‚·B
             if ( auto background = Sprite::create( u8"res/texture/system/favoritegauge.png",
                                                    Rect( 0, 0, ( start + getWidth( now ) ) * scale, size.height * scale ) ) )
             {
@@ -151,7 +151,7 @@ namespace User
         {
             auto targetValue = clampf( now + value, 0, max );
 
-            UserDefault::getInstance( )->setIntegerForKey( u8"è¦ªæ„›åº¦", targetValue );
+            UserDefault::getInstance( )->setIntegerForKey( u8"eˆ¤“x", targetValue );
             auto rect = background->getTextureRect( );
             background->runAction( ActionFloat::create( 1.0F, now, targetValue, [ = ] ( float t )
             {

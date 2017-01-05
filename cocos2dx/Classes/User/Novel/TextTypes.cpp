@@ -24,16 +24,9 @@ namespace User
     void errorSStream( std::string const& error, ScriptDebugData const& debugData )
     {
         std::stringstream stream;
-        stream << "[ã‚¨ãƒ©ãƒ¼å†…å®¹ : " + error + "]" << std::endl;
-        stream << "[ãƒ•ã‚¡ã‚¤ãƒ«å : " + debugData.fileName + "]" << std::endl;
-        stream << "[è¡Œç•ªå· : " + std::to_string( debugData.lineNumber ) + "]" << std::endl;
-        if ( CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
-        {
-            writeDebugLog( stream.str( ) );
-        }
-        else
-        {
-            throw( stream.str( ) );
-        }
+        stream << "[ƒGƒ‰[“à—e : " + error + "]" << std::endl;
+        stream << "[ƒtƒ@ƒCƒ‹–¼ : " + debugData.fileName + "]" << std::endl;
+        stream << "[s”Ô† : " + std::to_string( debugData.lineNumber ) + "]" << std::endl;
+        throw( stream.str( ) );
     }
 }

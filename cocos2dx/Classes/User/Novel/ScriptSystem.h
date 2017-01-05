@@ -16,17 +16,21 @@ namespace User
         ~ScriptSystem( );
     public:
         void setup( );
-    public: // システムの動作を変えるときなどに使います。
-        SCRIPT( l ); // シナリオ読み込みをストップ
-        SCRIPT( select ); // 選択肢の表示
+    public: // �V�X�e���̓����ς���Ƃ��ȂǂɎg���܂��B
+        SCRIPT( l ); // �V�i���I�ǂݍ��݂��X�g�b�v
+        SCRIPT( select ); // �I�����̕\��
         SCRIPT( stop );
+        SCRIPT( noveldisable );
+        SCRIPT( novelenable );
         SCRIPT( novelon );
         SCRIPT( noveloff );
         SCRIPT( novelswitch );
         SCRIPT( item );
         SCRIPT( autosave );
-    public: // 変数の登録に使います。
-            // 全てのクラスはシステムを経由してでないと作成できません。
+        SCRIPT( heartup );
+        SCRIPT( heartdown );
+    public: // �ϐ��̓o�^�Ɏg���܂��B
+            // �S�ẴN���X�̓V�X�e�����o�R���ĂłȂ��ƍ쐬�ł��܂���B
         SCRIPT( name );
         SCRIPT( background );
         SCRIPT( bgm );
@@ -50,12 +54,12 @@ namespace User
         cocos2d::Layer* flickFunctionLayer = nullptr;
 
         /**
-         *  現在のメッセージウィンドウの行数を保存しておきます。
+         *  ���݂̃��b�Z�[�W�E�B���h�E�̍s����ۑ����Ă����܂��B
          */
         static size_t novelIndex;
 
         /**
-         *  ノベルウィンドウの表示状態を保存しておきます。
+         *  �m�x���E�B���h�E�̕\����Ԃ�ۑ����Ă����܂��B
          */
         static bool isShowNovel;
     };

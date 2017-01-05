@@ -65,7 +65,7 @@ namespace User
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
 
-		auto backGround = Sprite::create("res/texture/novel/èƒŒæ™¯å¨¯æ¥½ã®å³¶.png");
+		auto backGround = Sprite::create(u8"res/texture/novel/”wŒiŒâŠy‚Ì“‡.png");
 		backGround->setPosition(winSize / 2);
 		this->addChild(backGround);
 
@@ -78,7 +78,7 @@ namespace User
 		this->addChild(titleLabel);
 	}
 
-	//"TAP TO SCREEN"(ä»®)ã®UIã‚’æç”»
+	//"TAP TO SCREEN"(‰¼)‚ÌUI‚ğ•`‰æ
 	void TitleManager::createTapUI()
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
@@ -88,7 +88,7 @@ namespace User
 		uiLabel->runAction(normalAction());
 	}
 
-	//ãƒ•ã‚§ãƒ¼ãƒ‰æ¼”å‡ºç”¨ã®é»’ã„ç”»åƒã€‚åˆã‚ã¯é€æ˜åº¦ã‚’ï¼ã«è¨­å®šã€‚
+	//ƒtƒF[ƒh‰‰o—p‚Ì•‚¢‰æ‘œB‰‚ß‚Í“§–¾“x‚ğ‚O‚Éİ’èB
 	void TitleManager::createFadeSprite()
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
@@ -101,7 +101,7 @@ namespace User
 		this->addChild(fadeSprite);
 	}
 
-	//ã‚¿ãƒƒãƒ—ã™ã‚‹å‰ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+	//ƒ^ƒbƒv‚·‚é‘O‚ÌƒAƒNƒVƒ‡ƒ“
 	cocos2d::Action * TitleManager::normalAction()
 	{
 		auto fadeIn = FadeIn::create(1);
@@ -111,7 +111,7 @@ namespace User
 		return fadeRepeat;
 	}
 
-	//ã‚¿ãƒƒãƒ—ã—ãŸå¾Œã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+	//ƒ^ƒbƒv‚µ‚½Œã‚ÌƒAƒNƒVƒ‡ƒ“
 	cocos2d::Action * TitleManager::afterAction()
 	{
 		auto fadeIn = FadeIn::create(0.1f);
@@ -121,9 +121,9 @@ namespace User
 		return fadeRepeat;
 	}
 
-	/**********************æ¬¡ã®ã‚·ãƒ¼ãƒ³ã¸ç§»å‹•**********************
-		_fadeTime	ãƒ•ã‚§ãƒ¼ãƒ‰ã™ã‚‹æ™‚é–“
-		_delayTime	ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã‹ã‚‰ãƒ•ã‚§ãƒ¼ãƒ‰ãŒé–‹å§‹ã™ã‚‹ã¾ã§ã®æ™‚é–“
+	/**********************Ÿ‚ÌƒV[ƒ“‚ÖˆÚ“®**********************
+		_fadeTime	ƒtƒF[ƒh‚·‚éŠÔ
+		_delayTime	ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚©‚çƒtƒF[ƒh‚ªŠJn‚·‚é‚Ü‚Å‚ÌŠÔ
 	***********************************************************/
 	cocos2d::Action * TitleManager::fadeAction(float _fadeTime, float _delayTime)
 	{

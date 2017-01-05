@@ -18,7 +18,7 @@
 #include "graphics/DrawProfileCocos2D.h"
 
 #ifdef L2D_TARGET_ANDROID_ES2
-    //android向けのシェーダ設定のために読み込み
+    //android�����̃V�F�[�_�ݒ�̂��߂ɓǂݍ���
 #include "graphics/DrawParam_OpenGLES2.h"
 #endif
 
@@ -65,10 +65,10 @@ LAppLive2DManager::LAppLive2DManager( )
         log( "==============================================" );
     }
 
-    // 以下の命令でメモリリークの検査を実施（_DEBUGモードのみ）
-    // Live2D::dispose()時に、Live2Dの管理するメモリでリークが発生していた場合にダンプする
-    // リークしている場合は、MEMORY_DEBUG_MEMORY_INFO_ALLでより詳細な情報をダンプします
-    // 検査用のデータはglobal new演算子を使います
+    // �ȉ��̖��߂Ń��������[�N�̌��������{�i_DEBUG���[�h�̂݁j
+    // Live2D::dispose()���ɁALive2D�̊Ǘ����郁�����Ń��[�N���������Ă����ꍇ�Ƀ_���v����
+    // ���[�N���Ă���ꍇ�́AMEMORY_DEBUG_MEMORY_INFO_ALL�ł��ڍׂȏ����_���v���܂�
+    // �����p�̃f�[�^��global new���Z�q���g���܂�
     //UtDebug::addMemoryDebugFlags( live2d::UtDebug::MEMORY_DEBUG_MEMORY_INFO_COUNT ) ;
 
     // Initialize Live2D

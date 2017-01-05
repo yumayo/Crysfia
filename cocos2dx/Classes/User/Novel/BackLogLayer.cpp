@@ -55,7 +55,7 @@ namespace User
 
         auto novelLayer = getLayer<NovelLayer>( );
 
-        ScriptStaticData::run( { "sys", "noveloff" } );
+        ScriptStaticData::run( { "sys", "noveldisable" } );
 
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
@@ -127,7 +127,7 @@ namespace User
 
             scheduleOnce( [ this, touchevent ] ( float delay )
             {
-                ScriptStaticData::run( { "sys", "novelon" } );
+                ScriptStaticData::run( { "sys", "novelenable" } );
                 getEventDispatcher( )->removeEventListener( touchevent );
             }, 0.0F, typeid( this ).name( ) );
         };

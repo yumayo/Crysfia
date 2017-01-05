@@ -1,0 +1,66 @@
+//配置場所
+//７日目、８日目
+
+@sys:name(名前アレン)
+@sys:name(名前クロエ)
+@sys:background(h娯楽の島)
+@sys:bgm(bサブ2)
+@sys:live2d(crysfia)
+@crysfia:touchoff
+//@crysfia:in
+//@crysfia:out
+//@sys:novelon
+//@sys:noveloff
+//@sys:stop(1)
+//@sys:l
+
+//ここから
+
+@h商店街:fadein(1)
+@bサブ2:in
+@crysfia:in
+@sys:stop(1)
+@sys:novelon
+
+@名前アレン:in
+「なあ、今まで普通にクロエのご飯あげてた
+  けどさ。」@sys:l
+@名前クロエ:in
+「うん。どうしたの？」@sys:l
+@名前アレン:in
+「こんぺいとうとかはわかるけどさ、あの宝
+  石みたいなやつはどう食べてるんだ？なに
+  よりあれって美味しいの？」
+@名前クロエ:in
+「すっごくおいしいよ！それでねー、食べる
+  時はこうやって大きく口を開けて……」@sys:l
+@名前アレン:in
+「大きく口をあけて？」@sys:l
+
+@crysfia:喜ぶ
+
+@名前クロエ:in
+「ゴリゴリゴリー！って食べるんだよ」@sys:l
+@名前アレン:in
+「ファ！？」@sys:l
+「いやあれって固いとかそういうレベルじゃ
+  ないよ…。本当にかじって食べてるの？」
+@名前クロエ:in
+「ほんとだよー。ねえ、ちょっと人差し指向け
+  てよ」@sys:l
+@名前アレン:in
+「え？いいけど」@sys:l
+@名前クロエ:in
+「あ～ん…」
+@名前アレン:in
+「ちょ、待って！なんか怖い！ホントだったら
+  冗談じゃすまないから！」@sys:l
+@名前クロエ:in
+「んふふ～」@sys:l
+
+@crysfia:out
+@sys:noveloff
+@h娯楽の島:fadeout(1)
+@bサブ2:fadeout(1)
+
+//ここまで

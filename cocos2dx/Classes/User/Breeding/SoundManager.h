@@ -45,8 +45,8 @@ namespace User
 				isPlaying = false;
 			}
 			int bgmId;		//ID
-			BgmType type;	//ZBGMã®ã‚¿ã‚¤ãƒ—
-			bool isPlaying;	//å†ç”Ÿä¸­ã‹ã©ã†ã‹
+			BgmType type;	//ZBGM‚Ìƒ^ƒCƒv
+			bool isPlaying;	//Ä¶’†‚©‚Ç‚¤‚©
 		};
 
 		std::string getBgmPath(BgmType type);
