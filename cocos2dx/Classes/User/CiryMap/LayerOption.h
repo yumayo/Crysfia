@@ -1,4 +1,4 @@
-# ifndef __LayerOption__
+ï»¿# ifndef __LayerOption__
 # define __LayerOption__
 
 # include "../LayerBase.h"
@@ -22,7 +22,7 @@ namespace User
     };
 
     /**
-     * ƒ‚[ƒ_ƒ‹ƒŒƒCƒ„[‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅA‚»‚Ì‚Ü‚Ücreate‚·‚é‚¾‚¯‚Å‘åä•v‚Å‚·B
+     * ãƒ¢ãƒ¼ãƒ€ãƒ«ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ãªã£ã¦ã„ã‚‹ã®ã§ã€ãã®ã¾ã¾createã™ã‚‹ã ã‘ã§å¤§ä¸ˆå¤«ã§ã™ã€‚
      */
     class LayerOption : public LayerBase
     {

@@ -1,4 +1,4 @@
-
+ï»¿
 #include "LayerIsland.h"
 
 #include "../SceneManager.h"
@@ -26,7 +26,7 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        Islands staying_island = (Islands)UserDefault::getInstance( )->getIntegerForKey( u8"‘Øİ’†‚Ì“‡" );
+        Islands staying_island = (Islands)UserDefault::getInstance( )->getIntegerForKey( u8"æ»åœ¨ä¸­ã®å³¶" );
 
         std::vector<int> days =
         {
@@ -34,15 +34,15 @@ namespace User
         };
         std::vector<std::string> point =
         {
-            u8"–³–¼‚Ì“‡",
-            u8"ƒ‰ƒVƒƒƒX“‡",
-            u8"ƒqƒƒƒ‹ƒLƒV“‡",
-            u8"ƒAƒCƒNƒ‰“‡",
+            u8"ç„¡åã®å³¶",
+            u8"ãƒ©ã‚·ãƒ£ã‚¹å³¶",
+            u8"ãƒ’ãƒ£ãƒ«ã‚­ã‚·å³¶",
+            u8"ã‚¢ã‚¤ã‚¯ãƒ©å³¶",
         };
 
         int sum = 0;
         for ( int i = Islands::none; i <= staying_island; ++i ) sum += days[i];
-        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"“ú" );
+        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"æ—¥" );
         if ( day <= sum )
         {
             /* nothing */
@@ -50,7 +50,7 @@ namespace User
         else if ( staying_island < Islands::aikura )
         {
             staying_island = Islands( staying_island + 1 );
-            UserDefault::getInstance( )->setIntegerForKey( u8"‘Øİ’†‚Ì“‡", staying_island );
+            UserDefault::getInstance( )->setIntegerForKey( u8"æ»åœ¨ä¸­ã®å³¶", staying_island );
         }
 
         scheduleOnce( [ = ] ( float d ) { SceneManager::createCityMap( point[staying_island] ); }, 0.0F, std::string( u8"scene.island" ) );

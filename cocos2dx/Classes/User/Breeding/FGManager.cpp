@@ -1,4 +1,4 @@
-#include "FGManager.h"
+﻿#include "FGManager.h"
 
 USING_NS_CC;
 

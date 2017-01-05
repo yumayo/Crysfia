@@ -1,4 +1,4 @@
-# ifndef __SceneManager__
+﻿# ifndef __SceneManager__
 # define __SceneManager__
 
 # include "cocos2d.h"

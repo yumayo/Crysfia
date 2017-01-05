@@ -1,4 +1,4 @@
-#include "ScriptHuman.h"
+﻿#include "ScriptHuman.h"
 
 USING_NS_CC;
 

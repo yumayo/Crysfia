@@ -1,4 +1,4 @@
-# ifndef __LayerIsland__
+ï»¿# ifndef __LayerIsland__
 # define __LayerIsland__
 
 # include "../LayerBase.h"
@@ -16,7 +16,7 @@ namespace User
         bool init( ) override;
         void setup( ) override;
         /**
-         *  ‘Øİ’†‚Ì“‡
+         *  æ»åœ¨ä¸­ã®å³¶
          */
         enum Islands
         {
@@ -28,7 +28,7 @@ namespace User
         };
 
         /**
-         *  ¡‚ÌŠÔB
+         *  ä»Šã®æ™‚é–“ã€‚
          */
         enum Times
         {

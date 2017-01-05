@@ -1,4 +1,4 @@
-
+ï»¿
 #include "LayerNovelView.h"
 
 #include "../SceneManager.h"
@@ -32,24 +32,24 @@ namespace User
         const auto _scale = 1.0F / scale;
         const float fadeTime = 0.2F;
 
-        // F‚Í•F
+        // è‰²ã¯é»’è‰²
         setColor( Color3B::BLACK );
 
-        // ‰Šúó‘Ô‚Å‚ÍƒŒƒCƒ„[‚Í“§–¾B
+        // åˆæœŸçŠ¶æ…‹ã§ã¯ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¯é€æ˜Žã€‚
         setOpacity( 0 );
-        // ƒtƒF[ƒhƒCƒ“
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
         runAction( FadeTo::create( fadeTime, 196 ) );
 
 
-        // ƒ^ƒbƒv‚µ‚½‚çAƒtƒF[ƒhƒAƒEƒg‚µ‚ÄƒŒƒCƒ„[‚ðíœ‚·‚éB
-        // ƒ_ƒuƒ‹ƒ^ƒbƒv‚ð–h‚®‚½‚ß‚ÉAˆê“x‰Ÿ‚³‚ê‚½‚çAevent‚ð–³Œø‚É‚·‚éB
+        // ã‚¿ãƒƒãƒ—ã—ãŸã‚‰ã€ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã—ã¦ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å‰Šé™¤ã™ã‚‹ã€‚
+        // ãƒ€ãƒ–ãƒ«ã‚¿ãƒƒãƒ—ã‚’é˜²ããŸã‚ã«ã€ä¸€åº¦æŠ¼ã•ã‚ŒãŸã‚‰ã€eventã‚’ç„¡åŠ¹ã«ã™ã‚‹ã€‚
         auto event = EventListenerTouchOneByOne::create( );
         event->setSwallowTouches( true );
         event->onTouchBegan = [this, event, fadeTime, scenario]( Touch* t, Event* e )
         {
             if ( isNext ) return true;
 
-            // ‹­§ƒCƒxƒ“ƒg‚Í–³Œø‚Éo—ˆ‚È‚¢B
+            // å¼·åˆ¶ã‚¤ãƒ™ãƒ³ãƒˆã¯ç„¡åŠ¹ã«å‡ºæ¥ãªã„ã€‚
             if ( scenario.event == ScenarioPointData::Event::force ) return true;
 
             enumerateChildren( "//.*", [ fadeTime ] ( cocos2d::Node* child )
@@ -65,24 +65,24 @@ namespace User
         };
         Director::getInstance( )->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, this );
 
-        // ƒ{[ƒh‚Í‚Ç^‚ñ’†‚ÉÝ’uB
+        // ãƒœãƒ¼ãƒ‰ã¯ã©çœŸã‚“ä¸­ã«è¨­ç½®ã€‚
         auto next_stage = Sprite::create( u8"res/texture/system/next.stage.png" );
         next_stage->setPosition( vo + vs * 0.5 );
         next_stage->setScale( scale );
         addChild( next_stage );
 
-        // ‚Ç‚ñ‚ÈƒCƒxƒ“ƒg‚È‚Ì‚©‚ð‹L“ü‚µ‚Ü‚·B
+        // ã©ã‚“ãªã‚¤ãƒ™ãƒ³ãƒˆãªã®ã‹ã‚’è¨˜å…¥ã—ã¾ã™ã€‚
         std::string event_name;
         switch ( scenario.event )
         {
         case ScenarioPointData::Event::force:
-            event_name = u8"‹­§ƒCƒxƒ“ƒg";
+            event_name = u8"å¼·åˆ¶ã‚¤ãƒ™ãƒ³ãƒˆ";
             break;
         case ScenarioPointData::Event::main:
-            event_name = u8"ƒƒCƒ“ƒCƒxƒ“ƒg";
+            event_name = u8"ãƒ¡ã‚¤ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆ";
             break;
         case ScenarioPointData::Event::sub:
-            event_name = u8"ƒTƒuƒCƒxƒ“ƒg";
+            event_name = u8"ã‚µãƒ–ã‚¤ãƒ™ãƒ³ãƒˆ";
             break;
         default:
             break;
@@ -94,9 +94,9 @@ namespace User
         label_event_name->setPosition( Vec2( 273, 230 - 107 ) * _scale );
         next_stage->addChild( label_event_name );
 
-        // ƒ^ƒCƒgƒ‹ //
-        // ƒ^ƒCƒgƒ‹‚Íƒ}ƒXƒN‚ÅØ‚èŽæ‚è‚½‚¢B
-        // ‚±‚±‚©‚çƒ}ƒXƒN‚Ìˆ—‚ð‘‚«‚Ü‚·B
+        // ã‚¿ã‚¤ãƒˆãƒ« //
+        // ã‚¿ã‚¤ãƒˆãƒ«ã¯ãƒžã‚¹ã‚¯ã§åˆ‡ã‚Šå–ã‚ŠãŸã„ã€‚
+        // ã“ã“ã‹ã‚‰ãƒžã‚¹ã‚¯ã®å‡¦ç†ã‚’æ›¸ãã¾ã™ã€‚
         if ( auto clipping = ClippingNode::create( ) )
         {
             clipping->setInverted( false );
@@ -111,25 +111,25 @@ namespace User
                 clipping->setStencil( mask );
             }
 
-            // ƒ^ƒCƒgƒ‹‚Í’·‚­‚ÄŒ©Ø‚ê‚é‚±‚Æ‚Ì‚Ù‚¤‚ª‘½‚¢‚ÆŽv‚¤‚Ì‚ÅA
-            // ƒjƒRƒjƒR“®‰æ‚Ì‹LŽ–‚Ì‚æ‚¤‚ÉAˆê’èŽžŠÔ‚ÅƒXƒ‰ƒCƒh‚·‚é‚æ‚¤‚É‚·‚éB
+            // ã‚¿ã‚¤ãƒˆãƒ«ã¯é•·ãã¦è¦‹åˆ‡ã‚Œã‚‹ã“ã¨ã®ã»ã†ãŒå¤šã„ã¨æ€ã†ã®ã§ã€
+            // ãƒ‹ã‚³ãƒ‹ã‚³å‹•ç”»ã®è¨˜äº‹ã®ã‚ˆã†ã«ã€ä¸€å®šæ™‚é–“ã§ã‚¹ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
             if ( auto title_label = Label::createWithTTF( scenario.title,
                                                           u8"res/fonts/HGRGE.TTC",
                                                           48 * _scale ) )
             {
                 title_label->setAnchorPoint( Vec2( 0, 0 ) );
-                title_label->setTextColor( Color4B( 242, 242, 242, 255 ) ); // ”’
+                title_label->setTextColor( Color4B( 242, 242, 242, 255 ) ); // ç™½
 
                 const auto slide = title_label->getContentSize( ).width - 420 * _scale;
                 auto action = title_label->getContentSize( ).width < 420 * _scale
-                    ? Sequence::create( DelayTime::create( 2.5F ), // Ž~‚ß‚é
+                    ? Sequence::create( DelayTime::create( 2.5F ), // æ­¢ã‚ã‚‹
                                         // MoveTo::create( ( title_label->getContentSize( ).width - 420 * _scale ) * 0.01, Vec2( -slide, 0 ) ),
                                         DelayTime::create( 2.5F ),
                                         MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, 0 ) ),
                                         CallFunc::create( [ title_label ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 0 ) ); } ),
                                         MoveTo::create( 0.3F, Vec2( 0, 0 ) ),
                                         nullptr )
-                    : Sequence::create( DelayTime::create( 2.5F ), // Ž~‚ß‚é
+                    : Sequence::create( DelayTime::create( 2.5F ), // æ­¢ã‚ã‚‹
                                         MoveTo::create( ( title_label->getContentSize( ).width - 420 * _scale ) * 0.01, Vec2( -slide, 0 ) ),
                                         DelayTime::create( 2.5F ),
                                         MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, 0 ) ),
@@ -143,9 +143,9 @@ namespace User
             next_stage->addChild( clipping );
         }
 
-        // ƒAƒCƒeƒ€î•ñ‚Í‚Ü‚¾–¢’è //
+        // ã‚¢ã‚¤ãƒ†ãƒ æƒ…å ±ã¯ã¾ã æœªå®š //
 
-        // Œˆ’èƒ{ƒ^ƒ“ //
+        // æ±ºå®šãƒœã‚¿ãƒ³ //
         if ( auto okButton = ui::Button::create( u8"res/texture/system/ok.button.png",
                                                  u8"res/texture/system/ok.button.select.png" ) )
         {
@@ -155,12 +155,12 @@ namespace User
             {
                 if ( type != ui::Widget::TouchEventType::ENDED ) return;
 
-                // “ñ“x‰Ÿ‚¹‚È‚¢‚æ‚¤‚ÉB
+                // äºŒåº¦æŠ¼ã›ãªã„ã‚ˆã†ã«ã€‚
                 if ( isNext ) return;
 
                 runAction( CallFunc::create( [ this, okButton, scenario, saveCallFunc ]
                 {
-                    // ƒtƒF[ƒhƒAƒEƒg
+                    // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
                     if ( auto sprite = Sprite::create( ) )
                     {
                         sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
@@ -181,7 +181,7 @@ namespace User
             next_stage->addChild( okButton );
         }
 
-        // ‘S‚Ä‚ÌŽqƒm[ƒh‚ðƒtƒF[ƒhƒCƒ“‚·‚éB
+        // å…¨ã¦ã®å­ãƒŽãƒ¼ãƒ‰ã‚’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã™ã‚‹ã€‚
         enumerateChildren( "//.*", [ fadeTime ] ( cocos2d::Node* child )
         {
             child->setOpacity( 0 );

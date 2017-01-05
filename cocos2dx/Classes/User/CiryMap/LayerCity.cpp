@@ -1,4 +1,4 @@
-#include "LayerCity.h"
+ï»¿#include "LayerCity.h"
 
 #include "../SceneManager.h"
 
@@ -85,7 +85,7 @@ namespace User
 
         const std::string dir = u8"res/texture/days/";
 
-        day = UserDefault::getInstance( )->getIntegerForKey( u8"“ú" );
+        day = UserDefault::getInstance( )->getIntegerForKey( u8"æ—¥" );
 
         std::string path = dir + u8"calendar(" + StringUtils::toString( day ) + u8").png";
         if ( auto calendar = Sprite::create( path ) )
@@ -167,7 +167,7 @@ namespace User
         jsonRead( );
 
         /**
-         *  ‰æ–Êã•”‚Ìƒƒjƒ…[
+         *  ç”»é¢ä¸Šéƒ¨ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼
          */
         {
             auto board = Sprite::create( u8"res/texture/system/board.png" );
@@ -188,7 +188,7 @@ namespace User
                 calendar->setPosition( Vec2( boardPixel ) * scale + Vec2( -10, -10 ) * scale );
             }
 
-            std::string time_path = u8"res/texture/system/time." + StringUtils::toString( UserDefault::getInstance( )->getIntegerForKey( u8"" ) ) + u8".png";
+            std::string time_path = u8"res/texture/system/time." + StringUtils::toString( UserDefault::getInstance( )->getIntegerForKey( u8"æ™‚åˆ»" ) ) + u8".png";
             auto time = Sprite::create( time_path );
             if ( time )
             {
@@ -203,7 +203,7 @@ namespace User
             {
                 heart->setAnchorPoint( Vec2( 0, 0.5 ) );
                 heart->setScale( Lib::fitWidth( heart, ( board->getContentSize( ).width -
-                                                         calendar->getContentSize( ).width * calendar->getScale( ) - 20/*‰º‚Ì‚¸‚ç‚µ‚Ä‚¢‚é•ª‚Ì10‚ÆAŠÔ‚É10pixelŠJ‚¯‚é‚½‚ß‚Å‚·B*/ * scale -
+                                                         calendar->getContentSize( ).width * calendar->getScale( ) - 20/*ä¸‹ã®ãšã‚‰ã—ã¦ã„ã‚‹åˆ†ã®10ã¨ã€é–“ã«10pixelé–‹ã‘ã‚‹ãŸã‚ã§ã™ã€‚*/ * scale -
                                                          time->getContentSize( ).width * time->getScale( ) - 20 * scale ) ) );
                 heart->setPosition( Vec2( 0, boardPixel.height * 0.5 ) * scale + Vec2( 10, 0 ) * scale );
                 board->addChild( heart );
@@ -211,7 +211,7 @@ namespace User
         }
 
         /**
-         *  ‰æ–Ê‰º•”‚Ìƒƒjƒ…[
+         *  ç”»é¢ä¸‹éƒ¨ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼
          */
         {
             auto board = Sprite::create( u8"res/texture/system/board.png" );
@@ -247,7 +247,7 @@ namespace User
     }
     void LayerCity::setup( )
     {
-        // ƒtƒF[ƒhƒCƒ“
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
         if ( auto sprite = Sprite::create( ) )
         {
             sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
@@ -264,14 +264,14 @@ namespace User
 
         removeChildByName( u8"background" );
 
-        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"“ú" );
-        int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"" );
+        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"æ—¥" );
+        int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"æ™‚åˆ»" );
 
         Json::Reader reader;
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
         {
             /**
-            * “\‚è•t‚¯‚é‚½‚ß‚Ì”wŒi‚ğì¬‚µ‚Ü‚·B
+            * è²¼ã‚Šä»˜ã‘ã‚‹ãŸã‚ã®èƒŒæ™¯ã‚’ä½œæˆã—ã¾ã™ã€‚
             */
             auto map = root[island_name][u8"background"].asString( );
             auto background = CityMap::create( )->make( map );
@@ -279,13 +279,13 @@ namespace User
             addChild( background );
 
             /**
-             * ‹­§ƒCƒxƒ“ƒg‚ğ“Ç‚İ‚İ‚Ü‚·B
+             * å¼·åˆ¶ã‚¤ãƒ™ãƒ³ãƒˆã‚’èª­ã¿è¾¼ã¿ã¾ã™ã€‚
              */
             for ( auto& value : root[island_name][u8"point.force"] )
             {
                 auto visit = value[u8"visit"].asBool( );
                 /**
-                 * ‹­§ƒCƒxƒ“ƒg‚Ì’†‚ÅA–¢“Ç‚Ì‚à‚Ì‚ª‚ ‚Á‚½‚çŸ‚ÌƒtƒŒ[ƒ€‚ÅA‹­§“I‚Éƒmƒxƒ‹‚ÌƒV[ƒ“‚É”ò‚Î‚µ‚Ü‚·B
+                 * å¼·åˆ¶ã‚¤ãƒ™ãƒ³ãƒˆã®ä¸­ã§ã€æœªèª­ã®ã‚‚ã®ãŒã‚ã£ãŸã‚‰æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã€å¼·åˆ¶çš„ã«ãƒãƒ™ãƒ«ã®ã‚·ãƒ¼ãƒ³ã«é£›ã°ã—ã¾ã™ã€‚
                  */
                 if ( !visit )
                 {
@@ -321,7 +321,7 @@ namespace User
             }
 
             /**
-             * ƒƒCƒ“ƒVƒiƒŠƒI‚ğ“Ç‚İ‚ñ‚Å“\‚è•t‚¯‚Ä‚¢‚«‚Ü‚·B
+             * ãƒ¡ã‚¤ãƒ³ã‚·ãƒŠãƒªã‚ªã‚’èª­ã¿è¾¼ã‚“ã§è²¼ã‚Šä»˜ã‘ã¦ã„ãã¾ã™ã€‚
              */
             for ( auto& value : root[island_name][u8"point.main"] )
             {
@@ -355,7 +355,7 @@ namespace User
             }
 
             /**
-             * ƒTƒuƒVƒiƒŠƒI‚ğ“Ç‚İ‚ñ‚Å“\‚è•t‚¯‚Ä‚¢‚«‚Ü‚·B
+             * ã‚µãƒ–ã‚·ãƒŠãƒªã‚ªã‚’èª­ã¿è¾¼ã‚“ã§è²¼ã‚Šä»˜ã‘ã¦ã„ãã¾ã™ã€‚
              */
             for ( auto& value : root[island_name][u8"point.sub"] )
             {
@@ -393,7 +393,7 @@ namespace User
     {
         using Islands = LayerIsland::Islands;
 
-        Islands staying_island = (Islands)UserDefault::getInstance( )->getIntegerForKey( u8"‘Øİ’†‚Ì“‡" );
+        Islands staying_island = (Islands)UserDefault::getInstance( )->getIntegerForKey( u8"æ»åœ¨ä¸­ã®å³¶" );
 
         std::vector<int> days =
         {
@@ -401,15 +401,15 @@ namespace User
         };
         std::vector<std::string> point =
         {
-            u8"–³–¼‚Ì“‡",
-            u8"ƒ‰ƒVƒƒƒX“‡",
-            u8"ƒqƒƒƒ‹ƒLƒV“‡",
-            u8"ƒAƒCƒNƒ‰“‡",
+            u8"ç„¡åã®å³¶",
+            u8"ãƒ©ã‚·ãƒ£ã‚¹å³¶",
+            u8"ãƒ’ãƒ£ãƒ«ã‚­ã‚·å³¶",
+            u8"ã‚¢ã‚¤ã‚¯ãƒ©å³¶",
         };
 
         int sum = 0;
         for ( int i = Islands::none; i <= staying_island; ++i ) sum += days[i];
-        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"“ú" );
+        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"æ—¥" );
         if ( day <= sum )
         {
             /* nothing */
@@ -417,7 +417,7 @@ namespace User
         else if ( staying_island < Islands::aikura )
         {
             staying_island = Islands( staying_island + 1 );
-            UserDefault::getInstance( )->setIntegerForKey( u8"‘Øİ’†‚Ì“‡", staying_island );
+            UserDefault::getInstance( )->setIntegerForKey( u8"æ»åœ¨ä¸­ã®å³¶", staying_island );
         }
 
         island_name = point[staying_island];
@@ -483,16 +483,16 @@ namespace User
         {
             if ( type != ui::Widget::TouchEventType::ENDED ) return;
 
-            // Ÿ‚ÉAŠÔ‚ğˆê’iŠKi‚ß‚Ü‚·B
-            // ’©¨—[¨–é
-            auto time = UserDefault::getInstance( )->getIntegerForKey( u8"" );
-            if ( 3 <= ( time + 1 ) ) // ŒJ‚èã‚ª‚Á‚½‚ç
+            // æ¬¡ã«ã€æ™‚é–“ã‚’ä¸€æ®µéšé€²ã‚ã¾ã™ã€‚
+            // æœâ†’å¤•â†’å¤œ
+            auto time = UserDefault::getInstance( )->getIntegerForKey( u8"æ™‚åˆ»" );
+            if ( 3 <= ( time + 1 ) ) // ç¹°ã‚Šä¸ŠãŒã£ãŸã‚‰
             {
-                auto day = UserDefault::getInstance( )->getIntegerForKey( u8"“ú" );
-                UserDefault::getInstance( )->setIntegerForKey( u8"“ú", day + 1 );
+                auto day = UserDefault::getInstance( )->getIntegerForKey( u8"æ—¥" );
+                UserDefault::getInstance( )->setIntegerForKey( u8"æ—¥", day + 1 );
             }
             time = ( time + 1 ) % 3;
-            UserDefault::getInstance( )->setIntegerForKey( u8"", time );
+            UserDefault::getInstance( )->setIntegerForKey( u8"æ™‚åˆ»", time );
 
             time_next( );
         } );

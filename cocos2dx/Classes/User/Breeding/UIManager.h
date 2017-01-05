@@ -1,4 +1,4 @@
-# ifndef __UIManager__
+﻿# ifndef __UIManager__
 # define __UIManager__
 
 # include "cocos2d.h"

@@ -1,4 +1,4 @@
-#include "LayerManager.h"
+﻿#include "LayerManager.h"
 #include "UIManager.h"
 #include "BGManager.h"
 #include "FGManager.h"

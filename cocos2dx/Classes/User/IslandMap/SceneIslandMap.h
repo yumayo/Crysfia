@@ -1,4 +1,4 @@
-# ifndef __SceneIslandMap__
+﻿# ifndef __SceneIslandMap__
 # define __SceneIslandMap__
 
 # include "cocos2d.h"

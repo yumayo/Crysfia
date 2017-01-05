@@ -1,4 +1,4 @@
-# ifndef __TextLabels__
+﻿# ifndef __TextLabels__
 # define __TextLabels__
 
 # include "cocos2d.h"

@@ -1,4 +1,4 @@
-# pragma once
+ï»¿# pragma once
 # include "cocos2d.h"
 # include "ui/CocosGUI.h"
 
@@ -7,9 +7,9 @@
 
 namespace User
 {
-    // ƒtƒF[ƒhƒCƒ“
-    // ”¼“§–¾‚Ì•F
-    // ƒ^ƒbƒv‚µ‚½‚çAƒtƒF[ƒhƒAƒEƒg‚µ‚ÄíœB
+    // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
+    // åŠé€æ˜ã®é»’è‰²
+    // ã‚¿ãƒƒãƒ—ã—ãŸã‚‰ã€ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã—ã¦å‰Šé™¤ã€‚
     class LayerNovelView : public cocos2d::LayerColor
     {
     public:

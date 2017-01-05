@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  *
  *  You can modify and use this source freely
  *  only for the development of application related Live2D.
@@ -45,13 +45,13 @@ public:
     void draw( live2d::framework::L2DMatrix44& matrix );
     void setViewMatrix( float matrix[16] );
 
-    // ‘S‚Ä‚Ìƒ‚[ƒVƒ‡ƒ“ƒf[ƒ^‚ğİ’è‚·‚éB
+    // å…¨ã¦ã®ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹ã€‚
     int startMotion( std::string group, int no, int priority );
     int startRandomMotion( std::string name, int priority );
 
-    // •\î‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ƒf[ƒ^‚ğİ’è‚·‚éB
-    // ã‚ÌstartMotion‚Æ‹£‡‚Í‚µ‚È‚¢B
-    // ˆê‚ÌƒtƒŒ[ƒ€‚Å‚â‚Á‚Ä‚à“Á‚É”j’]‚µ‚½‚è‚Í‚µ‚È‚¢B
+    // è¡¨æƒ…ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹ã€‚
+    // ä¸Šã®startMotionã¨ç«¶åˆã¯ã—ãªã„ã€‚
+    // ä¸€ç·’ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã‚„ã£ã¦ã‚‚ç‰¹ã«ç ´ç¶»ã—ãŸã‚Šã¯ã—ãªã„ã€‚
     void setExpression( std::string name );
     void setRandomExpression( );
 

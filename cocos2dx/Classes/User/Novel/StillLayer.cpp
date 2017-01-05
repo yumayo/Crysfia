@@ -1,4 +1,4 @@
-#include "StillLayer.h"
+﻿#include "StillLayer.h"
 
 USING_NS_CC;
 

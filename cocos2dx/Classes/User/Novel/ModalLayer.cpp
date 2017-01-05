@@ -1,4 +1,4 @@
-#include "ModalLayer.h"
+﻿#include "ModalLayer.h"
 
 USING_NS_CC;
 

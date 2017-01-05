@@ -1,4 +1,4 @@
-#ifndef __Utilitys__
+﻿#ifndef __Utilitys__
 #define __Utilitys__
 
 # include "cocos2d.h"

@@ -1,4 +1,4 @@
-#include "INIReader.h"
+﻿#include "INIReader.h"
 
 #include <fstream>
 

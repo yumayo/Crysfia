@@ -1,4 +1,4 @@
-#include "LayerOption.h"
+ï»¿#include "LayerOption.h"
 
 #include "../../Lib/Utilitys.h"
 
@@ -47,7 +47,7 @@ namespace User
         background->setPosition( vo + vs * 0.5 );
 
         /**
-        *  ‰æ–Ê‰º•”‚Ìƒƒjƒ…[
+        *  ç”»é¢ä¸‹éƒ¨ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼
         */
         auto board = Sprite::create( u8"res/texture/system/board.png" );
         {
@@ -83,7 +83,7 @@ namespace User
             }
         }
 
-        //‰æ–Ê‰º•”‚É•\¦‚³‚ê‚éƒƒbƒZ[ƒWƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY
+        //ç”»é¢ä¸‹éƒ¨ã«è¡¨ç¤ºã•ã‚Œã‚‹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚º
         auto message = Sprite::create( u8"res/texture/system/message.window.png" );
         message->setScale( Lib::fitWidth( message, vs.width ) );
 
@@ -151,7 +151,7 @@ namespace User
         }
 
         /**
-         * ƒ{ƒCƒX‚Ì‰¹—Ê
+         * ãƒœã‚¤ã‚¹ã®éŸ³é‡
          */
         {
             auto layout = ui::Layout::create( );
@@ -200,7 +200,7 @@ namespace User
             {
                 if ( type != ui::Widget::TouchEventType::ENDED ) return;
 
-                // ‚±‚±‚ÅƒTƒ“ƒvƒ‹ƒ{ƒCƒX‚ğ—¬‚·B
+                // ã“ã“ã§ã‚µãƒ³ãƒ—ãƒ«ãƒœã‚¤ã‚¹ã‚’æµã™ã€‚
                 auto audio = AudioManager::getInstance( );
                 audio->playVoice( u8"sample.voice" );
             } );
@@ -221,7 +221,7 @@ namespace User
         }
 
         /**
-         * •\¦‘¬“x
+         * è¡¨ç¤ºé€Ÿåº¦
          */
         {
             auto layout = ui::Layout::create( );
@@ -243,14 +243,14 @@ namespace User
             logo->setPosition( Vec2( 0, bar->getContentSize( ).height ) );
 
             /**
-             * •\¦‚³‚ê‚é‚Æ‚«‚Ì•¶šXV‘¬“x
+             * è¡¨ç¤ºã•ã‚Œã‚‹ã¨ãã®æ–‡å­—æ›´æ–°é€Ÿåº¦
              */
             {
                 message->setAnchorPoint( Vec2( 0, 0 ) );
                 message->setPosition( vo + Vec2( 0, 200 * message->getScale( ) / scale ) );
                 addChild( message );
 
-                auto test = Label::createWithTTF( u8"“Ç‚İã‚°‚ÌƒeƒXƒgA‘¬“x‚Í‚±‚ñ‚ÈŠ´‚¶‚Å‚·B", OptionalValues::fontName, OptionalValues::fontSize / message->getScale( ) );
+                auto test = Label::createWithTTF( u8"èª­ã¿ä¸Šã’ã®ãƒ†ã‚¹ãƒˆã€é€Ÿåº¦ã¯ã“ã‚“ãªæ„Ÿã˜ã§ã™ã€‚", OptionalValues::fontName, OptionalValues::fontSize / message->getScale( ) );
                 test->setTextColor( OptionalValues::fontColor );
                 test->enableShadow( OptionalValues::fontShadowColor, Size( 2, -2 ), 2 );
                 {
@@ -335,7 +335,7 @@ namespace User
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
-                addChild( createDialog( u8"ƒf[ƒ^‚ğÁ‚µ‚Ü‚·‚©H", [ ]
+                addChild( createDialog( u8"ãƒ‡ãƒ¼ã‚¿ã‚’æ¶ˆã—ã¾ã™ã‹ï¼Ÿ", [ ]
                 {
                     {
                         userDefaultForceSetup( );
@@ -357,8 +357,8 @@ namespace User
     }
     cocos2d::Node * LayerOption::createModal( )
     {
-        // ŠÈˆÕ“I‚Èƒ‚[ƒ_ƒ‹ƒŒƒCƒ„[‚Å‚·B
-        // “§–¾‚È‰æ‘œ‚ğ‰æ–Ê‚¢‚Á‚Ï‚¢‚É“\‚é‚±‚Æ‚Å‹@”\‚µ‚Ä‚¢‚Ü‚·B
+        // ç°¡æ˜“çš„ãªãƒ¢ãƒ¼ãƒ€ãƒ«ãƒ¬ã‚¤ãƒ¤ãƒ¼ã§ã™ã€‚
+        // é€æ˜ãªç”»åƒã‚’ç”»é¢ã„ã£ã±ã„ã«è²¼ã‚‹ã“ã¨ã§æ©Ÿèƒ½ã—ã¦ã„ã¾ã™ã€‚
         std::string dir = u8"res/texture/system/";
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto vo = Director::getInstance( )->getVisibleOrigin( );
@@ -381,7 +381,7 @@ namespace User
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
-        //ƒƒjƒ…[‚Ì”wŒi
+        //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®èƒŒæ™¯
         auto menuImage = ui::Scale9Sprite::create( u8"res/Image/WindowBase/WinBase_61.png",
                                                    Rect( 0 / scale, 0 / scale,
                                                          120 / scale, 120 / scale ),

@@ -1,4 +1,4 @@
-# ifndef __LayerCity__
+ï»¿# ifndef __LayerCity__
 # define __LayerCity__
 
 # include "../LayerBase.h"
@@ -56,7 +56,7 @@ namespace User
         }
 
         /**
-         * ‚Ç‚¤‚¢‚¤ƒCƒxƒ“ƒg‚È‚Ì‚©
+         * ã©ã†ã„ã†ã‚¤ãƒ™ãƒ³ãƒˆãªã®ã‹
          */
         enum Event
         {
@@ -68,9 +68,9 @@ namespace User
         Event event = none;
 
         /**
-         *  ‚·‚Å‚É“Ç‚ñ‚¾ƒVƒiƒŠƒI‚È‚Ì‚©‚Ç‚¤‚©B
-         *  @true   “Ç‚ñ‚Å‚¢‚½‚ç
-         *  @false  –¢“Ç‚È‚ç
+         *  ã™ã§ã«èª­ã‚“ã ã‚·ãƒŠãƒªã‚ªãªã®ã‹ã©ã†ã‹ã€‚
+         *  @true   èª­ã‚“ã§ã„ãŸã‚‰
+         *  @false  æœªèª­ãªã‚‰
          */
         bool visit = false;
 
@@ -89,17 +89,17 @@ namespace User
         Times time_end = Times::night;
 
         /**
-         *  ƒ}ƒbƒv‰æ‘œ’†‚Ì•\¦ˆÊ’uB
+         *  ãƒãƒƒãƒ—ç”»åƒä¸­ã®è¡¨ç¤ºä½ç½®ã€‚
          */
         cocos2d::Vec2 position;
 
         /**
-         *  “Ç‚İ‚ŞƒVƒiƒŠƒIƒtƒ@ƒCƒ‹‚ÌƒpƒXB
+         *  èª­ã¿è¾¼ã‚€ã‚·ãƒŠãƒªã‚ªãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã€‚
          */
         std::string scenario;
 
         /**
-         *  ‚±‚Ìƒmƒxƒ‹‚Ìƒ^ƒCƒgƒ‹B
+         *  ã“ã®ãƒãƒ™ãƒ«ã®ã‚¿ã‚¤ãƒˆãƒ«ã€‚
          */
         std::string title;
     };
@@ -134,7 +134,7 @@ namespace User
         bool init( );
     private:
         /**
-         *  ƒJƒŒƒ“ƒ_[‚É•\¦‚·‚é“ú‚É‚¿B
+         *  ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã«è¡¨ç¤ºã™ã‚‹æ—¥ã«ã¡ã€‚
          */
         int day;
     };
@@ -146,7 +146,7 @@ namespace User
         CityMap* make( std::string const& backgroundfile );
     private:
         /**
-         *  ¡‚ÌŠÔB
+         *  ä»Šã®æ™‚é–“ã€‚
          */
         enum Times
         {
@@ -157,7 +157,7 @@ namespace User
         Times times;
 
         /**
-         *  ƒ}ƒbƒv‚ğ‰¡‚ÉƒXƒ‰ƒCƒh‚·‚é‚Æ‚«‚Ég‚¢‚Ü‚·B
+         *  ãƒãƒƒãƒ—ã‚’æ¨ªã«ã‚¹ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã¨ãã«ä½¿ã„ã¾ã™ã€‚
          */
         cocos2d::Vec2 translate;
     };
@@ -178,17 +178,17 @@ namespace User
         cocos2d::ui::Button* createTimeNextButton( );
     private:
         /**
-         *  ƒZ[ƒuƒf[ƒ^‚Ì–¼‘O‚ğ•Û‘¶‚µ‚Ü‚·B
+         *  ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã®åå‰ã‚’ä¿å­˜ã—ã¾ã™ã€‚
          */
         std::string save_name;
 
         /**
-         *  ‚±‚Ì“‡‚Ì–¼‘O‚ğ•Û‘¶‚µ‚Ü‚·B
+         *  ã“ã®å³¶ã®åå‰ã‚’ä¿å­˜ã—ã¾ã™ã€‚
          */
         std::string island_name;
 
         /**
-         * Ÿ‚Ìs“®–Ú“I‚ğ•\¦‚·‚é‚½‚ß‚Ìƒf[ƒ^B
+         * æ¬¡ã®è¡Œå‹•ç›®çš„ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚ã®ãƒ‡ãƒ¼ã‚¿ã€‚
          */
         std::map<std::string, cocos2d::Data> data;
 

@@ -1,4 +1,4 @@
-#include "TemporaryCharacter.h"
+﻿#include "TemporaryCharacter.h"
 
 USING_NS_CC;
 

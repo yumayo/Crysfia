@@ -1,4 +1,4 @@
-# ifndef __FGManager__
+﻿# ifndef __FGManager__
 # define __FGManager__
 
 # include "cocos2d.h"

@@ -1,4 +1,4 @@
-#include "LayerBase.h"
+﻿#include "LayerBase.h"
 
 USING_NS_CC;
 

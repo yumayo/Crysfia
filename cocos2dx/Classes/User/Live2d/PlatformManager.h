@@ -1,4 +1,4 @@
-/**
+﻿/**
  *  You can modify and use this source freely
  *  only for the development of application related Live2D.
  *

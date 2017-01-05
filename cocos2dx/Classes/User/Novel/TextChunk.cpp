@@ -1,4 +1,4 @@
-#include "TextChunk.h"
+ï»¿#include "TextChunk.h"
 
 #include "ScriptStaticData.h"
 #include "ScriptSystem.h"
@@ -67,11 +67,11 @@ namespace User
             {
                 auto itr = variableScriptData.find( arg );
                 if ( itr != variableScriptData.cend( ) ) arg = itr->second;
-                else errorSStream( "w’è‚µ‚½•Ï”‚ª‘¶İ‚µ‚Ü‚¹‚ñB", scriptAnalysis.getTagWithData( ).debugData );
+                else errorSStream( "æŒ‡å®šã—ãŸå¤‰æ•°ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚", scriptAnalysis.getTagWithData( ).debugData );
             }
         }
 
-        // ƒXƒNƒŠƒvƒgƒf[ƒ^‚©‚ç•Ï”‚Æˆê’v‚·‚éŠÖ”‚ğŒÄ‚Ño‚µ‚Ü‚·B
+        // ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å¤‰æ•°ã¨ä¸€è‡´ã™ã‚‹é–¢æ•°ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
         ScriptStaticData::run( data );
 
         functionScriptData.insert( std::make_pair( data.variable, data.functionInfo ) );

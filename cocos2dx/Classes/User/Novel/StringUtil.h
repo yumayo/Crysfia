@@ -1,4 +1,4 @@
-# ifndef __StringUtil__
+﻿# ifndef __StringUtil__
 # define __StringUtil__
 
 # include <string>

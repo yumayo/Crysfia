@@ -1,4 +1,4 @@
-# ifndef __Home__
+﻿# ifndef __Home__
 # define __Home__
 
 # include "cocos2d.h"

@@ -1,4 +1,4 @@
-# ifndef __LayerCleaning__
+﻿# ifndef __LayerCleaning__
 # define __LayerCleaning__
 
 # include "cocos2d.h"

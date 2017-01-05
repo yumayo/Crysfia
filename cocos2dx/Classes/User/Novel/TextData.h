@@ -1,4 +1,4 @@
-# ifndef __TextData__
+ï»¿# ifndef __TextData__
 # define __TextData__
 
 # include <deque>
@@ -25,25 +25,25 @@ namespace User
         void makeData( std::string fileName );
         void setNextChild( std::string const& selectName );
     private:
-        // s‚ğì¬’†‚Éƒmƒxƒ‹ƒf[ƒ^‚ÆƒXƒNƒŠƒvƒgƒf[ƒ^‚ª¬İ‚µ‚Ä‚¢‚és‚ªo‚Ä‚«‚½ê‡‚ÉA
-        // ‚»‚ê‚ç‚ğ•ª‚¯‚Äì¬‚µ‚½‚èAƒRƒƒ“ƒg‚ª‘}“ü‚µ‚Ä‚¢‚és‚âA‹ós‚È‚Ç‚ğ”rœ‚µ‚Ü‚·B
+        // è¡Œã‚’ä½œæˆä¸­ã«ãƒãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã¨ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ‡ãƒ¼ã‚¿ãŒæ··åœ¨ã—ã¦ã„ã‚‹è¡ŒãŒå‡ºã¦ããŸå ´åˆã«ã€
+        // ãã‚Œã‚‰ã‚’åˆ†ã‘ã¦ä½œæˆã—ãŸã‚Šã€ã‚³ãƒ¡ãƒ³ãƒˆãŒæŒ¿å…¥ã—ã¦ã„ã‚‹è¡Œã‚„ã€ç©ºè¡Œãªã©ã‚’æ’é™¤ã—ã¾ã™ã€‚
         void tidydiness( std::string lineString, size_t lineNumber );
-        // ƒvƒŠƒvƒƒZƒbƒT–½—ß sys:import(fileName) ‚Ìê‡‚Ì‚İAŠ„‚è‚İ‚Å•Êƒtƒ@ƒCƒ‹‚ğƒŠƒ“ƒN‚µ‚Ü‚·B
+        // ãƒ—ãƒªãƒ—ãƒ­ã‚»ãƒƒã‚µå‘½ä»¤ sys:import(fileName) ã®å ´åˆã®ã¿ã€å‰²ã‚Šè¾¼ã¿ã§åˆ¥ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒªãƒ³ã‚¯ã—ã¾ã™ã€‚
         bool isPreprocess( DebugWithLineData const& debugWithLineData );
     private:
         void import( ArgumentList const& args );
         void beginland( ArgumentList const& args );
         void endland( ArgumentList const& args );
     private:
-        // make‚³‚ê‚½‚Æ‚«‚Ìƒtƒ@ƒCƒ‹–¼‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
+        // makeã•ã‚ŒãŸã¨ãã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ä¿å­˜ã—ã¦ãŠãã¾ã™ã€‚
         std::string fileName;
-        // ‚±‚±‚ÉA“Ç‚İ‚ñ‚Å‚«‚½ƒtƒ@ƒCƒ‹‚Ì’†g‚ª“WŠJ‚³‚ê‚Ü‚·B
+        // ã“ã“ã«ã€èª­ã¿è¾¼ã‚“ã§ããŸãƒ•ã‚¡ã‚¤ãƒ«ã®ä¸­èº«ãŒå±•é–‹ã•ã‚Œã¾ã™ã€‚
         TextChankData chunk;
-        // ¡Às‚µ‚Ä‚¢‚éƒf[ƒ^‚ğw‚µ‚Ü‚·B
-        // ƒ`ƒƒƒ“ƒNƒf[ƒ^‚ÍŠK‘w\‘¢‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ğ•Û‚µ‚Ü‚·B
+        // ä»Šå®Ÿè¡Œã—ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’æŒ‡ã—ã¾ã™ã€‚
+        // ãƒãƒ£ãƒ³ã‚¯ãƒ‡ãƒ¼ã‚¿ã¯éšå±¤æ§‹é€ ã«ãªã£ã¦ã„ã‚‹ã®ã§ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä¿æŒã—ã¾ã™ã€‚
         TextChankData* work;
     private:
-        // ƒvƒŠƒvƒƒZƒX‚ÅÀs‚³‚ê‚éŠÖ”‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
+        // ãƒ—ãƒªãƒ—ãƒ­ã‚»ã‚¹ã§å®Ÿè¡Œã•ã‚Œã‚‹é–¢æ•°ã‚’ä¿å­˜ã—ã¦ãŠãã¾ã™ã€‚
         std::map<std::string, std::function<void( ArgumentList const& )>> preprocess;
     };
 }
