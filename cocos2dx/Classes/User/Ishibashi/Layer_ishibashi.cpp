@@ -1,6 +1,6 @@
 ﻿#include "Layer_ishibashi.h"
-#include "cocos2d/external/json/rapidjson.h"
-#include "cocos2d/external/json/document.h"
+#include "external/json/rapidjson.h"
+#include "external/json/document.h"
 #include "audio/include/AudioEngine.h"
 #include "../Novel/ScriptHeart.h"
 

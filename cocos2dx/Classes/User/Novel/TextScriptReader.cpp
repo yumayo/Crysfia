@@ -115,7 +115,7 @@ namespace User
 
         TagWithData::Tag tag;
 
-        if ( parts.size( ) < 3U ) errorSStream( "最低限 ¥"@ NAME : RUN¥" の形で記入してください。", debugWithLineData.debugData );
+        if ( parts.size( ) < 3U ) errorSStream( "最低限 \"@ NAME : RUN\" の形で記入してください。", debugWithLineData.debugData );
 
         if ( parts[1] != u8":" ) errorSStream( "ペア表現に誤りがあります。", debugWithLineData.debugData );
 
@@ -132,7 +132,7 @@ namespace User
             if ( 3U < parts.size( ) )
             {
                 if ( parts[3] != u8"(" ) errorSStream( "関数の引数構文が間違っています。", debugWithLineData.debugData );
-                if ( parts.back( ) != u8")" ) errorSStream( "関数の引数リストの最後に ¥")¥" がありません。", debugWithLineData.debugData );
+                if ( parts.back( ) != u8")" ) errorSStream( "関数の引数リストの最後に \")\" がありません。", debugWithLineData.debugData );
 
                 for ( size_t i = 5; i < parts.size( ) - 1; i += 2 )
                 {

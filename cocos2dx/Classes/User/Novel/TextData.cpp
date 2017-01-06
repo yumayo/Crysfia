@@ -88,7 +88,7 @@ namespace User
         size_t stringPosition = 0;
         size_t findPosition = 0;
         size_t lineNumber = 1; // 普通のテキストエディタでは行番号は「1」から始まるので。
-        const std::string eolString = u8"¥n";
+        const std::string eolString = u8"\n";
         const size_t eolSize = std::string( eolString ).size( );
         while ( findPosition != std::string::npos )
         {

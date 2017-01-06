@@ -73,8 +73,8 @@ namespace User
         TextChunkManager& getTextChunkManager( ) { return textChunkManager; }
 
         /**
-        * 最後にクリックしたときの画面を保存しておきます。
-        */
+         * 最後にクリックしたときの画面を保存しておきます。
+         */
         static cocos2d::Image* screen;
     private:
         std::function<void( )> saveCallFunc;
