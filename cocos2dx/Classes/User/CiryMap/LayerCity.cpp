@@ -37,12 +37,13 @@ namespace User
 
         auto pixel = map->getTexture( )->getContentSizeInPixels( );
 
-        auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
 
         map->addChild( this );
 
-        setPosition( Vec2( position.x, pixel.height - position.y ) * scale );
-        setScale( Lib::fitWidth( this, 128 * scale ), Lib::fitWidth( this, 128 * scale ) );
+        setPosition( Vec2( position.x, pixel.height - position.y ) * _scale );
+        setScale( Lib::fitWidth( this, 368 * scale ) );
         if ( data.visit ) setEnabled( false );
 
         addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
@@ -73,7 +74,7 @@ namespace User
 
         LayerCityMark::pasteMap( map, data );
 
-        setScale( getScale( ) * 0.5 );
+        setScale( getScale( ) * 0.5F );
     }
 
 
@@ -425,9 +426,14 @@ namespace User
     }
     cocos2d::Label * LayerCity::createLabel( std::string const& title )
     {
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
+
         auto font = Label::createWithTTF( title,
                                           u8"res/fonts/HGRGE.TTC",
-                                          64 * Director::getInstance( )->getContentScaleFactor( ) );
+                                          64 );
+
+        font->setScale( Lib::fitHeight( font, 64 * scale ) );
         font->setAnchorPoint( Vec2( 0.5F, 0 ) );
         font->setAnchorPoint( Vec2( 0, 0 ) );
         font->setTextColor( Color4B( 39, 39, 39, 255 ) );
@@ -473,11 +479,13 @@ namespace User
     }
     cocos2d::ui::Button * LayerCity::createTimeNextButton( )
     {
-        auto _scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
 
         auto button = ui::Button::create( u8"res/texture/system/timer.png",
                                           u8"res/texture/system/timer.select.png" );
 
+        button->setScale( Lib::fitHeight( button, 128 * scale ) );
         button->setAnchorPoint( Vec2( 1, 0 ) );
         button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {

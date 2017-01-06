@@ -454,7 +454,6 @@ namespace User
     {
         std::string dir = u8"res/texture/system/";
         slider = ui::Slider::create( );
-        addChild( slider );
 
         auto left = ui::Button::create( u8"res/texture/system/slider.left.png", u8"res/texture/system/slider.left.select.png" );
         left->setAnchorPoint( Vec2( 0, 0 ) );
@@ -536,6 +535,8 @@ namespace User
                 break;
             }
         } );
+
+        addChild( slider );
 
         setContentSize( Size( translate, slider->getContentSize( ).height ) );
     }
