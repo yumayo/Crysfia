@@ -1,6 +1,6 @@
 ﻿#include "Layer_ishibashi.h"
-#include "external/json/rapidjson.h"
-#include "external/json/document.h"
+#include "json/rapidjson.h"
+#include "json/document.h"
 #include "audio/include/AudioEngine.h"
 #include "../Novel/ScriptHeart.h"
 
