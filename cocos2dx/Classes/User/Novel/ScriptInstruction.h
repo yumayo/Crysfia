@@ -1,4 +1,4 @@
-# ifndef __ScriptInstruction__
+﻿# ifndef __ScriptInstruction__
 # define __ScriptInstruction__
 
 # include "cocos2d.h"

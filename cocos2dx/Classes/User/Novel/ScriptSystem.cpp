@@ -1,4 +1,4 @@
-#include "ScriptSystem.h"
+Ôªø#include "ScriptSystem.h"
 
 #include "ScriptStaticData.h"
 #include "OptionalValues.h"
@@ -232,7 +232,7 @@ namespace User
         {
         case 1:
         {
-            std::vector<std::string> names = { u8"ñºëO", u8"n" };
+            std::vector<std::string> names = { u8"ÂêçÂâç", u8"n" };
 
             std::string variable = args[0];
             std::string humanName = variable;

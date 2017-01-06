@@ -1,4 +1,4 @@
-# ifndef __NameLayer__
+﻿# ifndef __NameLayer__
 # define __NameLayer__
 
 # include "../LayerBase.h"

@@ -1,4 +1,4 @@
-# ifndef __LayerManager__
+﻿# ifndef __LayerManager__
 # define __LayerManager__
 
 # include "cocos2d.h"

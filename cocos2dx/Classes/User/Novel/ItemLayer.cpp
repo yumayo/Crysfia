@@ -1,4 +1,4 @@
-#include "ItemLayer.h"
+ï»¿#include "ItemLayer.h"
 
 #include "../../Lib/Utilitys.h"
 
@@ -84,7 +84,7 @@ namespace User
         item->setOpacity( 0 );
         item->setPosition( content_size / 2 );
 
-        //TIPS:128‚Éscale‚ðŠ|‚¯‚Ä‚È‚¢‚Ì‚ÍAe‚ÌƒIƒuƒWƒFƒNƒg‚ÌContentSize‚ÉƒXƒP[ƒ‹‚ª‚©‚©‚Á‚Ä‚È‚¢‚©‚ç‚Å‚·B
+        //TIPS:128ã«scaleã‚’æŽ›ã‘ã¦ãªã„ã®ã¯ã€è¦ªã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ContentSizeã«ã‚¹ã‚±ãƒ¼ãƒ«ãŒã‹ã‹ã£ã¦ãªã„ã‹ã‚‰ã§ã™ã€‚
         auto scale_animation = EaseCubicActionOut::create( ScaleTo::create( 1.0F, Lib::fitHeight( this, 128 ) ) );
         auto rotate_animation = EaseCubicActionOut::create( RotateBy::create( 1.0F, 360 ) );
         auto fade_animation = EaseCubicActionOut::create( FadeIn::create( 1.0F ) );
@@ -120,7 +120,7 @@ namespace User
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-        std::vector<std::string> names = { u8"ƒA", u8"ƒC", u8"ƒe", u8"ƒ€", u8"ƒQ", u8"ƒb", u8"ƒg" };
+        std::vector<std::string> names = { u8"ã‚¢", u8"ã‚¤", u8"ãƒ†", u8"ãƒ ", u8"ã‚²", u8"ãƒƒ", u8"ãƒˆ" };
 
 
         auto effect_width_size = 1000.0F;

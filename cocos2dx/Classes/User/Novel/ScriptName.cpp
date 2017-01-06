@@ -1,4 +1,4 @@
-#include "ScriptName.h"
+﻿#include "ScriptName.h"
 
 #include "OptionalValues.h"
 

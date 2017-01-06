@@ -1,4 +1,4 @@
-# ifndef __SceneDiary__
+﻿# ifndef __SceneDiary__
 # define __SceneDiary__
 
 # include "cocos2d.h"

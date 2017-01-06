@@ -1,4 +1,4 @@
-#include "ScriptBackground.h"
+﻿#include "ScriptBackground.h"
 
 USING_NS_CC;
 

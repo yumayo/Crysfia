@@ -1,4 +1,4 @@
-# ifndef __SoundManager__
+ï»¿# ifndef __SoundManager__
 # define __SoundManager__
 
 # include "cocos2d.h"
@@ -45,8 +45,8 @@ namespace User
 				isPlaying = false;
 			}
 			int bgmId;		//ID
-			BgmType type;	//ZBGM‚Ìƒ^ƒCƒv
-			bool isPlaying;	//Ä¶’†‚©‚Ç‚¤‚©
+			BgmType type;	//ZBGMã®ã‚¿ã‚¤ãƒ—
+			bool isPlaying;	//å†ç”Ÿä¸­ã‹ã©ã†ã‹
 		};
 
 		std::string getBgmPath(BgmType type);

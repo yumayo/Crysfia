@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  *
  *  You can modify and use this source freely
  *  only for the development of application related Live2D.
@@ -15,31 +15,31 @@ public:
     
 	virtual ~ModelSetting(){}
 	
-	// ƒ‚ƒfƒ‹ƒf[ƒ^‚É‚Â‚¢‚Ä
+	// ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦
 	virtual std::string getModelName() =0 ;
 	virtual std::string getModelFile() =0  ;
 	
-	// ƒeƒNƒXƒ`ƒƒ‚É‚Â‚¢‚Ä
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã«ã¤ã„ã¦
 	virtual int getTextureNum() =0 ;
 	virtual std::string getTextureDir() =0 ;
 	virtual std::string getTextureFile(int n) =0 ;
 	
-	// ‰Šúƒpƒ‰ƒ[ƒ^‚É‚Â‚¢‚Ä
+	// åˆæœŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«ã¤ã„ã¦
 	virtual int getInitParamNum() =0;
 	virtual float getInitParamValue(int n) =0 ;
 	virtual std::string getInitParamID(int n) =0 ;
 	
-	// ‰Šúƒp[ƒc•\¦‚É‚Â‚¢‚Ä
+	// åˆæœŸãƒ‘ãƒ¼ãƒ„è¡¨ç¤ºã«ã¤ã„ã¦
 	virtual int getInitPartsVisibleNum() =0 ;
 	virtual float getInitPartsVisibleValue(int n) =0 ;
 	virtual std::string getInitPartsVisibleID(int n) =0;
 	
-	// ‚ ‚½‚è”»’è‚É‚Â‚¢‚Ä
+	// ã‚ãŸã‚Šåˆ¤å®šã«ã¤ã„ã¦
 	virtual int getHitAreasNum() =0 ;
 	virtual std::string getHitAreaID(int n) =0 ;
 	virtual std::string getHitAreaName(int n) =0 ;
 	
-	// •¨—‰‰ZAƒp[ƒcØ‚è‘Ö‚¦A•\îƒtƒ@ƒCƒ‹‚É‚Â‚¢‚Ä
+	// ç‰©ç†æ¼”ç®—ã€ãƒ‘ãƒ¼ãƒ„åˆ‡ã‚Šæ›¿ãˆã€è¡¨æƒ…ãƒ•ã‚¡ã‚¤ãƒ«ã«ã¤ã„ã¦
 	virtual std::string getPhysicsFile() =0;
 	virtual std::string getPoseFile() =0;
 	
@@ -47,7 +47,7 @@ public:
 	virtual std::string getExpressionName(int n) =0 ;
 	virtual std::string getExpressionFile(int n) =0 ;
 	
-	// ƒ‚[ƒVƒ‡ƒ“‚É‚Â‚¢‚Ä
+	// ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã«ã¤ã„ã¦
 	virtual int getMotionNum(std::string name)  =0;
 	virtual int getMotionGroupNum() =0;
 	virtual std::string getMotionGroupName(int n) =0;

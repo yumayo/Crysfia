@@ -1,4 +1,4 @@
-# ifndef __TextChunk__
+﻿# ifndef __TextChunk__
 # define __TextChunk__
 
 # include "TextTypes.hpp"

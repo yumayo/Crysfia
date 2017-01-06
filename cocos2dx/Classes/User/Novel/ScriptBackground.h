@@ -1,4 +1,4 @@
-# ifndef __ScriptBackground__
+﻿# ifndef __ScriptBackground__
 # define __ScriptBackground__
 
 # include "cocos2d.h"

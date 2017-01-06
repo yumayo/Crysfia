@@ -1,4 +1,4 @@
-# ifndef __ScriptHuman__
+﻿# ifndef __ScriptHuman__
 # define __ScriptHuman__
 
 # include "cocos2d.h"

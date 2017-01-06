@@ -1,28 +1,28 @@
-# ifndef __LayerBase__
+ï»¿# ifndef __LayerBase__
 # define __LayerBase__
 
 # include "cocos2d.h"
 
 # include <string>
 
-// ‰Â•Ï’·”z—ñ‚É‘Î‰‚µ‚½createŠÖ”‚ğì‚è‚Ü‚·B
-// ’†g‚ÍCREATE_FUNC‚Æ“¯‚¶‚Å‚·B
-#define CREATE_ARGS_FUNC(__TYPE__) \
-template <class... Args> \
-static __TYPE__* create(Args... args) \
-{ \
-    __TYPE__ *pRet = new(std::nothrow) __TYPE__(args...); \
-    if (pRet && pRet->init()) \
-    { \
-        pRet->autorelease(); \
-        return pRet; \
-    } \
-    else \
-    { \
-        delete pRet; \
-        pRet = nullptr; \
-        return nullptr; \
-    } \
+// å¯å¤‰é•·é…åˆ—ã«å¯¾å¿œã—ãŸcreateé–¢æ•°ã‚’ä½œã‚Šã¾ã™ã€‚
+// ä¸­èº«ã¯CREATE_FUNCã¨åŒã˜ã§ã™ã€‚
+#define CREATE_ARGS_FUNC(__TYPE__)\
+template <class... Args>\
+static __TYPE__* create(Args... args)\
+{\
+  __TYPE__ *pRet = new(std::nothrow) __TYPE__(args...);\
+    if (pRet && pRet->init())\
+    {\
+        pRet->autorelease();\
+        return pRet;\
+    }\
+    else\
+    {\
+        delete pRet;\
+        pRet = nullptr;\
+        return nullptr;\
+    }\
 }
 
 #define LAMBDA_TOUCH cocos2d::Ref* ref, cocos2d::ui::Widget::TouchEventType type
@@ -34,11 +34,11 @@ namespace User
     public:
         LayerBase( );
         virtual ~LayerBase( );
-        // initŠÖ”‚ÌŒã‚ÉŒÄ‚Î‚ê‚Ü‚·B
-        // setup‚©‚çgetLayer‚ªg‚¦‚é‚æ‚¤‚É‚È‚è‚Ü‚·B
+        // inité–¢æ•°ã®å¾Œã«å‘¼ã°ã‚Œã¾ã™ã€‚
+        // setupã‹ã‚‰getLayerãŒä½¿ãˆã‚‹ã‚ˆã†ã«ãªã‚Šã¾ã™ã€‚
         virtual void setup( );
     public:
-        // ‚±‚ÌŠÖ”‚ÅƒV[ƒ“‚É’Ç‰Á‚³‚ê‚Ä‚¢‚é‘S‚Ä‚ÌƒŒƒCƒ„[‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚·B
+        // ã“ã®é–¢æ•°ã§ã‚·ãƒ¼ãƒ³ã«è¿½åŠ ã•ã‚Œã¦ã„ã‚‹å…¨ã¦ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã™ã€‚
         template<class LayerClass>
         LayerClass* getLayer( );
     };

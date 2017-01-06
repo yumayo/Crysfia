@@ -1,4 +1,4 @@
-#include "INIWriter.h"
+﻿#include "INIWriter.h"
 
 #include <fstream>
 #include <sstream>

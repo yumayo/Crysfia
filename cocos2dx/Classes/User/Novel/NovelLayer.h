@@ -1,4 +1,4 @@
-# ifndef __NovelLayer__
+ï»¿# ifndef __NovelLayer__
 # define __NovelLayer__
 
 # include "../LayerBase.h"
@@ -66,33 +66,33 @@ namespace User
         void addAuto( );
         void select( std::string const& name );
         void setDelayTime( double delayTime ) { textChunkManager.setDelayTime( delayTime ); }
-        // ‘I‘ğˆ‚ÅƒVƒiƒŠƒI‚Ì“Ç‚İ‚İ’â~‹@”\‚ÌƒXƒCƒbƒ`
+        // é¸æŠè‚¢ã§ã‚·ãƒŠãƒªã‚ªã®èª­ã¿è¾¼ã¿åœæ­¢æ©Ÿèƒ½ã®ã‚¹ã‚¤ãƒƒãƒ
         SwitchBoolean systemStop;
         void click( );
         void next( );
         TextChunkManager& getTextChunkManager( ) { return textChunkManager; }
 
         /**
-        * ÅŒã‚ÉƒNƒŠƒbƒN‚µ‚½‚Æ‚«‚Ì‰æ–Ê‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
-        */
+         * æœ€å¾Œã«ã‚¯ãƒªãƒƒã‚¯ã—ãŸã¨ãã®ç”»é¢ã‚’ä¿å­˜ã—ã¦ãŠãã¾ã™ã€‚
+         */
         static cocos2d::Image* screen;
     private:
         std::function<void( )> saveCallFunc;
 
         std::string novelPath;
-        // “Ç‚İ‚İ‹@”\‚ğ’â~‚·‚é‚©‚Ç‚¤‚©B
-        // ƒeƒLƒXƒg‚ğ“Ç‚İ‚İ“r’†‚Ìê‡‚Ítrue‚É‚È‚è‚Ü‚·B
+        // èª­ã¿è¾¼ã¿æ©Ÿèƒ½ã‚’åœæ­¢ã™ã‚‹ã‹ã©ã†ã‹ã€‚
+        // ãƒ†ã‚­ã‚¹ãƒˆã‚’èª­ã¿è¾¼ã¿é€”ä¸­ã®å ´åˆã¯trueã«ãªã‚Šã¾ã™ã€‚
         void readingProceedUpdate( );
         void makeLoadingFeatureOn( );
         void readNextNovel( );
         void textActionStop( );
-        // ƒeƒLƒXƒgƒf[ƒ^‚ğ‹ó‚É‚·‚éB
+        // ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ç©ºã«ã™ã‚‹ã€‚
         void textClear( );
-        // “Ç‚İ‚ñ‚¾ƒeƒLƒXƒgƒf[ƒ^‚ğƒmƒxƒ‹ƒŒƒCƒ„[‚É“\‚è•t‚¯‚éB
+        // èª­ã¿è¾¼ã‚“ã ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ãƒãƒ™ãƒ«ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è²¼ã‚Šä»˜ã‘ã‚‹ã€‚
         void textPasting( );
-        // “Ç‚İ‚İ‚ª’â~‚³‚ê‚é‚Ü‚Å“Ç‚İ‚Ş‚©‚ÌƒXƒCƒbƒ`
+        // èª­ã¿è¾¼ã¿ãŒåœæ­¢ã•ã‚Œã‚‹ã¾ã§èª­ã¿è¾¼ã‚€ã‹ã®ã‚¹ã‚¤ãƒƒãƒ
         SwitchBoolean systemRead;
-        // ‚‘¬‚É“Ç‚İ”ò‚Î‚·‹@”\‚ÌƒXƒCƒbƒ`
+        // é«˜é€Ÿã«èª­ã¿é£›ã°ã™æ©Ÿèƒ½ã®ã‚¹ã‚¤ãƒƒãƒ
         SwitchBoolean readProceed;
         TextLabels textLabels;
         TextChunkManager textChunkManager;
@@ -104,7 +104,7 @@ namespace User
         AutoMode* automode = nullptr;
 
         /**
-         *  ƒmƒxƒ‹‚ğ•\¦‚ğ‚·‚é‰æ‘œ‚ğ•Û‘¶‚µ‚Ü‚·B
+         *  ãƒãƒ™ãƒ«ã‚’è¡¨ç¤ºã‚’ã™ã‚‹ç”»åƒã‚’ä¿å­˜ã—ã¾ã™ã€‚
          */
         cocos2d::Sprite* novelWindow = nullptr;
     };

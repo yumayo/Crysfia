@@ -1,4 +1,4 @@
-#include "BGManager.h"
+ï»¿#include "BGManager.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
 #include "audio/include/AudioEngine.h"
@@ -26,12 +26,12 @@ namespace User
 
 	bool BGManager::init()
 	{		
-		//jsonƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 		auto fileUtils = FileUtils::getInstance();
 		auto path = fileUtils->getStringFromFile("res/json/background.json");
 		rapidjson::Document doc;
 
-		//jsonƒtƒ@ƒCƒ‹‚ğƒp[ƒX5
+		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‘ãƒ¼ã‚¹5
 		doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
 		if (!doc.HasParseError())
 		{

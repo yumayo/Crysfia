@@ -1,4 +1,4 @@
-#include "FlickFunctionLayer.h"
+ï»¿#include "FlickFunctionLayer.h"
 
 #include "NovelLayer.h"
 
@@ -116,8 +116,8 @@ namespace User
                 break;
             case EventListenerGesture::SwipeDirection::UP:
                 /**
-                 * ƒXƒƒCƒv‚ªã•ûŒü‚É‚³‚ê‚½‚Æ‚«‚Ì‚İAƒƒjƒ…[‚ğ•\¦‚³‚¹‚éB
-                 * ‚·‚Å‚É•\¦‚³‚ê‚Ä‚¢‚éê‡‚Í•\¦‚µ‚È‚¢B
+                 * ã‚¹ãƒ¯ã‚¤ãƒ—ãŒä¸Šæ–¹å‘ã«ã•ã‚ŒãŸã¨ãã®ã¿ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¡¨ç¤ºã•ã›ã‚‹ã€‚
+                 * ã™ã§ã«è¡¨ç¤ºã•ã‚Œã¦ã„ã‚‹å ´åˆã¯è¡¨ç¤ºã—ãªã„ã€‚
                  */
 
                 if ( !functions )

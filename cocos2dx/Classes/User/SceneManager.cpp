@@ -1,22 +1,22 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 #include "LayerBase.h"
 
-// scenario‚Ég‚í‚ê‚é•Ï”‚ÌƒTƒCƒY‚È‚Ç‚Ì‰Šú‰»B
+// scenarioã«ä½¿ã‚ã‚Œã‚‹å¤‰æ•°ã®ã‚µã‚¤ã‚ºãªã©ã®åˆæœŸåŒ–ã€‚
 #include "Novel/OptionalValues.h"
 
-// ƒ†[ƒ}ƒˆ‚ªŠÇ—‚·‚éƒV[ƒ“‚ğì¬‚µ‚Ü‚·B
+// ãƒ¦ãƒ¼ãƒãƒ¨ãŒç®¡ç†ã™ã‚‹ã‚·ãƒ¼ãƒ³ã‚’ä½œæˆã—ã¾ã™ã€‚
 #include "Novel/SceneNovel.h"
 #include "IslandMap/SceneIslandMap.h"
 #include "CiryMap/SceneCityMap.h"
 
-// ¬¼‚³‚ñ‚ªŠÇ—‚·‚éƒV[ƒ“‚ğì¬‚µ‚Ü‚·B
+// å°æ¾ã•ã‚“ãŒç®¡ç†ã™ã‚‹ã‚·ãƒ¼ãƒ³ã‚’ä½œæˆã—ã¾ã™ã€‚
 #include "Breeding/SceneBreeding.h"
 #include "Title/SceneTitle.h"
 
-// Î‹´‚­‚ñ‚ªŠÇ—‚·‚éƒV[ƒ“‚ğì¬‚µ‚Ü‚·B
+// çŸ³æ©‹ãã‚“ãŒç®¡ç†ã™ã‚‹ã‚·ãƒ¼ãƒ³ã‚’ä½œæˆã—ã¾ã™ã€‚
 #include "Ishibashi/Scene_ishibashi.h"
 
-// ”©R‚­‚ñ‚ªŠÇ—‚·‚éƒV[ƒ“‚ğì¬‚µ‚Ü‚·B
+// ç• å±±ãã‚“ãŒç®¡ç†ã™ã‚‹ã‚·ãƒ¼ãƒ³ã‚’ä½œæˆã—ã¾ã™ã€‚
 #include "Diary/SceneDiary.h"
 
 USING_NS_CC;

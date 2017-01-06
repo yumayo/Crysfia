@@ -1,4 +1,4 @@
-# ifndef __FlickFunctionLayer__
+﻿# ifndef __FlickFunctionLayer__
 # define __FlickFunctionLayer__
 
 # include "../LayerBase.h"
@@ -34,20 +34,20 @@ namespace User
         void createFlickCircle( );
     private:
         /**
-         *  Novel���C���[��ۑ����܂��B
-         *  ���j���[���o������ANovel���C���[�̃^�b�`�C�x���g�𖳌��ɂ��邽�߂ł��B
+         *  Novelレイヤーを保存します。
+         *  メニューを出したら、Novelレイヤーのタッチイベントを無効にするためです。
          */
         cocos2d::Layer* novelLayer = nullptr;
 
         /**
-         *  �o�b�O���O���C���[��ۑ����܂��B
-         *  �T�[�N���̋@�\�Ƃ��Ďg�����߂ł��B
+         *  バッグログレイヤーを保存します。
+         *  サークルの機能として使うためです。
          */
         cocos2d::Layer* backlogLayer = nullptr;
 
         /**
-         * �l�[�����C���[��ۑ����܂��B
-         * �m�x���E�B���h�E�̔�\����Ԃ̋@�\���������߂ł��B
+         * ネームレイヤーを保存します。
+         * ノベルウィンドウの非表示状態の機能を扱うためです。
          */
         cocos2d::Layer* nameLayer = nullptr;
 

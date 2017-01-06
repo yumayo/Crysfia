@@ -1,4 +1,4 @@
-# ifndef __BackLogLayer__
+﻿# ifndef __BackLogLayer__
 # define __BackLogLayer__
 
 # include "../LayerBase.h"

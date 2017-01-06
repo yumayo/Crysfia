@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  *
  *  You can modify and use this source freely
  *  only for the development of application related Live2D.
@@ -8,7 +8,7 @@
 #pragma once
 
 
-// ‰æ–Ê
+// ç”»é¢
 static const float VIEW_MAX_SCALE = 2.0f;
 static const float VIEW_MIN_SCALE = 0.8f;
 
@@ -20,15 +20,15 @@ static const float VIEW_LOGICAL_MAX_RIGHT = 2;
 static const float VIEW_LOGICAL_MAX_BOTTOM = -2;
 static const float VIEW_LOGICAL_MAX_TOP = 2;
 
-// ŠO•”’è‹`ƒtƒ@ƒCƒ‹(json)‚Æ‡‚í‚¹‚é
-static const char MOTION_GROUP_IDLE [ ] = "idle";// ƒAƒCƒhƒŠƒ“ƒO
-static const char MOTION_GROUP_TAP_BODY [ ] = "tap_body";// ‘Ì‚ğƒ^ƒbƒv‚µ‚½‚Æ‚«
+// å¤–éƒ¨å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«(json)ã¨åˆã‚ã›ã‚‹
+static const char MOTION_GROUP_IDLE [ ] = "idle";// ã‚¢ã‚¤ãƒ‰ãƒªãƒ³ã‚°
+static const char MOTION_GROUP_TAP_BODY [ ] = "tap_body";// ä½“ã‚’ã‚¿ãƒƒãƒ—ã—ãŸã¨ã
 
-// ŠO•”’è‹`ƒtƒ@ƒCƒ‹(json)‚Æ‡‚í‚¹‚é
+// å¤–éƒ¨å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«(json)ã¨åˆã‚ã›ã‚‹
 static const char HIT_AREA_NAME_HEAD [ ] = "head";
 static const char HIT_AREA_NAME_BODY [ ] = "body";
 
-// ƒ‚[ƒVƒ‡ƒ“‚Ì—Dæ“x’è”
+// ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã®å„ªå…ˆåº¦å®šæ•°
 static const int PRIORITY_NONE = 0;
 static const int PRIORITY_IDLE = 1;
 static const int PRIORITY_NORMAL = 2;
@@ -37,6 +37,6 @@ static const int PRIORITY_FORCE = 3;
 
 class LAppDefine {
 public:
-    static const bool DEBUG_LOG = true;// ƒfƒoƒbƒO—pƒƒO‚Ì•\¦
+    static const bool DEBUG_LOG = true;// ãƒ‡ãƒãƒƒã‚°ç”¨ãƒ­ã‚°ã®è¡¨ç¤º
     static const bool DEBUG_TOUCH_LOG = false;
 };

@@ -1,4 +1,4 @@
-# ifndef __TextScriptAnalysis__
+ï»¿# ifndef __TextScriptAnalysis__
 # define __TextScriptAnalysis__
 
 # include "TextTypes.hpp"
@@ -24,7 +24,7 @@ namespace User
         NovelScript novelScript;
         FunctionScript functionScript;
         VariableScript variableScript;
-        // ‚à‚ç‚Á‚Ä‚«‚½ƒf[ƒ^‚ğˆê“I‚É•Û‘¶‚µ‚Ü‚·B
+        // ã‚‚ã‚‰ã£ã¦ããŸãƒ‡ãƒ¼ã‚¿ã‚’ä¸€æ™‚çš„ã«ä¿å­˜ã—ã¾ã™ã€‚
         TagWithData tagWithData;
     };
 }
