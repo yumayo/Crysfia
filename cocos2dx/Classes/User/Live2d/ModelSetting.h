@@ -15,31 +15,31 @@ public:
     
 	virtual ~ModelSetting(){}
 	
-	// ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦
+	// ƒ‚ƒfƒ‹ƒf[ƒ^‚É‚Â‚¢‚Ä
 	virtual std::string getModelName() =0 ;
 	virtual std::string getModelFile() =0  ;
 	
-	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã«ã¤ã„ã¦
+	// ƒeƒNƒXƒ`ƒƒ‚É‚Â‚¢‚Ä
 	virtual int getTextureNum() =0 ;
 	virtual std::string getTextureDir() =0 ;
 	virtual std::string getTextureFile(int n) =0 ;
 	
-	// åˆæœŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«ã¤ã„ã¦
+	// ‰Šúƒpƒ‰ƒ[ƒ^‚É‚Â‚¢‚Ä
 	virtual int getInitParamNum() =0;
 	virtual float getInitParamValue(int n) =0 ;
 	virtual std::string getInitParamID(int n) =0 ;
 	
-	// åˆæœŸãƒ‘ãƒ¼ãƒ„è¡¨ç¤ºã«ã¤ã„ã¦
+	// ‰Šúƒp[ƒc•\Ž¦‚É‚Â‚¢‚Ä
 	virtual int getInitPartsVisibleNum() =0 ;
 	virtual float getInitPartsVisibleValue(int n) =0 ;
 	virtual std::string getInitPartsVisibleID(int n) =0;
 	
-	// ã‚ãŸã‚Šåˆ¤å®šã«ã¤ã„ã¦
+	// ‚ ‚½‚è”»’è‚É‚Â‚¢‚Ä
 	virtual int getHitAreasNum() =0 ;
 	virtual std::string getHitAreaID(int n) =0 ;
 	virtual std::string getHitAreaName(int n) =0 ;
 	
-	// ç‰©ç†æ¼”ç®—ã€ãƒ‘ãƒ¼ãƒ„åˆ‡ã‚Šæ›¿ãˆã€è¡¨æƒ…ãƒ•ã‚¡ã‚¤ãƒ«ã«ã¤ã„ã¦
+	// •¨—‰‰ŽZAƒp[ƒcØ‚è‘Ö‚¦A•\îƒtƒ@ƒCƒ‹‚É‚Â‚¢‚Ä
 	virtual std::string getPhysicsFile() =0;
 	virtual std::string getPoseFile() =0;
 	
@@ -47,7 +47,7 @@ public:
 	virtual std::string getExpressionName(int n) =0 ;
 	virtual std::string getExpressionFile(int n) =0 ;
 	
-	// ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã«ã¤ã„ã¦
+	// ƒ‚[ƒVƒ‡ƒ“‚É‚Â‚¢‚Ä
 	virtual int getMotionNum(std::string name)  =0;
 	virtual int getMotionGroupNum() =0;
 	virtual std::string getMotionGroupName(int n) =0;

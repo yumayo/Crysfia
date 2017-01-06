@@ -4,6 +4,7 @@
 # include "cocos2d.h"
 
 # include <string>
+# include "../Lib/json.h"
 
 namespace User
 {
@@ -13,7 +14,7 @@ namespace User
         static void createSystemAppDelegateStart( );
     public:
         static void createTitle( );
-        static void createNovel( std::string const& novelPath );
+        static void createNovel( std::string const& scenario, std::function<void()> const& saveCallFunc );
         static void createIslandMap( );
         static void createCityMap( std::string const& backgroundPath );
         static void createBreeding( );

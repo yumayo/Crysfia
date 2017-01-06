@@ -40,7 +40,13 @@ namespace User
         event->setOnExitCallback( [ this, lay ]
         {
             lay->runAction( Sequence::create( FadeOut::create( 0.3F ), RemoveSelf::create( ), nullptr ) );
-            if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->delayOn( );
+            if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) )
+            {
+                scheduleOnce( [ this ] ( float delay )
+                {
+                    novelLayer->resume( );
+                }, 0.0F, typeid( this ).name( ) );
+            }
         } );
         if ( novelLayer ) novelLayer->pause( );
     }

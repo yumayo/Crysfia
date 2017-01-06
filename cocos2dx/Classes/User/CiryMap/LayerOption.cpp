@@ -12,6 +12,10 @@
 
 #include "../../Lib/AudioManager.h"
 
+#include "../LayerSave/LayerSave.h"
+
+#include "../System/DataSettings.h"
+
 USING_NS_CC;
 
 namespace User
@@ -55,17 +59,27 @@ namespace User
 
             auto height = boardPixel.height - 10 * 2;
 
-            if ( auto button = createBackButton( ) )
+            auto back_button = createBackButton( );
+            if ( back_button )
             {
-                board->addChild( button );
-                button->setScale( Lib::fitHeight( button, height * scale ), Lib::fitHeight( button, height * scale ) );
-                button->setPosition( Vec2( 10, 10 ) * scale );
+                board->addChild( back_button );
+                back_button->setScale( Lib::fitHeight( back_button, height * scale ) );
+                back_button->setPosition( Vec2( 10, 10 ) * scale );
             }
-            if ( auto button = createDeleteButton( ) )
+            auto delete_button = createDeleteButton( );
+            if ( delete_button )
             {
-                board->addChild( button );
-                button->setScale( Lib::fitHeight( button, height * scale ), Lib::fitHeight( button, height * scale ) );
-                button->setPosition( Vec2( boardPixel.width - 10, 10 ) * scale );
+                board->addChild( delete_button );
+                delete_button->setScale( Lib::fitHeight( delete_button, height * scale ) );
+                delete_button->setPosition( Vec2( boardPixel.width - 10, 10 ) * scale );
+            }
+            auto savemenu_button = createSaveMenuButton( );
+            if ( savemenu_button )
+            {
+                board->addChild( savemenu_button );
+                savemenu_button->setScale( Lib::fitHeight( savemenu_button, height * scale ) );
+                savemenu_button->setPosition( Vec2( boardPixel.width - 10 -
+                                                    delete_button->getContentSize( ).width * delete_button->getScale( ) - 10, 10 ) * scale );
             }
         }
 
@@ -178,7 +192,8 @@ namespace User
                 return sprite;
             };
 
-            auto button = ui::Button::create( u8"res/texture/system/button.samplevoice.png" );
+            auto button = ui::Button::create( u8"res/texture/system/button.samplevoice.png",
+                                              u8"res/texture/system/button.samplevoice.select.png" );
             button->setPosition( Vec2( logo->getContentSize( ).width, bar->getContentSize( ).height ) );
             button->setAnchorPoint( Vec2( 0, 0 ) );
             button->addTouchEventListener( [ ] ( Ref* ref, ui::Widget::TouchEventType type )
@@ -236,7 +251,8 @@ namespace User
                 addChild( message );
 
                 auto test = Label::createWithTTF( u8"読み上げのテスト、速度はこんな感じです。", OptionalValues::fontName, OptionalValues::fontSize / message->getScale( ) );
-                test->setTextColor( Color4B( 39, 39, 39, 255 ) );
+                test->setTextColor( OptionalValues::fontColor );
+                test->enableShadow( OptionalValues::fontShadowColor, Size( 2, -2 ), 2 );
                 {
                     test->setPosition( message->getContentSize( ) * 0.5 );
                     test->setAnchorPoint( Vec2( 0.5, 0 ) );
@@ -289,7 +305,8 @@ namespace User
     {
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
+        auto button = ui::Button::create( u8"res/texture/system/backbutton.png",
+                                          u8"res/texture/system/backbutton.select.png" );
 
         button->setScale( Lib::fitWidth( button, 128 * scale ), Lib::fitWidth( button, 128 * scale ) );
         button->setAnchorPoint( Vec2( 0, 0 ) );
@@ -320,8 +337,16 @@ namespace User
             {
                 addChild( createDialog( u8"データを消しますか？", [ ]
                 {
-                    auto path = FileUtils::getInstance( )->getWritablePath( ) + u8"island.json";
-                    remove( path.c_str( ) );
+                    {
+                        userDefaultForceSetup( );
+
+                        UserDefault::getInstance( )->flush( );
+                    }
+                    {
+                        auto data = FileUtils::getInstance( )->getDataFromFile( u8"res/data/autosave.json" );
+                        writeDataUserLocal( data, u8"autosave.json" );
+                    }
+                    SceneManager::createTitle( );
                 }, [ ]
                 {
 
@@ -363,19 +388,19 @@ namespace User
                                                    Rect( 32 / scale, 32 / scale,
                                                          64 / scale, 64 / scale ) );
 
-        auto content_size = Size( 640, 640 ) * scale;
+        auto content_size = Size( 640, 640 );
         menuImage->setContentSize( content_size );
         menuImage->setPosition( vo + vs * 0.5 );
         layout->addChild( menuImage );
 
-        auto label = Label::createWithTTF( str, u8"res/fonts/HGRGE.TTC", 36 );
+        auto label = Label::createWithTTF( str, u8"res/fonts/HGRGE.TTC", 48 * scale );
         label->setPosition( content_size * 0.5 );
         menuImage->addChild( label );
 
         auto yes_button = ui::Button::create( u8"res/texture/system/yes.button.base.png", u8"res/texture/system/yes.button.push.png" );
         yes_button->setPosition( Vec2( content_size.width * 0.25, content_size.height * 0.1 ) );
-        yes_button->setScale( 0.5 );
-        yes_button->setAnchorPoint( Vec2( 0, 0 ) );
+        yes_button->setScale( Lib::fitWidth( yes_button, 150 ) );
+        yes_button->setAnchorPoint( Vec2( 0.5, 0 ) );
         menuImage->addChild( yes_button );
         yes_button->addTouchEventListener( [ = ] ( Ref* ref, ui::Widget::TouchEventType type )
         {
@@ -386,8 +411,8 @@ namespace User
         } );
         auto no_button = ui::Button::create( u8"res/texture/system/no.button.base.png", u8"res/texture/system/no.button.push.png" );
         no_button->setPosition( Vec2( content_size.width * 0.75, content_size.height * 0.1 ) );
-        no_button->setAnchorPoint( Vec2( 1, 0 ) );
-        no_button->setScale( 0.5 );
+        no_button->setAnchorPoint( Vec2( 0.5, 0 ) );
+        no_button->setScale( Lib::fitWidth( no_button, 150 ) );
         menuImage->addChild( no_button );
         no_button->addTouchEventListener( [ = ] ( Ref* ref, ui::Widget::TouchEventType type )
         {
@@ -399,13 +424,39 @@ namespace User
 
         return layout;
     }
+    cocos2d::ui::Button * User::LayerOption::createSaveMenuButton( )
+    {
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+
+        auto button = ui::Button::create( u8"res/texture/system/icon.save.edge.png" );
+        button->setAnchorPoint( Vec2( 1, 0 ) );
+        button->setScale( Lib::fitHeight( button, 128 / scale ) );
+        button->addTouchEventListener( [ this ] ( LAMBDA_TOUCH )
+        {
+            switch ( type )
+            {
+            case cocos2d::ui::Widget::TouchEventType::BEGAN:
+                break;
+            case cocos2d::ui::Widget::TouchEventType::MOVED:
+                break;
+            case cocos2d::ui::Widget::TouchEventType::ENDED:
+                addChild( LayerSave::create( ) );
+                break;
+            case cocos2d::ui::Widget::TouchEventType::CANCELED:
+                break;
+            default:
+                break;
+            }
+        } );
+        return button;
+    }
     SlideBar::SlideBar( )
     {
         std::string dir = u8"res/texture/system/";
         slider = ui::Slider::create( );
         addChild( slider );
 
-        auto left = ui::Button::create( u8"res/texture/system/slider.left.png" );
+        auto left = ui::Button::create( u8"res/texture/system/slider.left.png", u8"res/texture/system/slider.left.select.png" );
         left->setAnchorPoint( Vec2( 0, 0 ) );
         addChild( left );
         auto translate = left->getContentSize( ).width;
@@ -434,12 +485,11 @@ namespace User
             }
         } );
 
-
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
         slider->loadBarTexture( dir + u8"slider.process.base.png" );
         slider->loadProgressBarTexture( dir + u8"slider.process.bar.png" );
-        //slider->loadSlidBallTextures( dir + u8"slider.button.base.png", dir + u8"slider.button.selected.png" );
+        slider->loadSlidBallTextures( dir + u8"slider.button.png", dir + u8"slider.button.select.png" );
         slider->addEventListener( [ this ] ( Ref* ref, ui::Slider::EventType type )
         {
             ui::Slider* slider = dynamic_cast<ui::Slider*>( ref );
@@ -456,7 +506,7 @@ namespace User
         slider->setPosition( Vec2( translate, 0 ) );
         translate += slider->getContentSize( ).width;
 
-        auto right = ui::Button::create( u8"res/texture/system/slider.right.png" );
+        auto right = ui::Button::create( u8"res/texture/system/slider.right.png", u8"res/texture/system/slider.right.select.png" );
         addChild( right );
         right->setAnchorPoint( Vec2( 0, 0 ) );
         right->setPosition( Vec2( translate, 0 ) );
@@ -469,7 +519,7 @@ namespace User
             {
                 float max = slider->getMaxPercent( );
                 int value = clampf( slider->getPercent( ) + 1.0F, 0.0F, slider->getMaxPercent( ) );
-                slider->setPercent( value ); 
+                slider->setPercent( value );
                 float percent = slider->getPercent( ) / 100.0F;
                 if ( move ) move( percent );
                 if ( ended ) ended( percent );

@@ -17,7 +17,7 @@ TouchManager::TouchManager()
 
 
 /*
- * ã‚¿ãƒƒãƒé–‹å§‹æ™‚ã‚¤ãƒ™ãƒ³ãƒˆ
+ * ƒ^ƒbƒ`ŠJnƒCƒxƒ“ƒg
  * @param x
  * @param deviceY
  */
@@ -33,7 +33,7 @@ void TouchManager::touchesBegan(float x, float y) {
 
 
 /*
- * ã‚¿ãƒƒãƒé–‹å§‹æ™‚ã‚¤ãƒ™ãƒ³ãƒˆã€‚
+ * ƒ^ƒbƒ`ŠJnƒCƒxƒ“ƒgB
  * @param x1
  * @param y1
  * @param x2
@@ -61,8 +61,8 @@ void TouchManager::touchesBegan(float x1, float y1, float x2, float y2) {
 
 void TouchManager::touchesMoved(cocos2d::Point touches[],int num)
 {
-    // å‰å›ã®ã‚¯ãƒªãƒƒã‚¯ä½ç½®ã«æœ€ã‚‚è¿‘ã„ã‚‚ã®ã‚’é¸ã³ã ã™
-    // pt1ã€pt2ã®ä¸¡ç‚¹ã¸ã®è·é›¢ã®å’ŒãŒæœ€å°ã¨ãªã‚‹ç‚¹ã®çµ„ã¿åˆã‚ã›ã‚’ç·å½“ãŸã‚Šã§æ¢ã™
+    // ‘O‰ñ‚ÌƒNƒŠƒbƒNˆÊ’u‚ÉÅ‚à‹ß‚¢‚à‚Ì‚ğ‘I‚Ñ‚¾‚·
+    // pt1Apt2‚Ì—¼“_‚Ö‚Ì‹——£‚Ì˜a‚ªÅ¬‚Æ‚È‚é“_‚Ì‘g‚İ‡‚í‚¹‚ğ‘“–‚½‚è‚Å’T‚·
     int index1 , index2 , minDist2 = 999999999 ;
 	index1=0;
 	index2=1;
@@ -88,8 +88,8 @@ void TouchManager::touchesMoved(cocos2d::Point touches[],int num)
         }
     }
     
-    if( minDist2 > 70*70*2 && num > 2 ) return ;// å‡¦ç†ã—ãªã„
-    // pt2ã«ä¸€ç•ªè¿‘ã„ç‚¹
+    if( minDist2 > 70*70*2 && num > 2 ) return ;// ˆ—‚µ‚È‚¢
+    // pt2‚Éˆê”Ô‹ß‚¢“_
     cocos2d::Point pt1 = touches[index1] ;
     cocos2d::Point pt2 = touches[index2] ;
     
@@ -98,7 +98,7 @@ void TouchManager::touchesMoved(cocos2d::Point touches[],int num)
 
 
 /*
- * ãƒ‰ãƒ©ãƒƒã‚°æ™‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
+ * ƒhƒ‰ƒbƒO‚ÌƒCƒxƒ“ƒg
  * @param deviceX
  * @param deviceY
  */
@@ -111,7 +111,7 @@ void TouchManager::touchesMoved(float deviceX, float deviceY) {
 
 
 /*
- * ãƒ‰ãƒ©ãƒƒã‚°æ™‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
+ * ƒhƒ‰ƒbƒO‚ÌƒCƒxƒ“ƒg
  * @param x1
  * @param y1
  * @param x2
@@ -147,7 +147,7 @@ void TouchManager::touchesMoved(float x1, float y1, float x2, float y2) {
 
 
 /*
- * ãƒ•ãƒªãƒƒã‚¯ã—ãŸè·é›¢
+ * ƒtƒŠƒbƒN‚µ‚½‹——£
  * @return
  */
 float TouchManager::getFlickDistance(){
@@ -156,7 +156,7 @@ float TouchManager::getFlickDistance(){
 
 
 /*
- * ç‚¹1ã‹ã‚‰ç‚¹2ã¸ã®è·é›¢ã‚’æ±‚ã‚ã‚‹
+ * “_1‚©‚ç“_2‚Ö‚Ì‹——£‚ğ‹‚ß‚é
  * @param p1x
  * @param p1y
  * @param p2x
@@ -169,8 +169,8 @@ float TouchManager::distance(float x1, float y1, float x2, float y2){
 
 
 /*
- * äºŒã¤ã®å€¤ã‹ã‚‰ã€ç§»å‹•é‡ã‚’æ±‚ã‚ã‚‹ã€‚
- * é•ã†æ–¹å‘ã®å ´åˆã¯ç§»å‹•é‡ï¼ã€‚åŒã˜æ–¹å‘ã®å ´åˆã¯ã€çµ¶å¯¾å€¤ãŒå°ã•ã„æ–¹ã®å€¤ã‚’å‚ç…§ã™ã‚‹
+ * “ñ‚Â‚Ì’l‚©‚çAˆÚ“®—Ê‚ğ‹‚ß‚éB
+ * ˆá‚¤•ûŒü‚Ìê‡‚ÍˆÚ“®—Ê‚OB“¯‚¶•ûŒü‚Ìê‡‚ÍAâ‘Î’l‚ª¬‚³‚¢•û‚Ì’l‚ğQÆ‚·‚é
  */
 float TouchManager::calcShift( float v1 , float v2 ){
     if( (v1>0) != (v2>0) ) return 0 ;

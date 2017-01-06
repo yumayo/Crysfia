@@ -6,3 +6,7 @@ cocos2dx/proj.win32/
 
 .cocos-project.json
 CMakeLists.txt
+
+.DS_Store
+git_bash.lnk
+local.lnk

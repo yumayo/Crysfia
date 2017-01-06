@@ -20,11 +20,15 @@ namespace User
         SCRIPT( l ); // シナリオ読み込みをストップ
         SCRIPT( select ); // 選択肢の表示
         SCRIPT( stop );
+        SCRIPT( noveldisable );
+        SCRIPT( novelenable );
         SCRIPT( novelon );
         SCRIPT( noveloff );
         SCRIPT( novelswitch );
         SCRIPT( item );
         SCRIPT( autosave );
+        SCRIPT( heartup );
+        SCRIPT( heartdown );
     public: // 変数の登録に使います。
             // 全てのクラスはシステムを経由してでないと作成できません。
         SCRIPT( name );
@@ -47,6 +51,7 @@ namespace User
         cocos2d::Layer* live2dLayer = nullptr;
         cocos2d::Layer* itemLayer = nullptr;
         cocos2d::Layer* voiceLayer = nullptr;
+        cocos2d::Layer* flickFunctionLayer = nullptr;
 
         /**
          *  現在のメッセージウィンドウの行数を保存しておきます。

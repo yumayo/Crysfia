@@ -83,14 +83,8 @@ namespace User
 
         disassembly( );
 
-        try
-        {
-            syntaxCheck( scriptParts );
-        }
-        catch ( char const* str )
-        {
-
-        }
+        // throwされますので、どこかでcatchしないといけません。
+        syntaxCheck( scriptParts );
 
         // 変数名のところに"$"マークがあれば新しい変数として作成出来ます。
         if ( scriptParts[0].find( u8"$" ) != std::string::npos )
@@ -121,7 +115,7 @@ namespace User
 
         TagWithData::Tag tag;
 
-        if ( parts.size( ) < 3U ) errorSStream( "最低限 [@ NAME : RUN] の形で記入してください。", debugWithLineData.debugData );
+        if ( parts.size( ) < 3U ) errorSStream( "最低限 \"@ NAME : RUN\" の形で記入してください。", debugWithLineData.debugData );
 
         if ( parts[1] != u8":" ) errorSStream( "ペア表現に誤りがあります。", debugWithLineData.debugData );
 

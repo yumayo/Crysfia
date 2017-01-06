@@ -36,16 +36,11 @@ namespace User
     }
     bool StringUtil::string_bool( std::string const & str )
     {
-        auto s = str;
-        for ( auto& obj : s )
-        {
-            toupper( obj );
-        }
-        if ( str == u8"FALSE" )
+        if ( str == u8"false" )
         {
             return false;
         }
-        else if ( s == u8"TRUE" )
+        else if ( str == u8"true" )
         {
             return true;
         }

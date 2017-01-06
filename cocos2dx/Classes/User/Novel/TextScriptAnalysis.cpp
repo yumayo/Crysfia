@@ -45,42 +45,42 @@ namespace User
     }
     void TextScriptAnalysis::makeVariableScript( )
     {
-        auto variableName = tagWithData.scriptParts[0]; // ç”Ÿãƒ‡ãƒ¼ã‚¿ã® é…åˆ—0ç•ªç›®ã«ã¯ã€å¤‰æ•°åãŒè¨˜è¼‰ã•ã‚Œã¦ã„ã¾ã™ã€‚
-        auto currentStatusName = tagWithData.scriptParts[2]; // ç”Ÿãƒ‡ãƒ¼ã‚¿ã® é…åˆ—2ç•ªç›®ã«ã¯ã€ãã®å¤‰æ•°ã®å®Ÿä½“ãŒè¨˜è¼‰ã•ã‚Œã¦ã„ã¾ã™ã€‚
+        auto variableName = tagWithData.scriptParts[0]; // ¶ƒf[ƒ^‚Ì ”z—ñ0”Ô–Ú‚É‚ÍA•Ï”–¼‚ª‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
+        auto currentStatusName = tagWithData.scriptParts[2]; // ¶ƒf[ƒ^‚Ì ”z—ñ2”Ô–Ú‚É‚ÍA‚»‚Ì•Ï”‚ÌÀ‘Ì‚ª‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
 
         variableScript = { variableName, currentStatusName };
     }
     void TextScriptAnalysis::makeFunctionScript( )
     {
-        auto variableName = tagWithData.scriptParts[0]; // ç”Ÿãƒ‡ãƒ¼ã‚¿ã® é…åˆ—0ç•ªç›®ã«ã¯ã€å¤‰æ•°åãŒè¨˜è¼‰ã•ã‚Œã¦ã„ã¾ã™ã€‚
-        auto functionName = tagWithData.scriptParts[2]; // ç”Ÿãƒ‡ãƒ¼ã‚¿ã® é…åˆ—2ç•ªç›®ã«ã¯ã€é–¢æ•°åãŒè¨˜è¼‰ã•ã‚Œã¦ã„ã¾ã™ã€‚
+        auto variableName = tagWithData.scriptParts[0]; // ¶ƒf[ƒ^‚Ì ”z—ñ0”Ô–Ú‚É‚ÍA•Ï”–¼‚ª‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
+        auto functionName = tagWithData.scriptParts[2]; // ¶ƒf[ƒ^‚Ì ”z—ñ2”Ô–Ú‚É‚ÍAŠÖ”–¼‚ª‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
 
-        // å¼•æ•°ãªã—ã®å ´åˆ
-        // æ–‡æ³•ä¸Šé–¢æ•°ã®å¼•æ•°ãŒãªã„å ´åˆã¯"()"ã‚’çœç•¥ã§ãã‚‹ã‚ˆã†ã«ã—ã¦ã„ã‚‹ã®ã§ã€‚
+        // ˆø”‚È‚µ‚Ìê‡
+        // •¶–@ãŠÖ”‚Ìˆø”‚ª‚È‚¢ê‡‚Í"()"‚ğÈ—ª‚Å‚«‚é‚æ‚¤‚É‚µ‚Ä‚¢‚é‚Ì‚ÅB
         if ( tagWithData.scriptParts.size( ) == 3U )
         {
-            // é–¢æ•°æƒ…å ±ã‚’ä½œæˆã€‚
-            // é–¢æ•°ã®åå‰ã¨ã€å¼•æ•°ãƒªã‚¹ãƒˆã‚’ä¿å­˜ã—ã¾ã™ã€‚
+            // ŠÖ”î•ñ‚ğì¬B
+            // ŠÖ”‚Ì–¼‘O‚ÆAˆø”ƒŠƒXƒg‚ğ•Û‘¶‚µ‚Ü‚·B
             FunctionInfo functionInfo = { functionName, ArgumentList( ) };
 
             functionScript = { variableName, functionInfo };
         }
-        // å¼•æ•°ã‚ã‚Šã®å ´åˆ
-        // "()"ã‚’æ˜ç¤ºçš„ã«æ›¸ã„ã¦ã‚‚OKãªã‚ˆã†ã«ã—ã¦ã„ã¾ã™ã€‚
+        // ˆø”‚ ‚è‚Ìê‡
+        // "()"‚ğ–¾¦“I‚É‘‚¢‚Ä‚àOK‚È‚æ‚¤‚É‚µ‚Ä‚¢‚Ü‚·B
         else
         {
-            // é–¢æ•°ã®å¼•æ•°ã ã‘ã‚’æ®‹ã—ã¾ã™ã€‚
+            // ŠÖ”‚Ìˆø”‚¾‚¯‚ğc‚µ‚Ü‚·B
             auto values = tagWithData.scriptParts; // [var][:][name][(][hoge][,][huga]...[)]
             values.erase( values.begin( ), values.begin( ) + 4 ); // [hoge][,][huga]...[)]
             values.pop_back( ); // [hoge][,][huga]...
 
-            // å¼•æ•°ãƒªã‚¹ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
+            // ˆø”ƒŠƒXƒg‚ğì¬‚µ‚Ü‚·B
             ArgumentList argumentList;
-            // 2ã¤é£›ã°ã—ãªã®ã¯ã€é–“ã«","ãŒã‚ã‚‹ãŸã‚ã€‚
-            // ã»ã‚“ã¨ã†ã«å¿…è¦ãªã®ã¯ã€å¶æ•°ç•ªã«ã‚ã‚‹å¼•æ•°ã®ã¿ã§ã™ã€‚
+            // 2‚Â”ò‚Î‚µ‚È‚Ì‚ÍAŠÔ‚É","‚ª‚ ‚é‚½‚ßB
+            // ‚Ù‚ñ‚Æ‚¤‚É•K—v‚È‚Ì‚ÍA‹ô””Ô‚É‚ ‚éˆø”‚Ì‚İ‚Å‚·B
             for ( size_t i = 0; i < values.size( ); i += 2 ) argumentList.emplace_back( values[i] );
-            // é–¢æ•°æƒ…å ±ã‚’ä½œæˆã€‚
-            // é–¢æ•°ã®åå‰ã¨ã€å¼•æ•°ãƒªã‚¹ãƒˆã‚’ä¿å­˜ã—ã¾ã™ã€‚
+            // ŠÖ”î•ñ‚ğì¬B
+            // ŠÖ”‚Ì–¼‘O‚ÆAˆø”ƒŠƒXƒg‚ğ•Û‘¶‚µ‚Ü‚·B
             FunctionInfo functionInfo = { functionName, argumentList };
 
             functionScript = { variableName, functionInfo };

@@ -53,7 +53,7 @@ namespace User
             UserDefault::getInstance( )->setIntegerForKey( u8"‘Øİ’†‚Ì“‡", staying_island );
         }
 
-        scheduleOnce( [ = ] ( float d ) { SceneManager::createCityMap( point[staying_island] ); }, 0.016F, std::string( u8"scene" ) );
+        scheduleOnce( [ = ] ( float d ) { SceneManager::createCityMap( point[staying_island] ); }, 0.0F, std::string( u8"scene.island" ) );
 
         return true;
     }

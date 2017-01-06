@@ -19,10 +19,11 @@ namespace User
         auto origin = Director::getInstance( )->getVisibleOrigin( );
 
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-        auto size = Sprite::create( u8"res/texture/system/message.window.png" )->getContentSize( );
+        auto message = Sprite::create( u8"res/texture/system/message.window.png" );
+        auto size = message->getContentSize( );
         auto mul = size.width / visibleSize.width;
 
-        position = origin + Vec2( 0, 480.0F / mul * scale - OptionalValues::fontSize / 2 );
+        position = origin + Vec2( 0, 458 / mul * scale );
         slideSize = 220.0F / mul * scale;
 
         REGIST_FUNC( ScriptName, in );
