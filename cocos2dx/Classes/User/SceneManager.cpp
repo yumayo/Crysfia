@@ -6,7 +6,6 @@
 
 // ユーマヨが管理するシーンを作成します。
 #include "Novel/SceneNovel.h"
-#include "IslandMap/SceneIslandMap.h"
 #include "CiryMap/SceneCityMap.h"
 
 // 小松さんが管理するシーンを作成します。
@@ -26,7 +25,7 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-        createIslandMap( );
+        createCityMap( );
     }
     void SceneManager::createTitle( )
     {
@@ -36,13 +35,9 @@ namespace User
     {
         create<SceneNovel>( scenario, saveCallFunc );
     }
-    void SceneManager::createIslandMap( )
+    void SceneManager::createCityMap( )
     {
-        create<SceneIslandMap>( );
-    }
-    void SceneManager::createCityMap( std::string const& backgroundPath )
-    {
-        create<SceneCityMap>( backgroundPath );
+        create<SceneCityMap>( );
     }
     void SceneManager::createBreeding( )
     {

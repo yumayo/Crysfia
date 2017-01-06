@@ -179,6 +179,14 @@ public:
     // 効果音のキャッシュを解放する
     void releaseVoice( std::string const& baseName );
 
+    void stopAllBgm( );
+    void stopAllSe( );
+    void stopAllVoice( );
+private:
+    std::vector<int> playSeIds;
+    std::vector<int> playVoiceIds;
+
+
 private:
     // 環境に応じて拡張子付きファイル名に変換する
     std::string getFileName( AudioType type, std::string baseName );

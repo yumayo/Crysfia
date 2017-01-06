@@ -10,7 +10,7 @@ namespace User
     class SceneCityMap : public SceneBase
     {
     public:
-        static cocos2d::Scene* create( std::string const& tag );
+        static cocos2d::Scene* create( );
     };
 }
 

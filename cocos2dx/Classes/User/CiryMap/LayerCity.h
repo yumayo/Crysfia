@@ -16,7 +16,7 @@ namespace User
             scenario = root[u8"scenario"].asString( );
             visit = root[u8"visit"].asBool( );
             position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
-                                  root[u8"position"][1].asInt( ) );
+                                      root[u8"position"][1].asInt( ) );
             title = root[u8"title"].asString( );
 
             auto& day = root[u8"day"];
@@ -104,12 +104,14 @@ namespace User
         std::string title;
     };
 
+    class CityMap;
+
     class LayerCityMark : protected ScenarioPointData, public cocos2d::ui::Button
     {
     public:
         void setButtonEndCallBack( std::function<void( )>const& callback );
     protected:
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
         std::function<void( )> buttonEnd;
     };
 
@@ -117,14 +119,14 @@ namespace User
     {
     public:
         CREATE_FUNC( MainMark );
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
     };
 
     class SubMark : public LayerCityMark
     {
     public:
         CREATE_FUNC( SubMark );
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
     };
 
     class Calendar : public cocos2d::ui::Layout
@@ -142,8 +144,11 @@ namespace User
     class CityMap : public cocos2d::Sprite
     {
     public:
-        CREATE_FUNC( CityMap );
-        CityMap* make( std::string const& backgroundfile );
+        CREATE_ARGS_INIT_FUNC( CityMap );
+        bool init( int const x, int const y );
+        void paste( cocos2d::ui::Button* icon, int const x, int const y );
+        void paste( MainMark* icon, int const x, int const y );
+        void paste( SubMark* icon, int const x, int const y );
     private:
         /**
          *  今の時間。
@@ -160,13 +165,16 @@ namespace User
          *  マップを横にスライドするときに使います。
          */
         cocos2d::Vec2 translate;
+
+        cocos2d::Size honeycomb_size;
+        cocos2d::Vec2 start_position;
+        cocos2d::Size map_size;
     };
 
     class LayerCity : public LayerBase
     {
     public:
-        CREATE_ARGS_FUNC( LayerCity );
-        LayerCity( std::string const& name );
+        CREATE_ARGS_INIT_FUNC( LayerCity );
         ~LayerCity( );
         bool init( ) override;
         void setup( ) override;
@@ -183,11 +191,6 @@ namespace User
         std::string save_name;
 
         /**
-         *  この島の名前を保存します。
-         */
-        std::string island_name;
-
-        /**
          * 次の行動目的を表示するためのデータ。
          */
         std::map<std::string, cocos2d::Data> data;
@@ -196,6 +199,8 @@ namespace User
          *
          */
         Json::Value root;
+
+        void setIslandName( );
     };
 }
 

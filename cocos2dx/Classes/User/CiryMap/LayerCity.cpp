@@ -21,8 +21,6 @@
 
 #include "LayerNovelView.h"
 
-#include "../IslandMap/LayerIsland.h"
-
 USING_NS_CC;
 
 namespace User
@@ -31,7 +29,7 @@ namespace User
     {
         buttonEnd = callback;
     }
-    void LayerCityMark::pasteMap( cocos2d::Sprite * map, ScenarioPointData const & data )
+    void LayerCityMark::pasteMap( CityMap* map, ScenarioPointData const & data )
     {
         initScenarioPointData( data );
 
@@ -40,10 +38,9 @@ namespace User
         auto scale = Director::getInstance( )->getContentScaleFactor( );
         auto _scale = 1.0F / scale;
 
-        map->addChild( this );
+        // マップの方で、ポジションを指定するので用済みになりました。
+        // setPosition( Vec2( position.x, pixel.height - position.y ) * _scale );
 
-        setPosition( Vec2( position.x, pixel.height - position.y ) * _scale );
-        setScale( Lib::fitWidth( this, 368 * scale ) );
         if ( data.visit ) setEnabled( false );
 
         addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
@@ -55,7 +52,7 @@ namespace User
         } );
     }
 
-    void MainMark::pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data )
+    void MainMark::pasteMap( CityMap* map, ScenarioPointData const& data )
     {
         const std::string dir = u8"res/texture/system/";
 
@@ -63,9 +60,11 @@ namespace User
         loadTexturePressed( dir + "scenario.main.select.png" );
 
         LayerCityMark::pasteMap( map, data );
+
+        map->paste( this, position.x, position.y );
     }
 
-    void SubMark::pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data )
+    void SubMark::pasteMap( CityMap* map, ScenarioPointData const& data )
     {
         const std::string dir = u8"res/texture/system/";
 
@@ -74,7 +73,10 @@ namespace User
 
         LayerCityMark::pasteMap( map, data );
 
-        setScale( getScale( ) * 0.5F );
+        map->paste( this, position.x, position.y );
+
+        // これもマップの方で設定するので用済みです。
+        //setScale( getScale( ) * 0.5F );
     }
 
 
@@ -99,30 +101,37 @@ namespace User
         return true;
     }
 
-    CityMap* CityMap::make( std::string const& backgroundfile )
+    bool CityMap::init( int const x, int const y )
     {
-        initWithFile( backgroundfile );
+        honeycomb_size = Size( 95, 80.5 );
+        map_size = Size( 19, 20 );
+        start_position = Vec2( 168, 2048 - 220 );
 
-        auto size = Director::getInstance( )->getVisibleSize( );
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
+        initWithFile( u8"res/texture/system/map.select.png" );
 
-        auto targetSize = size;
-        translate = origin + size / 2;
-        auto backgroundWindowHeightFitScale = targetSize.height / getContentSize( ).height;
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
 
-        setPosition( translate );
-        setScale( backgroundWindowHeightFitScale, backgroundWindowHeightFitScale );
+        translate = vo + vs * 0.5;
+
+        Vec2 const slide = ( y & 1 ) == 0 ? Vec2( ) : Vec2( honeycomb_size.width * 0.5F, 0 );
+
+        Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
+        setPosition( Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
+                     Vec2( -move.x, move.y ) * _scale );
 
         auto listener = EventListenerTouchAllAtOnce::create( );
         listener->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
             removeChildByName( u8"ok.button" );
         };
-        listener->onTouchesMoved = [ this, backgroundWindowHeightFitScale ] ( const std::vector<Touch*>& touches, Event* event )
+        listener->onTouchesMoved = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
             auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
-            auto texS_2 = ( getContentSize( ) * backgroundWindowHeightFitScale ) / 2;
+            auto texS_2 = ( getContentSize( ) ) / 2;
             auto winS_2 = visibleSize / 2;
             auto clearance = texS_2 - winS_2;
 
@@ -143,14 +152,49 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
 
-        return this;
+        // 実験的な配列のテスト。
+        //for ( int y = 0; y < map_size.height; ++y )
+        //{
+        //    for ( int x = 0; x < map_size.width; ++x )
+        //    {
+        //        auto icon = ui::Button::create( u8"res/texture/system/scenario.sub.png",
+        //                                        u8"res/texture/system/scenario.sub.select.png" );
+        //        paste( icon, x, y );
+        //    }
+        //}
+
+        return true;
     }
 
-    LayerCity::LayerCity( std::string const& island_name )
-        : island_name( island_name )
+    void CityMap::paste( cocos2d::ui::Button * icon, int const x, int const y )
     {
+        Vec2 const slide = ( y & 1 ) == 0 ? Vec2( ) : Vec2( honeycomb_size.width * 0.5F, 0 );
+        auto const scale = Director::getInstance( )->getContentScaleFactor( );
+        auto const _scale = 1.0F / scale;
 
+        icon->setPosition( start_position * _scale + Vec2( x * honeycomb_size.width, -y * honeycomb_size.height ) * _scale + slide * _scale );
+        icon->setScale( Lib::fitHeight( icon, 86 * _scale ) );
+
+    #ifdef _DEBUG // アイコンの上に配列番号を描画します。
+        icon->setTitleFontName( u8"res/fonts/HGRGE.TTC" );
+        icon->setTitleFontSize( 35 * _scale );
+        icon->setTitleText( StringUtils::format( u8"[%d, %d]", x, y ) );
+    #endif
+
+        addChild( icon );
     }
+
+    void CityMap::paste( MainMark * icon, int const x, int const y )
+    {
+        paste( static_cast<cocos2d::ui::Button*>( icon ), x, y );
+    }
+
+    void CityMap::paste( SubMark * icon, int const x, int const y )
+    {
+        paste( static_cast<cocos2d::ui::Button*>( icon ), x, y );
+        icon->setScale( icon->getScale( ) * 0.75 );
+    }
+
     LayerCity::~LayerCity( )
     {
         AudioManager::getInstance( )->stopBgm( 1.5F );
@@ -163,7 +207,12 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
-        AudioManager::getInstance( )->playBgm( "city", 1.5f );
+        scheduleOnce( [ this ] ( float delay )
+        {
+            AudioManager::getInstance( )->playBgm( "city", 1.5f );
+        }, 0.0F, u8"bgm_delay" );
+
+        setIslandName( );
 
         jsonRead( );
 
@@ -237,7 +286,7 @@ namespace User
                 button->setPosition( Vec2( board->getContentSize( ).width * board->getScale( ), board->getContentSize( ).height * board->getScale( ) ) );
             }
 
-            if ( auto label = createLabel( island_name ) )
+            if ( auto label = createLabel( UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" ) ) )
             {
                 addChild( label );
                 label->setPosition( Vec2( 0, board->getContentSize( ).height * board->getScale( ) ) );
@@ -263,8 +312,6 @@ namespace User
     {
         save_name = u8"autosave.json";
 
-        removeChildByName( u8"background" );
-
         int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
         int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
 
@@ -272,42 +319,98 @@ namespace User
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
         {
             /**
-            * 貼り付けるための背景を作成します。
-            */
-            auto map = root[island_name][u8"background"].asString( );
-            auto background = CityMap::create( )->make( map );
-            background->setName( u8"background" );
+             * 貼り付けるための背景を作成します。
+             */
+            auto& position = root[UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" )][u8"position"];
+            int x = 0, y = 0;
+            switch ( position.size( ) )
+            {
+            case 2:
+                x = position[0].asInt( );
+                y = position[1].asInt( );
+                break;
+            default:
+                break;
+            }
+            auto background = CityMap::create( x, y );
             addChild( background );
 
-            /**
-             * 強制イベントを読み込みます。
-             */
-            for ( auto& value : root[island_name][u8"point.force"] )
+            for ( auto& island : root )
             {
-                auto visit = value[u8"visit"].asBool( );
                 /**
-                 * 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
-                 */
-                if ( !visit )
+                * 強制イベントを読み込みます。
+                */
+                for ( auto& value : island[u8"point.force"] )
+                {
+                    auto visit = value[u8"visit"].asBool( );
+                    /**
+                    * 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
+                    */
+                    if ( !visit )
+                    {
+                        bool action = true;
+
+                        ScenarioPointData data;
+                        data.event = ScenarioPointData::Event::force;
+                        data.initScenarioPointData( value );
+
+                        auto mark = MainMark::create( );
+                        mark->pasteMap( background, data );
+
+                        if ( data.day_begin <= now_day &&
+                             now_day <= data.day_end )
+                            ;
+                        else action = false;
+
+                        if ( data.time_begin <= now_time &&
+                             now_time <= data.time_end )
+                            ;
+                        else action = false;
+
+                        if ( action )
+                        {
+                            scheduleOnce( [ this, &value, data ] ( float delay )
+                            {
+                                value[u8"visit"] = true;
+                                Json::StyledWriter writer;
+                                auto saveString = writer.write( root );
+                                auto savePath = save_name;
+                                Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
+                                {
+                                    writeUserLocal( saveString, savePath );
+                                } ) );
+                            }, 0.0F, u8"force_event" );
+                        }
+                        else
+                        {
+                            mark->setEnabled( false );
+                        }
+                    }
+                }
+
+                /**
+                * メインシナリオを読み込んで貼り付けていきます。
+                */
+                for ( auto& value : island[u8"point.main"] )
                 {
                     ScenarioPointData data;
-                    data.event = ScenarioPointData::Event::force;
+                    data.event = ScenarioPointData::Event::main;
                     data.initScenarioPointData( value );
-
-                    if ( data.day_begin <= now_day &&
-                         now_day <= data.day_end )
-                        ;
-                    else continue;
-
-                    if ( data.time_begin <= now_time &&
-                         now_time <= data.time_end )
-                        ;
-                    else continue;
 
                     auto mark = MainMark::create( );
                     mark->pasteMap( background, data );
 
-                    scheduleOnce( [ this, &value, data ] ( float delay )
+                    if ( data.day_begin <= now_day &&
+                         now_day <= data.day_end )
+                        ;
+                    else mark->setEnabled( false );
+
+                    if ( data.time_begin <= now_time &&
+                         now_time <= data.time_end )
+                        ;
+                    else  mark->setEnabled( false );
+
+                    mark->setButtonEndCallBack( [ this, &value, data ]
                     {
                         value[u8"visit"] = true;
                         Json::StyledWriter writer;
@@ -317,111 +420,49 @@ namespace User
                         {
                             writeUserLocal( saveString, savePath );
                         } ) );
-                    }, 0.0F, u8"force_event" );
+                    } );
                 }
-            }
 
-            /**
-             * メインシナリオを読み込んで貼り付けていきます。
-             */
-            for ( auto& value : root[island_name][u8"point.main"] )
-            {
-                ScenarioPointData data;
-                data.event = ScenarioPointData::Event::main;
-                data.initScenarioPointData( value );
-
-                if ( data.day_begin <= now_day &&
-                     now_day <= data.day_end )
-                    ;
-                else continue;
-
-                if ( data.time_begin <= now_time &&
-                     now_time <= data.time_end )
-                    ;
-                else continue;
-
-                auto mark = MainMark::create( );
-                mark->pasteMap( background, data );
-                mark->setButtonEndCallBack( [ this, &value, data ]
+                /**
+                * サブシナリオを読み込んで貼り付けていきます。
+                */
+                for ( auto& value : island[u8"point.sub"] )
                 {
-                    value[u8"visit"] = true;
-                    Json::StyledWriter writer;
-                    auto saveString = writer.write( root );
-                    auto savePath = save_name;
-                    Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
+                    ScenarioPointData data;
+                    data.event = ScenarioPointData::Event::sub;
+                    data.initScenarioPointData( value );
+
+                    auto mark = SubMark::create( );
+                    mark->pasteMap( background, data );
+
+                    if ( data.day_begin <= now_day &&
+                         now_day <= data.day_end )
+                        ;
+                    else mark->setEnabled( false );
+
+                    if ( data.time_begin <= now_time &&
+                         now_time <= data.time_end )
+                        ;
+                    else  mark->setEnabled( false );
+
+                    mark->setButtonEndCallBack( [ this, &value, data ]
                     {
-                        writeUserLocal( saveString, savePath );
-                    } ) );
-                } );
-            }
-
-            /**
-             * サブシナリオを読み込んで貼り付けていきます。
-             */
-            for ( auto& value : root[island_name][u8"point.sub"] )
-            {
-                ScenarioPointData data;
-                data.event = ScenarioPointData::Event::sub;
-                data.initScenarioPointData( value );
-
-                if ( data.day_begin <= now_day &&
-                     now_day <= data.day_end )
-                    ;
-                else continue;
-
-                if ( data.time_begin <= now_time &&
-                     now_time <= data.time_end )
-                    ;
-                else continue;
-
-                auto mark = SubMark::create( );
-                mark->pasteMap( background, data );
-                mark->setButtonEndCallBack( [ this, &value, data ]
-                {
-                    value[u8"visit"] = true;
-                    Json::StyledWriter writer;
-                    auto saveString = writer.write( root );
-                    auto savePath = save_name;
-                    Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
-                    {
-                        writeUserLocal( saveString, savePath );
-                    } ) );
-                } );
+                        value[u8"visit"] = true;
+                        Json::StyledWriter writer;
+                        auto saveString = writer.write( root );
+                        auto savePath = save_name;
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
+                        {
+                            writeUserLocal( saveString, savePath );
+                        } ) );
+                    } );
+                }
             }
         }
     }
     void LayerCity::time_next( )
     {
-        using Islands = LayerIsland::Islands;
-
-        Islands staying_island = (Islands)UserDefault::getInstance( )->getIntegerForKey( u8"滞在中の島" );
-
-        std::vector<int> days =
-        {
-            0, 8, 4, 1
-        };
-        std::vector<std::string> point =
-        {
-            u8"無名の島",
-            u8"ラシャス島",
-            u8"ヒャルキシ島",
-            u8"アイクラ島",
-        };
-
-        int sum = 0;
-        for ( int i = Islands::none; i <= staying_island; ++i ) sum += days[i];
-        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
-        if ( day <= sum )
-        {
-            /* nothing */
-        }
-        else if ( staying_island < Islands::aikura )
-        {
-            staying_island = Islands( staying_island + 1 );
-            UserDefault::getInstance( )->setIntegerForKey( u8"滞在中の島", staying_island );
-        }
-
-        island_name = point[staying_island];
+        removeAllChildrenWithCleanup( true );
         init( );
     }
     cocos2d::Label * LayerCity::createLabel( std::string const& title )
@@ -505,5 +546,40 @@ namespace User
             time_next( );
         } );
         return button;
+    }
+    void LayerCity::setIslandName( )
+    {
+        std::vector<int> days =
+        {
+            0, 8, 4, 1
+        };
+
+        auto sum = [ & ] ( int end )
+        {
+            int a = 0;
+            for ( int i = 0; i <= end; ++i )
+            {
+                a += days[i];
+            }
+            return a;
+        };
+
+        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        if ( day <= sum( 0 ) )
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"無名の島" );
+        }
+        else if ( day <= sum( 1 ) ) // 8 <= 8 ok 9 <= 8 no
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"ラシャス島" );
+        }
+        else if ( day <= sum( 2 ) )
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"ヒャルキシ島" );
+        }
+        else if ( day <= sum( 3 ) )
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"アイクラ島" );
+        }
     }
 }

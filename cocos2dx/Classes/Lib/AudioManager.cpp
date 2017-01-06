@@ -546,6 +546,7 @@ int AudioManager::playSe( std::string const& baseName, int chunkNo, bool loop, f
     }
 
     soundId = AudioEngine::play2d( fileName, loop, volume );
+    playSeIds.emplace_back( soundId );
 
     if ( chunkFlag ) {
         // チャンクにSoundIdを登録
@@ -568,6 +569,8 @@ int AudioManager::playSe( std::string const& baseName, bool loop /* = false */ )
 // 効果音を停止する
 void AudioManager::stopSe( int soundId ) {
     AudioEngine::stop( soundId );
+    if ( playSeIds.empty( ) ) return;
+    playSeIds.erase( std::remove_if( playSeIds.begin( ), playSeIds.end( ), [ soundId ] ( int const& id ) -> bool { return id == soundId; } ) );
 }
 
 // 効果音の音量を変更する
@@ -637,6 +640,7 @@ int AudioManager::playVoice( std::string const& baseName, Chunk chunkNo, bool lo
     }
 
     soundId = AudioEngine::play2d( fileName, loop, volume );
+    playVoiceIds.emplace_back( soundId );
 
     if ( chunkFlag ) {
         // チャンクにSoundIdを登録
@@ -659,6 +663,8 @@ int AudioManager::playVoice( std::string const& baseName, bool loop /* = false *
 // 効果音を停止する
 void AudioManager::stopVoice( int soundId ) {
     AudioEngine::stop( soundId );
+    if ( playVoiceIds.empty( ) ) return;
+    playVoiceIds.erase( std::remove_if( playVoiceIds.begin( ), playVoiceIds.end( ), [ soundId ] ( int const& id ) -> bool { return id == soundId; } ) );
 }
 
 // 効果音の音量を変更する
@@ -681,4 +687,25 @@ void AudioManager::releaseVoice( std::string const& baseName ) {
     }
 
     AudioEngine::uncache( fileName );
+}
+
+void AudioManager::stopAllBgm( )
+{
+    stopBgm( );
+}
+
+void AudioManager::stopAllSe( )
+{
+    for ( auto const& id : playSeIds )
+    {
+        AudioEngine::stop( id );
+    }
+}
+
+void AudioManager::stopAllVoice( )
+{
+    for ( auto const& id : playVoiceIds )
+    {
+        AudioEngine::stop( id );
+    }
 }

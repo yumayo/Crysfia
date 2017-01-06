@@ -25,9 +25,6 @@
     <Filter Include="src\User\CityMap">
       <UniqueIdentifier>{33bda6f5-6a3c-4d9b-8325-9193a08d2a11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\User\IslandMap">
-      <UniqueIdentifier>{a0a4d727-d50e-41a3-a4fb-a9a644348145}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\User\Title">
       <UniqueIdentifier>{b7fa4f3a-df70-4b00-82a3-072b5487863a}</UniqueIdentifier>
     </Filter>
@@ -92,12 +89,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp">
       <Filter>src\User\Ishibashi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp">
-      <Filter>src\User\IslandMap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp">
-      <Filter>src\User\IslandMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Live2d\LAppLive2DManager.cpp">
       <Filter>src\User\Live2d</Filter>
@@ -361,12 +352,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h">
       <Filter>src\User\Ishibashi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h">
-      <Filter>src\User\IslandMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h">
-      <Filter>src\User\IslandMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Live2d\AppMacros.h">
       <Filter>src\User\Live2d</Filter>

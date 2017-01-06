@@ -15,8 +15,7 @@ namespace User
     public:
         static void createTitle( );
         static void createNovel( std::string const& scenario, std::function<void()> const& saveCallFunc );
-        static void createIslandMap( );
-        static void createCityMap( std::string const& backgroundPath );
+        static void createCityMap( );
         static void createBreeding( );
         static void createDiary( );
         static void createIshibashi( );

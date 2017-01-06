@@ -14,6 +14,8 @@
 
 #include "../System/DataSettings.h"
 
+#include "../../Lib/AudioManager.h"
+
 USING_NS_CC;
 
 namespace User
@@ -32,7 +34,9 @@ namespace User
     }
     NovelLayer::~NovelLayer( )
     {
-
+        AudioManager::getInstance( )->stopAllSe( );
+        AudioManager::getInstance( )->stopAllBgm( );
+        AudioManager::getInstance( )->stopAllVoice( );
     }
     bool NovelLayer::init( )
     {
@@ -158,7 +162,7 @@ namespace User
                     time = ( time + 1 ) % 3;
                     UserDefault::getInstance( )->setIntegerForKey( u8"時刻", time );
 
-                    SceneManager::createIslandMap( );
+                    SceneManager::createCityMap( );
                 } ), RemoveSelf::create( ), nullptr ) );
                 Director::getInstance( )->getRunningScene( )->addChild( sprite );
             }
