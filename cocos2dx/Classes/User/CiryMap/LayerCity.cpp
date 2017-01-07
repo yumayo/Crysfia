@@ -349,22 +349,9 @@ namespace User
                 // 強制イベントを読み込みます。
                 for ( auto& value : island[u8"point.force"] )
                 {
-                    // スポーンしていたのに、読むことのできなかった場合、
-                    // それらは、アニメーションさせて登場させます。
-                    if ( mark_spawned_not_read_check( value ) )
-                    {
-                        mark_ptr_stack.push( [ this, &value, map ] ( ) {
-                            value[u8"read_not"] = true; return set_force_mark( value, map ); } );
-                        stack_mark_ptr_pos( value );
-                    }
-                    // スポーンしたことあるものは貼り付けます。
-                    // アニメーションはなしです。
-                    else if ( mark_spawned_check( value ) )
+                    if ( mark_spawned_check( value ) )
                     {
                         auto mark = set_force_mark( value, map );
-                        auto p = Sprite::create( u8"res/texture/system/read.png" );
-                        p->setAnchorPoint( Vec2( 0, 0 ) );
-                        mark->addChild( p );
                     }
                     // スポーンしたことのないものの中で、
                     // 滞在期間中のもの。
@@ -380,18 +367,9 @@ namespace User
                 // メインシナリオを読み込んで貼り付けていきます。
                 for ( auto& value : island[u8"point.main"] )
                 {
-                    if ( mark_spawned_not_read_check( value ) )
-                    {
-                        mark_ptr_stack.push( [ this, &value, map ] ( ) {
-                            value[u8"read_not"] = true; return set_main_mark( value, map ); } );
-                        stack_mark_ptr_pos( value );
-                    }
-                    else if ( mark_spawned_check( value ) )
+                    if ( mark_spawned_check( value ) )
                     {
                         auto mark = set_main_mark( value, map );
-                        auto p = Sprite::create( u8"res/texture/system/read.png" );
-                        p->setAnchorPoint( Vec2( 0, 0 ) );
-                        mark->addChild( p );
                     }
                     else if ( mark_stay_check( value ) )
                     {
@@ -403,18 +381,9 @@ namespace User
                 // サブシナリオを読み込んで貼り付けていきます。
                 for ( auto& value : island[u8"point.sub"] )
                 {
-                    if ( mark_spawned_not_read_check( value ) )
-                    {
-                        mark_ptr_stack.push( [ this, &value, map ] ( ) {
-                            value[u8"read_not"] = true; return set_sub_mark( value, map ); } );
-                        stack_mark_ptr_pos( value );
-                    }
-                    else if ( mark_spawned_check( value ) )
+                    if ( mark_spawned_check( value ) )
                     {
                         auto mark = set_sub_mark( value, map );
-                        auto p = Sprite::create( u8"res/texture/system/read.png" );
-                        p->setAnchorPoint( Vec2( 0, 0 ) );
-                        mark->addChild( p );
                     }
                     else if ( mark_stay_check( value ) )
                     {
@@ -622,7 +591,6 @@ namespace User
         auto mark = MainMark::create( );
         mark->pasteMap( map, data );
         if ( !stay )mark->setEnabled( false );
-        if( data.read_not )
 
         // 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
         if ( !value[u8"visit"].asBool( ) )
