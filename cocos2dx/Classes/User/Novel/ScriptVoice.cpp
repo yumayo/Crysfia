@@ -1,4 +1,4 @@
-#include "ScriptVoice.h"
+﻿#include "ScriptVoice.h"
 
 #include "../../Lib/AudioManager.h"
 

@@ -1,4 +1,4 @@
-# ifndef __Layer_meal__
+ï»¿# ifndef __Layer_meal__
 # define __Layer_meal__
 
 # include "../LayerBase.h"
@@ -10,36 +10,36 @@ namespace User
     class Layer_meal : public LayerBase
     {
     protected:
-        void confirmButton( );//Œˆ’èƒ{ƒ^ƒ“‚ğ•\¦‚·‚é
-                              //void backButton();//ƒz[ƒ€‚É–ß‚éƒ{ƒ^ƒ“
+        void confirmButton( );//æ±ºå®šãƒœã‚¿ãƒ³ã‚’è¡¨ç¤ºã™ã‚‹
+                              //void backButton();//ãƒ›ãƒ¼ãƒ ã«æˆ»ã‚‹ãƒœã‚¿ãƒ³
 
-        void eatText( );//HŞà–¾—pƒEƒBƒ“ƒhƒE
+        void eatText( );//é£Ÿæèª¬æ˜ç”¨ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 
-        void foodText( std::string commentary, int x, int y, int size);//HŞà–¾
+        void foodText( std::string commentary, int x, int y, int size);//é£Ÿæèª¬æ˜
         void eraseFoodText( );
 
-        //void eatButton(int food_num);//HŞ•`‰æ—p ‰¼ˆø”‚Å•`‰æ‚·‚é‚à‚Ì‚ğ•ÏX
+        //void eatButton(int food_num);//é£Ÿææç”»ç”¨ ä»®å¼•æ•°ã§æç”»ã™ã‚‹ã‚‚ã®ã‚’å¤‰æ›´
 
-        void Menu( );//‘I‘ğ—pƒEƒBƒ“ƒhƒE
+        void Menu( );//é¸æŠç”¨ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
         void selectedItemEvent( Ref *pSender, cocos2d::ui::ListView::EventType type );
 
-        void eatTime( std::string eatTime );//ŠÔ•\¦H
+        void eatTime( std::string eatTime );//æ™‚é–“è¡¨ç¤ºï¼Ÿ
 
-        void character(std::string chara_texture, std::string puppet);//ƒLƒƒƒ‰ƒNƒ^[•`‰æ
+        void character(std::string chara_texture, std::string puppet);//ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼æç”»
 
 		void eraseCharacter();
 
-        void animation( int anime_num );//H–ƒAƒjƒ[ƒVƒ‡ƒ“
+        void animation( int anime_num );//é£Ÿäº‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 
-        void normalButton( int text_number, std::string button_photo, int normalButtonTag );//ƒ{ƒ^ƒ“”Ä—p—p
+        void normalButton( int text_number, std::string button_photo, int normalButtonTag );//ãƒœã‚¿ãƒ³æ±ç”¨ç”¨
 
-        void heart( );//DŠ´“x•\¦(‰¼)
+        void heart( );//å¥½æ„Ÿåº¦è¡¨ç¤º(ä»®)
 
-        void buttonAudio( std::string audio_name, int volume );//Œø‰Ê‰¹“Ç‚İ‚İ—p volume 0.0~1.0
+        void buttonAudio( std::string audio_name, int volume );//åŠ¹æœéŸ³èª­ã¿è¾¼ã¿ç”¨ volume 0.0~1.0
 
-        void mealDressVolume();//‰¹—Ê’²ß—p
+        void mealDressVolume();//éŸ³é‡èª¿ç¯€ç”¨
 
-        void mealTutorial( );//ƒ`ƒ…[ƒgƒŠƒAƒ‹—p?
+        void mealTutorial( );//ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ç”¨?
 
         void eraseMealTutorial( );
 
@@ -47,23 +47,23 @@ namespace User
 
 		void loveMetor();
 
-		void dressAnimetion(int my_dress, int dress_num);//Œ»İ‚ÌƒhƒŒƒX”Ô†A’…‘Ö‚¦‚ÌƒhƒŒƒX”Ô†
+		void dressAnimetion(int my_dress, int dress_num);//ç¾åœ¨ã®ãƒ‰ãƒ¬ã‚¹ç•ªå·ã€ç€æ›¿ãˆã®ãƒ‰ãƒ¬ã‚¹ç•ªå·
 
 		void dressChange();
 
-		void decoration();//‘•ü—p
+		void decoration();//è£…é£¾ç”¨
 
     public:
-        bool exist;//H‚×•¨‰æ‘œ—p
-        bool reside;//Œˆ’è‚Ì—L–³—p
-        int change;//H–‚Æ’…‘Ö‚¦
+        bool exist;//é£Ÿã¹ç‰©ç”»åƒç”¨
+        bool reside;//æ±ºå®šã®æœ‰ç„¡ç”¨
+        int change;//é£Ÿäº‹ã¨ç€æ›¿ãˆ
 		cocos2d::UserDefault * now;
-		int now_dress;//¡‚Ì•
-		int next_dress = 0;//’…‘Ö‚¦‚½Œã‚Ì•
-		int love_degrees = 0;//eˆ¤“xó‚¯“n‚µ—p
+		int now_dress;//ä»Šã®æœ
+		int next_dress = 0;//ç€æ›¿ãˆãŸå¾Œã®æœ
+		int love_degrees = 0;//è¦ªæ„›åº¦å—ã‘æ¸¡ã—ç”¨
         int audio_volume = 1.0f;
-        int animation_num = 0;//ƒAƒjƒ[ƒVƒ‡ƒ“”Ô†
-        cocos2d::Sprite * food;//ƒAƒjƒ[ƒVƒ‡ƒ“—p‰æ‘œ
+        int animation_num = 0;//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·
+        cocos2d::Sprite * food;//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ç”»åƒ
 
         enum situation
         {
@@ -71,78 +71,78 @@ namespace User
             dressClothes,
         };
 
-        //H‚×•¨‰æ‘œ
+        //é£Ÿã¹ç‰©ç”»åƒ
         std::vector<std::string> food_button;
 
-        //H‚×•¨æ“¾—L–³
-        std::vector<bool> food_gain;//false‚Å–¢æ“¾
+        //é£Ÿã¹ç‰©å–å¾—æœ‰ç„¡
+        std::vector<bool> food_gain;//falseã§æœªå–å¾—
 
-        //ˆß‘•‰æ‘œ
+        //è¡£è£…ç”»åƒ
         std::vector<std::string> dress_button;
 
-        //ˆß‘•‚Ì—L–³
-        std::vector<bool> dress_gain;//false‚Å–¢æ“¾
+        //è¡£è£…ã®æœ‰ç„¡
+        std::vector<bool> dress_gain;//falseã§æœªå–å¾—
 
-        //ˆß‘•‰ğà
+        //è¡£è£…è§£èª¬
         std::vector<std::string> dress_commentary
         {
-            u8"ƒƒ“ƒs[ƒX",
-            u8"ƒhƒŒƒX",
-            u8"’…‚®‚é‚İ",
-            u8"C“¹•",
-            u8"ƒZ[ƒ‰[•",
+            u8"ãƒ¯ãƒ³ãƒ”ãƒ¼ã‚¹",
+            u8"ãƒ‰ãƒ¬ã‚¹",
+            u8"ç€ãã‚‹ã¿",
+            u8"ä¿®é“æœ",
+            u8"ã‚»ãƒ¼ãƒ©ãƒ¼æœ",
         };
 
 		std::vector<std::string> dress_text2
 		{
-			u8"lŠp‚¢Œ`‚Ì‚¨»“œB",
-			u8"”’‚­‚Ä¬‚³‚¢‚¨‰ÔB",
-			u8"ŠÃ_‚Á‚Ï‚¢‰Ê•¨B",
-			u8"ƒJƒ‰ƒtƒ‹‚Å‚©‚í‚¢‚¢Œ`‚ğ‚µ‚½‚¨»“œB",
-			u8"ƒNƒŠƒXƒtƒBƒA‚ªH‚×‚ç‚ê‚é“Á•Ê‚ÈH‚×•¨B",
+			u8"å››è§’ã„å½¢ã®ãŠç ‚ç³–ã€‚",
+			u8"ç™½ãã¦å°ã•ã„ãŠèŠ±ã€‚",
+			u8"ç”˜é…¸ã£ã±ã„æœç‰©ã€‚",
+			u8"ã‚«ãƒ©ãƒ•ãƒ«ã§ã‹ã‚ã„ã„å½¢ã‚’ã—ãŸãŠç ‚ç³–ã€‚",
+			u8"ã‚¯ãƒªã‚¹ãƒ•ã‚£ã‚¢ãŒé£Ÿã¹ã‚‰ã‚Œã‚‹ç‰¹åˆ¥ãªé£Ÿã¹ç‰©ã€‚",
 		};
 
 		std::vector<std::string> dress_text3
 		{
-			u8"H‚×•¨‚Æ‚µ‚Ä‚Í­‚µ•¨‘«‚è‚È‚¢‚©‚àB",
-			u8"‚è‚ª‹­‚­‚¢‚¢“õ‚¢‚ª‚·‚éB",
-			u8"ƒWƒƒƒ€‚É‚µ‚Ä‚à‚¨‚¢‚µ‚¢B",
-			u8"‚Æ‚Ä‚à‚©‚í‚¢‚ç‚µ‚¢B",
-			u8"•sv‹c‚ÆŒ³‹C‚ª‚ ‚Ó‚ê‚Ä‚­‚éB",
+			u8"é£Ÿã¹ç‰©ã¨ã—ã¦ã¯å°‘ã—ç‰©è¶³ã‚Šãªã„ã‹ã‚‚ã€‚",
+			u8"é¦™ã‚ŠãŒå¼·ãã„ã„åŒ‚ã„ãŒã™ã‚‹ã€‚",
+			u8"ã‚¸ãƒ£ãƒ ã«ã—ã¦ã‚‚ãŠã„ã—ã„ã€‚",
+			u8"ã¨ã¦ã‚‚ã‹ã‚ã„ã‚‰ã—ã„ã€‚",
+			u8"ä¸æ€è­°ã¨å…ƒæ°—ãŒã‚ãµã‚Œã¦ãã‚‹ã€‚",
 		};
 
-        //H‚×•¨‰ğà
+        //é£Ÿã¹ç‰©è§£èª¬
         std::vector<std::string> food_commentary
         {
-            u8"Šp»“œ",
-            u8"ƒXƒYƒ‰ƒ“",
-            u8"ƒuƒ‹[ƒxƒŠ[",
-            u8"‚±‚ñ‚Ø‚¢‚Æ‚¤",
-            u8"ƒVƒgƒŠƒ“•óÎ",
+            u8"è§’ç ‚ç³–",
+            u8"ã‚¹ã‚ºãƒ©ãƒ³",
+            u8"ãƒ–ãƒ«ãƒ¼ãƒ™ãƒªãƒ¼",
+            u8"ã“ã‚“ãºã„ã¨ã†",
+            u8"ã‚·ãƒˆãƒªãƒ³å®çŸ³",
         };
 
 		std::vector<std::string> food_text2
 		{
-			u8"lŠp‚¢Œ`‚Ì‚¨»“œB",
-			u8"”’‚­‚Ä¬‚³‚¢‚¨‰ÔB",
-			u8"ŠÃ_‚Á‚Ï‚¢‰Ê•¨B",
-			u8"ƒJƒ‰ƒtƒ‹‚Å‚©‚í‚¢‚¢Œ`‚ğ‚µ‚½‚¨»“œB",
-			u8"ƒNƒŠƒXƒtƒBƒA‚ªH‚×‚ç‚ê‚é“Á•Ê‚ÈH‚×•¨B",
+			u8"å››è§’ã„å½¢ã®ãŠç ‚ç³–ã€‚",
+			u8"ç™½ãã¦å°ã•ã„ãŠèŠ±ã€‚",
+			u8"ç”˜é…¸ã£ã±ã„æœç‰©ã€‚",
+			u8"ã‚«ãƒ©ãƒ•ãƒ«ã§ã‹ã‚ã„ã„å½¢ã‚’ã—ãŸãŠç ‚ç³–ã€‚",
+			u8"ã‚¯ãƒªã‚¹ãƒ•ã‚£ã‚¢ãŒé£Ÿã¹ã‚‰ã‚Œã‚‹ç‰¹åˆ¥ãªé£Ÿã¹ç‰©ã€‚",
 		};
 
 		std::vector<std::string> food_text3
 		{
-			u8"H‚×•¨‚Æ‚µ‚Ä‚Í­‚µ•¨‘«‚è‚È‚¢‚©‚àB",
-			u8"‚è‚ª‹­‚­‚¢‚¢“õ‚¢‚ª‚·‚éB",
-			u8"ƒWƒƒƒ€‚É‚µ‚Ä‚à‚¨‚¢‚µ‚¢B",
-			u8"‚Æ‚Ä‚à‚©‚í‚¢‚ç‚µ‚¢B",
-			u8"•sv‹c‚ÆŒ³‹C‚ª‚ ‚Ó‚ê‚Ä‚­‚éB",
+			u8"é£Ÿã¹ç‰©ã¨ã—ã¦ã¯å°‘ã—ç‰©è¶³ã‚Šãªã„ã‹ã‚‚ã€‚",
+			u8"é¦™ã‚ŠãŒå¼·ãã„ã„åŒ‚ã„ãŒã™ã‚‹ã€‚",
+			u8"ã‚¸ãƒ£ãƒ ã«ã—ã¦ã‚‚ãŠã„ã—ã„ã€‚",
+			u8"ã¨ã¦ã‚‚ã‹ã‚ã„ã‚‰ã—ã„ã€‚",
+			u8"ä¸æ€è­°ã¨å…ƒæ°—ãŒã‚ãµã‚Œã¦ãã‚‹ã€‚",
 		};
 
-		//ƒNƒƒG‚¿‚á‚ñƒtƒ@ƒbƒVƒ‡ƒ“ƒVƒ‡[
+		//ã‚¯ãƒ­ã‚¨ã¡ã‚ƒã‚“ãƒ•ã‚¡ãƒƒã‚·ãƒ§ãƒ³ã‚·ãƒ§ãƒ¼
 		std::vector<std::string> fashion_show;
 
-		//’Z”¯ƒNƒƒG
+		//çŸ­é«ªã‚¯ãƒ­ã‚¨
 		std::vector<std::string> clear;
 
         CREATE_ARGS_FUNC( Layer_meal );

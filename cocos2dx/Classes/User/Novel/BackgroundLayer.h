@@ -1,4 +1,4 @@
-# ifndef __BackgroundLayer__
+﻿# ifndef __BackgroundLayer__
 # define __BackgroundLayer__
 
 # include "../LayerBase.h"

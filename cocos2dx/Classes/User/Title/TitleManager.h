@@ -1,4 +1,4 @@
-# ifndef __TitleManager__
+﻿# ifndef __TitleManager__
 # define __TitleManager__
 
 #include "../LayerBase.h"

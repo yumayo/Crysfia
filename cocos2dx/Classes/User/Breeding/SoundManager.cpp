@@ -1,4 +1,4 @@
-#include "SoundManager.h"
+﻿#include "SoundManager.h"
 USING_NS_CC;
 using namespace experimental;
 

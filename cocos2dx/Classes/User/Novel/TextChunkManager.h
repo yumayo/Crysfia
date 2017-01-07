@@ -1,4 +1,4 @@
-# ifndef __TextChunkManager__
+﻿# ifndef __TextChunkManager__
 # define __TextChunkManager__
 
 # include "cocos2d.h"

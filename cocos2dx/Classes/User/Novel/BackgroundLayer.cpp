@@ -1,4 +1,4 @@
-#include "BackgroundLayer.h"
+﻿#include "BackgroundLayer.h"
 
 USING_NS_CC;
 

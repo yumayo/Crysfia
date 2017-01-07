@@ -1,4 +1,4 @@
-# ifndef __StringUtil__
+﻿# ifndef __StringUtil__
 # define __StringUtil__
 
 # include <string>
@@ -44,6 +44,11 @@ namespace User
     inline std::string StringUtil::string_value<std::string>( std::string const & str )
     {
         return str;
+    }
+    template<>
+    inline std::string StringUtil::value_string<std::string>( std::string value )
+    {
+        return value;
     }
     template<>
     inline std::string StringUtil::value_string<bool>( bool value )

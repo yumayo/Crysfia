@@ -1,11 +1,11 @@
-# ifndef __UIManager__
+﻿# ifndef __UIManager__
 # define __UIManager__
 
 # include "cocos2d.h"
 #include "../LayerBase.h"
 #include "BGManager.h"
 #include "ui/CocosGUI.h"
-#include "User/Breeding/VariousStatus.h"
+#include "../Breeding/VariousStatus.h"
 
 namespace User
 {
@@ -27,6 +27,7 @@ namespace User
 		~UIManager();
 	
 	private:
+
 		BGManager* bgManager;
 		cocos2d::ui::ListView*	menuWindow;
 		cocos2d::ui::ListView*	optionWindow;
@@ -47,11 +48,9 @@ namespace User
 		void changeToCreaning();
 		void changeToBreeding(int _menuId);
 		void swapWindow(Node* moveOutObj, Node* moveInObj);
-		void createBackButton();
 
 		void createMainMenuWindow();
 		void createSubMenuWindow();
-		void createDiaryWindow();
 		void setOptionWindow();
 	};
 }

@@ -1,4 +1,4 @@
-# ifndef __ScriptHeart__
+﻿# ifndef __ScriptHeart__
 # define __ScriptHeart__
 
 # include "cocos2d.h"
@@ -9,57 +9,57 @@
 namespace User
 {
     /**
-     *  �e���x�Q�[�W�N���X
-     *  ��Ȏg���� HeartGauge::create()->make()
-     *  ��L�̂悤�ɋL������ƁA��ʍ���ɐݒ肳�ꂽ�m�[�h���Ԃ��Ă��܂��B
-     *  ���̂܂܃��C���[�ɓ\��t���܂��傤�B
+     *  親愛度ゲージクラス
+     *  主な使い方 HeartGauge::create()->make()
+     *  上記のように記入すると、画面左上に設定されたノードが返ってきます。
+     *  そのままレイヤーに貼り付けましょう。
      */
     class HeartGauge : public cocos2d::ui::Layout
     {
     public:
         CREATE_FUNC( HeartGauge );
         /**
-         *  �e���x�Q�[�W���쐬���܂��B
-         *  �\���ʒu�͉�ʂ̍���ł��B
-         *  �A���J�[�|�C���g�͉摜�̍���ł��B
-         *  ���̊֐����Ă񂾂Ƃ��ɁA�e���x�͎����I�Ƀ��[�h���܂��B
+         *  親愛度ゲージを作成します。
+         *  表示位置は画面の左上です。
+         *  アンカーポイントは画像の左上です。
+         *  この関数を呼んだときに、親愛度は自動的にロードします。
          */
         HeartGauge* make( );
     public:
         /**
-         *  ���݂̐e���x��Ԃ��܂��B
+         *  現在の親愛度を返します。
          */
         int getValue( ) { return now; }
 
         /**
-         *  �Q�[�W�̗ʂ𑝂₵�܂��B
-         *  < value >�Ɏ��R��������ƍ쓮���܂��B
-         *  ��b�ԂŌ��݂̐��l����< value >���オ��܂��B
-         *  ���ŃZ�[�u�������I�ɍs���܂��B
+         *  ゲージの量を増やします。
+         *  < value >に自然数を入れると作動します。
+         *  一秒間で現在の数値から< value >分上がります。
+         *  中でセーブも自動的に行われます。
          */
         HeartGauge* up( int value );
 
         /**
-         *  �Q�[�W�̗ʂ𑝂₵�܂��B
-         *  < value >�Ɏ��R��������ƍ쓮���܂��B
-         *  ��b�ԂŌ��݂̐��l����< value >��������܂��B
-         *  ���ŃZ�[�u�������I�ɍs���܂��B
+         *  ゲージの量を増やします。
+         *  < value >に自然数を入れると作動します。
+         *  一秒間で現在の数値から< value >分下がります。
+         *  中でセーブも自動的に行われます。
          */
         HeartGauge* down( int value );
 
         /**
-         *  �X�N���v�g�p�̃A�N�V�������J�n���܂��B
-         *  �����ō폜���s���܂��B
-         *  < str >�ɂ͕�����Ő��l����ł��܂��B
-         *  < str="10" >�̂悤�Ɏg���܂��B
+         *  スクリプト用のアクションを開始します。
+         *  自動で削除を行います。
+         *  < str >には文字列で数値代入できます。
+         *  < str="10" >のように使えます。
          */
         HeartGauge* scriptUpAction( std::string const& str );
 
         /**
-         *  �X�N���v�g�p�̃A�N�V�������J�n���܂��B
-         *  �����ō폜���s���܂��B
-         *  < str >�ɂ͕�����Ő��l����ł��܂��B
-         *  < str="10" >�̂悤�Ɏg���܂��B
+         *  スクリプト用のアクションを開始します。
+         *  自動で削除を行います。
+         *  < str >には文字列で数値代入できます。
+         *  < str="10" >のように使えます。
          */
         HeartGauge* scriptDownAction( std::string const& str );
     private:

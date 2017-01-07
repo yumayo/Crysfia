@@ -1,4 +1,4 @@
-#ifndef __APPMACROS_H__
+﻿#ifndef __APPMACROS_H__
 #define __APPMACROS_H__
 
 #include "cocos2d.h"

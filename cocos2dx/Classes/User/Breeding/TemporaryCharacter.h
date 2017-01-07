@@ -1,9 +1,9 @@
-# ifndef __TemporaryCharacter__
+ï»¿# ifndef __TemporaryCharacter__
 # define __TemporaryCharacter__
 
 # include "cocos2d.h"
 #include "../LayerBase.h"
-//ƒLƒƒƒ‰ƒNƒ^[‰¼’u‚«—pƒŒƒCƒ„[
+//ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ä»®ç½®ãç”¨ãƒ¬ã‚¤ãƒ¤ãƒ¼
 namespace User
 {
     class TemporaryCharacter : public LayerBase

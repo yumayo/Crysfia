@@ -1,7 +1,7 @@
-# ifndef __LayerDiary__
+﻿# ifndef __LayerDiary__
 # define __LayerDiary__
 
-# include "cocos2d.h"
+#include "cocos2d.h"
 #include "../LayerBase.h"
 #include "ui/CocosGUI.h"
 
@@ -14,25 +14,21 @@ namespace User
         ~LayerDiary( );
 
 		bool init()override;
-		void createGameStartButton();
-		void touchEvent(Ref* pSneder, cocos2d::ui::TouchEventType type);
-		void touch_feature();
-		void selectedItemEvent(Ref* pSender, cocos2d::ui::ListView::EventType type);
-		void selectDiary(int num);
+		void selectDiary(std::string _name);
+		void touchEvent(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+		std::vector<cocos2d::ui::Button*> menuButton;
+
+		Node* node;
+		std::vector<cocos2d::Layer*> layers;
 
 		CREATE_FUNC(LayerDiary);
-    private:
 
-		enum MenuType {
-			button_1,
-			button_2,
-			button_3,
-			button_4,
+		int num[15];
+    private:		
+		cocos2d::ui::ListView *listView;
+		std::vector<std::string> name;
+		bool flagDiary;
 
-			MAX
-		};
-
-		std::vector<cocos2d::ui::Button*> menuButtons;
     };
 }
 

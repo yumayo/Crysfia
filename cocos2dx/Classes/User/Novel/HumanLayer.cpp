@@ -1,4 +1,4 @@
-#include "HumanLayer.h"
+﻿#include "HumanLayer.h"
 
 USING_NS_CC;
 

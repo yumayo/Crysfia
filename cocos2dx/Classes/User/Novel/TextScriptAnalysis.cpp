@@ -1,4 +1,4 @@
-#include "TextScriptAnalysis.h"
+﻿#include "TextScriptAnalysis.h"
 
 #include "ScriptStaticData.h"
 #include "ScriptSystem.h"

@@ -1,4 +1,4 @@
-# ifndef __ScriptVoice__
+﻿# ifndef __ScriptVoice__
 # define __ScriptVoice__
 
 # include "cocos2d.h"

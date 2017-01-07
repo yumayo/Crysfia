@@ -1,4 +1,4 @@
-# ifndef __OptionalValues__
+﻿# ifndef __OptionalValues__
 # define __OptionalValues__
 
 # include "cocos2d.h"

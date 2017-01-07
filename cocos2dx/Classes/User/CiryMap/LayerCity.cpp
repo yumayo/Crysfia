@@ -1,4 +1,4 @@
-#include "LayerCity.h"
+﻿#include "LayerCity.h"
 
 #include "../SceneManager.h"
 
@@ -19,6 +19,8 @@
 
 #include "../../Lib/AudioManager.h"
 
+#include "LayerNovelView.h"
+
 USING_NS_CC;
 
 namespace User
@@ -27,149 +29,109 @@ namespace User
     {
         buttonEnd = callback;
     }
-    void LayerCityMark::pasteMap( cocos2d::Sprite * map, ScenarioPointData const & data )
+    void LayerCityMark::pasteMap( CityMap* map, ScenarioPointData const & data )
     {
-        initData( data );
+        initScenarioPointData( data );
 
         auto pixel = map->getTexture( )->getContentSizeInPixels( );
 
-        auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
 
-        map->addChild( this );
+        // マップの方で、ポジションを指定するので用済みになりました。
+        // setPosition( Vec2( position.x, pixel.height - position.y ) * _scale );
 
-        setPosition( Vec2( position.x, pixel.height - position.y ) * scale );
-        setScale( Lib::fitWidth( this, 128 * scale ), Lib::fitWidth( this, 128 * scale ) );
         if ( data.visit ) setEnabled( false );
 
         addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
-                if ( auto parent = getParent( ) )
-                {
-                    auto pixel = map->getTexture( )->getContentSizeInPixels( );
-
-                    auto scale = 1.0 / Director::getInstance( )->getContentScaleFactor( );
-
-                    parent->removeChildByName( u8"ok.button" );
-
-                    auto node = Node::create( );
-                    node->setPosition( Vec2( position.x, pixel.height - position.y ) * scale );
-                    node->setName( u8"ok.button" );
-                    parent->addChild( node );
-
-                    const std::string dir = u8"res/texture/system/";
-                    auto kuroe = Sprite::create( dir + "kuroeicon.png" );
-                    auto kuroePixel = kuroe->getContentSize( ) / scale;
-                    node->addChild( kuroe );
-
-                    auto fitButton = Lib::fitWidth( kuroe, 128 * scale );
-                    node->setScale( fitButton );
-
-                    auto ok = ui::Button::create( dir + u8"ok.png" );
-                    auto okPixel = ok->getContentSize( ) / scale;
-                    node->addChild( ok );
-                    ok->setPosition( Vec2( 0, -kuroePixel.height / 2 - okPixel.height / 2 ) * scale );
-                    ok->addTouchEventListener( [ map, this ] ( Ref* pSender, ui::Widget::TouchEventType type )
-                    {
-                        if ( type == ui::Widget::TouchEventType::ENDED )
-                        {
-                            map->pause( );
-                            if ( buttonEnd ) buttonEnd( );
-                        }
-                    } );
-                }
+                if ( buttonEnd )buttonEnd( );
             }
         } );
     }
 
-    void MainMark::pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data )
+    void MainMark::pasteMap( CityMap* map, ScenarioPointData const& data )
     {
         const std::string dir = u8"res/texture/system/";
 
         loadTextureNormal( dir + "scenario.main.png" );
+        loadTexturePressed( dir + "scenario.main.select.png" );
 
         LayerCityMark::pasteMap( map, data );
+
+        map->paste( this, position.x, position.y );
     }
 
-    void SubMark::pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data )
+    void SubMark::pasteMap( CityMap* map, ScenarioPointData const& data )
     {
         const std::string dir = u8"res/texture/system/";
 
         loadTextureNormal( dir + "scenario.sub.png" );
+        loadTexturePressed( dir + "scenario.sub.select.png" );
 
         LayerCityMark::pasteMap( map, data );
 
-        setScale( getScale( ) * 0.5 );
+        map->paste( this, position.x, position.y );
+
+        // これもマップの方で設定するので用済みです。
+        //setScale( getScale( ) * 0.5F );
     }
 
-    Calendar* Calendar::make( )
+
+    bool Calendar::init( )
     {
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto vs = Director::getInstance( )->getVisibleSize( );
         setPosition( vo + vs );
 
-        const std::string dir = u8"res/texture/system/";
+        const std::string dir = u8"res/texture/days/";
 
-        if ( auto calendar = Sprite::create( dir + "calendar.png" ) )
+        day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+
+        std::string path = dir + u8"calendar(" + StringUtils::toString( day ) + u8").png";
+        if ( auto calendar = Sprite::create( path ) )
         {
             addChild( calendar );
             setContentSize( calendar->getContentSize( ) );
-            calendar->setAnchorPoint( Vec2( 1, 1 ) );
-
-            auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-
-            auto pixel = calendar->getContentSize( ) / scale;
-
-            day = UserDefault::getInstance( )->getIntegerForKey( u8"��" );
-
-            {
-                auto font = Label::createWithTTF( StringUtils::toString( day ),
-                                                  u8"res/fonts/HGRGE.TTC",
-                                                  130 * scale );
-                calendar->addChild( font );
-                font->setAnchorPoint( Vec2( 0.5F, 0 ) );
-                font->setPosition( Vec2( 90, ( pixel.height - 230 ) ) * scale );
-                font->setColor( Color3B( 39, 39, 39 ) );
-            }
-
-            {
-                auto font = Label::createWithTTF( u8"����",
-                                                  u8"res/fonts/HGRGE.TTC",
-                                                  40 * scale );
-                calendar->addChild( font );
-                font->setPosition( Vec2( 203, ( pixel.height - 134 ) ) * scale );
-                font->setColor( Color3B( 39, 39, 39 ) );
-            }
+            calendar->setAnchorPoint( Vec2( 0, 0 ) );
+            setAnchorPoint( Vec2( 1, 1 ) );
         }
-
-        return this;
+        return true;
     }
 
-    CityMap* CityMap::make( std::string const& backgroundfile )
+    bool CityMap::init( int const x, int const y )
     {
-        initWithFile( backgroundfile );
+        honeycomb_size = Size( 95, 80.5 );
+        map_size = Size( 19, 20 );
+        start_position = Vec2( 168, 2048 - 220 );
 
-        auto size = Director::getInstance( )->getVisibleSize( );
-        auto origin = Director::getInstance( )->getVisibleOrigin( );
+        initWithFile( u8"res/texture/system/map.select.png" );
 
-        auto targetSize = size;
-        translate = origin + size / 2;
-        auto backgroundWindowHeightFitScale = targetSize.height / getContentSize( ).height;
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
 
-        setPosition( translate );
-        setScale( backgroundWindowHeightFitScale, backgroundWindowHeightFitScale );
+        translate = vo + vs * 0.5;
+
+        Vec2 const slide = ( y & 1 ) == 0 ? Vec2( ) : Vec2( honeycomb_size.width * 0.5F, 0 );
+
+        Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
+        setPosition( Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
+                     Vec2( -move.x, move.y ) * _scale );
 
         auto listener = EventListenerTouchAllAtOnce::create( );
         listener->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
-
+            removeChildByName( u8"ok.button" );
         };
-        listener->onTouchesMoved = [ this, backgroundWindowHeightFitScale ] ( const std::vector<Touch*>& touches, Event* event )
+        listener->onTouchesMoved = [ this ] ( const std::vector<Touch*>& touches, Event* event )
         {
             auto visibleSize = Director::getInstance( )->getVisibleSize( );
 
-            auto texS_2 = ( getContentSize( ) * backgroundWindowHeightFitScale ) / 2;
+            auto texS_2 = ( getContentSize( ) ) / 2;
             auto winS_2 = visibleSize / 2;
             auto clearance = texS_2 - winS_2;
 
@@ -190,38 +152,77 @@ namespace User
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
 
-        return this;
+        // 実験的な配列のテスト。
+        //for ( int y = 0; y < map_size.height; ++y )
+        //{
+        //    for ( int x = 0; x < map_size.width; ++x )
+        //    {
+        //        auto icon = ui::Button::create( u8"res/texture/system/scenario.sub.png",
+        //                                        u8"res/texture/system/scenario.sub.select.png" );
+        //        paste( icon, x, y );
+        //    }
+        //}
+
+        return true;
     }
 
-    LayerCity::LayerCity( std::string const& island_name )
-        : island_name( island_name )
+    void CityMap::paste( cocos2d::ui::Button * icon, int const x, int const y )
     {
+        Vec2 const slide = ( y & 1 ) == 0 ? Vec2( ) : Vec2( honeycomb_size.width * 0.5F, 0 );
+        auto const scale = Director::getInstance( )->getContentScaleFactor( );
+        auto const _scale = 1.0F / scale;
 
+        icon->setPosition( start_position * _scale + Vec2( x * honeycomb_size.width, -y * honeycomb_size.height ) * _scale + slide * _scale );
+        icon->setScale( Lib::fitHeight( icon, 86 * _scale ) );
+
+    #ifdef _DEBUG // アイコンの上に配列番号を描画します。
+        icon->setTitleFontName( u8"res/fonts/HGRGE.TTC" );
+        icon->setTitleFontSize( 35 * _scale );
+        icon->setTitleText( StringUtils::format( u8"[%d, %d]", x, y ) );
+    #endif
+
+        addChild( icon );
     }
+
+    void CityMap::paste( MainMark * icon, int const x, int const y )
+    {
+        paste( static_cast<cocos2d::ui::Button*>( icon ), x, y );
+    }
+
+    void CityMap::paste( SubMark * icon, int const x, int const y )
+    {
+        paste( static_cast<cocos2d::ui::Button*>( icon ), x, y );
+        icon->setScale( icon->getScale( ) * 0.75 );
+    }
+
     LayerCity::~LayerCity( )
     {
+        AudioManager::getInstance( )->stopBgm( 1.5F );
     }
     bool LayerCity::init( )
     {
         if ( !Layer::init( ) ) return false;
 
-        using namespace Lib;
-
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
 
-        AudioManager::getInstance( )->playBgm( "city", 1.5f );
+        scheduleOnce( [ this ] ( float delay )
+        {
+            AudioManager::getInstance( )->playBgm( "city", 1.5f );
+        }, 0.0F, u8"bgm_delay" );
+
+        setIslandName( );
 
         jsonRead( );
 
         /**
-         *  ��ʏ㕔�̃��j���[
+         *  画面上部のメニュー
          */
         {
             auto board = Sprite::create( u8"res/texture/system/board.png" );
             auto boardPixel = board->getContentSize( ) / scale;
-            auto boardScale = fitWidth( board, vs.width );
+            auto boardScale = Lib::fitWidth( board, vs.width );
             board->setScale( boardScale, boardScale );
             board->setAnchorPoint( Vec2( 0, 1 ) );
             board->setPosition( Vec2( vo + Vec2( 0, vs.height ) ) );
@@ -229,31 +230,43 @@ namespace User
 
             auto width = boardPixel.width - 10 * 2;
             auto height = boardPixel.height - 10 * 2;
-            auto calendar = Calendar::create( )->make( );
+            auto calendar = Calendar::create( );
             if ( calendar )
             {
                 board->addChild( calendar );
-                calendar->setScale( fitHeight( calendar, height * scale ), fitHeight( calendar, height * scale ) );
+                calendar->setScale( Lib::fitHeight( calendar, height * scale ) );
                 calendar->setPosition( Vec2( boardPixel ) * scale + Vec2( -10, -10 ) * scale );
+            }
+
+            std::string time_path = u8"res/texture/system/time." + StringUtils::toString( UserDefault::getInstance( )->getIntegerForKey( u8"時刻" ) ) + u8".png";
+            auto time = Sprite::create( time_path );
+            if ( time )
+            {
+                board->addChild( time );
+                time->setAnchorPoint( Vec2( 1, 1 ) );
+                time->setScale( Lib::fitHeight( calendar, height * scale ) );
+                time->setPosition( Vec2( boardPixel ) * scale + Vec2( -10, -10 ) * scale + Vec2( -calendar->getContentSize( ).width * calendar->getScale( ), 0 ) );
             }
 
             auto heart = HeartGauge::create( )->make( );
             if ( heart )
             {
                 heart->setAnchorPoint( Vec2( 0, 0.5 ) );
-                heart->setScale( fitWidth( heart, board->getContentSize( ).width - calendar->getContentSize( ).width ) );
+                heart->setScale( Lib::fitWidth( heart, ( board->getContentSize( ).width -
+                                                         calendar->getContentSize( ).width * calendar->getScale( ) - 20/*下のずらしている分の10と、間に10pixel開けるためです。*/ * scale -
+                                                         time->getContentSize( ).width * time->getScale( ) - 20 * scale ) ) );
                 heart->setPosition( Vec2( 0, boardPixel.height * 0.5 ) * scale + Vec2( 10, 0 ) * scale );
                 board->addChild( heart );
             }
         }
 
         /**
-         *  ��ʉ����̃��j���[
+         *  画面下部のメニュー
          */
         {
             auto board = Sprite::create( u8"res/texture/system/board.png" );
             auto boardPixel = board->getContentSize( ) / scale;
-            auto boardScale = fitWidth( board, vs.width );
+            auto boardScale = Lib::fitWidth( board, vs.width );
             board->setScale( boardScale, boardScale );
             board->setAnchorPoint( Vec2( 0, 0 ) );
             board->setPosition( vo );
@@ -263,24 +276,28 @@ namespace User
             if ( auto button = createBackButton( ) )
             {
                 board->addChild( button );
-                button->setScale( fitHeight( button, height * scale ), fitHeight( button, height * scale ) );
+                button->setScale( Lib::fitHeight( button, height * scale ) );
                 button->setPosition( Vec2( 10, 10 ) * scale );
             }
 
-            if ( auto button = createOptionButton( ) )
+            if ( auto button = createTimeNextButton( ) )
             {
-                board->addChild( button );
-                button->setScale( fitHeight( button, height * scale ), fitHeight( button, height * scale ) );
-                button->setPosition( Vec2( boardPixel.width - 10, 10 ) * scale );
+                addChild( button );
+                button->setPosition( Vec2( board->getContentSize( ).width * board->getScale( ), board->getContentSize( ).height * board->getScale( ) ) );
             }
 
-            if ( auto label = createLabel( island_name ) )
+            if ( auto label = createLabel( UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" ) ) )
             {
-                board->addChild( label );
-                label->setPosition( Vec2( 0, board->getContentSize( ).height ) );
+                addChild( label );
+                label->setPosition( Vec2( 0, board->getContentSize( ).height * board->getScale( ) ) );
             }
         }
 
+        return true;
+    }
+    void LayerCity::setup( )
+    {
+        // フェードイン
         if ( auto sprite = Sprite::create( ) )
         {
             sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
@@ -290,125 +307,174 @@ namespace User
             sprite->runAction( Sequence::create( FadeOut::create( 1.0F ), RemoveSelf::create( ), nullptr ) );
             addChild( sprite );
         }
-
-        return true;
-    }
-    void LayerCity::setup( )
-    {
-
     }
     void LayerCity::jsonRead( )
     {
-        save_name = u8"island.json";
+        save_name = u8"autosave.json";
 
-        removeChildByName( u8"background" );
+        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
 
         Json::Reader reader;
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
         {
             /**
-             * �����C�x���g��ǂݍ��݂܂��B
+             * 貼り付けるための背景を作成します。
              */
-            for ( auto& value : root[island_name][u8"point.force"] )
+            auto& position = root[UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" )][u8"position"];
+            int x = 0, y = 0;
+            switch ( position.size( ) )
             {
-                auto scenario = value[u8"scenario"].asString( );
-                auto visit = value[u8"visit"].asBool( );
+            case 2:
+                x = position[0].asInt( );
+                y = position[1].asInt( );
+                break;
+            default:
+                break;
+            }
+            auto background = CityMap::create( x, y );
+            addChild( background );
+
+            for ( auto& island : root )
+            {
+                /**
+                * 強制イベントを読み込みます。
+                */
+                for ( auto& value : island[u8"point.force"] )
+                {
+                    auto visit = value[u8"visit"].asBool( );
+                    /**
+                    * 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
+                    */
+                    if ( !visit )
+                    {
+                        bool action = true;
+
+                        ScenarioPointData data;
+                        data.event = ScenarioPointData::Event::force;
+                        data.initScenarioPointData( value );
+
+                        auto mark = MainMark::create( );
+                        mark->pasteMap( background, data );
+
+                        if ( data.day_begin <= now_day &&
+                             now_day <= data.day_end )
+                            ;
+                        else action = false;
+
+                        if ( data.time_begin <= now_time &&
+                             now_time <= data.time_end )
+                            ;
+                        else action = false;
+
+                        if ( action )
+                        {
+                            scheduleOnce( [ this, &value, data ] ( float delay )
+                            {
+                                value[u8"visit"] = true;
+                                Json::StyledWriter writer;
+                                auto saveString = writer.write( root );
+                                auto savePath = save_name;
+                                Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
+                                {
+                                    writeUserLocal( saveString, savePath );
+                                } ) );
+                            }, 0.0F, u8"force_event" );
+                        }
+                        else
+                        {
+                            mark->setEnabled( false );
+                        }
+                    }
+                }
 
                 /**
-                 * �����C�x���g�̒��ŁA���ǂ̂��̂��������玟�̃t���[���ŁA�����I�Ƀm�x���̃V�[���ɔ�΂��܂��B
-                 */
-                if ( !visit )
+                * メインシナリオを読み込んで貼り付けていきます。
+                */
+                for ( auto& value : island[u8"point.main"] )
                 {
-                    value[u8"visit"] = true;
-                    Json::StyledWriter writer;
-                    writeUserLocal( writer.write( root ), save_name );
-                    scheduleOnce( [ = ] ( float d ) { SceneManager::createNovel( scenario ); }, 0.016F, std::string( u8"scene" ) );
-                    return;
+                    ScenarioPointData data;
+                    data.event = ScenarioPointData::Event::main;
+                    data.initScenarioPointData( value );
+
+                    auto mark = MainMark::create( );
+                    mark->pasteMap( background, data );
+
+                    if ( data.day_begin <= now_day &&
+                         now_day <= data.day_end )
+                        ;
+                    else mark->setEnabled( false );
+
+                    if ( data.time_begin <= now_time &&
+                         now_time <= data.time_end )
+                        ;
+                    else  mark->setEnabled( false );
+
+                    mark->setButtonEndCallBack( [ this, &value, data ]
+                    {
+                        value[u8"visit"] = true;
+                        Json::StyledWriter writer;
+                        auto saveString = writer.write( root );
+                        auto savePath = save_name;
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
+                        {
+                            writeUserLocal( saveString, savePath );
+                        } ) );
+                    } );
                 }
-            }
 
-            /**
-             * �\��t���邽�߂̔w�i���쐬���܂��B
-             */
-            auto map = root[island_name][u8"background"].asString( );
-            auto background = CityMap::create( )->make( map );
-            background->setName( u8"background" );
-            addChild( background, -1 );
-
-            /**
-             * ���C���V�i���I��ǂݍ���œ\��t���Ă����܂��B
-             */
-            for ( auto& value : root[island_name][u8"point.main"] )
-            {
-                ScenarioPointData data;
-                data.scenario = value[u8"scenario"].asString( );
-                data.visit = value[u8"visit"].asBool( );
-                data.position = Vec2( value[u8"position"][0].asInt( ),
-                                      value[u8"position"][1].asInt( ) );
-
-                auto mark = MainMark::create( );
-                mark->pasteMap( background, data );
-
-                mark->setButtonEndCallBack( [ this, &value ]
+                /**
+                * サブシナリオを読み込んで貼り付けていきます。
+                */
+                for ( auto& value : island[u8"point.sub"] )
                 {
-                    if ( auto sprite = Sprite::create( ) )
+                    ScenarioPointData data;
+                    data.event = ScenarioPointData::Event::sub;
+                    data.initScenarioPointData( value );
+
+                    auto mark = SubMark::create( );
+                    mark->pasteMap( background, data );
+
+                    if ( data.day_begin <= now_day &&
+                         now_day <= data.day_end )
+                        ;
+                    else mark->setEnabled( false );
+
+                    if ( data.time_begin <= now_time &&
+                         now_time <= data.time_end )
+                        ;
+                    else  mark->setEnabled( false );
+
+                    mark->setButtonEndCallBack( [ this, &value, data ]
                     {
-                        sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
-                        sprite->setAnchorPoint( Vec2( 0, 0 ) );
-                        sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
-                        sprite->setOpacity( 0 );
-                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ this, &value ] 
+                        value[u8"visit"] = true;
+                        Json::StyledWriter writer;
+                        auto saveString = writer.write( root );
+                        auto savePath = save_name;
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
                         {
-                            value[u8"visit"] = true;
-                            Json::StyledWriter writer;
-                            writeUserLocal( writer.write( root ), save_name );
-                            SceneManager::createNovel( value[u8"scenario"].asString( ) ); 
-                        } ), RemoveSelf::create( ), nullptr ) );
-                        addChild( sprite );
-                    }
-                } );
-            }
-
-            /**
-             * �T�u�V�i���I��ǂݍ���œ\��t���Ă����܂��B
-             */
-            for ( auto& value : root[island_name][u8"point.sub"] )
-            {
-                ScenarioPointData data;
-                data.scenario = value[u8"scenario"].asString( );
-                data.visit = value[u8"visit"].asBool( );
-                data.position = Vec2( value[u8"position"][0].asInt( ),
-                                      value[u8"position"][1].asInt( ) );
-
-                auto mark = SubMark::create( );
-                mark->pasteMap( background, data );
-
-                mark->setButtonEndCallBack( [ this, &value ]
-                {
-                    if ( auto sprite = Sprite::create( ) )
-                    {
-                        sprite->setTextureRect( Rect( Vec2( 0, 0 ), Director::getInstance( )->getVisibleSize( ) ) );
-                        sprite->setAnchorPoint( Vec2( 0, 0 ) );
-                        sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
-                        sprite->setOpacity( 0 );
-                        sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ this, &value ]
-                        {
-                            value[u8"visit"] = true;
-                            Json::StyledWriter writer;
-                            writeUserLocal( writer.write( root ), save_name );
-                            SceneManager::createNovel( value[u8"scenario"].asString( ) );
-                        } ), RemoveSelf::create( ), nullptr ) );
-                        addChild( sprite );
-                    }
-                } );
+                            writeUserLocal( saveString, savePath );
+                        } ) );
+                    } );
+                }
             }
         }
     }
+    void LayerCity::time_next( )
+    {
+        removeAllChildrenWithCleanup( true );
+        init( );
+    }
     cocos2d::Label * LayerCity::createLabel( std::string const& title )
     {
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
+
         auto font = Label::createWithTTF( title,
                                           u8"res/fonts/HGRGE.TTC",
                                           64 );
+
+        font->setScale( Lib::fitHeight( font, 64 * scale ) );
         font->setAnchorPoint( Vec2( 0.5F, 0 ) );
         font->setAnchorPoint( Vec2( 0, 0 ) );
         font->setTextColor( Color4B( 39, 39, 39, 255 ) );
@@ -418,7 +484,8 @@ namespace User
     {
         auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
 
-        auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
+        auto button = ui::Button::create( u8"res/texture/system/backbutton.png",
+                                          u8"res/texture/system/backbutton.select.png" );
 
         button->setScale( Lib::fitWidth( button, 128 * scale ), Lib::fitWidth( button, 128 * scale ) );
         button->setAnchorPoint( Vec2( 0, 0 ) );
@@ -450,5 +517,69 @@ namespace User
             }
         } );
         return button;
+    }
+    cocos2d::ui::Button * LayerCity::createTimeNextButton( )
+    {
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
+
+        auto button = ui::Button::create( u8"res/texture/system/timer.png",
+                                          u8"res/texture/system/timer.select.png" );
+
+        button->setScale( Lib::fitHeight( button, 128 * scale ) );
+        button->setAnchorPoint( Vec2( 1, 0 ) );
+        button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
+        {
+            if ( type != ui::Widget::TouchEventType::ENDED ) return;
+
+            // 次に、時間を一段階進めます。
+            // 朝→夕→夜
+            auto time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
+            if ( 3 <= ( time + 1 ) ) // 繰り上がったら
+            {
+                auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+                UserDefault::getInstance( )->setIntegerForKey( u8"日", day + 1 );
+            }
+            time = ( time + 1 ) % 3;
+            UserDefault::getInstance( )->setIntegerForKey( u8"時刻", time );
+
+            time_next( );
+        } );
+        return button;
+    }
+    void LayerCity::setIslandName( )
+    {
+        std::vector<int> days =
+        {
+            0, 8, 4, 1
+        };
+
+        auto sum = [ & ] ( int end )
+        {
+            int a = 0;
+            for ( int i = 0; i <= end; ++i )
+            {
+                a += days[i];
+            }
+            return a;
+        };
+
+        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        if ( day <= sum( 0 ) )
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"無名の島" );
+        }
+        else if ( day <= sum( 1 ) ) // 8 <= 8 ok 9 <= 8 no
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"ラシャス島" );
+        }
+        else if ( day <= sum( 2 ) )
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"ヒャルキシ島" );
+        }
+        else if ( day <= sum( 3 ) )
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"アイクラ島" );
+        }
     }
 }

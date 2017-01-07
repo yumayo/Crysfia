@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  *
  *  You can modify and use this source freely
  *  only for the development of application related Live2D.
@@ -19,8 +19,8 @@
 
 #include <vector>
 
-// ‚·‚×‚Ä‚ği‚éƒNƒ‰ƒX‚Å‚·B
-// ‚±‚ÌƒNƒ‰ƒX‚ªaddChild‚³‚ê‚é‚Æƒ}ƒl[ƒWƒƒ[‚È‚Ç‚ªˆêÄ‚É“®‚«o‚µ‚Ü‚·B
+// ã™ã¹ã¦ã‚’å¸ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
+// ã“ã®ã‚¯ãƒ©ã‚¹ãŒaddChildã•ã‚Œã‚‹ã¨ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ãªã©ãŒä¸€æ–‰ã«å‹•ãå‡ºã—ã¾ã™ã€‚
 class LAppView :public cocos2d::DrawNode
 {    
 public:

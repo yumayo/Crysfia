@@ -1,4 +1,4 @@
-#include "TemporaryCharacter.h"
+﻿#include "TemporaryCharacter.h"
 
 USING_NS_CC;
 
@@ -7,7 +7,7 @@ namespace User
     TemporaryCharacter::TemporaryCharacter( ):
 		winSize(Director::getInstance()->getVisibleSize()),
 		character(Sprite::create("res/texture/home/fia.png")),
-		bottle(Sprite::create("res/Texture/home/bottle_1.png"))
+		bottle(Sprite::create("res/texture/home/bottle_1.png"))
     {
 		character->setPosition(winSize / 2);
 		character->setScale(0.3f);

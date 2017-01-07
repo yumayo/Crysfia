@@ -1,4 +1,4 @@
-# ifndef __SaveLayer__
+﻿# ifndef __SaveLayer__
 # define __SaveLayer__
 
 # include "../LayerBase.h"

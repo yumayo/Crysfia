@@ -1,4 +1,4 @@
-# ifndef __BGManager__
+﻿# ifndef __BGManager__
 # define __BGManager__
 # include "cocos2d.h"
 #include "VariousStatus.h"

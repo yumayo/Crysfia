@@ -1,4 +1,4 @@
-# ifndef __LayerCity__
+ï»¿# ifndef __LayerCity__
 # define __LayerCity__
 
 # include "../LayerBase.h"
@@ -11,52 +11,107 @@ namespace User
 {
     struct ScenarioPointData
     {
-        /**
-         *  ƒf[ƒ^‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·B
-         *  \‘¢‚É•K—v‚Èƒf[ƒ^‚ğˆê‚Âˆê‚Â‹l‚ß‚Ü‚·B
-         */
-        void initData( bool visit, cocos2d::Vec2 const& position, std::string const& scenario )
+        void initScenarioPointData( Json::Value const& root )
         {
-            this->visit = visit;
-            this->position = position;
-            this->scenario = scenario;
+            scenario = root[u8"scenario"].asString( );
+            visit = root[u8"visit"].asBool( );
+            position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
+                                      root[u8"position"][1].asInt( ) );
+            title = root[u8"title"].asString( );
+
+            auto& day = root[u8"day"];
+            switch ( day.size( ) )
+            {
+            case 1:
+                day_begin = day[0].asInt( );
+                day_end = day[0].asInt( );
+                break;
+            case 2:
+                day_begin = day[0].asInt( );
+                day_end = day[1].asInt( );
+                break;
+            default:
+                break;
+            }
+
+            auto& time = root[u8"time"];
+            switch ( time.size( ) )
+            {
+            case 1:
+                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
+                time_end = ( ScenarioPointData::Times )time[0].asInt( );
+                break;
+            case 2:
+                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
+                time_end = ( ScenarioPointData::Times )time[1].asInt( );
+                break;
+            default:
+                break;
+            }
+        }
+
+        void initScenarioPointData( ScenarioPointData const& data )
+        {
+            *this = data;
         }
 
         /**
-         *  ƒf[ƒ^‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·B
-         *  ƒRƒs[‚ğæ‚Á‚Ä‚»‚Ì‚Ü‚Ü‘ã“ü‚µ‚Ü‚·B
+         * ã©ã†ã„ã†ã‚¤ãƒ™ãƒ³ãƒˆãªã®ã‹
          */
-        void initData( ScenarioPointData const& scenario ) { *this = scenario; }
+        enum Event
+        {
+            none,
+            force,
+            main,
+            sub
+        };
+        Event event = none;
 
         /**
-         *  ‚·‚Å‚É“Ç‚ñ‚¾ƒVƒiƒŠƒI‚È‚Ì‚©‚Ç‚¤‚©B
-         *  @true   “Ç‚ñ‚Å‚¢‚½‚ç
-         *  @false  –¢“Ç‚È‚ç
+         *  ã™ã§ã«èª­ã‚“ã ã‚·ãƒŠãƒªã‚ªãªã®ã‹ã©ã†ã‹ã€‚
+         *  @true   èª­ã‚“ã§ã„ãŸã‚‰
+         *  @false  æœªèª­ãªã‚‰
          */
-        bool visit;
+        bool visit = false;
+
+        int day_begin = -1;
+
+        int day_end = -1;
+
+        enum Times
+        {
+            morning,
+            daytime,
+            night
+        };
+        Times time_begin = Times::morning;
+
+        Times time_end = Times::night;
 
         /**
-         *  ƒ}ƒbƒv‰æ‘œ’†‚Ì•\¦ˆÊ’uB
+         *  ãƒãƒƒãƒ—ç”»åƒä¸­ã®è¡¨ç¤ºä½ç½®ã€‚
          */
         cocos2d::Vec2 position;
 
         /**
-         *  “Ç‚İ‚ŞƒVƒiƒŠƒIƒtƒ@ƒCƒ‹‚ÌƒpƒXB
+         *  èª­ã¿è¾¼ã‚€ã‚·ãƒŠãƒªã‚ªãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã€‚
          */
         std::string scenario;
 
         /**
-         *  ‚±‚Ìƒmƒxƒ‹‚Ìƒ^ƒCƒgƒ‹B
+         *  ã“ã®ãƒãƒ™ãƒ«ã®ã‚¿ã‚¤ãƒˆãƒ«ã€‚
          */
         std::string title;
     };
+
+    class CityMap;
 
     class LayerCityMark : protected ScenarioPointData, public cocos2d::ui::Button
     {
     public:
         void setButtonEndCallBack( std::function<void( )>const& callback );
     protected:
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
         std::function<void( )> buttonEnd;
     };
 
@@ -64,24 +119,24 @@ namespace User
     {
     public:
         CREATE_FUNC( MainMark );
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
     };
 
     class SubMark : public LayerCityMark
     {
     public:
         CREATE_FUNC( SubMark );
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
     };
 
     class Calendar : public cocos2d::ui::Layout
     {
     public:
         CREATE_FUNC( Calendar );
-        Calendar* make( );
+        bool init( );
     private:
         /**
-         *  ƒJƒŒƒ“ƒ_[‚É•\¦‚·‚é“ú‚É‚¿B
+         *  ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã«è¡¨ç¤ºã™ã‚‹æ—¥ã«ã¡ã€‚
          */
         int day;
     };
@@ -89,11 +144,14 @@ namespace User
     class CityMap : public cocos2d::Sprite
     {
     public:
-        CREATE_FUNC( CityMap );
-        CityMap* make( std::string const& backgroundfile );
+        CREATE_ARGS_INIT_FUNC( CityMap );
+        bool init( int const x, int const y );
+        void paste( cocos2d::ui::Button* icon, int const x, int const y );
+        void paste( MainMark* icon, int const x, int const y );
+        void paste( SubMark* icon, int const x, int const y );
     private:
         /**
-         *  ¡‚ÌŠÔB
+         *  ä»Šã®æ™‚é–“ã€‚
          */
         enum Times
         {
@@ -104,36 +162,36 @@ namespace User
         Times times;
 
         /**
-         *  ƒ}ƒbƒv‚ğ‰¡‚ÉƒXƒ‰ƒCƒh‚·‚é‚Æ‚«‚Ég‚¢‚Ü‚·B
+         *  ãƒãƒƒãƒ—ã‚’æ¨ªã«ã‚¹ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã¨ãã«ä½¿ã„ã¾ã™ã€‚
          */
         cocos2d::Vec2 translate;
+
+        cocos2d::Size honeycomb_size;
+        cocos2d::Vec2 start_position;
+        cocos2d::Size map_size;
     };
 
     class LayerCity : public LayerBase
     {
     public:
-        CREATE_ARGS_FUNC( LayerCity );
-        LayerCity( std::string const& name );
+        CREATE_ARGS_INIT_FUNC( LayerCity );
         ~LayerCity( );
         bool init( ) override;
         void setup( ) override;
         void jsonRead( );
-        cocos2d::Label* createLabel(  std::string const& title);
+        void time_next( );
+        cocos2d::Label* createLabel( std::string const& title );
         cocos2d::ui::Button* createBackButton( );
         cocos2d::ui::Button* createOptionButton( );
+        cocos2d::ui::Button* createTimeNextButton( );
     private:
         /**
-         *  ƒZ[ƒuƒf[ƒ^‚Ì–¼‘O‚ğ•Û‘¶‚µ‚Ü‚·B
+         *  ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã®åå‰ã‚’ä¿å­˜ã—ã¾ã™ã€‚
          */
         std::string save_name;
 
         /**
-         *  ‚±‚Ì“‡‚Ì–¼‘O‚ğ•Û‘¶‚µ‚Ü‚·B
-         */
-        std::string island_name;
-
-        /**
-         * Ÿ‚Ìs“®–Ú“I‚ğ•\¦‚·‚é‚½‚ß‚Ìƒf[ƒ^B
+         * æ¬¡ã®è¡Œå‹•ç›®çš„ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚ã®ãƒ‡ãƒ¼ã‚¿ã€‚
          */
         std::map<std::string, cocos2d::Data> data;
 
@@ -141,6 +199,8 @@ namespace User
          *
          */
         Json::Value root;
+
+        void setIslandName( );
     };
 }
 

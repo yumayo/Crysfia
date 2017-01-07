@@ -1,4 +1,4 @@
-#include "ScriptBase.h"
+﻿#include "ScriptBase.h"
 
 USING_NS_CC;
 

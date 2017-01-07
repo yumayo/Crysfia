@@ -1,4 +1,4 @@
-# ifndef __ModalLayer__
+﻿# ifndef __ModalLayer__
 # define __ModalLayer__
 
 # include "cocos2d.h"
