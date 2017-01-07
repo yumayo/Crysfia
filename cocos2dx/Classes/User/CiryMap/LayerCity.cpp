@@ -195,6 +195,20 @@ namespace User
         icon->setScale( icon->getScale( ) * 0.75 );
     }
 
+    cocos2d::MoveTo * CityMap::move_action( int const x, int const y )
+    {
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
+        Vec2 const slide = ( y & 1 ) == 0 ? Vec2( ) : Vec2( honeycomb_size.width * 0.5F, 0 );
+
+        Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
+        Vec2 pos = Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
+            Vec2( -move.x, move.y ) * _scale;
+        return  MoveTo::create( 0.3F, pos );
+    }
+
     LayerCity::~LayerCity( )
     {
         AudioManager::getInstance( )->stopBgm( 1.5F );
@@ -311,10 +325,6 @@ namespace User
     void LayerCity::jsonRead( )
     {
         save_name = u8"autosave.json";
-
-        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
-        int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
-
         Json::Reader reader;
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
         {
@@ -332,136 +342,107 @@ namespace User
             default:
                 break;
             }
-            auto background = CityMap::create( x, y );
-            addChild( background );
-
+            auto map = CityMap::create( x, y );
+            addChild( map );
             for ( auto& island : root )
             {
-                /**
-                * 強制イベントを読み込みます。
-                */
+                // 強制イベントを読み込みます。
                 for ( auto& value : island[u8"point.force"] )
                 {
-                    auto visit = value[u8"visit"].asBool( );
-                    /**
-                    * 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
-                    */
-                    if ( !visit )
+                    // スポーンしていたのに、読むことのできなかった場合、
+                    // それらは、アニメーションさせて登場させます。
+                    if ( mark_spawned_not_read_check( value ) )
                     {
-                        bool action = true;
-
-                        ScenarioPointData data;
-                        data.event = ScenarioPointData::Event::force;
-                        data.initScenarioPointData( value );
-
-                        auto mark = MainMark::create( );
-                        mark->pasteMap( background, data );
-
-                        if ( data.day_begin <= now_day &&
-                             now_day <= data.day_end )
-                            ;
-                        else action = false;
-
-                        if ( data.time_begin <= now_time &&
-                             now_time <= data.time_end )
-                            ;
-                        else action = false;
-
-                        if ( action )
-                        {
-                            scheduleOnce( [ this, &value, data ] ( float delay )
-                            {
-                                value[u8"visit"] = true;
-                                Json::StyledWriter writer;
-                                auto saveString = writer.write( root );
-                                auto savePath = save_name;
-                                Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
-                                {
-                                    writeUserLocal( saveString, savePath );
-                                } ) );
-                            }, 0.0F, u8"force_event" );
-                        }
-                        else
-                        {
-                            mark->setEnabled( false );
-                        }
+                        mark_ptr_stack.push( [ this, &value, map ] ( ) {
+                            value[u8"read_not"] = true; return set_force_mark( value, map ); } );
+                        stack_mark_ptr_pos( value );
+                    }
+                    // スポーンしたことあるものは貼り付けます。
+                    // アニメーションはなしです。
+                    else if ( mark_spawned_check( value ) )
+                    {
+                        auto mark = set_force_mark( value, map );
+                        auto p = Sprite::create( u8"res/texture/system/read.png" );
+                        p->setAnchorPoint( Vec2( 0, 0 ) );
+                        mark->addChild( p );
+                    }
+                    // スポーンしたことのないものの中で、
+                    // 滞在期間中のもの。
+                    // 要するに新規に読めるシナリオ。
+                    // それらは、アニメーションさせて登場させます。
+                    else if ( mark_stay_check( value ) )
+                    {
+                        mark_stack.push( [ this, &value, map ] ( ) {
+                            value[u8"spawn"] = true; set_force_mark( value, map ); } );
+                        stack_mark_pos( value );
                     }
                 }
-
-                /**
-                * メインシナリオを読み込んで貼り付けていきます。
-                */
+                // メインシナリオを読み込んで貼り付けていきます。
                 for ( auto& value : island[u8"point.main"] )
                 {
-                    ScenarioPointData data;
-                    data.event = ScenarioPointData::Event::main;
-                    data.initScenarioPointData( value );
-
-                    auto mark = MainMark::create( );
-                    mark->pasteMap( background, data );
-
-                    if ( data.day_begin <= now_day &&
-                         now_day <= data.day_end )
-                        ;
-                    else mark->setEnabled( false );
-
-                    if ( data.time_begin <= now_time &&
-                         now_time <= data.time_end )
-                        ;
-                    else  mark->setEnabled( false );
-
-                    mark->setButtonEndCallBack( [ this, &value, data ]
+                    if ( mark_spawned_not_read_check( value ) )
                     {
-                        value[u8"visit"] = true;
-                        Json::StyledWriter writer;
-                        auto saveString = writer.write( root );
-                        auto savePath = save_name;
-                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
-                        {
-                            writeUserLocal( saveString, savePath );
-                        } ) );
-                    } );
+                        mark_ptr_stack.push( [ this, &value, map ] ( ) {
+                            value[u8"read_not"] = true; return set_main_mark( value, map ); } );
+                        stack_mark_ptr_pos( value );
+                    }
+                    else if ( mark_spawned_check( value ) )
+                    {
+                        auto mark = set_main_mark( value, map );
+                        auto p = Sprite::create( u8"res/texture/system/read.png" );
+                        p->setAnchorPoint( Vec2( 0, 0 ) );
+                        mark->addChild( p );
+                    }
+                    else if ( mark_stay_check( value ) )
+                    {
+                        mark_stack.push( [ this, &value, map ] ( ) {
+                            value[u8"spawn"] = true; set_main_mark( value, map ); } );
+                        stack_mark_pos( value );
+                    }
                 }
-
-                /**
-                * サブシナリオを読み込んで貼り付けていきます。
-                */
+                // サブシナリオを読み込んで貼り付けていきます。
                 for ( auto& value : island[u8"point.sub"] )
                 {
-                    ScenarioPointData data;
-                    data.event = ScenarioPointData::Event::sub;
-                    data.initScenarioPointData( value );
-
-                    auto mark = SubMark::create( );
-                    mark->pasteMap( background, data );
-
-                    if ( data.day_begin <= now_day &&
-                         now_day <= data.day_end )
-                        ;
-                    else mark->setEnabled( false );
-
-                    if ( data.time_begin <= now_time &&
-                         now_time <= data.time_end )
-                        ;
-                    else  mark->setEnabled( false );
-
-                    mark->setButtonEndCallBack( [ this, &value, data ]
+                    if ( mark_spawned_not_read_check( value ) )
                     {
-                        value[u8"visit"] = true;
-                        Json::StyledWriter writer;
-                        auto saveString = writer.write( root );
-                        auto savePath = save_name;
-                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
-                        {
-                            writeUserLocal( saveString, savePath );
-                        } ) );
-                    } );
+                        mark_ptr_stack.push( [ this, &value, map ] ( ) {
+                            value[u8"read_not"] = true; return set_sub_mark( value, map ); } );
+                        stack_mark_ptr_pos( value );
+                    }
+                    else if ( mark_spawned_check( value ) )
+                    {
+                        auto mark = set_sub_mark( value, map );
+                        auto p = Sprite::create( u8"res/texture/system/read.png" );
+                        p->setAnchorPoint( Vec2( 0, 0 ) );
+                        mark->addChild( p );
+                    }
+                    else if ( mark_stay_check( value ) )
+                    {
+                        mark_stack.push( [ this, &value, map ] ( ) {
+                            value[u8"spawn"] = true; set_sub_mark( value, map ); } );
+                        stack_mark_pos( value );
+                    }
                 }
             }
+            event_recovery( map );
         }
     }
     void LayerCity::time_next( )
     {
+        // 次に、時間を一段階進めます。
+        // 朝→夕→夜
+        auto time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
+        if ( 3 <= ( time + 1 ) ) // 繰り上がったら
+        {
+            auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+            UserDefault::getInstance( )->setIntegerForKey( u8"日", day + 1 );
+        }
+        time = ( time + 1 ) % 3;
+        UserDefault::getInstance( )->setIntegerForKey( u8"時刻", time );
+
+        Json::StyledWriter writer;
+        writeUserLocal( writer.write( root ), save_name );
+
         removeAllChildrenWithCleanup( true );
         init( );
     }
@@ -532,16 +513,7 @@ namespace User
         {
             if ( type != ui::Widget::TouchEventType::ENDED ) return;
 
-            // 次に、時間を一段階進めます。
-            // 朝→夕→夜
-            auto time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
-            if ( 3 <= ( time + 1 ) ) // 繰り上がったら
-            {
-                auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
-                UserDefault::getInstance( )->setIntegerForKey( u8"日", day + 1 );
-            }
-            time = ( time + 1 ) % 3;
-            UserDefault::getInstance( )->setIntegerForKey( u8"時刻", time );
+
 
             time_next( );
         } );
@@ -551,7 +523,7 @@ namespace User
     {
         std::vector<int> days =
         {
-            0, 8, 4, 1
+            0, 0, 8, 4, 1
         };
 
         auto sum = [ & ] ( int end )
@@ -569,17 +541,239 @@ namespace User
         {
             UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"無名の島" );
         }
-        else if ( day <= sum( 1 ) ) // 8 <= 8 ok 9 <= 8 no
+        else if ( day <= sum( 1 ) )
+        {
+            UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"旅立ちの島" );
+        }
+        else if ( day <= sum( 2 ) ) // 8 <= 8 true 9 <= 8 false
         {
             UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"ラシャス島" );
         }
-        else if ( day <= sum( 2 ) )
+        else if ( day <= sum( 3 ) )
         {
             UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"ヒャルキシ島" );
         }
-        else if ( day <= sum( 3 ) )
+        else if ( day <= sum( 4 ) )
         {
             UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"アイクラ島" );
+        }
+    }
+    bool LayerCity::mark_spawned_check( Json::Value & value )
+    {
+        ScenarioPointData scenario;
+        scenario.initScenarioPointData( value );
+        if ( scenario.spawn ) return true;
+        return false;
+    }
+    bool LayerCity::mark_spawned_not_read_check( Json::Value & value )
+    {
+        ScenarioPointData scenario;
+        bool stay = mark_stay_check_with_make( value, scenario );
+
+        // マップに配置されていて、まだ読んだことなくて、読める期間から過ぎてしまった場合。
+        if ( scenario.spawn && !scenario.visit && !stay && !scenario.read_not ) return true;
+        return false;
+    }
+    bool LayerCity::mark_stay_check( Json::Value & value )
+    {
+        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
+
+        ScenarioPointData scenario;
+        scenario.initScenarioPointData( value );
+
+        if ( scenario.day_begin <= now_day &&
+             now_day <= scenario.day_end )
+            ;
+        else return false;
+
+        if ( scenario.time_begin <= now_time &&
+             now_time <= scenario.time_end )
+            ;
+        else return false;
+
+        return true;
+    }
+    bool LayerCity::mark_stay_check_with_make( Json::Value & value, ScenarioPointData& scenario )
+    {
+        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
+
+        scenario.initScenarioPointData( value );
+
+        if ( scenario.day_begin <= now_day &&
+             now_day <= scenario.day_end )
+            ;
+        else return false;
+
+        if ( scenario.time_begin <= now_time &&
+             now_time <= scenario.time_end )
+            ;
+        else return false;
+
+        return true;
+    }
+    LayerCityMark* LayerCity::set_force_mark( Json::Value& value, CityMap* map )
+    {
+        ScenarioPointData data;
+        bool stay = mark_stay_check_with_make( value, data );
+        data.event = ScenarioPointData::Event::force;
+
+        auto mark = MainMark::create( );
+        mark->pasteMap( map, data );
+        if ( !stay )mark->setEnabled( false );
+        if( data.read_not )
+
+        // 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
+        if ( !value[u8"visit"].asBool( ) )
+        {
+            if ( stay )
+            {
+                force_event = true;
+                scheduleOnce( [ this, &value, data ] ( float delay )
+                {
+                    value[u8"visit"] = true;
+                    Json::StyledWriter writer;
+                    auto saveString = writer.write( root );
+                    auto savePath = save_name;
+                    Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
+                    {
+                        writeUserLocal( saveString, savePath );
+                    } ) );
+                }, 0.0F, u8"force_event" );
+            }
+        }
+
+        return mark;
+    }
+    LayerCityMark* LayerCity::set_main_mark( Json::Value& value, CityMap* map )
+    {
+        ScenarioPointData data;
+        bool stay = mark_stay_check_with_make( value, data );
+        data.event = ScenarioPointData::Event::main;
+
+        auto mark = MainMark::create( );
+        mark->pasteMap( map, data );
+        if ( !stay ) mark->setEnabled( false );
+
+        mark->setButtonEndCallBack( [ this, &value, data ]
+        {
+            value[u8"visit"] = true;
+            Json::StyledWriter writer;
+            auto saveString = writer.write( root );
+            auto savePath = save_name;
+            Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
+            {
+                writeUserLocal( saveString, savePath );
+            } ) );
+        } );
+
+        return mark;
+    }
+    LayerCityMark* LayerCity::set_sub_mark( Json::Value& value, CityMap* map )
+    {
+        ScenarioPointData data;
+        bool stay = mark_stay_check_with_make( value, data );
+        data.event = ScenarioPointData::Event::sub;
+
+        auto mark = SubMark::create( );
+        mark->pasteMap( map, data );
+        if ( !stay ) mark->setEnabled( false );
+
+        mark->setButtonEndCallBack( [ this, &value, data ]
+        {
+            value[u8"visit"] = true;
+            Json::StyledWriter writer;
+            auto saveString = writer.write( root );
+            auto savePath = save_name;
+            Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
+            {
+                writeUserLocal( saveString, savePath );
+            } ) );
+        } );
+
+        return mark;
+    }
+    void LayerCity::stack_mark_pos( Json::Value & value )
+    {
+        auto& position = value[u8"position"];
+        int x = 0, y = 0;
+        switch ( position.size( ) )
+        {
+        case 2:
+            x = position[0].asInt( );
+            y = position[1].asInt( );
+            break;
+        default:
+            break;
+        }
+        mark_pos_stack.push( Vec2( x, y ) );
+    }
+    void LayerCity::event_recovery( CityMap* map )
+    {
+        if ( mark_stack.empty( ) || force_event )
+            ;
+        else
+        {
+            auto delay = DelayTime::create( 0.1F );
+            auto spawn = CallFunc::create( [ this ]
+            {
+                if ( mark_stack.top( ) ) mark_stack.top( )( );
+            } );
+            auto move = map->move_action( mark_pos_stack.top( ).x, mark_pos_stack.top( ).y );
+            auto pop = CallFunc::create( [ this ]
+            {
+                mark_stack.pop( );
+                mark_pos_stack.pop( );
+            } );
+
+            auto seq = Sequence::create( delay, move, spawn, pop, nullptr );
+
+            map->runAction( Sequence::create( seq, CallFunc::create( [ this, map ] { event_recovery( map ); } ), nullptr ) );
+        }
+    }
+    void LayerCity::stack_mark_ptr_pos( Json::Value & value )
+    {
+        auto& position = value[u8"position"];
+        int x = 0, y = 0;
+        switch ( position.size( ) )
+        {
+        case 2:
+            x = position[0].asInt( );
+            y = position[1].asInt( );
+            break;
+        default:
+            break;
+        }
+        mark_ptr_pos_stack.push( Vec2( x, y ) );
+    }
+    void LayerCity::read_check( CityMap* map )
+    {
+        if ( mark_ptr_stack.empty( ) )
+            ;
+        else
+        {
+            auto delay = DelayTime::create( 0.1F );
+            auto check = CallFunc::create( [ this ]
+            {
+                auto p = Sprite::create( u8"res/texture/system/read.png" );
+                p->setAnchorPoint( Vec2( 0, 0 ) );
+                if ( mark_ptr_stack.top( ) )
+                {
+                   auto mark = mark_ptr_stack.top( )( );
+                   mark->addChild( p );
+                }
+            } );
+            auto move = map->move_action( mark_ptr_pos_stack.top( ).x, mark_ptr_pos_stack.top( ).y );
+            auto pop = CallFunc::create( [ this ]
+            {
+                mark_ptr_stack.pop( );
+                mark_ptr_pos_stack.pop( );
+            } );
+
+            auto seq = Sequence::create( delay, move, check, pop, nullptr );
+
+            map->runAction( Sequence::create( seq, CallFunc::create( [ this, map ] { read_check( map ); } ), nullptr ) );
         }
     }
 }
