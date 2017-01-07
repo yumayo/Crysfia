@@ -152,7 +152,7 @@ namespace User
         int day;
     };
 
-    class CityMap : public cocos2d::Sprite
+    class CityMap : public cocos2d::Layer
     {
     public:
         CREATE_ARGS_INIT_FUNC( CityMap );
@@ -161,6 +161,7 @@ namespace User
         void paste( MainMark* icon, int const x, int const y );
         void paste( SubMark* icon, int const x, int const y );
         cocos2d::MoveTo* move_action( int const x, int const y );
+        void set_position( int const x, int const y );
     private:
         /**
          *  今の時間。
@@ -181,6 +182,12 @@ namespace User
         cocos2d::Size honeycomb_size;
         cocos2d::Vec2 start_position;
         cocos2d::Size map_size;
+
+        cocos2d::Sprite* map;
+
+        bool is_move = false;
+
+        cocos2d::EventListenerTouchOneByOne* event = nullptr;
     };
 
     class LayerCity : public LayerBase
@@ -215,27 +222,39 @@ namespace User
         bool force_event = false;
 
         void setIslandName( );
+        void setIslandPos( );
 
+        bool mark_visit_check( Json::Value& value );
         bool mark_spawned_check( Json::Value& value );
         bool mark_spawned_not_read_check( Json::Value& value );
+
+        bool mark_stay_check( ScenarioPointData const& scenario );
         bool mark_stay_check( Json::Value& value );
         bool mark_stay_check_with_make( Json::Value& value, ScenarioPointData& scenario );
 
-        LayerCityMark* set_force_mark( Json::Value& value, CityMap* map );
-        LayerCityMark* set_main_mark( Json::Value& value, CityMap* map );
-        LayerCityMark* set_sub_mark( Json::Value& value, CityMap* map );
+        LayerCityMark* set_force_mark( Json::Value& value );
+        LayerCityMark* set_main_mark( Json::Value& value );
+        LayerCityMark* set_sub_mark( Json::Value& value );
+
+        CityMap* map = nullptr;
+        int map_x = 0;
+        int map_y = 0;
+
+        bool is_animation = true;
 
         // 新しく生まれてくるシナリオのチェック。
         std::stack<std::function<void( )>> mark_stack;
         std::stack<cocos2d::Vec2> mark_pos_stack;
         void stack_mark_pos( Json::Value& value );
-        void event_recovery( CityMap* map );
+        void event_recovery( );
+        void event_recovery_skip( );
 
         // 期限を過ぎて読めなくなるシナリオのチェック。
-        std::stack<std::function<LayerCityMark*( )>> mark_ptr_stack;
+        std::stack<std::function<void( )>> mark_ptr_stack;
         std::stack<cocos2d::Vec2> mark_ptr_pos_stack;
         void stack_mark_ptr_pos( Json::Value& value );
-        void read_check( CityMap* map );
+        void read_check( );
+        void read_check_skip( );
     };
 }
 

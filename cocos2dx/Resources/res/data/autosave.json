@@ -1,6 +1,5 @@
 {
   "無名の島": {
-    "position": [ 19, 20 ],
     "point.main": [
     ],
     "point.sub": [
@@ -18,7 +17,6 @@
     ]
   },
   "旅立ちの島": {
-    "position": [ 19, 20 ],
     "point.main": [
     ],
     "point.sub": [
@@ -45,7 +43,6 @@
     ]
   },
   "ラシャス島": {
-    "position": [ 5, 5 ],
     "point.main": [
       {
         "position": [ 4, 4 ],
@@ -326,7 +323,6 @@
     ]
   },
   "アイクラ島": {
-    "position": [ 12, 11 ],
     "point.main": [
       {
         "position": [ 12, 11 ],

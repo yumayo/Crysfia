@@ -8,25 +8,36 @@ namespace User
 {
     bool LayerMessageBox::init( std::string const & message, std::function<void( )> const & ok )
     {
-        if ( !Sprite::init( ) ) return false;
+        if ( !LayerColor::init( ) ) return false;
 
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
         auto _scale = 1.0F / scale;
-        auto const fade_time = 0.3F;
+        auto const fade_time = 0.2F;
 
-        initWithFile( u8"res/texture/system/message.box.png" );
-        setPosition( vo + Vec2( vs.width * 0.5, vs.height * 0.75 ) );
+        // 色は黒色
+        setColor( Color3B::BLACK );
+
+        // 初期状態ではレイヤーは透明。
+        setOpacity( 0 );
+        // フェードイン
+        runAction( FadeTo::create( fade_time, 196 ) );
+
+        auto sprite = Sprite::create( u8"res/texture/system/message.box.png" );
+        sprite->setPosition( vo + vs * 0.5 );
+        sprite->setScale( Lib::fitWidth( sprite, vs.width * 0.9 ) );
+        addChild( sprite );
 
         auto label = Label::createWithTTF( message,
                                            u8"res/fonts/HGRGE.TTC",
                                            64 );
-        label->setScale( Lib::fitHeight( label, 64 * scale ) );
-        label->setAnchorPoint( Vec2( 0, 0 ) );
+        label->setTextColor( Color4B( 29, 29, 29, 255 ) );
+        label->setScale( Lib::fitHeight( label, 128 * scale ) );
+        label->setPosition( sprite->getContentSize( ) * 0.5 );
+        sprite->addChild( label );
 
         auto event = EventListenerTouchOneByOne::create( );
-        Director::getInstance( )->getEventDispatcher( )->addEventListenerWithFixedPriority( event, -1 );
         event->setSwallowTouches( true );
         event->onTouchBegan = [this, fade_time, event, ok]( Touch* t, Event* e ) -> bool
         {
@@ -45,6 +56,15 @@ namespace User
             runAction( Sequence::create( fade, removeEvent, ok_call, RemoveSelf::create( ), nullptr ) );
             return true;
         };
+        Director::getInstance( )->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, this );
+
+        // 全ての子ノードをフェードインする。
+        enumerateChildren( "//.*", [ fade_time ] ( cocos2d::Node* child )
+        {
+            child->setOpacity( 0 );
+            child->runAction( FadeIn::create( fade_time ) );
+            return false;
+        } );
 
         return true;
     }

@@ -52,6 +52,9 @@ namespace User
     }
     GetItemEvent * GetItemEvent::make( std::string const& name )
     {
+        auto item = Sprite::create( u8"res/texture/item/" + name + u8".png" );
+        if ( !item ) return nullptr;
+
         UserDefault::getInstance( )->setBoolForKey( name.c_str( ), true );
 
         auto vo = Director::getInstance( )->getVisibleOrigin( );
@@ -77,8 +80,6 @@ namespace User
             effect->setAnchorPoint( Vec2( 0.5, 1 ) );
         }
 
-
-        auto item = Sprite::create( u8"res/texture/item/" + name + u8".png" );
         auto pixel = item->getContentSize( ) / scale;
         item->setScale( 10 );
         item->setOpacity( 0 );

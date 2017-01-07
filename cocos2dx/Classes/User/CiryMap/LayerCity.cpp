@@ -21,6 +21,8 @@
 
 #include "LayerNovelView.h"
 
+#include "LayerMessageBox.h"
+
 USING_NS_CC;
 
 namespace User
@@ -32,14 +34,6 @@ namespace User
     void LayerCityMark::pasteMap( CityMap* map, ScenarioPointData const & data )
     {
         initScenarioPointData( data );
-
-        auto pixel = map->getTexture( )->getContentSizeInPixels( );
-
-        auto scale = Director::getInstance( )->getContentScaleFactor( );
-        auto _scale = 1.0F / scale;
-
-        // マップの方で、ポジションを指定するので用済みになりました。
-        // setPosition( Vec2( position.x, pixel.height - position.y ) * _scale );
 
         if ( data.visit ) setEnabled( false );
 
@@ -107,7 +101,9 @@ namespace User
         map_size = Size( 19, 20 );
         start_position = Vec2( 168, 2048 - 220 );
 
-        initWithFile( u8"res/texture/system/map.select.png" );
+        map = Sprite::create( u8"res/texture/system/map.select.png" );
+        setContentSize( map->getContentSize( ) );
+        addChild( map );
 
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto vo = Director::getInstance( )->getVisibleOrigin( );
@@ -122,22 +118,52 @@ namespace User
         setPosition( Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
                      Vec2( -move.x, move.y ) * _scale );
 
-        auto listener = EventListenerTouchAllAtOnce::create( );
-        listener->onTouchesBegan = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        auto move_layer = Layer::create( );
+        addChild( move_layer );
+        event = EventListenerTouchOneByOne::create( );
+        event->onTouchBegan = [ this ] ( Touch* touch, Event* e )
         {
-            removeChildByName( u8"ok.button" );
+            return true;
         };
-        listener->onTouchesMoved = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        event->onTouchMoved = [ this ] ( Touch* touch, Event* e )
         {
-            auto visibleSize = Director::getInstance( )->getVisibleSize( );
-
-            auto texS_2 = ( getContentSize( ) ) / 2;
-            auto winS_2 = visibleSize / 2;
-            auto clearance = texS_2 - winS_2;
-
-            for ( auto& obj : touches )
+            if ( touch->getStartLocation( ).distance( touch->getLocation( ) ) < 10 )
             {
-                auto movedPos = getPosition( ) - translate + obj->getDelta( );
+            }
+            else
+            {
+                if ( !is_move )
+                {
+                    // ゴミコード
+                    // 一部のイベントだけをキャンセルできないかなー。
+                    // http://qiita.com/Riyaaaa_a/items/15b1661e96653d17b4e1
+                    // イベント中断参考になりました。
+                    {
+                        EventTouch event_touch;
+                        event_touch.setEventCode( EventTouch::EventCode::CANCELLED );
+                        event_touch.setTouches( std::vector<Touch*>{touch} );
+                        Director::getInstance( )->getEventDispatcher( )->dispatchEvent( &event_touch );
+                    }
+                    // 中断した後に、通り抜け出来ないレイヤーとして認識させる。
+                    event->setSwallowTouches( true );
+                    // その後で、再び、マップを押したという命令を出せば、
+                    // 後ろのボタンの方は無効になってくれる。
+                    {
+                        EventTouch event_touch;
+                        event_touch.setEventCode( EventTouch::EventCode::BEGAN );
+                        event_touch.setTouches( std::vector<Touch*>{touch} );
+                        Director::getInstance( )->getEventDispatcher( )->dispatchEvent( &event_touch );
+                    }
+                    is_move = true;
+                }
+
+                auto visibleSize = Director::getInstance( )->getVisibleSize( );
+
+                auto texS_2 = ( getContentSize( ) ) / 2;
+                auto winS_2 = visibleSize / 2;
+                auto clearance = texS_2 - winS_2;
+
+                auto movedPos = getPosition( ) - translate + touch->getDelta( );
                 if ( clearance.width * -1 <= clearance.width &&
                      clearance.height * -1 <= clearance.height )
                 {
@@ -146,22 +172,12 @@ namespace User
                 }
             }
         };
-        listener->onTouchesEnded = [ this ] ( const std::vector<Touch*>& touches, Event* event )
+        event->onTouchEnded = [ this ] ( Touch* touch, Event* e )
         {
-
+            event->setSwallowTouches( false );
+            is_move = false;
         };
-        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( listener, this );
-
-        // 実験的な配列のテスト。
-        //for ( int y = 0; y < map_size.height; ++y )
-        //{
-        //    for ( int x = 0; x < map_size.width; ++x )
-        //    {
-        //        auto icon = ui::Button::create( u8"res/texture/system/scenario.sub.png",
-        //                                        u8"res/texture/system/scenario.sub.select.png" );
-        //        paste( icon, x, y );
-        //    }
-        //}
+        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, move_layer );
 
         return true;
     }
@@ -181,7 +197,7 @@ namespace User
         icon->setTitleText( StringUtils::format( u8"[%d, %d]", x, y ) );
     #endif
 
-        addChild( icon );
+        map->addChild( icon );
     }
 
     void CityMap::paste( MainMark * icon, int const x, int const y )
@@ -209,9 +225,24 @@ namespace User
         return  MoveTo::create( 0.3F, pos );
     }
 
+    void CityMap::set_position( int const x, int const y )
+    {
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
+        Vec2 const slide = ( y & 1 ) == 0 ? Vec2( ) : Vec2( honeycomb_size.width * 0.5F, 0 );
+
+        Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
+        Vec2 pos = Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
+            Vec2( -move.x, move.y ) * _scale;
+        setPosition( pos );
+    }
+
     LayerCity::~LayerCity( )
     {
         AudioManager::getInstance( )->stopBgm( 1.5F );
+        setIslandPos( );
     }
     bool LayerCity::init( )
     {
@@ -307,6 +338,20 @@ namespace User
             }
         }
 
+        if ( !mark_ptr_stack.empty( ) )
+        {
+            addChild( LayerMessageBox::create( u8"期限を過ぎたシナリオがあります。", [ this ] {
+                is_animation = true; read_check( ); } ) );
+        }
+        else if ( !mark_stack.empty( ) )
+        {
+            addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { event_recovery( ); } ) );
+        }
+        else
+        {
+            is_animation = false;
+        }
+
         return true;
     }
     void LayerCity::setup( )
@@ -328,72 +373,130 @@ namespace User
         Json::Reader reader;
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
         {
-            /**
-             * 貼り付けるための背景を作成します。
-             */
-            auto& position = root[UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" )][u8"position"];
-            int x = 0, y = 0;
-            switch ( position.size( ) )
-            {
-            case 2:
-                x = position[0].asInt( );
-                y = position[1].asInt( );
-                break;
-            default:
-                break;
-            }
-            auto map = CityMap::create( x, y );
+            map_x = UserDefault::getInstance( )->getIntegerForKey( u8"マップx" );
+            map_y = UserDefault::getInstance( )->getIntegerForKey( u8"マップy" );
+            map = CityMap::create( map_x, map_y );
             addChild( map );
             for ( auto& island : root )
             {
                 // 強制イベントを読み込みます。
                 for ( auto& value : island[u8"point.force"] )
                 {
-                    if ( mark_spawned_check( value ) )
-                    {
-                        auto mark = set_force_mark( value, map );
-                    }
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+
                     // スポーンしたことのないものの中で、
                     // 滞在期間中のもの。
                     // 要するに新規に読めるシナリオ。
                     // それらは、アニメーションさせて登場させます。
-                    else if ( mark_stay_check( value ) )
+                    if ( !temp.visit && !temp.spawn && mark_stay_check( temp ) )
                     {
-                        mark_stack.push( [ this, &value, map ] ( ) {
-                            value[u8"spawn"] = true; set_force_mark( value, map ); } );
+                        mark_stack.push( [ this, &value ] ( ) {
+                            value[u8"spawn"] = true; set_force_mark( value ); } );
                         stack_mark_pos( value );
+                        continue;
+                    }
+                    // スポーンしていたのに、訪れることの出来なかったらシナリオにはバツマークを付けます。
+                    if ( !temp.visit && temp.spawn && !mark_stay_check( value ) && !temp.read_not )
+                    {
+                        auto mark = set_force_mark( value );
+                        mark->setEnabled( true );
+                        mark_ptr_stack.push( [ this, &value, mark ] ( )
+                        {
+                            value[u8"read_not"] = true;
+                            auto p = Sprite::create( u8"res/texture/system/read_out.png" );
+                            p->setAnchorPoint( Vec2( 0, 0 ) );
+                            mark->addChild( p );
+                            mark->setEnabled( false );
+                        } );
+                        stack_mark_ptr_pos( value );
+                        continue;
+                    }
+                    // スポーンしていたら、
+                    if ( mark_spawned_check( value ) )
+                    {
+                        set_force_mark( value );
                     }
                 }
                 // メインシナリオを読み込んで貼り付けていきます。
                 for ( auto& value : island[u8"point.main"] )
                 {
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+
+                    // スポーンしたことのないものの中で、
+                    // 滞在期間中のもの。
+                    // 要するに新規に読めるシナリオ。
+                    // それらは、アニメーションさせて登場させます。
+                    if ( !temp.visit && !temp.spawn && mark_stay_check( temp ) )
+                    {
+                        mark_stack.push( [ this, &value ] ( ) {
+                            value[u8"spawn"] = true; set_main_mark( value ); } );
+                        stack_mark_pos( value );
+                        continue;
+                    }
+                    // スポーンしていたのに、訪れることの出来なかったらシナリオにはバツマークを付けます。
+                    if ( !temp.visit && temp.spawn && !mark_stay_check( value ) && !temp.read_not )
+                    {
+                        auto mark = set_main_mark( value );
+                        mark->setEnabled( true );
+                        mark_ptr_stack.push( [ this, &value, mark ] ( )
+                        {
+                            value[u8"read_not"] = true;
+                            auto p = Sprite::create( u8"res/texture/system/read_out.png" );
+                            p->setAnchorPoint( Vec2( 0, 0 ) );
+                            mark->addChild( p );
+                            mark->setEnabled( false );
+                        } );
+                        stack_mark_ptr_pos( value );
+                        continue;
+                    }
+                    // スポーンしていたら、
                     if ( mark_spawned_check( value ) )
                     {
-                        auto mark = set_main_mark( value, map );
-                    }
-                    else if ( mark_stay_check( value ) )
-                    {
-                        mark_stack.push( [ this, &value, map ] ( ) {
-                            value[u8"spawn"] = true; set_main_mark( value, map ); } );
-                        stack_mark_pos( value );
+                        set_main_mark( value );
                     }
                 }
                 // サブシナリオを読み込んで貼り付けていきます。
                 for ( auto& value : island[u8"point.sub"] )
                 {
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+
+                    // スポーンしたことのないものの中で、
+                    // 滞在期間中のもの。
+                    // 要するに新規に読めるシナリオ。
+                    // それらは、アニメーションさせて登場させます。
+                    if ( !temp.visit && !temp.spawn && mark_stay_check( temp ) )
+                    {
+                        mark_stack.push( [ this, &value ] ( ) {
+                            value[u8"spawn"] = true; set_sub_mark( value ); } );
+                        stack_mark_pos( value );
+                        continue;
+                    }
+                    // スポーンしていたのに、訪れることの出来なかったらシナリオにはバツマークを付けます。
+                    if ( !temp.visit && temp.spawn && !mark_stay_check( value ) && !temp.read_not )
+                    {
+                        auto mark = set_sub_mark( value );
+                        mark->setEnabled( true );
+                        mark_ptr_stack.push( [ this, &value, mark ] ( )
+                        {
+                            value[u8"read_not"] = true;
+                            auto p = Sprite::create( u8"res/texture/system/read_out.png" );
+                            p->setAnchorPoint( Vec2( 0, 0 ) );
+                            mark->addChild( p );
+                            mark->setEnabled( false );
+                        } );
+                        stack_mark_ptr_pos( value );
+                        continue;
+                    }
+                    // スポーンしていたら、
                     if ( mark_spawned_check( value ) )
                     {
-                        auto mark = set_sub_mark( value, map );
-                    }
-                    else if ( mark_stay_check( value ) )
-                    {
-                        mark_stack.push( [ this, &value, map ] ( ) {
-                            value[u8"spawn"] = true; set_sub_mark( value, map ); } );
-                        stack_mark_pos( value );
+                        set_sub_mark( value );
                     }
                 }
             }
-            event_recovery( map );
         }
     }
     void LayerCity::time_next( )
@@ -413,6 +516,7 @@ namespace User
         writeUserLocal( writer.write( root ), save_name );
 
         removeAllChildrenWithCleanup( true );
+        setIslandPos( );
         init( );
     }
     cocos2d::Label * LayerCity::createLabel( std::string const& title )
@@ -482,7 +586,7 @@ namespace User
         {
             if ( type != ui::Widget::TouchEventType::ENDED ) return;
 
-
+            if ( is_animation ) return;
 
             time_next( );
         } );
@@ -527,6 +631,15 @@ namespace User
             UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"アイクラ島" );
         }
     }
+    void LayerCity::setIslandPos( )
+    {
+        UserDefault::getInstance( )->setIntegerForKey( u8"マップx", map_x );
+        UserDefault::getInstance( )->setIntegerForKey( u8"マップy", map_y );
+    }
+    bool LayerCity::mark_visit_check( Json::Value & value )
+    {
+        return false;
+    }
     bool LayerCity::mark_spawned_check( Json::Value & value )
     {
         ScenarioPointData scenario;
@@ -543,13 +656,10 @@ namespace User
         if ( scenario.spawn && !scenario.visit && !stay && !scenario.read_not ) return true;
         return false;
     }
-    bool LayerCity::mark_stay_check( Json::Value & value )
+    bool LayerCity::mark_stay_check( ScenarioPointData const & scenario )
     {
         int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
         int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
-
-        ScenarioPointData scenario;
-        scenario.initScenarioPointData( value );
 
         if ( scenario.day_begin <= now_day &&
              now_day <= scenario.day_end )
@@ -562,27 +672,19 @@ namespace User
         else return false;
 
         return true;
+    }
+    bool LayerCity::mark_stay_check( Json::Value & value )
+    {
+        ScenarioPointData scenario;
+        scenario.initScenarioPointData( value );
+        return mark_stay_check( scenario );
     }
     bool LayerCity::mark_stay_check_with_make( Json::Value & value, ScenarioPointData& scenario )
     {
-        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
-        int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
-
         scenario.initScenarioPointData( value );
-
-        if ( scenario.day_begin <= now_day &&
-             now_day <= scenario.day_end )
-            ;
-        else return false;
-
-        if ( scenario.time_begin <= now_time &&
-             now_time <= scenario.time_end )
-            ;
-        else return false;
-
-        return true;
+        return mark_stay_check( scenario );
     }
-    LayerCityMark* LayerCity::set_force_mark( Json::Value& value, CityMap* map )
+    LayerCityMark* LayerCity::set_force_mark( Json::Value& value )
     {
         ScenarioPointData data;
         bool stay = mark_stay_check_with_make( value, data );
@@ -591,7 +693,12 @@ namespace User
         auto mark = MainMark::create( );
         mark->pasteMap( map, data );
         if ( !stay )mark->setEnabled( false );
-
+        if ( data.read_not )
+        {
+            auto p = Sprite::create( u8"res/texture/system/read_out.png" );
+            p->setAnchorPoint( Vec2( 0, 0 ) );
+            mark->addChild( p );
+        }
         // 強制イベントの中で、未読のものがあったら次のフレームで、強制的にノベルのシーンに飛ばします。
         if ( !value[u8"visit"].asBool( ) )
         {
@@ -614,7 +721,7 @@ namespace User
 
         return mark;
     }
-    LayerCityMark* LayerCity::set_main_mark( Json::Value& value, CityMap* map )
+    LayerCityMark* LayerCity::set_main_mark( Json::Value& value )
     {
         ScenarioPointData data;
         bool stay = mark_stay_check_with_make( value, data );
@@ -623,7 +730,12 @@ namespace User
         auto mark = MainMark::create( );
         mark->pasteMap( map, data );
         if ( !stay ) mark->setEnabled( false );
-
+        if ( data.read_not )
+        {
+            auto p = Sprite::create( u8"res/texture/system/read_out.png" );
+            p->setAnchorPoint( Vec2( 0, 0 ) );
+            mark->addChild( p );
+        }
         mark->setButtonEndCallBack( [ this, &value, data ]
         {
             value[u8"visit"] = true;
@@ -638,7 +750,7 @@ namespace User
 
         return mark;
     }
-    LayerCityMark* LayerCity::set_sub_mark( Json::Value& value, CityMap* map )
+    LayerCityMark* LayerCity::set_sub_mark( Json::Value& value )
     {
         ScenarioPointData data;
         bool stay = mark_stay_check_with_make( value, data );
@@ -647,7 +759,12 @@ namespace User
         auto mark = SubMark::create( );
         mark->pasteMap( map, data );
         if ( !stay ) mark->setEnabled( false );
-
+        if ( data.read_not )
+        {
+            auto p = Sprite::create( u8"res/texture/system/read_out.png" );
+            p->setAnchorPoint( Vec2( 0, 0 ) );
+            mark->addChild( p );
+        }
         mark->setButtonEndCallBack( [ this, &value, data ]
         {
             value[u8"visit"] = true;
@@ -677,10 +794,10 @@ namespace User
         }
         mark_pos_stack.push( Vec2( x, y ) );
     }
-    void LayerCity::event_recovery( CityMap* map )
+    void LayerCity::event_recovery( )
     {
         if ( mark_stack.empty( ) || force_event )
-            ;
+            is_animation = false;
         else
         {
             auto delay = DelayTime::create( 0.1F );
@@ -688,7 +805,9 @@ namespace User
             {
                 if ( mark_stack.top( ) ) mark_stack.top( )( );
             } );
-            auto move = map->move_action( mark_pos_stack.top( ).x, mark_pos_stack.top( ).y );
+            map_x = mark_pos_stack.top( ).x;
+            map_y = mark_pos_stack.top( ).y;
+            auto move = map->move_action( map_x, map_y );
             auto pop = CallFunc::create( [ this ]
             {
                 mark_stack.pop( );
@@ -697,8 +816,25 @@ namespace User
 
             auto seq = Sequence::create( delay, move, spawn, pop, nullptr );
 
-            map->runAction( Sequence::create( seq, CallFunc::create( [ this, map ] { event_recovery( map ); } ), nullptr ) );
+            map->runAction( Sequence::create( seq, CallFunc::create( [ this ] { event_recovery( ); } ), nullptr ) );
         }
+    }
+    void User::LayerCity::event_recovery_skip( )
+    {
+        while ( !( mark_stack.empty( ) || force_event ) )
+        {
+            // delay
+            // move
+            map_x = mark_pos_stack.top( ).x;
+            map_y = mark_pos_stack.top( ).y;
+            map->set_position( map_x, map_y );
+            // spawn
+            if ( mark_stack.top( ) ) mark_stack.top( )( );
+            // pop
+            mark_stack.pop( );
+            mark_pos_stack.pop( );
+        }
+        is_animation = false;
     }
     void LayerCity::stack_mark_ptr_pos( Json::Value & value )
     {
@@ -715,24 +851,19 @@ namespace User
         }
         mark_ptr_pos_stack.push( Vec2( x, y ) );
     }
-    void LayerCity::read_check( CityMap* map )
+    void LayerCity::read_check( )
     {
         if ( mark_ptr_stack.empty( ) )
-            ;
+        {
+            addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { event_recovery( ); } ) );
+        }
         else
         {
             auto delay = DelayTime::create( 0.1F );
-            auto check = CallFunc::create( [ this ]
-            {
-                auto p = Sprite::create( u8"res/texture/system/read.png" );
-                p->setAnchorPoint( Vec2( 0, 0 ) );
-                if ( mark_ptr_stack.top( ) )
-                {
-                   auto mark = mark_ptr_stack.top( )( );
-                   mark->addChild( p );
-                }
-            } );
-            auto move = map->move_action( mark_ptr_pos_stack.top( ).x, mark_ptr_pos_stack.top( ).y );
+            auto check = CallFunc::create( [ this ] { if ( mark_ptr_stack.top( ) ) mark_ptr_stack.top( )( ); } );
+            map_x = mark_ptr_pos_stack.top( ).x;
+            map_y = mark_ptr_pos_stack.top( ).y;
+            auto move = map->move_action( map_x, map_y );
             auto pop = CallFunc::create( [ this ]
             {
                 mark_ptr_stack.pop( );
@@ -741,7 +872,24 @@ namespace User
 
             auto seq = Sequence::create( delay, move, check, pop, nullptr );
 
-            map->runAction( Sequence::create( seq, CallFunc::create( [ this, map ] { read_check( map ); } ), nullptr ) );
+            map->runAction( Sequence::create( seq, CallFunc::create( [ this ] { read_check( ); } ), nullptr ) );
+        }
+    }
+
+    void User::LayerCity::read_check_skip( )
+    {
+        while ( !( mark_ptr_stack.empty( ) ) )
+        {
+            // delay
+            // move
+            map_x = mark_ptr_pos_stack.top( ).x;
+            map_y = mark_ptr_pos_stack.top( ).y;
+            map->set_position( map_x, map_y );
+            // check
+            if ( mark_ptr_stack.top( ) ) mark_ptr_stack.top( )( );
+            // pop
+            mark_ptr_stack.pop( );
+            mark_ptr_pos_stack.pop( );
         }
     }
 }

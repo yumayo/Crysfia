@@ -5,7 +5,7 @@
 
 namespace User
 {
-    class LayerMessageBox : public cocos2d::Sprite
+    class LayerMessageBox : public cocos2d::LayerColor
     {
     public:
         CREATE_ARGS_INIT_FUNC( LayerMessageBox );
