@@ -95,7 +95,7 @@ namespace User
         if ( visibleWidth * ( 614.0F / 720 ) <= contentSize.width ) width = visibleWidth * ( 614.0F / 720 )  * 0.5;
         else width = contentSize.width * 0.5;
 
-        label->setPosition( position + Vec2( width, -contentSize.height ) );
+        label->setPosition( position + Vec2( width, 0 ) );
     }
     void TextString::setActionStart( size_t stringLength )
     {

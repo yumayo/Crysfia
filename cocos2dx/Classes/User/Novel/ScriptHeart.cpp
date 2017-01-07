@@ -86,6 +86,7 @@ namespace User
             {
                 clipping->setStencil( mask );
                 mask->setAnchorPoint( Vec2( 0, 0.5 ) );
+
             }
 
             // 塗りつぶすイメージを用意します。

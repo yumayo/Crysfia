@@ -12,25 +12,25 @@
 class TouchManager 
 {
 private:
-    float startY ;// ã‚¿ãƒƒãƒã‚’é–‹å§‹ã—ãŸä½ç½®
+    float startY ;// ƒ^ƒbƒ`‚ğŠJn‚µ‚½ˆÊ’u
 	float startX ;
     
-	float lastX ;// ã‚·ãƒ³ã‚°ãƒ«ã‚¿ãƒƒãƒæ™‚ã®xã®å€¤
-	float lastY ;// ã‚·ãƒ³ã‚°ãƒ«ã‚¿ãƒƒãƒæ™‚ã®yã®å€¤
-	float lastX1 ;// ãƒ€ãƒ–ãƒ«ã‚¿ãƒƒãƒæ™‚ã®ä¸€ã¤ç›®ã®xã®å€¤
-	float lastY1 ;// ãƒ€ãƒ–ãƒ«ã‚¿ãƒƒãƒæ™‚ã®ä¸€ã¤ç›®ã®yã®å€¤
-	float lastX2 ;// ãƒ€ãƒ–ãƒ«ã‚¿ãƒƒãƒæ™‚ã®äºŒã¤ç›®ã®xã®å€¤
-	float lastY2 ;// ãƒ€ãƒ–ãƒ«ã‚¿ãƒƒãƒæ™‚ã®äºŒã¤ç›®ã®yã®å€¤
+	float lastX ;// ƒVƒ“ƒOƒ‹ƒ^ƒbƒ`‚Ìx‚Ì’l
+	float lastY ;// ƒVƒ“ƒOƒ‹ƒ^ƒbƒ`‚Ìy‚Ì’l
+	float lastX1 ;// ƒ_ƒuƒ‹ƒ^ƒbƒ`‚Ìˆê‚Â–Ú‚Ìx‚Ì’l
+	float lastY1 ;// ƒ_ƒuƒ‹ƒ^ƒbƒ`‚Ìˆê‚Â–Ú‚Ìy‚Ì’l
+	float lastX2 ;// ƒ_ƒuƒ‹ƒ^ƒbƒ`‚Ì“ñ‚Â–Ú‚Ìx‚Ì’l
+	float lastY2 ;// ƒ_ƒuƒ‹ƒ^ƒbƒ`‚Ì“ñ‚Â–Ú‚Ìy‚Ì’l
     
-	float lastTouchDist ;// 2æœ¬ä»¥ä¸Šã§ã‚¿ãƒƒãƒã—ãŸã¨ãã®æŒ‡ã®è·é›¢
+	float lastTouchDist ;// 2–{ˆÈã‚Åƒ^ƒbƒ`‚µ‚½‚Æ‚«‚Ìw‚Ì‹——£
     
-	float deltaX;// å‰å›ã®å€¤ã‹ã‚‰ä»Šå›ã®å€¤ã¸ã®xã®ç§»å‹•è·é›¢ã€‚
-	float deltaY;// å‰å›ã®å€¤ã‹ã‚‰ä»Šå›ã®å€¤ã¸ã®yã®ç§»å‹•è·é›¢ã€‚
+	float deltaX;// ‘O‰ñ‚Ì’l‚©‚ç¡‰ñ‚Ì’l‚Ö‚Ìx‚ÌˆÚ“®‹——£B
+	float deltaY;// ‘O‰ñ‚Ì’l‚©‚ç¡‰ñ‚Ì’l‚Ö‚Ìy‚ÌˆÚ“®‹——£B
     
-	float scale;// ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§æ›ã‘åˆã‚ã›ã‚‹æ‹¡å¤§ç‡ã€‚æ‹¡å¤§æ“ä½œä¸­ä»¥å¤–ã¯1ã€‚
+	float scale;// ‚±‚ÌƒtƒŒ[ƒ€‚ÅŠ|‚¯‡‚í‚¹‚éŠg‘å—¦BŠg‘å‘€ì’†ˆÈŠO‚Í1B
     
-	bool touchSingle ;// ã‚·ãƒ³ã‚°ãƒ«ã‚¿ãƒƒãƒæ™‚ã¯true
-	bool flipAvailable ;// ãƒ•ãƒªãƒƒãƒ—ãŒæœ‰åŠ¹ã‹ã©ã†ã‹
+	bool touchSingle ;// ƒVƒ“ƒOƒ‹ƒ^ƒbƒ`‚Ítrue
+	bool flipAvailable ;// ƒtƒŠƒbƒv‚ª—LŒø‚©‚Ç‚¤‚©
     
     
 public:

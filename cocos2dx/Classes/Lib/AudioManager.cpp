@@ -349,7 +349,9 @@ int AudioManager::playBgm( std::string const& baseName, float fadeTime, bool loo
     }
 
     // 前回のBGMを停止
-    stopBgm( );
+    // FIXME:1フレーム未満で、前のBGMのキャッシュを削除すると、クラッシュします。
+    // なので、とりあえずキャッシュは手動で削除しましょう。
+    stopBgm( 0, false );
 
     // フェード指定の場合
     if ( fadeTime != 0 ) {

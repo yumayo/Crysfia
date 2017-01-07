@@ -25,6 +25,8 @@ static __TYPE__* create(Args... args) \
     } \
 }
 
+#define LAMBDA_TOUCH cocos2d::Ref* ref, cocos2d::ui::Widget::TouchEventType type
+
 namespace User
 {
     class LayerBase : public cocos2d::Layer

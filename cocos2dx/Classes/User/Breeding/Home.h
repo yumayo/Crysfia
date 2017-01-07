@@ -19,7 +19,7 @@ namespace User
 		};
 
 	public:
-		cocos2d::Scene* create()override;
+		cocos2d::Scene* create();
 	};
 }
 

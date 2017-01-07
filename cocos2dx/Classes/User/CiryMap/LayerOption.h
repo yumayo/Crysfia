@@ -36,8 +36,8 @@ namespace User
         cocos2d::ui::Button* createBackButton( );
         cocos2d::ui::Button* createDeleteButton( );
         cocos2d::Node* createModal( );
-        cocos2d::ui::Layout* createSlider( std::string const& str, std::function<void( float )> const& move = nullptr, std::function<void( float )> const& ended = nullptr );
         cocos2d::ui::Layout* createDialog( std::string const& str, std::function<void( )>const& yes, std::function<void( )>const& no );
+        cocos2d::ui::Button* createSaveMenuButton( );
     };
 }
 

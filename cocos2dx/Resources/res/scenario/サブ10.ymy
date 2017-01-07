@@ -1,0 +1,98 @@
+//配置場所
+//１０日目、１１日目、１２日目
+
+@sys:name(名前アレン)
+@sys:name(名前クロエ)
+@sys:name(名前わんこ)
+@sys:background(h墓)
+@sys:bgm(bシリアス)
+@sys:live2d(crysfia)
+@crysfia:touchoff
+//@crysfia:in
+//@crysfia:out
+//@sys:novelon
+//@sys:noveloff
+//@sys:stop(1)
+//@sys:l
+
+@hヒャルキシ島:fadein(1)
+@bシリアス:in
+@sys:stop(1)
+@sys:novelon
+
+@名前アレン:in
+「あれ？犬がいる。野良かな？」@sys:l
+
+@crysfia:in
+@crysfia:喜ぶ
+
+@名前クロエ:in
+「わんこわんこ！おっきいね！」@sys:l
+@名前わんこ:in
+「ワンッ」
+@名前アレン:in
+「ちょ、いきなり飛びついてくるなって」@sys:l
+
+@crysfia:普通
+
+@名前クロエ:in
+「このわんこ、アレンのこと好きなんじゃな
+  い？」@sys:l
+@名前アレン:in
+「いや、どうみてもクロエの方に興味津々で
+  しょ」@sys:l
+
+@crysfia:喜ぶ
+
+@名前クロエ:in
+「え、そうなの？わんこー、クロエのこと好
+  きー？」@sys:l
+@名前わんこ:in
+「ワンワンッ」@sys:l
+@名前アレン:in
+「ほら、目一杯しっぽ振って答えてるよ」@sys:l
+@名前クロエ:in
+「えへへ。ありがとう、わんこ」@sys:l
+@名前アレン:in
+「……あれ、こいつ、よく見たら首輪してる
+  ？」@sys:l
+
+@crysfia:悩む
+
+@名前クロエ:in
+「あ、ほんとだ。でも、飼い犬にしては汚れ
+  てるよね」@sys:l
+@名前アレン:in
+「もしかして……飼い主がいなくなっちゃっ
+  たのかな」@sys:l
+
+@crysfia:悲しむ
+
+@名前クロエ:in
+「あ、そっか……。大きな災害があったんだ
+  もんね……」@sys:l
+@名前わんこ:in
+「クゥーン」@sys:l
+@名前クロエ:in
+「わんこは、たった一匹で生きてるんだね」@sys:l
+@名前アレン:in
+「そうだね。一見元気に見えるけど、きっと
+  壮絶な体験をしてきたはずだ」@sys:l
+
+@crysfia:真剣
+
+@名前クロエ:in
+「わんこ。色々大変かもしれないけど、これ
+  からも頑張ってね」@sys:l
+@名前わんこ:in
+「ワンッ！」@sys:l
+
+@crysfia:普通
+
+@名前クロエ:in
+「ふふ、バイバイわんこ。元気でね」@sys:l
+
+@crysfia:out
+@sys:noveloff
+@h墓:fadeout(1)
+@bシリアス:fadeout(1)

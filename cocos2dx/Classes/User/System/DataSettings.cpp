@@ -32,62 +32,109 @@ namespace User
             reader.read( defalutDirectory + name );
         }
     }
-    void userDefaultLoading( )
+
+    void setUserDefault( INIReader& iniReader )
     {
-        INIReader reader;
-        iniDataRead( reader, u8"userDefault.ini", u8"res/data/" );
+        auto userDefault = UserDefault::getInstance( );
 
-        std::map<std::string, std::function<void( std::map<std::string, std::string> )>> calls;
+        using Type = std::string; // bool, int, float, stringの文字列を入れます。
+        using Key = std::string; // 変数に付けた名前を格納します。
+        using Value = std::string; // 変数の実態を格納します。
+        using ValueMap = std::map<Key, Value>; // 変数の名前を変数の実体をまとめた一覧を格納します。
 
-        calls.insert( { u8"bool", [ ] ( std::map< std::string, std::string > tag )
         {
-            auto data = UserDefault::getInstance( );
-            for ( auto& value : tag )
-                data->setBoolForKey( value.first.c_str( ), StringUtil::string_value<bool>( value.second ) );
-        } } );
-        calls.insert( { u8"int", [ ] ( std::map< std::string, std::string > tag )
-        {
-             auto data = UserDefault::getInstance( );
-             for ( auto& value : tag )
-                 data->setIntegerForKey( value.first.c_str( ), StringUtil::string_value<int>( value.second ) );
-        } } );
-        calls.insert( { u8"float", [ ] ( std::map< std::string, std::string > tag )
-        {
-            auto data = UserDefault::getInstance( );
-            for ( auto& value : tag )
-                data->setFloatForKey( value.first.c_str( ), StringUtil::string_value<float>( value.second ) );
-        } } );
-
-        for ( auto& tag : reader.getData( ) )
-        {
-            auto itr = calls.find( tag.first );
-            if ( itr != calls.end( ) )
+            Type type = u8"bool";
+            for ( auto const& map : iniReader[type] )
             {
-                itr->second( tag.second );
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setBoolForKey( key.c_str( ), StringUtil::string_value<bool>( value ) );
+            }
+        }
+        {
+            Type type = u8"int";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setIntegerForKey( key.c_str( ), StringUtil::string_value<int>( value ) );
+            }
+        }
+        {
+            Type type = u8"float";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setFloatForKey( key.c_str( ), StringUtil::string_value<float>( value ) );
+            }
+        }
+        {
+            Type type = u8"string";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                Value value = map.second;
+
+                userDefault->setStringForKey( key.c_str( ), StringUtil::string_value<std::string>( value ) );
             }
         }
     }
-    void userDefaultSaveing( )
+    // ユーザーデフォルトの中身をINI型にして返します。
+    // ユーザーデフォルトでは、中身を列挙することが出来ないので、
+    // データを取り出す際に、キーの元となるINIファイルを提示しないといけません。
+    INIReader getUserDefault( INIReader& iniReader )
     {
-        INIReader reader;
-        iniDataRead( reader, u8"system.ini", u8"res/data/" );
+        INIReader ret;
 
-        auto data = UserDefault::getInstance( );
-        for ( auto& tag : reader.getData( ) )
+        // INIデータのキーから一致するユーザーデフォルトの中身を取り出したい。
+        using Type = std::string; // bool, int, float, stringの文字列を入れます。
+        using Key = std::string; // 変数に付けた名前を格納します。
+        using Value = std::string; // 変数の実態を格納します。
+        using ValueMap = std::map<Key, Value>; // 変数の名前を変数の実体をまとめた一覧を格納します。
+
+        auto userDefault = UserDefault::getInstance( );
+
         {
-            if ( tag.first == u8"bool" )
+            Type type = u8"bool";
+            for ( auto const& map : iniReader[type] )
             {
-                for ( auto& value : tag.second )
-                    reader[tag.first][value.first] = StringUtil::value_string<bool>( data->getBoolForKey( value.first.c_str( ) ) );
-            }
-            else if ( tag.first == u8"int" )
-            {
-                for ( auto& value : tag.second )
-                    reader[tag.first][value.first] = StringUtil::value_string<int>( data->getIntegerForKey( value.first.c_str( ) ) );
+                Key key = map.first;
+                auto velue = userDefault->getBoolForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( velue );
             }
         }
-
-        INIWriter::write( u8"system.ini", reader );
+        {
+            Type type = u8"int";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getIntegerForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        {
+            Type type = u8"float";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getFloatForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        {
+            Type type = u8"string";
+            for ( auto const& map : iniReader[type] )
+            {
+                Key key = map.first;
+                auto value = userDefault->getStringForKey( key.c_str( ) );
+                ret[type][key] = StringUtil::value_string( value );
+            }
+        }
+        return ret;
     }
     void userDefaultSetup( )
     {
@@ -95,7 +142,7 @@ namespace User
         if ( !data->getBoolForKey( u8"INITDATA", false ) )
         {
             INIReader reader;
-            iniDataRead( reader, u8"userDefault.ini", u8"res/data/" );
+            iniDataRead( reader, u8"res/data/saveLayout.ini" );
 
             std::map<std::string, std::function<void( std::map<std::string, std::string> )>> calls;
 
@@ -132,8 +179,14 @@ namespace User
                     itr->second( tag.second );
                 }
             }
+
             data->setBoolForKey( u8"INITDATA", true );
         }
+    }
+    void userDefaultForceSetup( )
+    {
+        UserDefault::getInstance( )->setBoolForKey( u8"INITDATA", false );
+        userDefaultSetup( );
     }
     std::string getLocalReadPath( std::string const & name )
     {
@@ -173,6 +226,26 @@ namespace User
         if ( !path.empty( ) )
         {
             fileUtil->writeStringToFile( data, path + directory + name );
+        }
+    }
+    void writeDataUserLocal( cocos2d::Data const & data, std::string const & name )
+    {
+        auto fileUtil = FileUtils::getInstance( );
+
+        auto path = fileUtil->getWritablePath( );
+        if ( !path.empty( ) )
+        {
+            fileUtil->writeDataToFile( data, path + name );
+        }
+    }
+    void writeDataUserLocal( cocos2d::Data const & data, std::string const & name, std::string const & directory )
+    {
+        auto fileUtil = FileUtils::getInstance( );
+
+        auto path = fileUtil->getWritablePath( );
+        if ( !path.empty( ) )
+        {
+            fileUtil->writeDataToFile( data, path + directory + name );
         }
     }
 }

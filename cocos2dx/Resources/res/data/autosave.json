@@ -1,0 +1,215 @@
+{
+  "無名の島": {
+    "background": "res/texture/system/island.none.png",
+    "point.main": [
+    ],
+    "point.sub": [
+    ],
+    "point.force": [
+      {
+        "position": [ 360, 640 ],
+        "day": [ 0, 9999 ],
+        "scenario": "無名のスクリプト.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ]
+  },
+  "ラシャス島": {
+    "background": "res/texture/system/island.rasyasu.png",
+    "point.main": [
+      {
+        "position": [ 360, 640 ],
+        "day": [ 1 ],
+        "scenario": "シナリオ3.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 640 ],
+        "day": [ 5 ],
+        "scenario": "シナリオ5.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ],
+    "point.sub": [
+      {
+        "position": [ 560, 640 ],
+        "day": [ 1, 2 ],
+        "scenario": "サブ1.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 440 ],
+        "day": [ 1, 3 ],
+        "scenario": "サブ2.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 840 ],
+        "day": [ 2, 4 ],
+        "scenario": "サブ3.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 160, 640 ],
+        "day": [ 2, 4 ],
+        "scenario": "サブ4.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 560, 640 ],
+        "day": [ 4, 6 ],
+        "scenario": "サブ5.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 440 ],
+        "day": [ 6, 8 ],
+        "scenario": "サブ6.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 840 ],
+        "day": [ 7, 9 ],
+        "scenario": "サブ7(ラシャス).ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 160, 640 ],
+        "day": [ 8, 10 ],
+        "scenario": "サブ8(ラシャス).ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ],
+    "point.force": [
+      {
+        "position": [ 360, 640 ],
+        "day": [ 1 ],
+        "scenario": "シナリオ1.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 640 ],
+        "day": [ 1 ],
+        "scenario": "シナリオ2.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 640 ],
+        "day": [ 3 ],
+        "time": [ 0 ],
+        "scenario": "シナリオ4.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 640 ],
+        "day": [ 7 ],
+        "time": [ 2 ],
+        "scenario": "シナリオ6.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ]
+  },
+  "ヒャルキシ島": {
+    "background": "res/texture/system/island.hyarukisi.png",
+    "point.main": [
+      {
+        "position": [ 360, 640 ],
+        "day": [ 9 ],
+        "scenario": "シナリオ7.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 640 ],
+        "day": [ 11 ],
+        "scenario": "シナリオ8.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ],
+    "point.sub": [
+      {
+        "position": [ 360, 840 ],
+        "day": [ 7, 9 ],
+        "scenario": "サブ7(ヒャルキシ).ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 160, 640 ],
+        "day": [ 8, 10 ],
+        "scenario": "サブ8(ヒャルキシ).ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 560, 640 ],
+        "day": [ 9, 10 ],
+        "scenario": "サブ9.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 440 ],
+        "day": [ 10, 12 ],
+        "scenario": "サブ10.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 360, 840 ],
+        "day": [ 10, 12 ],
+        "scenario": "サブ11.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 160, 640 ],
+        "day": [ 11, 12 ],
+        "scenario": "サブ12.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 560, 640 ],
+        "day": [ 12 ],
+        "scenario": "サブ13.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ],
+    "point.force": [
+    ]
+  },
+  "アイクラ島": {
+    "background": "res/texture/system/island.aikura.png",
+    "point.main": [
+      {
+        "position": [ 360, 640 ],
+        "day": [ 13 ],
+        "scenario": "シナリオ9.ymy",
+        "visit": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ],
+    "point.sub": [
+    ],
+    "point.force": [
+    ]
+  }
+}

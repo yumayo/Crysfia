@@ -26,16 +26,15 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-       // createIslandMap( );
-		createBreeding();
+        createIslandMap( );
     }
     void SceneManager::createTitle( )
     {
         create<SceneTitle>( );
     }
-    void SceneManager::createNovel( std::string const& novelPath )
+    void SceneManager::createNovel( std::string const& scenario, std::function<void( )> const& saveCallFunc )
     {
-        create<SceneNovel>( novelPath );
+        create<SceneNovel>( scenario, saveCallFunc );
     }
     void SceneManager::createIslandMap( )
     {

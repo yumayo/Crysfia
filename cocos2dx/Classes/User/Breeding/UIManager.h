@@ -5,7 +5,7 @@
 #include "../LayerBase.h"
 #include "BGManager.h"
 #include "ui/CocosGUI.h"
-#include "User/Breeding/VariousStatus.h"
+#include "../Breeding/VariousStatus.h"
 
 namespace User
 {

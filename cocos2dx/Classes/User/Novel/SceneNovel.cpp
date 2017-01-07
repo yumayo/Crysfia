@@ -23,7 +23,7 @@ USING_NS_CC;
 
 namespace User
 {
-    cocos2d::Scene * SceneNovel::create( std::string const& novelPath )
+    cocos2d::Scene * SceneNovel::create( std::string const& scenario, std::function<void( )> const& saveCallFunc )
     {
         auto scene = Scene::create( );
 
@@ -31,7 +31,7 @@ namespace User
         scene->addChild( createLayer<StillLayer>( ), (int)Tag::Still );
         scene->addChild( createLayer<HumanLayer>( ), (int)Tag::Human );
         scene->addChild( createLayer<Live2dLayer>( ), (int)Tag::Live2d );
-        scene->addChild( createLayer<NovelLayer>( novelPath ), (int)Tag::Novel );
+        scene->addChild( createLayer<NovelLayer>( scenario, saveCallFunc ), (int)Tag::Novel );
         scene->addChild( createLayer<NameLayer>( ), (int)Tag::Name );
         scene->addChild( createLayer<HeartLayer>( ), (int)Tag::Heart );
         scene->addChild( createLayer<SelectLayer>( ), (int)Tag::Select );

@@ -105,7 +105,7 @@ namespace User
 					//log("%d", c->getTag());
 					if (pSender == c) {
 						selectDiary(c->getName());
-						log("%s", c->getName());
+						log("%s", c->getName().c_str());
 					}
 				}
 			}

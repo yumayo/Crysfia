@@ -1,6 +1,6 @@
 #include "BGManager.h"
-#include "cocos2d/external/json/rapidjson.h"
-#include "cocos2d/external/json/document.h"
+#include "json/rapidjson.h"
+#include "json/document.h"
 #include "audio/include/AudioEngine.h"
 USING_NS_CC;
 using namespace experimental;
@@ -26,12 +26,12 @@ namespace User
 
 	bool BGManager::init()
 	{		
-		//json繝輔ぃ繧､繝ｫ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+		//jsonファイルの読み込み
 		auto fileUtils = FileUtils::getInstance();
 		auto path = fileUtils->getStringFromFile("res/json/background.json");
 		rapidjson::Document doc;
 
-		//json繝輔ぃ繧､繝ｫ繧偵ヱ繝ｼ繧ｹ5
+		//jsonファイルをパース5
 		doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
 		if (!doc.HasParseError())
 		{

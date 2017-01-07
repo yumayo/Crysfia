@@ -11,29 +11,82 @@ namespace User
 {
     struct ScenarioPointData
     {
-        /**
-         *  データの初期化を行います。
-         *  構造に必要なデータを一つ一つ詰めます。
-         */
-        void initData( bool visit, cocos2d::Vec2 const& position, std::string const& scenario )
+        void initScenarioPointData( Json::Value const& root )
         {
-            this->visit = visit;
-            this->position = position;
-            this->scenario = scenario;
+            scenario = root[u8"scenario"].asString( );
+            visit = root[u8"visit"].asBool( );
+            position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
+                                  root[u8"position"][1].asInt( ) );
+            title = root[u8"title"].asString( );
+
+            auto& day = root[u8"day"];
+            switch ( day.size( ) )
+            {
+            case 1:
+                day_begin = day[0].asInt( );
+                day_end = day[0].asInt( );
+                break;
+            case 2:
+                day_begin = day[0].asInt( );
+                day_end = day[1].asInt( );
+                break;
+            default:
+                break;
+            }
+
+            auto& time = root[u8"time"];
+            switch ( time.size( ) )
+            {
+            case 1:
+                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
+                time_end = ( ScenarioPointData::Times )time[0].asInt( );
+                break;
+            case 2:
+                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
+                time_end = ( ScenarioPointData::Times )time[1].asInt( );
+                break;
+            default:
+                break;
+            }
+        }
+
+        void initScenarioPointData( ScenarioPointData const& data )
+        {
+            *this = data;
         }
 
         /**
-         *  データの初期化を行います。
-         *  コピーを取ってそのまま代入します。
+         * どういうイベントなのか
          */
-        void initData( ScenarioPointData const& scenario ) { *this = scenario; }
+        enum Event
+        {
+            none,
+            force,
+            main,
+            sub
+        };
+        Event event = none;
 
         /**
          *  すでに読んだシナリオなのかどうか。
          *  @true   読んでいたら
          *  @false  未読なら
          */
-        bool visit;
+        bool visit = false;
+
+        int day_begin = -1;
+
+        int day_end = -1;
+
+        enum Times
+        {
+            morning,
+            daytime,
+            night
+        };
+        Times time_begin = Times::morning;
+
+        Times time_end = Times::night;
 
         /**
          *  マップ画像中の表示位置。
@@ -78,7 +131,7 @@ namespace User
     {
     public:
         CREATE_FUNC( Calendar );
-        Calendar* make( );
+        bool init( );
     private:
         /**
          *  カレンダーに表示する日にち。
@@ -118,9 +171,11 @@ namespace User
         bool init( ) override;
         void setup( ) override;
         void jsonRead( );
-        cocos2d::Label* createLabel(  std::string const& title);
+        void time_next( );
+        cocos2d::Label* createLabel( std::string const& title );
         cocos2d::ui::Button* createBackButton( );
         cocos2d::ui::Button* createOptionButton( );
+        cocos2d::ui::Button* createTimeNextButton( );
     private:
         /**
          *  セーブデータの名前を保存します。
