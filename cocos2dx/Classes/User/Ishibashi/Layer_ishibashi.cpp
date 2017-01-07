@@ -44,7 +44,7 @@ namespace User
         {
             auto scale = Director::getInstance( )->getContentScaleFactor( );
 
-            auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
+            auto button = ui::Button::create( "res/texture/system/backbutton.png" );
             addChild( button );
             button->setScale( 0.5, 0.5 );
             button->setAnchorPoint( Vec2( 0, 0 ) );
@@ -115,7 +115,7 @@ namespace User
 
         //ボタンに表示する文字
         // テキスト
-        button->setTitleText( u8"決定" );
+        button->setTitleText( "決定" );
         // フォント
         button->setTitleFontName( "Arial" );
         // フォントサイズ
@@ -201,7 +201,7 @@ namespace User
 		}
 
 		now = UserDefault::getInstance();
-		now_dress = now->getIntegerForKey(u8"現在の服");
+		now_dress = now->getIntegerForKey("現在の服");
 
 		auto sprite = Sprite::create();
 		sprite->setTextureRect(Rect(0, 0, 150, 900));
@@ -522,21 +522,21 @@ namespace User
     {
         auto item = UserDefault::getInstance();
 
-        food_gain.push_back(item->getBoolForKey(u8"角砂糖"));
-        food_gain.push_back(item->getBoolForKey(u8"花"));
-        food_gain.push_back(item->getBoolForKey(u8"果物"));
-        food_gain.push_back(item->getBoolForKey(u8"コンペイトウ"));
-        food_gain.push_back(item->getBoolForKey(u8"宝石"));
-        dress_gain.push_back(item->getBoolForKey(u8"服A"));
-        dress_gain.push_back(item->getBoolForKey(u8"服B"));
-        dress_gain.push_back(item->getBoolForKey(u8"服C"));
-        dress_gain.push_back(item->getBoolForKey(u8"服D"));
-        dress_gain.push_back(item->getBoolForKey(u8"服E"));
+        food_gain.push_back(item->getBoolForKey("角砂糖"));
+        food_gain.push_back(item->getBoolForKey("花"));
+        food_gain.push_back(item->getBoolForKey("果物"));
+        food_gain.push_back(item->getBoolForKey("コンペイトウ"));
+        food_gain.push_back(item->getBoolForKey("宝石"));
+        dress_gain.push_back(item->getBoolForKey("服A"));
+        dress_gain.push_back(item->getBoolForKey("服B"));
+        dress_gain.push_back(item->getBoolForKey("服C"));
+        dress_gain.push_back(item->getBoolForKey("服D"));
+        dress_gain.push_back(item->getBoolForKey("服E"));
     }
 
 	void Layer_meal::dressChange()
 	{
-		now->setIntegerForKey(u8"現在の服", next_dress);
+		now->setIntegerForKey("現在の服", next_dress);
 	}
 
 	//未確認
@@ -545,8 +545,8 @@ namespace User
 		int love_gauge;
 
 		auto love = UserDefault::getInstance();
-		love_gauge = love->getIntegerForKey(u8"親愛度");
+		love_gauge = love->getIntegerForKey("親愛度");
 		love_gauge += love_degrees;
-		love->setIntegerForKey(u8"親愛度", love_gauge);
+		love->setIntegerForKey("親愛度", love_gauge);
 	}
 }
