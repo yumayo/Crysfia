@@ -315,6 +315,9 @@
     <ClCompile Include="..\Classes\User\CiryMap\LayerNovelView.cpp">
       <Filter>src\User\CityMap</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\LayerMessageBox.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -603,6 +606,9 @@
       <Filter>src\User\LayerSave</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\CiryMap\LayerNovelView.h">
+      <Filter>src\User\CityMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\LayerMessageBox.h">
       <Filter>src\User\CityMap</Filter>
     </ClInclude>
   </ItemGroup>

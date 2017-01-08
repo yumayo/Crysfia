@@ -1,6 +1,5 @@
 {
   "無名の島": {
-    "position": [ 19, 20 ],
     "point.main": [
     ],
     "point.sub": [
@@ -11,18 +10,47 @@
         "day": [ 100 ],
         "scenario": "無名のスクリプト.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ]
+  },
+  "旅立ちの島": {
+    "point.main": [
+    ],
+    "point.sub": [
+    ],
+    "point.force": [
+      {
+        "position": [ 3, 12 ],
+        "day": [ 1 ],
+        "scenario": "シナリオ1.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      },
+      {
+        "position": [ 3, 11 ],
+        "day": [ 1 ],
+        "scenario": "シナリオ2.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       }
     ]
   },
   "ラシャス島": {
-    "position": [ 5, 5 ],
     "point.main": [
       {
         "position": [ 4, 4 ],
         "day": [ 1 ],
         "scenario": "シナリオ3.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -30,6 +58,8 @@
         "day": [ 5 ],
         "scenario": "シナリオ5.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       }
     ],
@@ -39,6 +69,8 @@
         "day": [ 1, 2 ],
         "scenario": "サブ1.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -46,6 +78,8 @@
         "day": [ 1, 3 ],
         "scenario": "サブ2.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -53,6 +87,8 @@
         "day": [ 2, 4 ],
         "scenario": "サブ3.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -60,13 +96,17 @@
         "day": [ 2, 4 ],
         "scenario": "サブ4.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
-        "position": [ 7, 6 ],
+        "position": [ 7, 4 ],
         "day": [ 4, 6 ],
         "scenario": "サブ5.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -74,20 +114,26 @@
         "day": [ 6, 8 ],
         "scenario": "サブ6.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
         "position": [ 7, 6 ],
-        "day": [ 7, 9 ],
+        "day": [ 7, 8 ],
         "scenario": "サブ7(ラシャス).ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
         "position": [ 7, 8 ],
-        "day": [ 8, 10 ],
+        "day": [ 8 ],
         "scenario": "サブ8(ラシャス).ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -95,6 +141,8 @@
         "day": [ 8 ],
         "scenario": "サブシスター服入手.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -102,6 +150,8 @@
         "day": [ 6 ],
         "scenario": "サブセーラー服入手.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -109,6 +159,8 @@
         "day": [ 2 ],
         "scenario": "サブドレス入手.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -116,6 +168,8 @@
         "day": [ 3 ],
         "scenario": "サブ果物入手.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -123,6 +177,8 @@
         "day": [ 1 ],
         "scenario": "サブ花入手.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -130,6 +186,8 @@
         "day": [ 5 ],
         "scenario": "サブ金平糖入手.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -137,6 +195,8 @@
         "day": [ 4 ],
         "scenario": "サブ着ぐるみ入手.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -144,38 +204,34 @@
         "day": [ 7 ],
         "scenario": "サブ宝石入手.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       }
     ],
     "point.force": [
       {
-        "position": [ 3, 12 ],
-        "day": [ 1 ],
-        "scenario": "シナリオ1.ymy",
-        "visit": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
-      },
-      {
-        "position": [ 3, 11 ],
-        "day": [ 1 ],
-        "scenario": "シナリオ2.ymy",
-        "visit": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
-      },
-      {
         "position": [ 6, 6 ],
         "day": [ 3 ],
-        "time": [ 0 ],
+        "morning": true,
+        "daytime": false,
+        "night": false,
         "scenario": "シナリオ4.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
         "position": [ 7, 7 ],
         "day": [ 7 ],
-        "time": [ 2 ],
+        "morning": false,
+        "daytime": false,
+        "night": true,
         "scenario": "シナリオ6.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       }
     ]
@@ -188,6 +244,8 @@
         "day": [ 9 ],
         "scenario": "シナリオ7.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -195,22 +253,28 @@
         "day": [ 11 ],
         "scenario": "シナリオ8.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       }
     ],
     "point.sub": [
       {
         "position": [ 11, 4 ],
-        "day": [ 7, 9 ],
+        "day": [ 9 ],
         "scenario": "サブ7(ヒャルキシ).ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
         "position": [ 12, 3 ],
-        "day": [ 8, 10 ],
+        "day": [ 9, 10 ],
         "scenario": "サブ8(ヒャルキシ).ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -218,6 +282,8 @@
         "day": [ 9, 10 ],
         "scenario": "サブ9.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -225,6 +291,8 @@
         "day": [ 10, 12 ],
         "scenario": "サブ10.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -232,6 +300,8 @@
         "day": [ 10, 12 ],
         "scenario": "サブ11.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -239,6 +309,8 @@
         "day": [ 11, 12 ],
         "scenario": "サブ12.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       },
       {
@@ -246,6 +318,8 @@
         "day": [ 12 ],
         "scenario": "サブ13.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       }
     ],
@@ -253,13 +327,14 @@
     ]
   },
   "アイクラ島": {
-    "position": [ 8, 10 ],
     "point.main": [
       {
-        "position": [ 8, 10 ],
+        "position": [ 12, 11 ],
         "day": [ 13 ],
         "scenario": "シナリオ9.ymy",
         "visit": false,
+        "spawn": false,
+        "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       }
     ],

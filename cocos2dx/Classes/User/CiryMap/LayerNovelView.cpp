@@ -2,6 +2,7 @@
 #include "LayerNovelView.h"
 
 #include "../SceneManager.h"
+#include "../../Lib/Utilitys.h"
 
 USING_NS_CC;
 
@@ -66,47 +67,83 @@ namespace User
         Director::getInstance( )->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, this );
 
         // ボードはど真ん中に設置。
-        auto next_stage = Sprite::create( u8"res/texture/system/next.stage.png" );
+        auto next_stage = Sprite::create( u8"res/texture/system/next.stage2.png" );
         next_stage->setPosition( vo + vs * 0.5 );
         next_stage->setScale( scale );
         addChild( next_stage );
 
-        // どんなイベントなのかを記入します。
-        std::string event_name;
+        int dead_line = scenario.get_dead_line( );
+        bool stay = scenario.is_stay( );
+        std::string stay_day;
+        if ( dead_line == 0 && stay )
+        {
+            // 当日 最終日
+            stay_day = u8"最後の日";
+        }
+        else
+        {
+            stay_day = StringUtils::format( u8"あと%d日", dead_line );
+        }
+        auto label_event_name = Label::createWithTTF( stay_day,
+                                                      u8"res/fonts/HGRGE.TTC",
+                                                      32 );
+        label_event_name->setScale( Lib::fitHeight( label_event_name, 32 * _scale ) );
+        label_event_name->setPosition( Vec2( 367, 230 - 100 ) * _scale );
+        next_stage->addChild( label_event_name );
+
+        std::string event_name_path;
         switch ( scenario.event )
         {
         case ScenarioPointData::Event::force:
-            event_name = u8"強制イベント";
+            event_name_path = u8"force";
             break;
         case ScenarioPointData::Event::main:
-            event_name = u8"メインイベント";
+            event_name_path = u8"main";
             break;
         case ScenarioPointData::Event::sub:
-            event_name = u8"サブイベント";
+            event_name_path = u8"sub";
             break;
         default:
             break;
         }
-        auto label_event_name = Label::createWithTTF( event_name,
-                                                      u8"res/fonts/HGRGE.TTC",
-                                                      64 * _scale );
-        label_event_name->setAnchorPoint( Vec2( 0.5F, 0 ) );
-        label_event_name->setPosition( Vec2( 273, 230 - 107 ) * _scale );
-        next_stage->addChild( label_event_name );
+        auto event_name = Sprite::create( u8"res/texture/system/event." + event_name_path + u8".png" );
+        event_name->setPosition( Vec2( 285, 230 - 46 ) * _scale );
+        next_stage->addChild( event_name );
+
+        if ( scenario.morning )
+        {
+            auto morning = Sprite::create( u8"res/texture/system/time.1.check.png" );
+            morning->setPosition( Vec2( 145, 230 - 100 ) * _scale );
+            next_stage->addChild( morning );
+        }
+        if ( scenario.daytime )
+        {
+            auto daytime = Sprite::create( u8"res/texture/system/time.2.check.png" );
+            daytime->setPosition( Vec2( 195, 230 - 100 ) * _scale );
+            next_stage->addChild( daytime );
+        }
+        if ( scenario.night )
+        {
+            auto night = Sprite::create( u8"res/texture/system/time.3.check.png" );
+            night->setPosition( Vec2( 245, 230 - 100 ) * _scale );
+            next_stage->addChild( night );
+        }
 
         // タイトル //
         // タイトルはマスクで切り取りたい。
         // ここからマスクの処理を書きます。
+        Vec2 title_start_pos( 20, 200 );
+        Size title_size( 431, 67 );
         if ( auto clipping = ClippingNode::create( ) )
         {
             clipping->setInverted( false );
             clipping->setAlphaThreshold( 0.0 );
             clipping->setAnchorPoint( Vec2( 0, 0 ) );
-            clipping->setPosition( Vec2( 28, 230 - 192 ) * _scale );
+            clipping->setPosition( Vec2( title_start_pos.x, 230 - title_start_pos.y ) * _scale );
 
             if ( auto mask = Sprite::create( ) )
             {
-                mask->setTextureRect( Rect( 0, 0, 420 * _scale, 48 * _scale ) );
+                mask->setTextureRect( Rect( 0, 0, title_size.width * _scale, title_size.height * _scale ) );
                 mask->setAnchorPoint( Vec2( 0, 0 ) );
                 clipping->setStencil( mask );
             }
@@ -119,22 +156,26 @@ namespace User
             {
                 title_label->setAnchorPoint( Vec2( 0, 0 ) );
                 title_label->setTextColor( Color4B( 242, 242, 242, 255 ) ); // 白
+                auto title_label_translate_y = ( title_size.height * 0.5F - 48 * 0.5F ) * _scale;
+                title_label->setPosition( Vec2( 0, title_label_translate_y ) );
 
-                const auto slide = title_label->getContentSize( ).width - 420 * _scale;
-                auto action = title_label->getContentSize( ).width < 420 * _scale
+                const auto slide = title_label->getContentSize( ).width - title_size.width * _scale;
+                auto action = title_label->getContentSize( ).width < title_size.width * _scale
                     ? Sequence::create( DelayTime::create( 2.5F ), // 止める
                                         // MoveTo::create( ( title_label->getContentSize( ).width - 420 * _scale ) * 0.01, Vec2( -slide, 0 ) ),
                                         DelayTime::create( 2.5F ),
-                                        MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, 0 ) ),
-                                        CallFunc::create( [ title_label ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 0 ) ); } ),
-                                        MoveTo::create( 0.3F, Vec2( 0, 0 ) ),
+                                        MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, title_label_translate_y ) ),
+                                        CallFunc::create( [ title_label, title_label_translate_y ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width,
+                                                                                                                                     title_label_translate_y ) ); } ),
+                                        MoveTo::create( 0.3F, Vec2( 0, title_label_translate_y ) ),
                                         nullptr )
                     : Sequence::create( DelayTime::create( 2.5F ), // 止める
-                                        MoveTo::create( ( title_label->getContentSize( ).width - 420 * _scale ) * 0.01, Vec2( -slide, 0 ) ),
+                                        MoveTo::create( ( title_label->getContentSize( ).width - title_size.width * _scale ) * 0.01, Vec2( -slide, title_label_translate_y ) ),
                                         DelayTime::create( 2.5F ),
-                                        MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, 0 ) ),
-                                        CallFunc::create( [ title_label ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 0 ) ); } ),
-                                        MoveTo::create( 0.3F, Vec2( 0, 0 ) ),
+                                        MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, title_label_translate_y ) ),
+                                        CallFunc::create( [ title_label, title_label_translate_y ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 
+                                                                                                                                     title_label_translate_y ) ); } ),
+                                        MoveTo::create( 0.3F, Vec2( 0, title_label_translate_y ) ),
                                         nullptr );
                 title_label->runAction( RepeatForever::create( action ) );
 

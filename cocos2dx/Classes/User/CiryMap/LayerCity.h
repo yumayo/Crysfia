@@ -11,44 +11,11 @@ namespace User
 {
     struct ScenarioPointData
     {
-        void initScenarioPointData( Json::Value const& root )
-        {
-            scenario = root[u8"scenario"].asString( );
-            visit = root[u8"visit"].asBool( );
-            position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
-                                      root[u8"position"][1].asInt( ) );
-            title = root[u8"title"].asString( );
+        void initScenarioPointData( Json::Value const& root );
 
-            auto& day = root[u8"day"];
-            switch ( day.size( ) )
-            {
-            case 1:
-                day_begin = day[0].asInt( );
-                day_end = day[0].asInt( );
-                break;
-            case 2:
-                day_begin = day[0].asInt( );
-                day_end = day[1].asInt( );
-                break;
-            default:
-                break;
-            }
+        bool is_stay( ) const;
 
-            auto& time = root[u8"time"];
-            switch ( time.size( ) )
-            {
-            case 1:
-                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
-                time_end = ( ScenarioPointData::Times )time[0].asInt( );
-                break;
-            case 2:
-                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
-                time_end = ( ScenarioPointData::Times )time[1].asInt( );
-                break;
-            default:
-                break;
-            }
-        }
+        int get_dead_line( ) const;
 
         void initScenarioPointData( ScenarioPointData const& data )
         {
@@ -74,19 +41,29 @@ namespace User
          */
         bool visit = false;
 
+        /**
+         * マップに配置されたかを保存します。
+         * @true    配置されていたら
+         * @false   配置されていないなら
+         */
+        bool spawn = false;
+
+        bool read_not = false;
+
         int day_begin = -1;
 
         int day_end = -1;
 
-        enum Times
+        enum class Times
         {
+            none,
             morning,
             daytime,
-            night
+            night,
         };
-        Times time_begin = Times::morning;
-
-        Times time_end = Times::night;
+        bool morning = true;
+        bool daytime = true;
+        bool night = true;
 
         /**
          *  マップ画像中の表示位置。
@@ -141,7 +118,7 @@ namespace User
         int day;
     };
 
-    class CityMap : public cocos2d::Sprite
+    class CityMap : public cocos2d::Layer
     {
     public:
         CREATE_ARGS_INIT_FUNC( CityMap );
@@ -149,6 +126,8 @@ namespace User
         void paste( cocos2d::ui::Button* icon, int const x, int const y );
         void paste( MainMark* icon, int const x, int const y );
         void paste( SubMark* icon, int const x, int const y );
+        cocos2d::MoveTo* move_action( int const x, int const y );
+        void set_position( int const x, int const y );
     private:
         /**
          *  今の時間。
@@ -169,6 +148,12 @@ namespace User
         cocos2d::Size honeycomb_size;
         cocos2d::Vec2 start_position;
         cocos2d::Size map_size;
+
+        cocos2d::Sprite* map;
+
+        bool is_move = false;
+
+        cocos2d::EventListenerTouchOneByOne* event = nullptr;
     };
 
     class LayerCity : public LayerBase
@@ -200,7 +185,35 @@ namespace User
          */
         Json::Value root;
 
+        bool force_event = false;
+
         void setIslandName( );
+        void setIslandPos( );
+
+
+        LayerCityMark* set_force_mark( Json::Value& value );
+        LayerCityMark* set_main_mark( Json::Value& value );
+        LayerCityMark* set_sub_mark( Json::Value& value );
+
+        CityMap* map = nullptr;
+        int map_x = 0;
+        int map_y = 0;
+
+        bool is_animation = true;
+
+        // 新しく生まれてくるシナリオのチェック。
+        std::stack<std::function<void( )>> mark_stack;
+        std::stack<cocos2d::Vec2> mark_pos_stack;
+        void stack_mark_pos( Json::Value& value );
+        void event_recovery( );
+        void event_recovery_skip( );
+
+        // 期限を過ぎて読めなくなるシナリオのチェック。
+        std::stack<std::function<void( )>> mark_ptr_stack;
+        std::stack<cocos2d::Vec2> mark_ptr_pos_stack;
+        void stack_mark_ptr_pos( Json::Value& value );
+        void read_check( );
+        void read_check_skip( );
     };
 }
 
