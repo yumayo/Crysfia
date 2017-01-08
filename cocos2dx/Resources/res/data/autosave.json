@@ -213,7 +213,9 @@
       {
         "position": [ 6, 6 ],
         "day": [ 3 ],
-        "time": [ 0 ],
+        "morning": true,
+        "daytime": false,
+        "night": false,
         "scenario": "シナリオ4.ymy",
         "visit": false,
         "spawn": false,
@@ -223,7 +225,9 @@
       {
         "position": [ 7, 7 ],
         "day": [ 7 ],
-        "time": [ 2 ],
+        "morning": false,
+        "daytime": false,
+        "night": true,
         "scenario": "シナリオ6.ymy",
         "visit": false,
         "spawn": false,

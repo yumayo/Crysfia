@@ -2,6 +2,7 @@
 #include "LayerNovelView.h"
 
 #include "../SceneManager.h"
+#include "../../Lib/Utilitys.h"
 
 USING_NS_CC;
 
@@ -66,33 +67,67 @@ namespace User
         Director::getInstance( )->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, this );
 
         // ボードはど真ん中に設置。
-        auto next_stage = Sprite::create( u8"res/texture/system/next.stage.png" );
+        auto next_stage = Sprite::create( u8"res/texture/system/next.stage2.png" );
         next_stage->setPosition( vo + vs * 0.5 );
         next_stage->setScale( scale );
         addChild( next_stage );
 
-        // どんなイベントなのかを記入します。
-        std::string event_name;
+        int dead_line = scenario.get_dead_line( );
+        bool stay = scenario.is_stay( );
+        std::string stay_day;
+        if ( dead_line == 0 && stay )
+        {
+            // 当日 最終日
+            stay_day = u8"最後の日";
+        }
+        else
+        {
+            stay_day = StringUtils::format( u8"あと%d日", dead_line );
+        }
+        auto label_event_name = Label::createWithTTF( stay_day,
+                                                      u8"res/fonts/HGRGE.TTC",
+                                                      32 );
+        label_event_name->setScale( Lib::fitHeight( label_event_name, 32 * _scale ) );
+        label_event_name->setPosition( Vec2( 367, 230 - 100 ) * _scale );
+        next_stage->addChild( label_event_name );
+
+        std::string event_name_path;
         switch ( scenario.event )
         {
         case ScenarioPointData::Event::force:
-            event_name = u8"強制イベント";
+            event_name_path = u8"force";
             break;
         case ScenarioPointData::Event::main:
-            event_name = u8"メインイベント";
+            event_name_path = u8"main";
             break;
         case ScenarioPointData::Event::sub:
-            event_name = u8"サブイベント";
+            event_name_path = u8"sub";
             break;
         default:
             break;
         }
-        auto label_event_name = Label::createWithTTF( event_name,
-                                                      u8"res/fonts/HGRGE.TTC",
-                                                      64 * _scale );
-        label_event_name->setAnchorPoint( Vec2( 0.5F, 0 ) );
-        label_event_name->setPosition( Vec2( 273, 230 - 107 ) * _scale );
-        next_stage->addChild( label_event_name );
+        auto event_name = Sprite::create( u8"res/texture/system/event." + event_name_path + u8".png" );
+        event_name->setPosition( Vec2( 285, 230 - 46 ) * _scale );
+        next_stage->addChild( event_name );
+
+        if ( scenario.morning )
+        {
+            auto morning = Sprite::create( u8"res/texture/system/time.1.check.png" );
+            morning->setPosition( Vec2( 145, 230 - 100 ) * _scale );
+            next_stage->addChild( morning );
+        }
+        if ( scenario.daytime )
+        {
+            auto daytime = Sprite::create( u8"res/texture/system/time.2.check.png" );
+            daytime->setPosition( Vec2( 195, 230 - 100 ) * _scale );
+            next_stage->addChild( daytime );
+        }
+        if ( scenario.night )
+        {
+            auto night = Sprite::create( u8"res/texture/system/time.3.check.png" );
+            night->setPosition( Vec2( 245, 230 - 100 ) * _scale );
+            next_stage->addChild( night );
+        }
 
         // タイトル //
         // タイトルはマスクで切り取りたい。

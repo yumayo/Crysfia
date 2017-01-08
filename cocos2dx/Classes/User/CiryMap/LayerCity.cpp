@@ -340,12 +340,11 @@ namespace User
 
         if ( !mark_ptr_stack.empty( ) )
         {
-            addChild( LayerMessageBox::create( u8"期限を過ぎたシナリオがあります。", [ this ] {
-                is_animation = true; read_check( ); } ) );
+            addChild( LayerMessageBox::create( u8"期限を過ぎたシナリオがあります。", [ this ] { is_animation = true; read_check( ); } ) );
         }
         else if ( !mark_stack.empty( ) )
         {
-            addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { event_recovery( ); } ) );
+            addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { is_animation = true; event_recovery( ); } ) );
         }
         else
         {
@@ -389,7 +388,7 @@ namespace User
                     // 滞在期間中のもの。
                     // 要するに新規に読めるシナリオ。
                     // それらは、アニメーションさせて登場させます。
-                    if ( !temp.visit && !temp.spawn && mark_stay_check( temp ) )
+                    if ( !temp.visit && !temp.spawn && temp.is_stay( ) )
                     {
                         mark_stack.push( [ this, &value ] ( ) {
                             value[u8"spawn"] = true; set_force_mark( value ); } );
@@ -397,7 +396,7 @@ namespace User
                         continue;
                     }
                     // スポーンしていたのに、訪れることの出来なかったらシナリオにはバツマークを付けます。
-                    if ( !temp.visit && temp.spawn && !mark_stay_check( value ) && !temp.read_not )
+                    if ( !temp.visit && temp.spawn && !temp.is_stay( ) && !temp.read_not )
                     {
                         auto mark = set_force_mark( value );
                         mark->setEnabled( true );
@@ -413,7 +412,7 @@ namespace User
                         continue;
                     }
                     // スポーンしていたら、
-                    if ( mark_spawned_check( value ) )
+                    if ( temp.spawn )
                     {
                         set_force_mark( value );
                     }
@@ -428,7 +427,7 @@ namespace User
                     // 滞在期間中のもの。
                     // 要するに新規に読めるシナリオ。
                     // それらは、アニメーションさせて登場させます。
-                    if ( !temp.visit && !temp.spawn && mark_stay_check( temp ) )
+                    if ( !temp.visit && !temp.spawn && temp.is_stay( ) )
                     {
                         mark_stack.push( [ this, &value ] ( ) {
                             value[u8"spawn"] = true; set_main_mark( value ); } );
@@ -436,7 +435,7 @@ namespace User
                         continue;
                     }
                     // スポーンしていたのに、訪れることの出来なかったらシナリオにはバツマークを付けます。
-                    if ( !temp.visit && temp.spawn && !mark_stay_check( value ) && !temp.read_not )
+                    if ( !temp.visit && temp.spawn && !temp.is_stay( ) && !temp.read_not )
                     {
                         auto mark = set_main_mark( value );
                         mark->setEnabled( true );
@@ -452,7 +451,7 @@ namespace User
                         continue;
                     }
                     // スポーンしていたら、
-                    if ( mark_spawned_check( value ) )
+                    if ( temp.spawn )
                     {
                         set_main_mark( value );
                     }
@@ -467,7 +466,7 @@ namespace User
                     // 滞在期間中のもの。
                     // 要するに新規に読めるシナリオ。
                     // それらは、アニメーションさせて登場させます。
-                    if ( !temp.visit && !temp.spawn && mark_stay_check( temp ) )
+                    if ( !temp.visit && !temp.spawn && temp.is_stay( ) )
                     {
                         mark_stack.push( [ this, &value ] ( ) {
                             value[u8"spawn"] = true; set_sub_mark( value ); } );
@@ -475,7 +474,7 @@ namespace User
                         continue;
                     }
                     // スポーンしていたのに、訪れることの出来なかったらシナリオにはバツマークを付けます。
-                    if ( !temp.visit && temp.spawn && !mark_stay_check( value ) && !temp.read_not )
+                    if ( !temp.visit && temp.spawn && !temp.is_stay( ) && !temp.read_not )
                     {
                         auto mark = set_sub_mark( value );
                         mark->setEnabled( true );
@@ -491,7 +490,7 @@ namespace User
                         continue;
                     }
                     // スポーンしていたら、
-                    if ( mark_spawned_check( value ) )
+                    if ( temp.spawn )
                     {
                         set_sub_mark( value );
                     }
@@ -501,16 +500,7 @@ namespace User
     }
     void LayerCity::time_next( )
     {
-        // 次に、時間を一段階進めます。
-        // 朝→夕→夜
-        auto time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
-        if ( 3 <= ( time + 1 ) ) // 繰り上がったら
-        {
-            auto day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
-            UserDefault::getInstance( )->setIntegerForKey( u8"日", day + 1 );
-        }
-        time = ( time + 1 ) % 3;
-        UserDefault::getInstance( )->setIntegerForKey( u8"時刻", time );
+        Lib::next_day( );
 
         Json::StyledWriter writer;
         writeUserLocal( writer.write( root ), save_name );
@@ -636,58 +626,79 @@ namespace User
         UserDefault::getInstance( )->setIntegerForKey( u8"マップx", map_x );
         UserDefault::getInstance( )->setIntegerForKey( u8"マップy", map_y );
     }
-    bool LayerCity::mark_visit_check( Json::Value & value )
-    {
-        return false;
-    }
-    bool LayerCity::mark_spawned_check( Json::Value & value )
-    {
-        ScenarioPointData scenario;
-        scenario.initScenarioPointData( value );
-        if ( scenario.spawn ) return true;
-        return false;
-    }
-    bool LayerCity::mark_spawned_not_read_check( Json::Value & value )
-    {
-        ScenarioPointData scenario;
-        bool stay = mark_stay_check_with_make( value, scenario );
 
-        // マップに配置されていて、まだ読んだことなくて、読める期間から過ぎてしまった場合。
-        if ( scenario.spawn && !scenario.visit && !stay && !scenario.read_not ) return true;
-        return false;
-    }
-    bool LayerCity::mark_stay_check( ScenarioPointData const & scenario )
+    void User::ScenarioPointData::initScenarioPointData( Json::Value const & root )
     {
-        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
-        int now_time = UserDefault::getInstance( )->getIntegerForKey( u8"時刻" );
+        scenario = root[u8"scenario"].asString( );
+        visit = root[u8"visit"].asBool( );
+        spawn = root[u8"spawn"].asBool( );
+        read_not = root[u8"read_not"].asBool( );
+        position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
+                                  root[u8"position"][1].asInt( ) );
+        title = root[u8"title"].asString( );
 
-        if ( scenario.day_begin <= now_day &&
-             now_day <= scenario.day_end )
+        auto& day = root[u8"day"];
+        switch ( day.size( ) )
+        {
+        case 1:
+            day_begin = day[0].asInt( );
+            day_end = day[0].asInt( );
+            break;
+        case 2:
+            day_begin = day[0].asInt( );
+            day_end = day[1].asInt( );
+            break;
+        default:
+            break;
+        }
+
+        // サブ記入変数
+        // もしかしたらない可能性もあるので。
+        morning = root[u8"morning"].isNull( ) ? morning : root[u8"morning"].asBool( );
+        daytime = root[u8"daytime"].isNull( ) ? daytime : root[u8"daytime"].asBool( );
+        night = root[u8"night"].isNull( ) ? night : root[u8"night"].asBool( );
+    }
+
+    bool ScenarioPointData::is_stay( ) const
+    {
+        auto now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        auto now_time = static_cast<Times>( UserDefault::getInstance( )->getIntegerForKey( u8"時刻" ) );
+
+        if ( day_begin <= now_day &&
+             now_day <= day_end )
             ;
         else return false;
 
-        if ( scenario.time_begin <= now_time &&
-             now_time <= scenario.time_end )
-            ;
-        else return false;
+        switch ( now_time )
+        {
+        case User::ScenarioPointData::Times::morning:
+            return morning;
+            break;
+        case User::ScenarioPointData::Times::daytime:
+            return daytime;
+            break;
+        case User::ScenarioPointData::Times::night:
+            return night;
+            break;
+        default:
+            return false;
+            break;
+        }
 
         return true;
     }
-    bool LayerCity::mark_stay_check( Json::Value & value )
+    int User::ScenarioPointData::get_dead_line( ) const
     {
-        ScenarioPointData scenario;
-        scenario.initScenarioPointData( value );
-        return mark_stay_check( scenario );
-    }
-    bool LayerCity::mark_stay_check_with_make( Json::Value & value, ScenarioPointData& scenario )
-    {
-        scenario.initScenarioPointData( value );
-        return mark_stay_check( scenario );
+        int now_day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
+        int dead_line = day_end - now_day; // 12 - 10 -> 2, 9 - 10 -> -1
+        if ( dead_line < 0 ) dead_line = 0;
+        return dead_line;
     }
     LayerCityMark* LayerCity::set_force_mark( Json::Value& value )
     {
         ScenarioPointData data;
-        bool stay = mark_stay_check_with_make( value, data );
+        data.initScenarioPointData( value );
+        bool stay = data.is_stay( );
         data.event = ScenarioPointData::Event::force;
 
         auto mark = MainMark::create( );
@@ -724,7 +735,8 @@ namespace User
     LayerCityMark* LayerCity::set_main_mark( Json::Value& value )
     {
         ScenarioPointData data;
-        bool stay = mark_stay_check_with_make( value, data );
+        data.initScenarioPointData( value );
+        bool stay = data.is_stay( );
         data.event = ScenarioPointData::Event::main;
 
         auto mark = MainMark::create( );
@@ -753,7 +765,8 @@ namespace User
     LayerCityMark* LayerCity::set_sub_mark( Json::Value& value )
     {
         ScenarioPointData data;
-        bool stay = mark_stay_check_with_make( value, data );
+        data.initScenarioPointData( value );
+        bool stay = data.is_stay( );
         data.event = ScenarioPointData::Event::sub;
 
         auto mark = SubMark::create( );

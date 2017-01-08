@@ -11,46 +11,11 @@ namespace User
 {
     struct ScenarioPointData
     {
-        void initScenarioPointData( Json::Value const& root )
-        {
-            scenario = root[u8"scenario"].asString( );
-            visit = root[u8"visit"].asBool( );
-            spawn = root[u8"spawn"].asBool( );
-            read_not = root[u8"read_not"].asBool( );
-            position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
-                                      root[u8"position"][1].asInt( ) );
-            title = root[u8"title"].asString( );
+        void initScenarioPointData( Json::Value const& root );
 
-            auto& day = root[u8"day"];
-            switch ( day.size( ) )
-            {
-            case 1:
-                day_begin = day[0].asInt( );
-                day_end = day[0].asInt( );
-                break;
-            case 2:
-                day_begin = day[0].asInt( );
-                day_end = day[1].asInt( );
-                break;
-            default:
-                break;
-            }
+        bool is_stay( ) const;
 
-            auto& time = root[u8"time"];
-            switch ( time.size( ) )
-            {
-            case 1:
-                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
-                time_end = ( ScenarioPointData::Times )time[0].asInt( );
-                break;
-            case 2:
-                time_begin = ( ScenarioPointData::Times )time[0].asInt( );
-                time_end = ( ScenarioPointData::Times )time[1].asInt( );
-                break;
-            default:
-                break;
-            }
-        }
+        int get_dead_line( ) const;
 
         void initScenarioPointData( ScenarioPointData const& data )
         {
@@ -89,15 +54,16 @@ namespace User
 
         int day_end = -1;
 
-        enum Times
+        enum class Times
         {
+            none,
             morning,
             daytime,
-            night
+            night,
         };
-        Times time_begin = Times::morning;
-
-        Times time_end = Times::night;
+        bool morning = true;
+        bool daytime = true;
+        bool night = true;
 
         /**
          *  マップ画像中の表示位置。
@@ -224,13 +190,6 @@ namespace User
         void setIslandName( );
         void setIslandPos( );
 
-        bool mark_visit_check( Json::Value& value );
-        bool mark_spawned_check( Json::Value& value );
-        bool mark_spawned_not_read_check( Json::Value& value );
-
-        bool mark_stay_check( ScenarioPointData const& scenario );
-        bool mark_stay_check( Json::Value& value );
-        bool mark_stay_check_with_make( Json::Value& value, ScenarioPointData& scenario );
 
         LayerCityMark* set_force_mark( Json::Value& value );
         LayerCityMark* set_main_mark( Json::Value& value );
