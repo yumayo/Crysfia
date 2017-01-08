@@ -188,6 +188,7 @@ namespace User
         {
             ptr->make( args[0] );
         }
+        l( { } );
     }
     SCRIPT( ScriptSystem::autosave )
     {

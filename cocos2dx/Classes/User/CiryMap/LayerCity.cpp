@@ -721,6 +721,7 @@ namespace User
                     value[u8"visit"] = true;
                     Json::StyledWriter writer;
                     auto saveString = writer.write( root );
+                    value[u8"visit"] = false;
                     auto savePath = save_name;
                     Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
                     {
@@ -753,6 +754,7 @@ namespace User
             value[u8"visit"] = true;
             Json::StyledWriter writer;
             auto saveString = writer.write( root );
+            value[u8"visit"] = false;
             auto savePath = save_name;
             Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
             {
@@ -783,6 +785,7 @@ namespace User
             value[u8"visit"] = true;
             Json::StyledWriter writer;
             auto saveString = writer.write( root );
+            value[u8"visit"] = false;
             auto savePath = save_name;
             Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( data, [ this, saveString, savePath ]
             {

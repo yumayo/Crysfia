@@ -132,16 +132,18 @@ namespace User
         // タイトル //
         // タイトルはマスクで切り取りたい。
         // ここからマスクの処理を書きます。
+        Vec2 title_start_pos( 20, 200 );
+        Size title_size( 431, 67 );
         if ( auto clipping = ClippingNode::create( ) )
         {
             clipping->setInverted( false );
             clipping->setAlphaThreshold( 0.0 );
             clipping->setAnchorPoint( Vec2( 0, 0 ) );
-            clipping->setPosition( Vec2( 28, 230 - 192 ) * _scale );
+            clipping->setPosition( Vec2( title_start_pos.x, 230 - title_start_pos.y ) * _scale );
 
             if ( auto mask = Sprite::create( ) )
             {
-                mask->setTextureRect( Rect( 0, 0, 420 * _scale, 48 * _scale ) );
+                mask->setTextureRect( Rect( 0, 0, title_size.width * _scale, title_size.height * _scale ) );
                 mask->setAnchorPoint( Vec2( 0, 0 ) );
                 clipping->setStencil( mask );
             }
@@ -154,22 +156,26 @@ namespace User
             {
                 title_label->setAnchorPoint( Vec2( 0, 0 ) );
                 title_label->setTextColor( Color4B( 242, 242, 242, 255 ) ); // 白
+                auto title_label_translate_y = ( title_size.height * 0.5F - 48 * 0.5F ) * _scale;
+                title_label->setPosition( Vec2( 0, title_label_translate_y ) );
 
-                const auto slide = title_label->getContentSize( ).width - 420 * _scale;
-                auto action = title_label->getContentSize( ).width < 420 * _scale
+                const auto slide = title_label->getContentSize( ).width - title_size.width * _scale;
+                auto action = title_label->getContentSize( ).width < title_size.width * _scale
                     ? Sequence::create( DelayTime::create( 2.5F ), // 止める
                                         // MoveTo::create( ( title_label->getContentSize( ).width - 420 * _scale ) * 0.01, Vec2( -slide, 0 ) ),
                                         DelayTime::create( 2.5F ),
-                                        MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, 0 ) ),
-                                        CallFunc::create( [ title_label ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 0 ) ); } ),
-                                        MoveTo::create( 0.3F, Vec2( 0, 0 ) ),
+                                        MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, title_label_translate_y ) ),
+                                        CallFunc::create( [ title_label, title_label_translate_y ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width,
+                                                                                                                                     title_label_translate_y ) ); } ),
+                                        MoveTo::create( 0.3F, Vec2( 0, title_label_translate_y ) ),
                                         nullptr )
                     : Sequence::create( DelayTime::create( 2.5F ), // 止める
-                                        MoveTo::create( ( title_label->getContentSize( ).width - 420 * _scale ) * 0.01, Vec2( -slide, 0 ) ),
+                                        MoveTo::create( ( title_label->getContentSize( ).width - title_size.width * _scale ) * 0.01, Vec2( -slide, title_label_translate_y ) ),
                                         DelayTime::create( 2.5F ),
-                                        MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, 0 ) ),
-                                        CallFunc::create( [ title_label ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 0 ) ); } ),
-                                        MoveTo::create( 0.3F, Vec2( 0, 0 ) ),
+                                        MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, title_label_translate_y ) ),
+                                        CallFunc::create( [ title_label, title_label_translate_y ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 
+                                                                                                                                     title_label_translate_y ) ); } ),
+                                        MoveTo::create( 0.3F, Vec2( 0, title_label_translate_y ) ),
                                         nullptr );
                 title_label->runAction( RepeatForever::create( action ) );
 

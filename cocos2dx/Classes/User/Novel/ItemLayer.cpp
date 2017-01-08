@@ -86,12 +86,12 @@ namespace User
         item->setPosition( content_size / 2 );
 
         //TIPS:128にscaleを掛けてないのは、親のオブジェクトのContentSizeにスケールがかかってないからです。
-        auto scale_animation = EaseCubicActionOut::create( ScaleTo::create( 1.0F, Lib::fitHeight( this, 128 ) ) );
+        auto scale_animation = EaseCubicActionOut::create( ScaleTo::create( 1.0F, 1 ) );
         auto rotate_animation = EaseCubicActionOut::create( RotateBy::create( 1.0F, 360 ) );
         auto fade_animation = EaseCubicActionOut::create( FadeIn::create( 1.0F ) );
         auto begin_animation = Spawn::create( scale_animation, rotate_animation, fade_animation, nullptr );
-        auto up = EaseSineIn::create( ScaleTo::create( 0.25F, Lib::fitHeight( this, 128 * 2.0F ) ) );
-        auto down = EaseSineOut::create( ScaleTo::create( 0.25F, Lib::fitHeight( this, 128 * 1.0F ) ) );
+        auto up = EaseSineIn::create( ScaleTo::create( 0.25F, 2 ) );
+        auto down = EaseSineOut::create( ScaleTo::create( 0.25F, 1 ) );
         auto powan_animation = Sequence::create( up, down, nullptr );
 
         auto createButton = CallFunc::create( [ this, scale ]
