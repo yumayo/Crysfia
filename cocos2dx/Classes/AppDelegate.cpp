@@ -1,4 +1,4 @@
-﻿#include "AppDelegate.h"
+#include "AppDelegate.h"
 #include "Lib/EnvironmentDefaultData/EnvironmentDefaultData.h"
 #include "User/SceneManager.h"
 #include "User/System/DataSettings.h"

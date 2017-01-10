@@ -1,4 +1,4 @@
-ï»¿
+
 #include "UIManager.h"
 #include "BGManager.h"
 #include "FGManager.h"
@@ -50,25 +50,25 @@ namespace User
 	{
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x * 0, pos.y * 0.f));
-		layout->setContentSize(Size(winSize.x, 150));
+		layout->setContentSize(Size(winSize.x,210));
 
-		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®èƒŒæ™¯
-		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_88.png",
+		//ƒƒjƒ…[‚Ì”wŒi
+		auto menuImage = ui::Scale9Sprite::create("res/texture/system/select.base.png",
 			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
-				120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
-			Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
-				64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
+				960 / CC_CONTENT_SCALE_FACTOR(), 200 / CC_CONTENT_SCALE_FACTOR()),
+			Rect(20 / CC_CONTENT_SCALE_FACTOR(), 20 / CC_CONTENT_SCALE_FACTOR(),
+				920 / CC_CONTENT_SCALE_FACTOR(), 160 / CC_CONTENT_SCALE_FACTOR()));
 		menuImage->setPosition(layout->getContentSize().width / 2, layout->getContentSize().height * 0.5f);
 		menuImage->setContentSize(layout->getContentSize());
 		layout->addChild(menuImage);
 		Vec2 menuLayout = layout->getContentSize();
 
-		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
+		//jsonƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 		auto fileUtils = FileUtils::getInstance();
-		auto path = fileUtils->getStringFromFile("res/json/mainMenuUI.json");
+		auto path = fileUtils->getStringFromFile(u8"res/json/mainMenuUI.json");
 		rapidjson::Document doc;
 
-		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‘ãƒ¼ã‚¹
+		//jsonƒtƒ@ƒCƒ‹‚ğƒp[ƒX
 		doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
 
 		if (!doc.HasParseError())
@@ -76,8 +76,7 @@ namespace User
 			const rapidjson::Value& buttonsData = doc["Button"];
 			for (rapidjson::SizeType i = 0; i < buttonsData.Size(); i++)
 			{
-				menuButtons.push_back( ui::Button::create( buttonsData[i]["res"].GetString(),"", buttonsData[i]["res"].GetString() ) );
-				menuButtons[i]->setTitleText(buttonsData[i]["name"].GetString());
+				menuButtons.push_back(ui::Button::create(buttonsData[i]["res"]["pull"].GetString(), buttonsData[i]["res"]["push"].GetString(), buttonsData[i]["res"]["pull"].GetString()));
 				menuButtons[i]->setTitleFontSize(42);
 				menuButtons[i]->setTitleColor(Color3B::WHITE);
 
@@ -93,30 +92,30 @@ namespace User
 		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::MAIN_MENU);
 	}
 
-	//è‚²æˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‡¦ç†
+	//ˆç¬ƒƒjƒ…[‚Ìˆ—
 	void UIManager::createSubMenuWindow()
 	{
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x, pos.y * 0));
-		layout->setContentSize(Size(winSize.x, 150));
+		layout->setContentSize(Size(winSize.x, 210));
 
-		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®èƒŒæ™¯
-		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_88.png",
+		//ƒƒjƒ…[‚Ì”wŒi
+		auto menuImage = ui::Scale9Sprite::create("res/texture/system/select.base.png",
 			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
-				120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
-			Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
-				64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
+				960 / CC_CONTENT_SCALE_FACTOR(), 200 / CC_CONTENT_SCALE_FACTOR()),
+			Rect(20 / CC_CONTENT_SCALE_FACTOR(), 20 / CC_CONTENT_SCALE_FACTOR(),
+				920 / CC_CONTENT_SCALE_FACTOR(), 160 / CC_CONTENT_SCALE_FACTOR()));
 		menuImage->setPosition(layout->getContentSize().width / 2, layout->getContentSize().height * 0.5f);
 		menuImage->setContentSize(layout->getContentSize());
 		layout->addChild(menuImage);
 		Vec2 menuLayout = layout->getContentSize();
 
-		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
+		//jsonƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 		auto fileUtils = FileUtils::getInstance();
 		auto path = fileUtils->getStringFromFile("res/json/subMenuUI.json");
 		rapidjson::Document doc;
 
-		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‘ãƒ¼ã‚¹
+		//jsonƒtƒ@ƒCƒ‹‚ğƒp[ƒX
 		doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
 
 		if (!doc.HasParseError())
@@ -141,7 +140,7 @@ namespace User
 		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::BREEDING_MENU);
 	}
 
-	//å„ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ã®å‡¦ç†
+	//Šeƒƒjƒ…[ƒ{ƒ^ƒ“‚Ìˆ—
 	void UIManager::touchEventOfMainMenu(Ref * pSender, ui::Widget::TouchEventType type)
 	{
 		switch (type)
@@ -171,15 +170,15 @@ namespace User
 		}
 
 		for (auto& it : menuButtons) {
-			it->runAction( Sequence::create( CallFunc::create( [=] {it->setEnabled(false); } ),
-											 DelayTime::create(4),
-											 CallFunc::create([=] {it->setEnabled(true); }),
-											 nullptr ) );
+			it->runAction(Sequence::create(CallFunc::create([=] {it->setEnabled(false); }),
+				DelayTime::create(4),
+				CallFunc::create([=] {it->setEnabled(true); }),
+				nullptr));
 		}
 
 	}
 
-	//è‚²æˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ãƒœã‚¿ãƒ³å‡¦ç†
+	//ˆç¬ƒƒjƒ…[‚Ìƒ{ƒ^ƒ“ˆ—
 	void UIManager::touchEventOfSubMenu(Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
 	{
 		switch (type)
@@ -208,20 +207,20 @@ namespace User
 		}
 	}
 
-	//è‚²æˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¸æˆ»ã™é–¢æ•°ã§ã™
+	//ˆç¬ƒƒjƒ…[‚©‚çƒƒCƒ“ƒƒjƒ…[‚Ö–ß‚·ŠÖ”‚Å‚·
 	void UIManager::changeToMainWindow()
 	{
 		auto m = this->getChildByTag((int)tabMenu::MAIN_MENU);
 		auto s = this->getChildByTag((int)tabMenu::BREEDING_MENU);
 		swapWindow(s, m);
 
-		//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚’å–å¾—ã—ã€ã‚·ãƒ¼ãƒ³ã‹ã‚‰addChildã•ã‚Œã¦ã„ã‚‹BGManagerã«ã‚¢ã‚¯ã‚»ã‚¹ã—ã¦é–¢æ•°ã‚’å‘¼ã³å‡ºã™ã€‚
+		//Œ»İ‚ÌƒV[ƒ“‚ğæ“¾‚µAƒV[ƒ“‚©‚çaddChild‚³‚ê‚Ä‚¢‚éBGManager‚ÉƒAƒNƒZƒX‚µ‚ÄŠÖ”‚ğŒÄ‚Ño‚·B
 		auto p = this->getParent();
 		auto c = (BGManager*)p->getChildByTag((int)tabLayer::BACKGROUND);
 		c->changeBackGround((int)tabMenu::MAIN_MENU, (int)tabMenu::BREEDING_MENU);
 	}
 
-	//ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ã‚µãƒ–ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¸å¤‰æ›´ã™ã‚‹é–¢æ•°ã§ã™
+	//ƒƒCƒ“ƒƒjƒ…[‚©‚çƒTƒuƒƒjƒ…[‚Ö•ÏX‚·‚éŠÖ”‚Å‚·
 	void UIManager::changeToSubWindow()
 	{
 		auto m = this->getChildByTag((int)tabMenu::MAIN_MENU);
@@ -233,25 +232,25 @@ namespace User
 		c->changeBackGround((int)tabMenu::BREEDING_MENU, (int)tabMenu::MAIN_MENU);
 	}
 
-	//æ—¥è¨˜ç”»é¢ã¸ç§»å‹•
+	//“ú‹L‰æ–Ê‚ÖˆÚ“®
 	void UIManager::changeToDiaryWindow()
 	{
 		float fadeTime(3);
 		auto p = this->getParent();
 		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
 		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
-										 DelayTime::create(fadeTime / 2),
-										 CallFunc::create( [this] {
-											auto p = this->getParent();
-											auto layer = LayerDiary::create();
-											layer->setName(typeid(LayerDiary).name());
-											layer->setPosition(Vec2(winSize * 0.f));
-											p->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY); 
-											p->removeChildByTag((int)tabLayer::UI_MANAGER); }),
-										 nullptr) );
+			DelayTime::create(fadeTime / 2),
+			CallFunc::create([this] {
+			auto p = this->getParent();
+			auto layer = LayerDiary::create();
+			layer->setName(typeid(LayerDiary).name());
+			layer->setPosition(Vec2(winSize * 0.f));
+			p->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY);
+			p->removeChildByTag((int)tabLayer::UI_MANAGER); }),
+			nullptr));
 	}
 
-	//æƒé™¤ç”»é¢ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è²¼ã‚Šæ›¿ãˆ
+	//‘|œ‰æ–Ê‚ÌƒŒƒCƒ„[‚É“\‚è‘Ö‚¦
 	void UIManager::changeToCreaning()
 	{
 		auto p = this->getParent();
@@ -261,7 +260,7 @@ namespace User
 		p->addChild(LayerCleaning::create(), 0, (int)tabLayer::CLEANING);
 	}
 
-	//é£Ÿäº‹ç”»é¢åŠã³ç€æ›¿ãˆç”»é¢ã¸ç§»å‹•----------------------------------------------------------------------
+	//H–‰æ–Ê‹y‚Ñ’…‘Ö‚¦‰æ–Ê‚ÖˆÚ“®----------------------------------------------------------------------
 	void UIManager::changeToBreeding(int _menuId)
 	{
 		float fadeTime(2);
@@ -276,8 +275,8 @@ namespace User
 			nullptr));
 	}
 
-	//ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å…¥ã‚Œæ›¿ãˆã‚‹é–¢æ•°ã§ã™ã€‚ç¾åœ¨ã¯Nodeã®æŒ‡å®šã—ã‹ã§ããªã„ã§ã™
-	//TODO:PosæŒ‡å®šã€ç§»å‹•æ™‚é–“ã®æŒ‡å®šã€é…å»¶æ™‚é–“ã®æŒ‡å®šã‚’ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
+	//ƒŒƒCƒ„[‚ğ“ü‚ê‘Ö‚¦‚éŠÖ”‚Å‚·BŒ»İ‚ÍNode‚Ìw’è‚µ‚©‚Å‚«‚È‚¢‚Å‚·
+	//TODO:Posw’èAˆÚ“®ŠÔ‚Ìw’èA’x‰„ŠÔ‚Ìw’è‚ğ‚Å‚«‚é‚æ‚¤‚É‚·‚éB
 	void UIManager::swapWindow(Node * moveOutObj, Node * moveInObj)
 	{
 		auto size = Director::getInstance()->getVisibleSize();
@@ -289,17 +288,17 @@ namespace User
 		moveInObj->runAction(Sequence::create(delay, moveIn, nullptr));
 	}
 
-	//ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”Ÿæˆ
-	//TODO:PosæŒ‡å®šã€SizeæŒ‡å®šã€ç”»åƒæŒ‡å®šã‚’ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
+	//ƒIƒvƒVƒ‡ƒ“ƒEƒBƒ“ƒhƒE‚Ì¶¬
+	//TODO:Posw’èASizew’èA‰æ‘œw’è‚ğ‚Å‚«‚é‚æ‚¤‚É‚·‚éB
 	void UIManager::setOptionWindow()
 	{
 		float fadeTime(2);
 		auto p = this->getParent();
 		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
-		this->runAction(Sequence::create(	CallFunc::create([=] {f->fading(fadeTime); }),
-											DelayTime::create(fadeTime / 2),
-											CallFunc::create([=] {
-											p->addChild(LayerOption::create(), 4); } ),
-											nullptr ));
+		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
+			DelayTime::create(fadeTime / 2),
+			CallFunc::create([=] {
+			p->addChild(LayerOption::create(), 4); }),
+			nullptr));
 	}
 }

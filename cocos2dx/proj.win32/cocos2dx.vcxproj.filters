@@ -25,9 +25,6 @@
     <Filter Include="src\User\CityMap">
       <UniqueIdentifier>{33bda6f5-6a3c-4d9b-8325-9193a08d2a11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\User\Title">
-      <UniqueIdentifier>{b7fa4f3a-df70-4b00-82a3-072b5487863a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\User\TouchiEvent">
       <UniqueIdentifier>{69a70ced-98ef-4e5c-8434-fb78997061a6}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,9 @@
     </Filter>
     <Filter Include="src\User\Ishibashi">
       <UniqueIdentifier>{56fd8090-a36b-4c7e-9cb7-2bd76c9b2651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\Title">
+      <UniqueIdentifier>{b7fa4f3a-df70-4b00-82a3-072b5487863a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
