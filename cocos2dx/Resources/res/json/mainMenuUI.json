@@ -1,40 +1,51 @@
 {
-  "Button": 
-  [
+  "Button": [
     {
       "name": "物語",
-      "res": "res/Image/WindowBase/WinBase_24.png",
-      "pos": 
-      {
-        "x": 0.125,
-        "y": 0.5
+      "res": {
+        "pull": "res/texture/system/物語.png",
+        "push": "res/texture/system/物語_押した時.png"
+      },
+
+      "pos": {
+        "x": 0.15,
+        "y": 0.48
       }
     },
+
     {
       "name": "育成",
-      "res": "res/Image/WindowBase/WinBase_24.png",
-      "pos": 
-      {
-        "x": 0.375,
-        "y": 0.5
+      "res": {
+        "pull": "res/texture/system/お世話.png",
+        "push": "res/texture/system/お世話_押した時.png"
+      },
+      "pos": {
+        "x": 0.38,
+        "y": 0.48
       }
     },
+
     {
       "name": "日記",
-      "res": "res/Image/WindowBase/WinBase_24.png",
-      "pos": 
-      {
-        "x": 0.625,
-        "y": 0.5
+      "res": {
+        "pull": "res/texture/system/日記.png",
+        "push": "res/texture/system/日記_押した時.png"
+      },
+      "pos": {
+        "x": 0.61,
+        "y": 0.48
       }
     },
+
     {
       "name": "設定",
-      "res": "res/Image/WindowBase/WinBase_24.png",
-      "pos": 
-      {
-        "x": 0.875,
-        "y": 0.5
+      "res": {
+        "pull": "res/texture/system/その他.png",
+        "push": "res/texture/system/その他_押した時.png"
+      },
+      "pos": {
+        "x": 0.85,
+        "y": 0.48
       }
     }
   ]
@@ -42,5 +53,5 @@
 
 
 
-  
+
 }

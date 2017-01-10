@@ -50,14 +50,14 @@ namespace User
 	{
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x * 0, pos.y * 0.f));
-		layout->setContentSize(Size(winSize.x, 150));
+		layout->setContentSize(Size(winSize.x,210));
 
 		//メニューの背景
-		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_88.png",
+		auto menuImage = ui::Scale9Sprite::create("res/texture/system/select.base.png",
 			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
-				120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
-			Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
-				64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
+				960 / CC_CONTENT_SCALE_FACTOR(), 200 / CC_CONTENT_SCALE_FACTOR()),
+			Rect(20 / CC_CONTENT_SCALE_FACTOR(), 20 / CC_CONTENT_SCALE_FACTOR(),
+				920 / CC_CONTENT_SCALE_FACTOR(), 160 / CC_CONTENT_SCALE_FACTOR()));
 		menuImage->setPosition(layout->getContentSize().width / 2, layout->getContentSize().height * 0.5f);
 		menuImage->setContentSize(layout->getContentSize());
 		layout->addChild(menuImage);
@@ -65,7 +65,7 @@ namespace User
 
 		//jsonファイルの読み込み
 		auto fileUtils = FileUtils::getInstance();
-		auto path = fileUtils->getStringFromFile("res/json/mainMenuUI.json");
+		auto path = fileUtils->getStringFromFile(u8"res/json/mainMenuUI.json");
 		rapidjson::Document doc;
 
 		//jsonファイルをパース
@@ -76,8 +76,7 @@ namespace User
 			const rapidjson::Value& buttonsData = doc["Button"];
 			for (rapidjson::SizeType i = 0; i < buttonsData.Size(); i++)
 			{
-				menuButtons.push_back( ui::Button::create( buttonsData[i]["res"].GetString(),"", buttonsData[i]["res"].GetString() ) );
-				menuButtons[i]->setTitleText(buttonsData[i]["name"].GetString());
+				menuButtons.push_back(ui::Button::create(buttonsData[i]["res"]["pull"].GetString(), buttonsData[i]["res"]["push"].GetString(), buttonsData[i]["res"]["pull"].GetString()));
 				menuButtons[i]->setTitleFontSize(42);
 				menuButtons[i]->setTitleColor(Color3B::WHITE);
 
@@ -98,14 +97,14 @@ namespace User
 	{
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x, pos.y * 0));
-		layout->setContentSize(Size(winSize.x, 150));
+		layout->setContentSize(Size(winSize.x, 210));
 
 		//メニューの背景
-		auto menuImage = ui::Scale9Sprite::create("res/Image/WindowBase/WinBase_88.png",
+		auto menuImage = ui::Scale9Sprite::create("res/texture/system/select.base.png",
 			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
-				120 / CC_CONTENT_SCALE_FACTOR(), 120 / CC_CONTENT_SCALE_FACTOR()),
-			Rect(32 / CC_CONTENT_SCALE_FACTOR(), 32 / CC_CONTENT_SCALE_FACTOR(),
-				64 / CC_CONTENT_SCALE_FACTOR(), 64 / CC_CONTENT_SCALE_FACTOR()));
+				960 / CC_CONTENT_SCALE_FACTOR(), 200 / CC_CONTENT_SCALE_FACTOR()),
+			Rect(20 / CC_CONTENT_SCALE_FACTOR(), 20 / CC_CONTENT_SCALE_FACTOR(),
+				920 / CC_CONTENT_SCALE_FACTOR(), 160 / CC_CONTENT_SCALE_FACTOR()));
 		menuImage->setPosition(layout->getContentSize().width / 2, layout->getContentSize().height * 0.5f);
 		menuImage->setContentSize(layout->getContentSize());
 		layout->addChild(menuImage);
@@ -171,10 +170,10 @@ namespace User
 		}
 
 		for (auto& it : menuButtons) {
-			it->runAction( Sequence::create( CallFunc::create( [=] {it->setEnabled(false); } ),
-											 DelayTime::create(4),
-											 CallFunc::create([=] {it->setEnabled(true); }),
-											 nullptr ) );
+			it->runAction(Sequence::create(CallFunc::create([=] {it->setEnabled(false); }),
+				DelayTime::create(4),
+				CallFunc::create([=] {it->setEnabled(true); }),
+				nullptr));
 		}
 
 	}
@@ -240,15 +239,15 @@ namespace User
 		auto p = this->getParent();
 		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
 		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
-										 DelayTime::create(fadeTime / 2),
-										 CallFunc::create( [this] {
-											auto p = this->getParent();
-											auto layer = LayerDiary::create();
-											layer->setName(typeid(LayerDiary).name());
-											layer->setPosition(Vec2(winSize * 0.f));
-											p->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY); 
-											p->removeChildByTag((int)tabLayer::UI_MANAGER); }),
-										 nullptr) );
+			DelayTime::create(fadeTime / 2),
+			CallFunc::create([this] {
+			auto p = this->getParent();
+			auto layer = LayerDiary::create();
+			layer->setName(typeid(LayerDiary).name());
+			layer->setPosition(Vec2(winSize * 0.f));
+			p->addChild(layer, (int)tabMenu::DIARY_MENU, (int)tabLayer::DIARY);
+			p->removeChildByTag((int)tabLayer::UI_MANAGER); }),
+			nullptr));
 	}
 
 	//掃除画面のレイヤーに貼り替え
@@ -296,10 +295,10 @@ namespace User
 		float fadeTime(2);
 		auto p = this->getParent();
 		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
-		this->runAction(Sequence::create(	CallFunc::create([=] {f->fading(fadeTime); }),
-											DelayTime::create(fadeTime / 2),
-											CallFunc::create([=] {
-											p->addChild(LayerOption::create(), 4); } ),
-											nullptr ));
+		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
+			DelayTime::create(fadeTime / 2),
+			CallFunc::create([=] {
+			p->addChild(LayerOption::create(), 4); }),
+			nullptr));
 	}
 }
