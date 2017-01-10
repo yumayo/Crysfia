@@ -1,4 +1,4 @@
-# ifndef __DataSettings__
+﻿# ifndef __DataSettings__
 # define __DataSettings__
 
 # include "cocos2d.h"

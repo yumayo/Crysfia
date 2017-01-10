@@ -149,7 +149,7 @@ namespace User
 		case ui::Widget::TouchEventType::ENDED:
 
 			if (pSender == menuButtons[(int)ButtonType::STORY]) {
-				SceneManager::createIslandMap();
+				SceneManager::createCityMap();
 				break;
 			}
 			if (pSender == menuButtons[(int)ButtonType::BREEDING]) {

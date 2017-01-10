@@ -1,4 +1,4 @@
-#include "ScriptStaticData.h"
+﻿#include "ScriptStaticData.h"
 
 USING_NS_CC;
 

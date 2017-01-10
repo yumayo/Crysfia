@@ -1,4 +1,4 @@
-#include "ScriptSystem.h"
+ï»¿#include "ScriptSystem.h"
 
 #include "ScriptStaticData.h"
 #include "OptionalValues.h"
@@ -188,6 +188,7 @@ namespace User
         {
             ptr->make( args[0] );
         }
+        l( { } );
     }
     SCRIPT( ScriptSystem::autosave )
     {
@@ -232,7 +233,7 @@ namespace User
         {
         case 1:
         {
-            std::vector<std::string> names = { u8"–¼‘O", u8"n" };
+            std::vector<std::string> names = { u8"åå‰", u8"n" };
 
             std::string variable = args[0];
             std::string humanName = variable;

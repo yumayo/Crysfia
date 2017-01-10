@@ -1,4 +1,4 @@
-# ifndef __SceneTy__
+﻿# ifndef __SceneTy__
 # define __SceneTy__
 
 # include "cocos2d.h"

@@ -1,4 +1,4 @@
-# ifndef __VoiceLayer__
+﻿# ifndef __VoiceLayer__
 # define __VoiceLayer__
 
 # include "../LayerBase.h"

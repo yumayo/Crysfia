@@ -1,4 +1,4 @@
-# ifndef __StillLayer__
+﻿# ifndef __StillLayer__
 # define __StillLayer__
 
 # include "../LayerBase.h"

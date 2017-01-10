@@ -1,4 +1,4 @@
-#include "TextData.h"
+ï»¿#include "TextData.h"
 
 #include "cocos2d.h"
 
@@ -28,7 +28,7 @@ namespace User
 
     void alignFirst( std::string & lineString )
     {
-        // s‚Ìæ“ª‚É‹ó”’‚ª‚ ‚Á‚½ê‡‚Í‹l‚ß‚Ü‚·B
+        // è¡Œã®å…ˆé ­ã«ç©ºç™½ãŒã‚ã£ãŸå ´åˆã¯è©°ã‚ã¾ã™ã€‚
         size_t findPosition;
         if ( ( findPosition = lineString.find_first_not_of( u8" " ) ) != std::string::npos ) lineString = lineString.substr( findPosition );
         else lineString = u8"";
@@ -64,8 +64,8 @@ namespace User
     }
     bool TextData::isEmpty( )
     {
-        // q‹Ÿ‚ÍŠÖŒW‚È‚¢‚Å‚·B
-        // ‘I‘ğˆ‚Å‚Í•K‚¸Ì‚Ä‚ç‚ê‚é‘I‘ğ‚ª‚ ‚é‚Ì‚ÅB
+        // å­ä¾›ã¯é–¢ä¿‚ãªã„ã§ã™ã€‚
+        // é¸æŠè‚¢ã§ã¯å¿…ãšæ¨ã¦ã‚‰ã‚Œã‚‹é¸æŠãŒã‚ã‚‹ã®ã§ã€‚
         return !work->parentPointer && /*work->children.empty( ) &&*/ work->data.empty( );
     }
     void TextData::clear( )
@@ -87,7 +87,7 @@ namespace User
 
         size_t stringPosition = 0;
         size_t findPosition = 0;
-        size_t lineNumber = 1; // •’Ê‚ÌƒeƒLƒXƒgƒGƒfƒBƒ^‚Å‚Ís”Ô†‚Íu1v‚©‚çn‚Ü‚é‚Ì‚ÅB
+        size_t lineNumber = 1; // æ™®é€šã®ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ‡ã‚£ã‚¿ã§ã¯è¡Œç•ªå·ã¯ã€Œ1ã€ã‹ã‚‰å§‹ã¾ã‚‹ã®ã§ã€‚
         const std::string eolString = u8"\n";
         const size_t eolSize = std::string( eolString ).size( );
         while ( findPosition != std::string::npos )
@@ -114,7 +114,7 @@ namespace User
         {
             try
             {
-                errorSStream( "‘I‘ğˆ‚Ì‘Î‰æ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB", work->data.back( ).debugData );
+                errorSStream( "é¸æŠè‚¢ã®å¯¾å¿œå…ˆãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚", work->data.back( ).debugData );
             }
             catch ( char const* str )
             {
@@ -134,18 +134,18 @@ namespace User
 
         auto scriptPosition = commentErased.find( u8"@", 0 );
 
-        // ƒXƒNƒŠƒvƒgƒf[ƒ^‚ğì‚è‚Ü‚·B
+        // ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ä½œã‚Šã¾ã™ã€‚
         DebugWithLineData lineData;
-        // ƒfƒoƒbƒOƒf[ƒ^‚Íƒmƒxƒ‹ƒf[ƒ^‚ÆƒXƒNƒŠƒvƒgƒf[ƒ^‚Å‹¤’Ê‚È‚Ì‚ÅAæ‚É‹l‚ß‚İ‚Ü‚·B
+        // ãƒ‡ãƒãƒƒã‚°ãƒ‡ãƒ¼ã‚¿ã¯ãƒãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã¨ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ‡ãƒ¼ã‚¿ã§å…±é€šãªã®ã§ã€å…ˆã«è©°ã‚è¾¼ã¿ã¾ã™ã€‚
         lineData.debugData = debugData;
 
-        // ƒXƒNƒŠƒvƒgƒf[ƒ^‚ªŒ©‚Â‚©‚Á‚½ê‡B
+        // ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ‡ãƒ¼ã‚¿ãŒè¦‹ã¤ã‹ã£ãŸå ´åˆã€‚
         if ( scriptPosition != std::string::npos )
         {
             auto novelString = commentErased.substr( 0, scriptPosition );
             auto scriptString = commentErased.substr( scriptPosition );
 
-            // ƒmƒxƒ‹ƒf[ƒ^‚ªŠÜ‚Ü‚ê‚Ä‚¢‚éê‡
+            // ãƒãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãŒå«ã¾ã‚Œã¦ã„ã‚‹å ´åˆ
             if ( novelString != u8"" )
             {
                 lineData.lineData = novelString;
@@ -156,7 +156,7 @@ namespace User
 
             try
             {
-                // ƒXƒNƒŠƒvƒgƒf[ƒ^‚Ì’†‚ÉƒvƒŠƒvƒƒZƒX–½—ß‚ª‡‚Á‚½ê‡‚ÉŠ„‚è‚İˆ—‚ğ‚µ‚Ü‚·B
+                // ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ‡ãƒ¼ã‚¿ã®ä¸­ã«ãƒ—ãƒªãƒ—ãƒ­ã‚»ã‚¹å‘½ä»¤ãŒåˆã£ãŸå ´åˆã«å‰²ã‚Šè¾¼ã¿å‡¦ç†ã‚’ã—ã¾ã™ã€‚
                 if ( !isPreprocess( lineData ) ) work->data.emplace_back( lineData );
             }
             catch ( char const* str )
@@ -164,7 +164,7 @@ namespace User
 
             }
         }
-        // ƒmƒxƒ‹ƒf[ƒ^‚¾‚¯‚Ìê‡
+        // ãƒãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã ã‘ã®å ´åˆ
         else if ( commentErased != u8"" )
         {
             lineData.lineData = commentErased;
@@ -195,7 +195,7 @@ namespace User
         }
         catch ( char const* errorString )
         {
-            // ‚±‚±‚ÌƒGƒ‰[‚Íã‘w‚ÌŠÖ”‚Åtryˆ—‚µ‚Ä‚¢‚Ü‚·B
+            // ã“ã“ã®ã‚¨ãƒ©ãƒ¼ã¯ä¸Šå±¤ã®é–¢æ•°ã§tryå‡¦ç†ã—ã¦ã„ã¾ã™ã€‚
             errorSStream( errorString, scriptAnalysis.getTagWithData( ).debugData );
         }
 
@@ -203,7 +203,7 @@ namespace User
     }
     void TextData::import( ArgumentList const& args )
     {
-        if ( args.size( ) != 1 ) throw( "import‚Ìƒtƒ@ƒCƒ‹‚Íˆê‚Â‚Å‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB" );
+        if ( args.size( ) != 1 ) throw( "importã®ãƒ•ã‚¡ã‚¤ãƒ«ã¯ä¸€ã¤ã§ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚" );
 
         TextData textData;
         textData.makeData( args[0] );
@@ -212,14 +212,14 @@ namespace User
     }
     void TextData::beginland( ArgumentList const& args )
     {
-        if ( args.size( ) != 1 ) throw( "beginland‚Ìƒ^ƒO‚Íˆê‚Â‚Å‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB" );
+        if ( args.size( ) != 1 ) throw( "beginlandã®ã‚¿ã‚°ã¯ä¸€ã¤ã§ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚" );
 
         work->children.insert( std::make_pair( args[0], TextChankData( work ) ) );
         work = &work->children[args[0]];
     }
     void TextData::endland( ArgumentList const& args )
     {
-        if ( !work->parentPointer ) throw( "endland‚É‘Î‰‚·‚ébeginland‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½B" );
+        if ( !work->parentPointer ) throw( "endlandã«å¯¾å¿œã™ã‚‹beginlandãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚" );
 
         work = work->parentPointer;
     }

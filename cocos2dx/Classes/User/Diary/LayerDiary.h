@@ -1,4 +1,4 @@
-# ifndef __LayerDiary__
+﻿# ifndef __LayerDiary__
 # define __LayerDiary__
 
 #include "cocos2d.h"

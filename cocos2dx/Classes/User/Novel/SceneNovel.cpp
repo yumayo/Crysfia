@@ -1,4 +1,4 @@
-#include "SceneNovel.h"
+ï»¿#include "SceneNovel.h"
 
 #include "TextTypes.hpp"
 
@@ -39,8 +39,8 @@ namespace User
         scene->addChild( createLayer<FlickFunctionLayer>( ), (int)Tag::FlickFunction );
         scene->addChild( createLayer<BackLogLayer>( ), (int)Tag::BackLog );
 
-        // ƒVƒXƒeƒ€ƒŒƒCƒ„[‚Ì“o˜^
-        // ‘S‚Ä‚ÌƒXƒNƒŠƒvƒg‚ği‚é"sys"‚Í‰Šú‰»‚Ì“_‚Å“o˜^‚ğ‚µ‚Ü‚·B
+        // ã‚·ã‚¹ãƒ†ãƒ ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç™»éŒ²
+        // å…¨ã¦ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å¸ã‚‹"sys"ã¯åˆæœŸåŒ–ã®æ™‚ç‚¹ã§ç™»éŒ²ã‚’ã—ã¾ã™ã€‚
         auto system = createLayer<SystemLayer>( );
         scene->addChild( system, (int)Tag::System );
         auto script = new ScriptSystem( system );

@@ -1,4 +1,4 @@
-#ifndef __EnvironmentDefaultData__
+﻿#ifndef __EnvironmentDefaultData__
 #define __EnvironmentDefaultData__
 
 # include "cocos2d.h"

@@ -1,4 +1,4 @@
-#include "DataSettings.h"
+ï»¿#include "DataSettings.h"
 
 #include "../Novel/INIReader.h"
 #include "../Novel/INIWriter.h"
@@ -37,10 +37,10 @@ namespace User
     {
         auto userDefault = UserDefault::getInstance( );
 
-        using Type = std::string; // bool, int, float, string‚Ì•¶š—ñ‚ğ“ü‚ê‚Ü‚·B
-        using Key = std::string; // •Ï”‚É•t‚¯‚½–¼‘O‚ğŠi”[‚µ‚Ü‚·B
-        using Value = std::string; // •Ï”‚ÌÀ‘Ô‚ğŠi”[‚µ‚Ü‚·B
-        using ValueMap = std::map<Key, Value>; // •Ï”‚Ì–¼‘O‚ğ•Ï”‚ÌÀ‘Ì‚ğ‚Ü‚Æ‚ß‚½ˆê——‚ğŠi”[‚µ‚Ü‚·B
+        using Type = std::string; // bool, int, float, stringã®æ–‡å­—åˆ—ã‚’å…¥ã‚Œã¾ã™ã€‚
+        using Key = std::string; // å¤‰æ•°ã«ä»˜ã‘ãŸåå‰ã‚’æ ¼ç´ã—ã¾ã™ã€‚
+        using Value = std::string; // å¤‰æ•°ã®å®Ÿæ…‹ã‚’æ ¼ç´ã—ã¾ã™ã€‚
+        using ValueMap = std::map<Key, Value>; // å¤‰æ•°ã®åå‰ã‚’å¤‰æ•°ã®å®Ÿä½“ã‚’ã¾ã¨ã‚ãŸä¸€è¦§ã‚’æ ¼ç´ã—ã¾ã™ã€‚
 
         {
             Type type = u8"bool";
@@ -83,18 +83,18 @@ namespace User
             }
         }
     }
-    // ƒ†[ƒU[ƒfƒtƒHƒ‹ƒg‚Ì’†g‚ğINIŒ^‚É‚µ‚Ä•Ô‚µ‚Ü‚·B
-    // ƒ†[ƒU[ƒfƒtƒHƒ‹ƒg‚Å‚ÍA’†g‚ğ—ñ‹“‚·‚é‚±‚Æ‚ªo—ˆ‚È‚¢‚Ì‚ÅA
-    // ƒf[ƒ^‚ğæ‚èo‚·Û‚ÉAƒL[‚ÌŒ³‚Æ‚È‚éINIƒtƒ@ƒCƒ‹‚ğ’ñ¦‚µ‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ä¸­èº«ã‚’INIå‹ã«ã—ã¦è¿”ã—ã¾ã™ã€‚
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ã€ä¸­èº«ã‚’åˆ—æŒ™ã™ã‚‹ã“ã¨ãŒå‡ºæ¥ãªã„ã®ã§ã€
+    // ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šå‡ºã™éš›ã«ã€ã‚­ãƒ¼ã®å…ƒã¨ãªã‚‹INIãƒ•ã‚¡ã‚¤ãƒ«ã‚’æç¤ºã—ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚
     INIReader getUserDefault( INIReader& iniReader )
     {
         INIReader ret;
 
-        // INIƒf[ƒ^‚ÌƒL[‚©‚çˆê’v‚·‚éƒ†[ƒU[ƒfƒtƒHƒ‹ƒg‚Ì’†g‚ğæ‚èo‚µ‚½‚¢B
-        using Type = std::string; // bool, int, float, string‚Ì•¶š—ñ‚ğ“ü‚ê‚Ü‚·B
-        using Key = std::string; // •Ï”‚É•t‚¯‚½–¼‘O‚ğŠi”[‚µ‚Ü‚·B
-        using Value = std::string; // •Ï”‚ÌÀ‘Ô‚ğŠi”[‚µ‚Ü‚·B
-        using ValueMap = std::map<Key, Value>; // •Ï”‚Ì–¼‘O‚ğ•Ï”‚ÌÀ‘Ì‚ğ‚Ü‚Æ‚ß‚½ˆê——‚ğŠi”[‚µ‚Ü‚·B
+        // INIãƒ‡ãƒ¼ã‚¿ã®ã‚­ãƒ¼ã‹ã‚‰ä¸€è‡´ã™ã‚‹ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ä¸­èº«ã‚’å–ã‚Šå‡ºã—ãŸã„ã€‚
+        using Type = std::string; // bool, int, float, stringã®æ–‡å­—åˆ—ã‚’å…¥ã‚Œã¾ã™ã€‚
+        using Key = std::string; // å¤‰æ•°ã«ä»˜ã‘ãŸåå‰ã‚’æ ¼ç´ã—ã¾ã™ã€‚
+        using Value = std::string; // å¤‰æ•°ã®å®Ÿæ…‹ã‚’æ ¼ç´ã—ã¾ã™ã€‚
+        using ValueMap = std::map<Key, Value>; // å¤‰æ•°ã®åå‰ã‚’å¤‰æ•°ã®å®Ÿä½“ã‚’ã¾ã¨ã‚ãŸä¸€è¦§ã‚’æ ¼ç´ã—ã¾ã™ã€‚
 
         auto userDefault = UserDefault::getInstance( );
 

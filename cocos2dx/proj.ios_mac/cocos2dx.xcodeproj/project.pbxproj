@@ -236,6 +236,8 @@
 		FF573D5B1E13816D0009827E /* TitleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF573CB11E13816C0009827E /* TitleManager.cpp */; };
 		FF573D5C1E13816D0009827E /* EventListenerGesture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF573CB41E13816C0009827E /* EventListenerGesture.cpp */; };
 		FF573D5D1E13816D0009827E /* EventListenerGesture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF573CB41E13816C0009827E /* EventListenerGesture.cpp */; };
+		FFE20B6C1E1EAF2000576200 /* LayerNovelView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFE20B6A1E1EAF2000576200 /* LayerNovelView.cpp */; };
+		FFE20B6D1E1EAF2000576200 /* LayerNovelView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFE20B6A1E1EAF2000576200 /* LayerNovelView.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -411,7 +413,7 @@
 		FF573C3A1E13816C0009827E /* SceneIslandMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneIslandMap.cpp; sourceTree = "<group>"; };
 		FF573C3B1E13816C0009827E /* SceneIslandMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneIslandMap.h; sourceTree = "<group>"; };
 		FF573C3C1E13816C0009827E /* LayerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayerBase.cpp; sourceTree = "<group>"; };
-		FF573C3D1E13816C0009827E /* LayerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerBase.h; sourceTree = "<group>"; };
+		FF573C3D1E13816C0009827E /* LayerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LayerBase.h; sourceTree = "<group>"; };
 		FF573C3F1E13816C0009827E /* LayerSave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayerSave.cpp; sourceTree = "<group>"; };
 		FF573C401E13816C0009827E /* LayerSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerSave.h; sourceTree = "<group>"; };
 		FF573C421E13816C0009827E /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
@@ -525,6 +527,8 @@
 		FF573CB21E13816C0009827E /* TitleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleManager.h; sourceTree = "<group>"; };
 		FF573CB41E13816C0009827E /* EventListenerGesture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventListenerGesture.cpp; sourceTree = "<group>"; };
 		FF573CB51E13816C0009827E /* EventListenerGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventListenerGesture.h; sourceTree = "<group>"; };
+		FFE20B6A1E1EAF2000576200 /* LayerNovelView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayerNovelView.cpp; sourceTree = "<group>"; };
+		FFE20B6B1E1EAF2000576200 /* LayerNovelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerNovelView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -841,6 +845,8 @@
 		FF573C251E13816C0009827E /* CiryMap */ = {
 			isa = PBXGroup;
 			children = (
+				FFE20B6A1E1EAF2000576200 /* LayerNovelView.cpp */,
+				FFE20B6B1E1EAF2000576200 /* LayerNovelView.h */,
 				FF573C261E13816C0009827E /* LayerCity.cpp */,
 				FF573C271E13816C0009827E /* LayerCity.h */,
 				FF573C281E13816C0009827E /* LayerOption.cpp */,
@@ -1261,6 +1267,7 @@
 				FF573D5A1E13816D0009827E /* TitleManager.cpp in Sources */,
 				FF573D041E13816C0009827E /* FlickFunctionLayer.cpp in Sources */,
 				FF573CFC1E13816C0009827E /* TouchManager.cpp in Sources */,
+				FFE20B6C1E1EAF2000576200 /* LayerNovelView.cpp in Sources */,
 				FF573CD81E13816C0009827E /* UIManager.cpp in Sources */,
 				FF573CEC1E13816C0009827E /* SceneIslandMap.cpp in Sources */,
 				FF573CDA1E13816C0009827E /* LayerCity.cpp in Sources */,
@@ -1341,6 +1348,7 @@
 				FF573D1D1E13816C0009827E /* SceneNovel.cpp in Sources */,
 				FF573D2B1E13816C0009827E /* ScriptName.cpp in Sources */,
 				FF573D1B1E13816C0009827E /* SaveLayer.cpp in Sources */,
+				FFE20B6D1E1EAF2000576200 /* LayerNovelView.cpp in Sources */,
 				FF573D111E13816C0009827E /* Live2dLayer.cpp in Sources */,
 				FF573D331E13816C0009827E /* ScriptVoice.cpp in Sources */,
 				FF573D4D1E13816D0009827E /* VoiceLayer.cpp in Sources */,

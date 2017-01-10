@@ -1,4 +1,4 @@
-#include "StringUtil.h"
+ï»¿#include "StringUtil.h"
 
 #include <ctype.h>
 
@@ -15,7 +15,7 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0.0 == ret && s == endptr ) )
         {
-            throw( "–³Œø‚È”’l‚Å‚·B" );
+            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
         }
         return ret;
     }
@@ -30,7 +30,7 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0 == ret && s == endptr ) )
         {
-            throw( "–³Œø‚È”’l‚Å‚·B" );
+            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
         }
         return ret;
     }
@@ -56,7 +56,7 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0.0F == ret && s == endptr ) )
         {
-            throw( "–³Œø‚È”’l‚Å‚·B" );
+            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
         }
         return ret;
     }

@@ -1,4 +1,4 @@
-#include "LayerCleaning.h"
+ï»¿#include "LayerCleaning.h"
 #include "SceneBreeding.h"
 #include "LayerManager.h"
 USING_NS_CC;
@@ -16,8 +16,8 @@ namespace User
 	{
 		
 
-		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"‰æ–Ê‚ğƒ^ƒbƒv‚Å\n ‚¨‘|œŠJnI") :
-			Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"‚«‚ê‚¢‚¾‚æ(=ßƒÖß)É");
+		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"ç”»é¢ã‚’ã‚¿ãƒƒãƒ—ã§Â¥n ãŠæƒé™¤é–‹å§‹ï¼") :
+			Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"ãã‚Œã„ã ã‚ˆ(=ï¾ŸÏ‰ï¾Ÿ)ï¾‰");
 
 		bottle->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.5f));
 		bottle->setScale(0.5f);
@@ -54,11 +54,11 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
-		//UserDefault‚Å’l‚ğæ‚èo‚µ‚½‚èƒZƒbƒg‚µ‚½‚è‚·‚é
+		//UserDefaultã§å€¤ã‚’å–ã‚Šå‡ºã—ãŸã‚Šã‚»ãƒƒãƒˆã—ãŸã‚Šã™ã‚‹
 		UserDefault* _userDef = UserDefault::getInstance();
 		_userDef->setIntegerForKey("aaa", 100);
 		auto hoge = _userDef->getIntegerForKey("aaa");
-		log(u8"“ú‚É‚¿=[%d]", hoge);
+		log(u8"æ—¥ã«ã¡=[%d]", hoge);
 
 		auto background = Sprite::create("res/texture/home/cleaning_bg.jpg");
 		background->setPosition(winSize / 2);
@@ -86,22 +86,22 @@ namespace User
 	{
 		
 		listener->onTouchBegan = [=](Touch* touch, Event* event) {
-			//ƒrƒ“‚Æƒ^ƒbƒ`‚µ‚½êŠ‚Ì‚ ‚½‚è”»’è‚ğ‚Æ‚é‚½‚ßƒ^ƒbƒ`‚µ‚½ˆÊ’u‚ğæ“¾
+			//ãƒ“ãƒ³ã¨ã‚¿ãƒƒãƒã—ãŸå ´æ‰€ã®ã‚ãŸã‚Šåˆ¤å®šã‚’ã¨ã‚‹ãŸã‚ã‚¿ãƒƒãƒã—ãŸä½ç½®ã‚’å–å¾—
 			touchLocation = touch->getLocation();
 			return true;
 		};
 
-		//ƒXƒƒCƒvˆ—
+		//ã‚¹ãƒ¯ã‚¤ãƒ—å‡¦ç†
 		listener->onTouchMoved = [this](Touch* touch, Event* event) {
 
-			//‚PƒtƒŒ[ƒ€‘O‚Ìƒ^ƒbƒ`ˆÊ’u‚Æ‚Ì·•ª‚ğæ“¾
+			//ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ å‰ã®ã‚¿ãƒƒãƒä½ç½®ã¨ã®å·®åˆ†ã‚’å–å¾—
 			auto delta = touch->getDelta();
 
-			//·•ªXAY‚ğ‘«‚µ‚½’l‚Ìâ‘Î’l‚ğ‚Æ‚è‚»‚Ì’l‚ğ‚T‚O•ª‚Ì‚P‚É‚µ‚½’l‚É‚É§ŒÀ‚ğ‚©‚¯‚éB
-			//‚±‚Ì’l‚ğg‚Á‚Äƒ}ƒXƒN‚Ì“§‰ß“x‚©‚çˆø‚¢‚Ä‚¢‚­
+			//å·®åˆ†Xã€Yã‚’è¶³ã—ãŸå€¤ã®çµ¶å¯¾å€¤ã‚’ã¨ã‚Šãã®å€¤ã‚’ï¼•ï¼åˆ†ã®ï¼‘ã«ã—ãŸå€¤ã«ã«åˆ¶é™ã‚’ã‹ã‘ã‚‹ã€‚
+			//ã“ã®å€¤ã‚’ä½¿ã£ã¦ãƒã‚¹ã‚¯ã®é€éåº¦ã‹ã‚‰å¼•ã„ã¦ã„ã
 			int creanVal = clampf((abs(delta.x + delta.y) * 0.05), 0, 2);
 
-			//‚´‚Á‚­‚è‚Æ‚µ‚½‚ ‚½‚è”»’è‚Ég‚¤‚½‚ß‚Ì‹éŒ`‚ğ—pˆÓ
+			//ã–ã£ãã‚Šã¨ã—ãŸã‚ãŸã‚Šåˆ¤å®šã«ä½¿ã†ãŸã‚ã®çŸ©å½¢ã‚’ç”¨æ„
 			auto rect = Rect(mask->getPosition().x - mask->getContentSize().width / 2,
 				mask->getPosition().y - mask->getContentSize().width / 2,
 				mask->getContentSize().width,
@@ -117,8 +117,8 @@ namespace User
 			else if (mask->getOpacity() >= 0 && mask->getOpacity() <= 5)
 			{
 				mask->setOpacity(0);
-				//TODO: ‘|œŠ®—¹‚Ì‰‰o‚ğ“ü‚ê‚é
-				UserDefault::getInstance()->setIntegerForKey(u8"‰˜‚ê“x", 0);
+				//TODO: æƒé™¤å®Œäº†ã®æ¼”å‡ºã‚’å…¥ã‚Œã‚‹
+				UserDefault::getInstance()->setIntegerForKey(u8"æ±šã‚Œåº¦", 0);
 				if (!isFinish)
 				{
 					completeDirection();
@@ -133,10 +133,10 @@ namespace User
 		};
 	}
 
-	//‘|œƒŒƒCƒ„[“à‚Å‚ÌUIˆ—
+	//æƒé™¤ãƒ¬ã‚¤ãƒ¤ãƒ¼å†…ã§ã®UIå‡¦ç†
 	void LayerCleaning::uiTouchProcess()
 	{
-		//ƒƒjƒ…[‰æ–Ê‚Ö–ß‚é
+		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã¸æˆ»ã‚‹
 		buttons[0]->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::ENDED) {
 				auto p = (LayerManager*)this->getParent();
@@ -167,8 +167,8 @@ namespace User
 
 	void LayerCleaning::labelAction(float dt)
 	{
-		//ƒWƒƒƒ“ƒvƒAƒNƒVƒ‡ƒ“‚Ìİ’è
-		//ˆø”: 1.ŠÔ 2.À•W 3.‚‚³ 4.‰ñ”
+		//ã‚¸ãƒ£ãƒ³ãƒ—ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®è¨­å®š
+		//å¼•æ•°: 1.æ™‚é–“ 2.åº§æ¨™ 3.é«˜ã• 4.å›æ•°
 		for (int i = 0; i < infoLabel->getStringLength(); i++) {
 			auto oneChracter = infoLabel->getLetter(i);
 			if (oneChracter) {
@@ -178,13 +178,13 @@ namespace User
 		}
 	}
 
-	//‘|œŠ®—¹‚Ì
+	//æƒé™¤å®Œäº†ã®
 	void LayerCleaning::completeDirection()
 	{
 		auto _layer = Layer::create();
 		this->addChild(_layer);
 		Label* _label = Label::create();
-		setInfoLayer(_layer, _label, u8"‚¶‚å‚¤‚¸‚É‚Å‚«‚Ü‚µ‚½I", 36);
+		setInfoLayer(_layer, _label, u8"ã˜ã‚‡ã†ãšã«ã§ãã¾ã—ãŸï¼", 36);
 	}
 
 }

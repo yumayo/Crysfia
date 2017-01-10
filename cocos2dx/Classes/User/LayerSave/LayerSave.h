@@ -1,4 +1,4 @@
-# ifndef __LayerSave__
+ï»¿# ifndef __LayerSave__
 # define __LayerSave__
 
 # include "../LayerBase.h"
@@ -8,7 +8,7 @@
 namespace User
 {
     /**
-     * ƒ‚[ƒ_ƒ‹ƒŒƒCƒ„[‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅA‚»‚Ì‚Ü‚Ücreate‚·‚é‚¾‚¯‚Å‘åä•v‚Å‚·B
+     * ãƒ¢ãƒ¼ãƒ€ãƒ«ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ãªã£ã¦ã„ã‚‹ã®ã§ã€ãã®ã¾ã¾createã™ã‚‹ã ã‘ã§å¤§ä¸ˆå¤«ã§ã™ã€‚
      */
     class LayerSave : public LayerBase
     {
@@ -24,7 +24,7 @@ namespace User
         cocos2d::ui::Layout* createDialog( std::string const& str, std::function<void( )> const & yes, std::function<void( )> const & no );
         cocos2d::ui::Layout* createSavePanel( std::string const& name );
         cocos2d::ui::Layout* createSavePanelSide( std::string const& left_name, std::string const& right_name );
-        cocos2d::Size panelSize; // ƒZ[ƒuƒf[ƒ^ƒpƒlƒ‹‚Ì‘å‚«‚³‚ğŠi”[‚µ‚Ü‚·B
+        cocos2d::Size panelSize; // ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ãƒ‘ãƒãƒ«ã®å¤§ãã•ã‚’æ ¼ç´ã—ã¾ã™ã€‚
     };
 }
 

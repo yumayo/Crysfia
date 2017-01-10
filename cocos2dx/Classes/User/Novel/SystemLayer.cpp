@@ -1,4 +1,4 @@
-#include "SystemLayer.h"
+﻿#include "SystemLayer.h"
 
 #include "ScriptSystem.h"
 #include "ScriptStaticData.h"

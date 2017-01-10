@@ -1,4 +1,4 @@
-# ifndef __SceneCityMap__
+﻿# ifndef __SceneCityMap__
 # define __SceneCityMap__
 
 # include "cocos2d.h"
@@ -10,7 +10,7 @@ namespace User
     class SceneCityMap : public SceneBase
     {
     public:
-        static cocos2d::Scene* create( std::string const& tag );
+        static cocos2d::Scene* create( );
     };
 }
 

@@ -1,4 +1,4 @@
-# ifndef __Scene_ishibashi__
+﻿# ifndef __Scene_ishibashi__
 # define __Scene_ishibashi__
 
 # include "cocos2d.h"

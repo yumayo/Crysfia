@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  *
  *  You can modify and use this source freely
  *  only for the development of application related Live2D.
@@ -8,7 +8,7 @@
 #include "ModelSetting.h"
 #include "util/Json.h"
 
-// JSON‚ÌƒL[
+// JSONã®ã‚­ãƒ¼
 const char NAME [ ] = "name";
 const char MODEL [ ] = "model";
 const char _ID [ ] = "id";
@@ -32,7 +32,7 @@ class ModelSettingJson : public ModelSetting
 {
 private:
     live2d::Json* json;
-    // ƒL[‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©‚Ìƒ`ƒFƒbƒN
+    // ã‚­ãƒ¼ãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
     bool existModelName( ) { return !json->getRoot( )[NAME].isNull( ); }
     bool existModelFile( ) { return !json->getRoot( )[MODEL].isNull( ); }
     bool existTextureFiles( ) { return !json->getRoot( )[TEXTURES].isNull( ); }
@@ -56,7 +56,7 @@ public:
         delete json;
     }
 
-    // ƒ‚ƒfƒ‹ƒf[ƒ^‚É‚Â‚¢‚Ä
+    // ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦
     std::string getModelName( )
     {
         if ( !existModelName( ) )return "";
@@ -70,7 +70,7 @@ public:
         return json->getRoot( )[MODEL].toString( ).c_str( );
     }
 
-    // ƒeƒNƒXƒ`ƒƒ‚É‚Â‚¢‚Ä
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã«ã¤ã„ã¦
     int getTextureNum( )
     {
         if ( !existTextureFiles( ) )return 0;
@@ -84,7 +84,7 @@ public:
 
     std::string getTextureFile( int n ) { return json->getRoot( )[TEXTURES][n].toString( ).c_str( ); }
 
-    // ‰Šúƒpƒ‰ƒ[ƒ^‚É‚Â‚¢‚Ä
+    // åˆæœŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«ã¤ã„ã¦
     int getInitParamNum( )
     {
         if ( !existInitParam( ) )return 0;
@@ -95,7 +95,7 @@ public:
     float getInitParamValue( int n ) { return json->getRoot( )[INIT_PARAM][n][VAL].toDouble( ); }
     std::string getInitParamID( int n ) { return json->getRoot( )[INIT_PARAM][n][_ID].toString( ).c_str( ); }
 
-    // ‰Šúƒp[ƒc•\¦‚É‚Â‚¢‚Ä
+    // åˆæœŸãƒ‘ãƒ¼ãƒ„è¡¨ç¤ºã«ã¤ã„ã¦
     int getInitPartsVisibleNum( )
     {
         if ( !existInitPartsVisible( ) )return 0;
@@ -107,7 +107,7 @@ public:
     std::string getInitPartsVisibleID( int n ) { return json->getRoot( )[INIT_PARTS_VISIBLE][n][_ID].toString( ).c_str( ); }
 
 
-    // ‚ ‚½‚è”»’è‚É‚Â‚¢‚Ä
+    // ã‚ãŸã‚Šåˆ¤å®šã«ã¤ã„ã¦
     int getHitAreasNum( )
     {
         if ( !existHitAreas( ) )return 0;
@@ -117,7 +117,7 @@ public:
     std::string getHitAreaID( int n ) { return json->getRoot( )[HIT_AREAS][n][_ID].toString( ).c_str( ); }
     std::string getHitAreaName( int n ) { return json->getRoot( )[HIT_AREAS][n][NAME].toString( ).c_str( ); }
 
-    // •¨—‰‰ZAƒp[ƒcØ‚è‘Ö‚¦A•\îƒtƒ@ƒCƒ‹‚É‚Â‚¢‚Ä
+    // ç‰©ç†æ¼”ç®—ã€ãƒ‘ãƒ¼ãƒ„åˆ‡ã‚Šæ›¿ãˆã€è¡¨æƒ…ãƒ•ã‚¡ã‚¤ãƒ«ã«ã¤ã„ã¦
     std::string getPhysicsFile( )
     {
         if ( !existPhysicsFile( ) )return "";
@@ -151,7 +151,7 @@ public:
     }
 
 
-    // ƒ‚[ƒVƒ‡ƒ“‚É‚Â‚¢‚Ä
+    // ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã«ã¤ã„ã¦
     int getMotionNum( std::string name )
     {
         if ( !existMotionGroup( name ) )return 0;

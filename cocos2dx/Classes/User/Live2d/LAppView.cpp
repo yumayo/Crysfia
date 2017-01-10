@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  *
  *  You can modify and use this source freely
  *  only for the development of application related Live2D.
@@ -34,16 +34,16 @@ LAppView::~LAppView( )
 //        return false;
 //    }
 //	
-//    // ƒCƒxƒ“ƒgƒŠƒXƒi[ì¬
+//    // ã‚¤ãƒ™ãƒ³ãƒˆãƒªã‚¹ãƒŠãƒ¼ä½œæˆ
 //    auto listener = EventListenerTouchAllAtOnce::create();
 //	
-//    // ƒ^ƒbƒ`ƒƒ\ƒbƒhİ’è
+//    // ã‚¿ãƒƒãƒãƒ¡ã‚½ãƒƒãƒ‰è¨­å®š
 //    listener->onTouchesBegan = CC_CALLBACK_2(LAppView::onTouchesBegan, this);
 //    listener->onTouchesMoved = CC_CALLBACK_2(LAppView::onTouchesMoved, this);
 //    listener->onTouchesEnded = CC_CALLBACK_2(LAppView::onTouchesEnded, this);
 //   
 //	
-//    // —Dæ“x100‚ÅƒfƒBƒXƒpƒbƒ`ƒƒ[‚É“o˜^
+//    // å„ªå…ˆåº¦100ã§ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£ãƒ¼ã«ç™»éŒ²
 //    this->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 100);
 //	
 //    return true;
@@ -55,13 +55,13 @@ void LAppView::onEnter()
 	DrawNode::onEnter();
 	
 	
-	// ƒ^ƒbƒ`ŠÖŒW‚ÌƒCƒxƒ“ƒgŠÇ—
+	// ã‚¿ãƒƒãƒé–¢ä¿‚ã®ã‚¤ãƒ™ãƒ³ãƒˆç®¡ç†
 	touchMgr=new TouchManager();
 	
-	// ƒfƒoƒCƒXÀ•W‚©‚çƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·‚·‚é‚½‚ß‚Ì
+	// ãƒ‡ãƒã‚¤ã‚¹åº§æ¨™ã‹ã‚‰ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã«å¤‰æ›ã™ã‚‹ãŸã‚ã®
 	deviceToScreen=new L2DMatrix44();
 	
-	// ‰æ–Ê‚Ì•\¦‚ÌŠg‘åk¬‚âˆÚ“®‚Ì•ÏŠ·‚ğs‚¤s—ñ
+	// ç”»é¢ã®è¡¨ç¤ºã®æ‹¡å¤§ç¸®å°ã‚„ç§»å‹•ã®å¤‰æ›ã‚’è¡Œã†è¡Œåˆ—
 	viewMatrix=new L2DViewMatrix();
 
 	Size size=Director::getInstance()->getWinSize();
@@ -74,18 +74,18 @@ void LAppView::onEnter()
 	float bottom = -ratio;
 	float top = ratio;
 	
-	viewMatrix->setScreenRect(left,right,bottom,top);// ƒfƒoƒCƒX‚É‘Î‰‚·‚é‰æ–Ê‚Ì”ÍˆÍB X‚Ì¶’[, X‚Ì‰E’[, Y‚Ì‰º’[, Y‚Ìã’[
+	viewMatrix->setScreenRect(left,right,bottom,top);// ãƒ‡ãƒã‚¤ã‚¹ã«å¯¾å¿œã™ã‚‹ç”»é¢ã®ç¯„å›²ã€‚ Xã®å·¦ç«¯, Xã®å³ç«¯, Yã®ä¸‹ç«¯, Yã®ä¸Šç«¯
 	
 	
 	float screenW=abs(left-right);
 	deviceToScreen->multTranslate(-width/2.0f,-height/2.0f );
 	deviceToScreen->multScale( screenW/width , -screenW/width );
 	
-	// •\¦”ÍˆÍ‚Ìİ’è
-	viewMatrix->setMaxScale( VIEW_MAX_SCALE );// ŒÀŠEŠg‘å—¦
-	viewMatrix->setMinScale( VIEW_MIN_SCALE );// ŒÀŠEk¬—¦
+	// è¡¨ç¤ºç¯„å›²ã®è¨­å®š
+	viewMatrix->setMaxScale( VIEW_MAX_SCALE );// é™ç•Œæ‹¡å¤§ç‡
+	viewMatrix->setMinScale( VIEW_MIN_SCALE );// é™ç•Œç¸®å°ç‡
 	
-	// •\¦‚Å‚«‚éÅ‘å”ÍˆÍ
+	// è¡¨ç¤ºã§ãã‚‹æœ€å¤§ç¯„å›²
 	viewMatrix->setMaxScreenRect(
 								 VIEW_LOGICAL_MAX_LEFT,
 								 VIEW_LOGICAL_MAX_RIGHT,
@@ -93,10 +93,10 @@ void LAppView::onEnter()
 								 VIEW_LOGICAL_MAX_TOP
 								 );
 
-	// ƒCƒxƒ“ƒgƒŠƒXƒi[ì¬
+	// ã‚¤ãƒ™ãƒ³ãƒˆãƒªã‚¹ãƒŠãƒ¼ä½œæˆ
     auto listener = EventListenerTouchAllAtOnce::create();
 	
-    // ƒ^ƒbƒ`ƒƒ\ƒbƒhİ’è
+    // ã‚¿ãƒƒãƒãƒ¡ã‚½ãƒƒãƒ‰è¨­å®š
     listener->onTouchesBegan = CC_CALLBACK_2(LAppView::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(LAppView::onTouchesMoved, this);
     listener->onTouchesEnded = CC_CALLBACK_2(LAppView::onTouchesEnded, this);
@@ -143,7 +143,7 @@ void LAppView::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 
 
 void LAppView::onTouchesBegan(const std::vector<Touch*>& touches, Event *event) {
-    // ƒ^ƒbƒ`ŠJn
+    // ã‚¿ãƒƒãƒé–‹å§‹
 	size_t touchNum = touches.size() ;
 		
 	if( touchNum == 1 )
@@ -155,7 +155,7 @@ void LAppView::onTouchesBegan(const std::vector<Touch*>& touches, Event *event) 
 }
 
 void LAppView::onTouchesMoved(const std::vector<Touch*>& touches, Event *event) {
-    // ƒ^ƒbƒ`’†
+    // ã‚¿ãƒƒãƒä¸­
 	size_t touchNum = touches.size() ;
 	
 	float screenX=this->transformScreenX(touchMgr->getX());
@@ -175,15 +175,15 @@ void LAppView::onTouchesMoved(const std::vector<Touch*>& touches, Event *event) 
 }
 
 void LAppView::onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event) {
-    // ƒ^ƒbƒ`I—¹
+    // ã‚¿ãƒƒãƒçµ‚äº†
     LAppLive2DManager* live2DMgr=LAppLive2DManager::getInstance();
 	live2DMgr->onDrag(0, 0);
     
     if( touches.size() == 1 )
     {
-        // ƒVƒ“ƒOƒ‹ƒ^ƒbƒv
-        float x = deviceToScreen->transformX( touchMgr->getX() );// ˜_—À•W•ÏŠ·‚µ‚½À•W‚ğæ“¾B
-        float y = deviceToScreen->transformY( touchMgr->getY() );// ˜_—À•W•ÏŠ·‚µ‚½À•W‚ğæ“¾B
+        // ã‚·ãƒ³ã‚°ãƒ«ã‚¿ãƒƒãƒ—
+        float x = deviceToScreen->transformX( touchMgr->getX() );// è«–ç†åº§æ¨™å¤‰æ›ã—ãŸåº§æ¨™ã‚’å–å¾—ã€‚
+        float y = deviceToScreen->transformY( touchMgr->getY() );// è«–ç†åº§æ¨™å¤‰æ›ã—ãŸåº§æ¨™ã‚’å–å¾—ã€‚
         if (LAppDefine::DEBUG_LOG) log( "touchesEnded x:%.2f y:%.2f",x,y);
 		live2DMgr->onTap(x,y);
     }
@@ -194,10 +194,10 @@ void LAppView::updateViewMatrix(float dx ,float dy ,float cx ,float cy ,float sc
 {
 	LAppLive2DManager* live2DMgr=LAppLive2DManager::getInstance();
 	
-	// Šg‘åk¬
+	// æ‹¡å¤§ç¸®å°
 	viewMatrix->adjustScale(cx, cy, scale);
 	
-	// ˆÚ“®
+	// ç§»å‹•
 	viewMatrix->adjustTranslate(dx, dy) ;
 	
 	live2DMgr->setViewMatrix(viewMatrix);
@@ -206,15 +206,15 @@ void LAppView::updateViewMatrix(float dx ,float dy ,float cx ,float cy ,float sc
 
 float LAppView::transformViewX(float deviceX)
 {
-	float screenX = deviceToScreen->transformX( deviceX );// ˜_—À•W•ÏŠ·‚µ‚½À•W‚ğæ“¾B
-	return  viewMatrix->invertTransformX(screenX);// Šg‘åAk¬AˆÚ“®Œã‚Ì’lB
+	float screenX = deviceToScreen->transformX( deviceX );// è«–ç†åº§æ¨™å¤‰æ›ã—ãŸåº§æ¨™ã‚’å–å¾—ã€‚
+	return  viewMatrix->invertTransformX(screenX);// æ‹¡å¤§ã€ç¸®å°ã€ç§»å‹•å¾Œã®å€¤ã€‚
 }
 
 
 float LAppView::transformViewY(float deviceY)
 {
-	float screenY = deviceToScreen->transformY( deviceY );// ˜_—À•W•ÏŠ·‚µ‚½À•W‚ğæ“¾B
-	return  viewMatrix->invertTransformY(screenY);// Šg‘åAk¬AˆÚ“®Œã‚Ì’lB
+	float screenY = deviceToScreen->transformY( deviceY );// è«–ç†åº§æ¨™å¤‰æ›ã—ãŸåº§æ¨™ã‚’å–å¾—ã€‚
+	return  viewMatrix->invertTransformY(screenY);// æ‹¡å¤§ã€ç¸®å°ã€ç§»å‹•å¾Œã®å€¤ã€‚
 }
 
 

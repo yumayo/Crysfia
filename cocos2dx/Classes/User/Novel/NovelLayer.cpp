@@ -1,4 +1,4 @@
-#include "NovelLayer.h"
+ï»¿#include "NovelLayer.h"
 
 #include "OptionalValues.h"
 
@@ -13,6 +13,8 @@
 #include "../../Lib/Utilitys.h"
 
 #include "../System/DataSettings.h"
+
+#include "../../Lib/AudioManager.h"
 
 USING_NS_CC;
 
@@ -32,7 +34,9 @@ namespace User
     }
     NovelLayer::~NovelLayer( )
     {
-
+        AudioManager::getInstance( )->stopAllSe( );
+        AudioManager::getInstance( )->stopAllBgm( );
+        AudioManager::getInstance( )->stopAllVoice( );
     }
     bool NovelLayer::init( )
     {
@@ -49,7 +53,7 @@ namespace User
             }
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
-                // ¶‘¤‚ÌCTRLƒL[‚ª‰Ÿ‚³‚ê‚½‚ç‚‘¬“Ç‚İ‚İ‚ğŠJn‚·‚éB
+                // å·¦å´ã®CTRLã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‚‰é«˜é€Ÿèª­ã¿è¾¼ã¿ã‚’é–‹å§‹ã™ã‚‹ã€‚
                 readProceed.on( );
             }
         };
@@ -57,7 +61,7 @@ namespace User
         {
             if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
             {
-                // ¶‘¤‚ÌCTRL‚ª—£‚³‚ê‚½‚ç‚‘¬“Ç‚İ‚İ‚ğ’â~‚·‚éB
+                // å·¦å´ã®CTRLãŒé›¢ã•ã‚ŒãŸã‚‰é«˜é€Ÿèª­ã¿è¾¼ã¿ã‚’åœæ­¢ã™ã‚‹ã€‚
                 readProceed.off( );
             }
         };
@@ -104,7 +108,7 @@ namespace User
 
         textLabels.animationEndCallBack = [ this ]
         {
-            // ‚±‚±‚ÅƒXƒNƒVƒ‡‚ğB‚é
+            // ã“ã“ã§ã‚¹ã‚¯ã‚·ãƒ§ã‚’æ’®ã‚‹
             delete screen;
             screen = utils::captureNode( Director::getInstance( )->getRunningScene( ) );
 
@@ -124,9 +128,9 @@ namespace User
         };
         textChunkManager.readEndCallBack = [ this ]
         {
-            // ƒeƒLƒXƒgƒf[ƒ^‚ğ“\‚è•t‚¯‚ÄB
+            // ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’è²¼ã‚Šä»˜ã‘ã¦ã€‚
             textPasting( );
-            // ƒVƒXƒeƒ€“Ç‚İ‚İ‚ğ’â~B
+            // ã‚·ã‚¹ãƒ†ãƒ èª­ã¿è¾¼ã¿ã‚’åœæ­¢ã€‚
             systemRead.off( );
         };
         textChunkManager.novelEndCallBack = [ this ]
@@ -144,21 +148,12 @@ namespace User
                 sprite->setPosition( Director::getInstance( )->getVisibleOrigin( ) );
                 sprite->runAction( Sequence::create( FadeIn::create( 1.0F ), CallFunc::create( [ this ]
                 {
-                    // ‚±‚±‚ÅAƒI[ƒgƒZ[ƒuƒf[ƒ^‚ğ‘‚«‚İ‚Ü‚·B
+                    // ã“ã“ã§ã€ã‚ªãƒ¼ãƒˆã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã¿ã¾ã™ã€‚
                     if ( saveCallFunc )saveCallFunc( );
 
-                    // Ÿ‚ÉAŠÔ‚ğˆê’iŠKi‚ß‚Ü‚·B
-                    // ’©¨—[¨–é
-                    auto time = UserDefault::getInstance( )->getIntegerForKey( u8"" );
-                    if ( 3 <= ( time + 1 ) ) // ŒJ‚èã‚ª‚Á‚½‚ç
-                    {
-                        auto day = UserDefault::getInstance( )->getIntegerForKey( u8"“ú" );
-                        UserDefault::getInstance( )->setIntegerForKey( u8"“ú", day + 1 );
-                    }
-                    time = ( time + 1 ) % 3;
-                    UserDefault::getInstance( )->setIntegerForKey( u8"", time );
+                    Lib::next_day( );
 
-                    SceneManager::createIslandMap( );
+                    SceneManager::createCityMap( );
                 } ), RemoveSelf::create( ), nullptr ) );
                 Director::getInstance( )->getRunningScene( )->addChild( sprite );
             }
@@ -168,7 +163,7 @@ namespace User
     }
     void NovelLayer::update( float delta )
     {
-        // ƒƒ“ƒOƒ^ƒbƒv
+        // ãƒ­ãƒ³ã‚°ã‚¿ãƒƒãƒ—
         if ( ( tap_began ) && ( !long_tap_began ) && ( 0.3F < ( tap_time += delta ) ) )
         {
             readProceed.on( );
@@ -177,12 +172,12 @@ namespace User
 
         textChunkManager.updateDelay( delta );
 
-        // ‚‘¬“Ç‚İ‚İ‚ÌƒAƒbƒvƒf[ƒg
-        // ƒL[ƒ{[ƒh‚Ì¶‘¤‚ÌCTRL‚ğ‰Ÿ‚µ‚Ä‚¢‚éŠÔ‚¾‚¯‚‘¬“Ç‚İ‚İ‹@”\‚ªON‚É‚È‚è‚Ü‚·B
+        // é«˜é€Ÿèª­ã¿è¾¼ã¿ã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
+        // ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®å·¦å´ã®CTRLã‚’æŠ¼ã—ã¦ã„ã‚‹é–“ã ã‘é«˜é€Ÿèª­ã¿è¾¼ã¿æ©Ÿèƒ½ãŒONã«ãªã‚Šã¾ã™ã€‚
         readingProceedUpdate( );
 
-        // ƒeƒLƒXƒg‚Ì“Ç‚İ‚İB
-        // delay‚ª0‚Å‚ ‚éŒÀ‚èAƒeƒLƒXƒg‚ğ“Ç‚İ‚İ‘±‚¯‚Ü‚·B
+        // ãƒ†ã‚­ã‚¹ãƒˆã®èª­ã¿è¾¼ã¿ã€‚
+        // delayãŒ0ã§ã‚ã‚‹é™ã‚Šã€ãƒ†ã‚­ã‚¹ãƒˆã‚’èª­ã¿è¾¼ã¿ç¶šã‘ã¾ã™ã€‚
         readNextNovel( );
     }
     void NovelLayer::on( )
@@ -233,10 +228,10 @@ namespace User
             automode = nullptr;
         }
 
-        // ‚·‚Å‚É’â~ó‘Ô
+        // ã™ã§ã«åœæ­¢çŠ¶æ…‹
         if ( textLabels.getIsReadOuted( ) )
         {
-            // ‚·‚®‚ÉAŸ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚É‰f‚éB
+            // ã™ãã«ã€æ¬¡ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã«æ˜ ã‚‹ã€‚
             click( );
             automode = AutoMode::create( [ this ] { click( ); } );
             addChild( automode );
@@ -255,14 +250,14 @@ namespace User
 
         auto selectLayer = this->getLayer<SelectLayer>( );
 
-        // ‘I‘ğˆ‚ÌƒŒƒCƒ„[‚ğíœ
+        // é¸æŠè‚¢ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å‰Šé™¤
         if ( auto ptr = dynamic_cast<Menu*>( selectLayer->getChildByName( u8"select" ) ) )
         {
             ptr->setEnabled( false );
             ptr->runAction( Sequence::create( FadeOut::create( 0.3 ), RemoveSelf::create( ), nullptr ) );
         }
 
-        // Ÿ‚É“Ç‚İ‚ŞƒVƒiƒŠƒIƒf[ƒ^‚ğw’èB
+        // æ¬¡ã«èª­ã¿è¾¼ã‚€ã‚·ãƒŠãƒªã‚ªãƒ‡ãƒ¼ã‚¿ã‚’æŒ‡å®šã€‚
         textChunkManager.select( name );
     }
     void NovelLayer::textClear( )
@@ -272,7 +267,7 @@ namespace User
     }
     void NovelLayer::textPasting( )
     {
-        // ƒeƒLƒXƒgƒf[ƒ^‚ğ“Ç‚İ‚İI‚í‚Á‚½‚çƒ‰ƒxƒ‹‚É“\‚è•t‚¯‚éB
+        // ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã¿çµ‚ã‚ã£ãŸã‚‰ãƒ©ãƒ™ãƒ«ã«è²¼ã‚Šä»˜ã‘ã‚‹ã€‚
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
@@ -286,10 +281,10 @@ namespace User
     }
     void NovelLayer::readingProceedUpdate( )
     {
-        // ‚‘¬“Ç‚İ‚İ‚ª‰Â”\‚È‚ç•¶š‚ğ1ƒtƒŒ[ƒ€‚É1‰ñ“Ç‚İ‘±‚¯‚éB
+        // é«˜é€Ÿèª­ã¿è¾¼ã¿ãŒå¯èƒ½ãªã‚‰æ–‡å­—ã‚’1ãƒ•ãƒ¬ãƒ¼ãƒ ã«1å›èª­ã¿ç¶šã‘ã‚‹ã€‚
         if ( readProceed )
         {
-            // ‚‘¬“Ç‚İ‚İ‚Å‚Ídelay‚Í–³‹‚µ‚Ü‚·B
+            // é«˜é€Ÿèª­ã¿è¾¼ã¿ã§ã¯delayã¯ç„¡è¦–ã—ã¾ã™ã€‚
             textChunkManager.setDelayTime( 0.0F );
             click( );
         }
@@ -328,15 +323,15 @@ namespace User
         novelWindow->removeChildByName( u8"novelReadedAnimation" );
         makeLoadingFeatureOn( );
     }
-    //@ƒeƒLƒXƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ªI‚í‚Á‚Ä‚¢‚éê‡
+    //ã€€ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚ã‚ã£ã¦ã„ã‚‹å ´åˆ
     void NovelLayer::makeLoadingFeatureOn( )
     {
-        // V‚µ‚­ƒeƒLƒXƒg‚ğ“Ç‚İ‚ñ‚Å—Ç‚¢ê‡B
+        // æ–°ã—ããƒ†ã‚­ã‚¹ãƒˆã‚’èª­ã¿è¾¼ã‚“ã§è‰¯ã„å ´åˆã€‚
         if ( !systemStop )
         {
-            // ƒeƒLƒXƒg‚Ì’†g‚ğÁ‚µ‚Ü‚·B
+            // ãƒ†ã‚­ã‚¹ãƒˆã®ä¸­èº«ã‚’æ¶ˆã—ã¾ã™ã€‚
             textClear( );
-            // “Ç‚İ‚İ‚ğŠJn‚Ì‡}‚ğo‚µ‚Ü‚·B
+            // èª­ã¿è¾¼ã¿ã‚’é–‹å§‹ã®åˆå›³ã‚’å‡ºã—ã¾ã™ã€‚
             systemRead.on( );
         }
     }
@@ -347,7 +342,7 @@ namespace User
             textChunkManager.textRead( );
         }
     }
-    // ƒeƒLƒXƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ªI‚í‚Á‚Ä‚¢‚È‚¢ê‡
+    // ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚ã‚ã£ã¦ã„ãªã„å ´åˆ
     void NovelLayer::textActionStop( )
     {
         textChunkManager.setDelayTime( 0.0F );

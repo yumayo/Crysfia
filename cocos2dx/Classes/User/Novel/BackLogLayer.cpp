@@ -1,4 +1,4 @@
-#include "BackLogLayer.h"
+﻿#include "BackLogLayer.h"
 
 #include "NovelLayer.h"
 #include "NameLayer.h"
