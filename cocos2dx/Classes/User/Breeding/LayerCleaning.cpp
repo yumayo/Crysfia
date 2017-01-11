@@ -8,13 +8,17 @@ namespace User
 	LayerCleaning::LayerCleaning() :
 		winSize(Director::getInstance()->getVisibleSize()),
 		bottle(Sprite::create("res/texture/home/bottle_1.png")),
+		clippingShape(Sprite::create("res/texture/home/bottle_mask.png")),
+		bottleTexture(Sprite::create("res/texture/home/dirt.png")),
 		mask(Sprite::create()),
 		clippingNode(ClippingNode::create()),
-		clippingShape(Sprite::create("res/texture/home/bottle_mask.png")),
 		canCleaning(false),
+		cleanDegrees(UserDefault::getInstance()->getIntegerForKey(u8"汚れ度")),
 		listener(EventListenerTouchOneByOne::create())
 	{
-		
+
+		UserDefault::getInstance()->setIntegerForKey(u8"汚れ度",255);
+		cleanDegrees = UserDefault::getInstance()->getIntegerForKey(u8"汚れ度");
 
 		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"画面をタップで¥n お掃除開始！") :
 			Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"きれいだよ(=ﾟωﾟ)ﾉ");
@@ -22,12 +26,12 @@ namespace User
 		bottle->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.5f));
 		bottle->setScale(0.5f);
 		this->addChild(bottle, 10);
-
-		mask->setTextureRect(Rect(0, 0, winSize.width - 50, winSize.height - 350));
+		
+		//汚れのテクスチャーをセット
+		bottleTexture->setOpacity(cleanDegrees);
+		mask->addChild(bottleTexture);
 		mask->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.38f));
-		mask->setColor(Color3B::BLACK);
-		mask->setOpacity(cleanDegrees);
-
+		
 		clippingShape->setScale(0.5f);
 		clippingShape->setPosition(winSize / 2);
 		clippingNode->setStencil(clippingShape);
@@ -50,15 +54,14 @@ namespace User
 
 	}
 
+	void LayerCleaning::update(float dt)
+	{
+
+	}
+
 	bool LayerCleaning::init()
 	{
 		if (!Layer::init()) { return false; }
-
-		//UserDefaultで値を取り出したりセットしたりする
-		UserDefault* _userDef = UserDefault::getInstance();
-		_userDef->setIntegerForKey("aaa", 100);
-		auto hoge = _userDef->getIntegerForKey("aaa");
-		log(u8"日にち=[%d]", hoge);
 
 		auto background = Sprite::create("res/texture/home/cleaning_bg.jpg");
 		background->setPosition(winSize / 2);
@@ -67,6 +70,8 @@ namespace User
 
 		uiTouchProcess();
 		setInfoLayer();
+
+		log(u8"bottleTextureの透過度=[%d]", bottleTexture->getOpacity());
 
 		listener->onTouchBegan = [=](Touch* touch, Event* event) { return true; };
 		listener->onTouchEnded = [this](Touch* touch, Event* event) {
@@ -77,8 +82,8 @@ namespace User
 				this->removeChildByTag(1);
 			}
 		};
-
 		this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
 		return true;
 	}
 
@@ -91,7 +96,7 @@ namespace User
 			return true;
 		};
 
-		//スワイプ処理
+		//スワイプ処理（掃除）
 		listener->onTouchMoved = [this](Touch* touch, Event* event) {
 
 			//１フレーム前のタッチ位置との差分を取得
@@ -100,24 +105,25 @@ namespace User
 			//差分X、Yを足した値の絶対値をとりその値を５０分の１にした値にに制限をかける。
 			//この値を使ってマスクの透過度から引いていく
 			int creanVal = clampf((abs(delta.x + delta.y) * 0.05), 0, 2);
+			log(u8"透過度=[%d]", creanVal);
 
 			//ざっくりとしたあたり判定に使うための矩形を用意
-			auto rect = Rect(mask->getPosition().x - mask->getContentSize().width / 2,
-				mask->getPosition().y - mask->getContentSize().width / 2,
-				mask->getContentSize().width,
-				mask->getContentSize().height);
+			auto rect = Rect(bottleTexture->getPosition().x - bottleTexture->getContentSize().width / 2,
+				bottleTexture->getPosition().y - bottleTexture->getContentSize().width / 2,
+				bottleTexture->getContentSize().width,
+				bottleTexture->getContentSize().height);
 
-			if (5 < mask->getOpacity())
+			if (5 < bottleTexture->getOpacity())
 			{
 				if (rect.containsPoint(touchLocation))
 				{
-					mask->setOpacity(mask->getOpacity() - creanVal);
+					bottleTexture->setOpacity(bottleTexture->getOpacity() - creanVal);
 				}
 			}
-			else if (mask->getOpacity() >= 0 && mask->getOpacity() <= 5)
+			else if (bottleTexture->getOpacity() >= 0 && bottleTexture->getOpacity() <= 5)
 			{
-				mask->setOpacity(0);
-				//TODO: 掃除完了の演出を入れる
+				bottleTexture->setOpacity(0);
+				//掃除完了の演出
 				UserDefault::getInstance()->setIntegerForKey(u8"汚れ度", 0);
 				if (!isFinish)
 				{
