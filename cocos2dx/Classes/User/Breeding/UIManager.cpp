@@ -123,8 +123,7 @@ namespace User
 			const rapidjson::Value& buttonsData = doc["Button"];
 			for (rapidjson::SizeType i = (int)SubButtonType::BACK; i < buttonsData.Size(); i++)
 			{
-				subButtons.push_back(ui::Button::create(buttonsData[i]["res"].GetString()));
-				subButtons[i]->setTitleText(buttonsData[i]["name"].GetString());
+				subButtons.push_back(ui::Button::create( buttonsData[i]["res"]["pull"].GetString(), buttonsData[i]["res"]["push"].GetString(), buttonsData[i]["res"]["pull"].GetString()) );
 				subButtons[i]->setTitleFontSize(42);
 				subButtons[i]->setTitleColor(Color3B::WHITE);
 
