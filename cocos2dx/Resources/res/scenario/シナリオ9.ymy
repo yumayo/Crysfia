@@ -551,7 +551,16 @@ aikura.1:play(43)
 にはフェアリーコアだけが残った。@sys:l
 クロエのコアは、太陽の光を受けて、美しく
 輝いていた。@sys:l
+@crysfia:out
 @sys:noveloff
 @h白背景:out
+@sys:stop(1)
 //ここまで
 //このあと親愛度が100%以上ならグッドエンドへ、100%以下ならノーマルエンドに分岐します
+@sys:heartif(100, ノーマルエンド, 530000, グッドエンド)
+@sys:beginland(ノーマルエンド)
+@sys:import(ノーマルエンド)
+@sys:endland
+@sys:beginland(グッドエンド)
+@sys:import(グッドエンド)
+@sys:endland

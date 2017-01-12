@@ -328,6 +328,10 @@
   },
   "アイクラ島": {
     "point.main": [
+    ],
+    "point.sub": [
+    ],
+    "point.force": [
       {
         "position": [ 12, 11 ],
         "day": [ 13 ],
@@ -337,10 +341,6 @@
         "read_not": false,
         "title": "ようこそ、クリスフィアが住む世界へ！"
       }
-    ],
-    "point.sub": [
-    ],
-    "point.force": [
     ]
   }
 }

@@ -122,12 +122,14 @@ namespace User
     {
     public:
         CREATE_ARGS_INIT_FUNC( CityMap );
-        bool init( int const x, int const y );
+        bool init( );
         void paste( cocos2d::ui::Button* icon, int const x, int const y );
         void paste( MainMark* icon, int const x, int const y );
         void paste( SubMark* icon, int const x, int const y );
         cocos2d::MoveTo* move_action( int const x, int const y );
         void set_position( int const x, int const y );
+        void set_enable( );
+        void set_disable( );
     private:
         /**
          *  今の時間。
@@ -150,6 +152,8 @@ namespace User
         cocos2d::Size map_size;
 
         cocos2d::Sprite* map;
+
+        cocos2d::Layer* move_layer;
 
         bool is_move = false;
 
@@ -188,7 +192,6 @@ namespace User
         bool force_event = false;
 
         void setIslandName( );
-        void setIslandPos( );
 
 
         LayerCityMark* set_force_mark( Json::Value& value );
@@ -196,10 +199,10 @@ namespace User
         LayerCityMark* set_sub_mark( Json::Value& value );
 
         CityMap* map = nullptr;
-        int map_x = 0;
-        int map_y = 0;
 
         bool is_animation = true;
+        void animation_start( );
+        void animation_end( );
 
         // 新しく生まれてくるシナリオのチェック。
         std::stack<std::function<void( )>> mark_stack;
