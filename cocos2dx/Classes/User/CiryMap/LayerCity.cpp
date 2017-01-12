@@ -94,18 +94,19 @@ namespace User
 
     bool CityMap::init( )
     {
+        auto vs = Director::getInstance( )->getVisibleSize( );
+        auto vo = Director::getInstance( )->getVisibleOrigin( );
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
+
         honeycomb_size = Size( 95, 80.5 );
         map_size = Size( 19, 20 );
         start_position = Vec2( 168, 2048 - 220 );
 
         map = Sprite::create( u8"res/texture/system/map.select.png" );
-        setContentSize( map->getContentSize( ) );
+        map->setScale( scale );
+        setContentSize( map->getContentSize( ) * map->getScale( ) );
         addChild( map );
-
-        auto vs = Director::getInstance( )->getVisibleSize( );
-        auto vo = Director::getInstance( )->getVisibleOrigin( );
-        auto scale = Director::getInstance( )->getContentScaleFactor( );
-        auto _scale = 1.0F / scale;
 
         translate = vo + vs * 0.5;
 
@@ -218,7 +219,7 @@ namespace User
 
         Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
         Vec2 pos = Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
-            Vec2( -move.x, move.y ) * _scale;
+            Vec2( -move.x, move.y );
         return  MoveTo::create( 0.3F, pos );
     }
 
@@ -232,7 +233,7 @@ namespace User
 
         Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
         Vec2 pos = Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
-            Vec2( -move.x, move.y ) * _scale;
+            Vec2( -move.x, move.y );
         setPosition( pos );
     }
 
@@ -346,19 +347,21 @@ namespace User
                 if ( auto button = createTimeNextButton( ) )
                 {
                     button->setName( u8"time_button" );
+                    button->setScale( scale );
                     //button->setOpacity( 0 );
                     //button->runAction( FadeIn::create( 0.3F ) );
                     button->setPosition( Vec2( board->getContentSize( ).width * board->getScale( ), board->getContentSize( ).height * board->getScale( ) ) );
                     addChild( button );
                 }
 
-                if ( auto label = createLabel( UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" ) ) )
-                {
-                    //label->setOpacity( 0 );
-                    //label->runAction( FadeIn::create( 0.3F ) );
-                    label->setPosition( Vec2( 0, board->getContentSize( ).height * board->getScale( ) ) );
-                    addChild( label );
-                }
+                //if ( auto label = createLabel( UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" ) ) )
+                //{
+                //    //label->setOpacity( 0 );
+                //    //label->runAction( FadeIn::create( 0.3F ) );
+                //    label->setScale( scale );
+                //    label->setPosition( Vec2( 0, board->getContentSize( ).height * board->getScale( ) ) );
+                //    addChild( label );
+                //}
             }
         }
 
