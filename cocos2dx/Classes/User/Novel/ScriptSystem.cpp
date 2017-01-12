@@ -412,7 +412,16 @@ namespace User
         {
         case 1:
         {
+            auto name = UserDefault::getInstance( )->getStringForKey( u8"現在の服" );
             auto model = args[0];
+            if ( name == u8"セーラー服" )
+            {
+                model += u8"_s";
+            }
+            else
+            {
+                model += u8"_d";
+            }
             auto dir = u8"res/live2d/" + model + u8"/";
             REGIST_VARIABLE( args[0], new ScriptLive2d( live2dLayer, model, dir ) );
         }
