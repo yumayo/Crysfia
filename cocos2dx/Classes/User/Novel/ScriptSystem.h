@@ -1,4 +1,4 @@
-# ifndef __ScriptSystem__
+ï»¿# ifndef __ScriptSystem__
 # define __ScriptSystem__
 
 # include "cocos2d.h"
@@ -16,17 +16,21 @@ namespace User
         ~ScriptSystem( );
     public:
         void setup( );
-    public: // ƒVƒXƒeƒ€‚Ì“®ì‚ğ•Ï‚¦‚é‚Æ‚«‚È‚Ç‚Ég‚¢‚Ü‚·B
-        SCRIPT( l ); // ƒVƒiƒŠƒI“Ç‚İ‚İ‚ğƒXƒgƒbƒv
-        SCRIPT( select ); // ‘I‘ğˆ‚Ì•\¦
+    public: // ã‚·ã‚¹ãƒ†ãƒ ã®å‹•ä½œã‚’å¤‰ãˆã‚‹ã¨ããªã©ã«ä½¿ã„ã¾ã™ã€‚
+        SCRIPT( l ); // ã‚·ãƒŠãƒªã‚ªèª­ã¿è¾¼ã¿ã‚’ã‚¹ãƒˆãƒƒãƒ—
+        SCRIPT( select ); // é¸æŠè‚¢ã®è¡¨ç¤º
         SCRIPT( stop );
+        SCRIPT( noveldisable );
+        SCRIPT( novelenable );
         SCRIPT( novelon );
         SCRIPT( noveloff );
         SCRIPT( novelswitch );
         SCRIPT( item );
         SCRIPT( autosave );
-    public: // •Ï”‚Ì“o˜^‚Ég‚¢‚Ü‚·B
-            // ‘S‚Ä‚ÌƒNƒ‰ƒX‚ÍƒVƒXƒeƒ€‚ğŒo—R‚µ‚Ä‚Å‚È‚¢‚Æì¬‚Å‚«‚Ü‚¹‚ñB
+        SCRIPT( heartup );
+        SCRIPT( heartdown );
+    public: // å¤‰æ•°ã®ç™»éŒ²ã«ä½¿ã„ã¾ã™ã€‚
+            // å…¨ã¦ã®ã‚¯ãƒ©ã‚¹ã¯ã‚·ã‚¹ãƒ†ãƒ ã‚’çµŒç”±ã—ã¦ã§ãªã„ã¨ä½œæˆã§ãã¾ã›ã‚“ã€‚
         SCRIPT( name );
         SCRIPT( background );
         SCRIPT( bgm );
@@ -47,14 +51,15 @@ namespace User
         cocos2d::Layer* live2dLayer = nullptr;
         cocos2d::Layer* itemLayer = nullptr;
         cocos2d::Layer* voiceLayer = nullptr;
+        cocos2d::Layer* flickFunctionLayer = nullptr;
 
         /**
-         *  Œ»İ‚ÌƒƒbƒZ[ƒWƒEƒBƒ“ƒhƒE‚Ìs”‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
+         *  ç¾åœ¨ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡Œæ•°ã‚’ä¿å­˜ã—ã¦ãŠãã¾ã™ã€‚
          */
         static size_t novelIndex;
 
         /**
-         *  ƒmƒxƒ‹ƒEƒBƒ“ƒhƒE‚Ì•\¦ó‘Ô‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
+         *  ãƒãƒ™ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤ºçŠ¶æ…‹ã‚’ä¿å­˜ã—ã¦ãŠãã¾ã™ã€‚
          */
         static bool isShowNovel;
     };

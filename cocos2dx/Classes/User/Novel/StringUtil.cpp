@@ -1,4 +1,4 @@
-#include "StringUtil.h"
+ï»¿#include "StringUtil.h"
 
 #include <ctype.h>
 
@@ -15,7 +15,7 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0.0 == ret && s == endptr ) )
         {
-            throw( "–³Œø‚È”’l‚Å‚·B" );
+            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
         }
         return ret;
     }
@@ -30,22 +30,17 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0 == ret && s == endptr ) )
         {
-            throw( "–³Œø‚È”’l‚Å‚·B" );
+            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
         }
         return ret;
     }
     bool StringUtil::string_bool( std::string const & str )
     {
-        auto s = str;
-        for ( auto& obj : s )
-        {
-            toupper( obj );
-        }
-        if ( str == u8"FALSE" )
+        if ( str == u8"false" )
         {
             return false;
         }
-        else if ( s == u8"TRUE" )
+        else if ( str == u8"true" )
         {
             return true;
         }
@@ -61,7 +56,7 @@ namespace User
         errno = errorBuf;
         if ( 0 != error || ( 0.0F == ret && s == endptr ) )
         {
-            throw( "–³Œø‚È”’l‚Å‚·B" );
+            throw( "ç„¡åŠ¹ãªæ•°å€¤ã§ã™ã€‚" );
         }
         return ret;
     }

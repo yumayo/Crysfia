@@ -1,4 +1,4 @@
-# ifndef __TextScriptReader__
+ï»¿# ifndef __TextScriptReader__
 # define __TextScriptReader__
 
 # include "TextTypes.hpp"
@@ -13,17 +13,17 @@ namespace User
         void makeNovelData( );
     private:
         void makeScriptData( );
-        // •¶–@ƒ`ƒFƒbƒN
+        // æ–‡æ³•ãƒã‚§ãƒƒã‚¯
         void syntaxCheck( StringArray const& scriptParts );
     private:
-        // ‘S‚Ä‚Ìƒoƒbƒtƒ@[‚ğ‹ó‚É‚µ‚Ä•K—v‚Èƒf[ƒ^‚¾‚¯‚ğ“n‚µ‚Ü‚·B
+        // å…¨ã¦ã®ãƒãƒƒãƒ•ã‚¡ãƒ¼ã‚’ç©ºã«ã—ã¦å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã ã‘ã‚’æ¸¡ã—ã¾ã™ã€‚
         TagWithData getCleanedData( );
         void cleanUp( );
     private:
-        // ‚à‚ç‚Á‚Ä‚«‚½ƒf[ƒ^‚ğ‚à‚Æ‚ÉAƒXƒNƒŠƒvƒgƒf[ƒ^‚âAƒmƒxƒ‹ƒf[ƒ^AƒfƒoƒbƒOƒf[ƒ^‚ğ‹l‚ß‚½\‘¢‘Ì‚ğì‚è‚Ü‚·B
+        // ã‚‚ã‚‰ã£ã¦ããŸãƒ‡ãƒ¼ã‚¿ã‚’ã‚‚ã¨ã«ã€ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ‡ãƒ¼ã‚¿ã‚„ã€ãƒãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã€ãƒ‡ãƒãƒƒã‚°ãƒ‡ãƒ¼ã‚¿ã‚’è©°ã‚ãŸæ§‹é€ ä½“ã‚’ä½œã‚Šã¾ã™ã€‚
         TagWithData tagWithData;
     private:
-        // ‚à‚ç‚Á‚Ä‚«‚½ƒf[ƒ^‚ğˆê“I‚É•Û‘¶‚µ‚Ü‚·B
+        // ã‚‚ã‚‰ã£ã¦ããŸãƒ‡ãƒ¼ã‚¿ã‚’ä¸€æ™‚çš„ã«ä¿å­˜ã—ã¾ã™ã€‚
         DebugWithLineData debugWithLineData;
     };
 }

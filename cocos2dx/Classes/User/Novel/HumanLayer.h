@@ -1,4 +1,4 @@
-# ifndef __HumanLayer__
+﻿# ifndef __HumanLayer__
 # define __HumanLayer__
 
 # include "../LayerBase.h"

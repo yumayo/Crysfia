@@ -1,4 +1,4 @@
-#include "TextScriptReader.h"
+ï»¿#include "TextScriptReader.h"
 
 #include "TextData.h"
 
@@ -12,9 +12,9 @@ namespace User
     {
         this->debugWithLineData = debugWithLineData;
 
-        // •¶š—ñ‚Ìæ“ª‚É"@"‚ª‚ ‚éê‡‚ÍƒXƒNƒŠƒvƒg
+        // æ–‡å­—åˆ—ã®å…ˆé ­ã«"@"ãŒã‚ã‚‹å ´åˆã¯ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
         if ( debugWithLineData.lineData[0] == '@' ) makeScriptData( );
-        // ‚»‚¤‚Å‚È‚¢ê‡‚Íƒmƒxƒ‹ƒf[ƒ^‚Å‚·B
+        // ãã†ã§ãªã„å ´åˆã¯ãƒãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã§ã™ã€‚
         else makeNovelData( );
 
         return getCleanedData( );
@@ -65,7 +65,7 @@ namespace User
                 return a.position < b.position;
             } );
 
-            // \•¶‚ªŒ©‚Â‚©‚Á‚½ê‡‚ÍA‚Ç‚ñ‚Ç‚ñ•ªŠ„‚µ‚Ä‚¢‚«‚Ü‚·B
+            // æ§‹æ–‡ãŒè¦‹ã¤ã‹ã£ãŸå ´åˆã¯ã€ã©ã‚“ã©ã‚“åˆ†å‰²ã—ã¦ã„ãã¾ã™ã€‚
             if ( findSyntaxItr->isFind )
             {
                 partsAdd( findSyntaxItr->position );
@@ -74,7 +74,7 @@ namespace User
 
                 disassembly( );
             }
-            // \•¶‚ªŒ©‚Â‚©‚ç‚È‚©‚Á‚½ê‡‚ÍAc‚Á‚½•¶š‚ğ’Ç‰Á‚µ‚ÄI—¹‚Å‚·B
+            // æ§‹æ–‡ãŒè¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸå ´åˆã¯ã€æ®‹ã£ãŸæ–‡å­—ã‚’è¿½åŠ ã—ã¦çµ‚äº†ã§ã™ã€‚
             else
             {
                 partsAdd( findSyntaxItr->position );
@@ -83,21 +83,15 @@ namespace User
 
         disassembly( );
 
-        try
-        {
-            syntaxCheck( scriptParts );
-        }
-        catch ( char const* str )
-        {
+        // throwã•ã‚Œã¾ã™ã®ã§ã€ã©ã“ã‹ã§catchã—ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚
+        syntaxCheck( scriptParts );
 
-        }
-
-        // •Ï”–¼‚Ì‚Æ‚±‚ë‚É"$"ƒ}[ƒN‚ª‚ ‚ê‚ÎV‚µ‚¢•Ï”‚Æ‚µ‚Äì¬o—ˆ‚Ü‚·B
+        // å¤‰æ•°åã®ã¨ã“ã‚ã«"$"ãƒãƒ¼ã‚¯ãŒã‚ã‚Œã°æ–°ã—ã„å¤‰æ•°ã¨ã—ã¦ä½œæˆå‡ºæ¥ã¾ã™ã€‚
         if ( scriptParts[0].find( u8"$" ) != std::string::npos )
         {
             tagWithData = { TagWithData::Tag::VAR, debugWithLineData.debugData, scriptParts, u8"" };
         }
-        // ˆá‚¤‚È‚çAŠÖ”ŒÄ‚Ño‚µ‚É‚È‚è‚Ü‚·B
+        // é•ã†ãªã‚‰ã€é–¢æ•°å‘¼ã³å‡ºã—ã«ãªã‚Šã¾ã™ã€‚
         else
         {
             tagWithData = { TagWithData::Tag::FUN, debugWithLineData.debugData, scriptParts, u8"" };
@@ -121,9 +115,9 @@ namespace User
 
         TagWithData::Tag tag;
 
-        if ( parts.size( ) < 3U ) errorSStream( "Å’áŒÀ [@ NAME : RUN] ‚ÌŒ`‚Å‹L“ü‚µ‚Ä‚­‚¾‚³‚¢B", debugWithLineData.debugData );
+        if ( parts.size( ) < 3U ) errorSStream( "æœ€ä½é™ \"@ NAME : RUN\" ã®å½¢ã§è¨˜å…¥ã—ã¦ãã ã•ã„ã€‚", debugWithLineData.debugData );
 
-        if ( parts[1] != u8":" ) errorSStream( "ƒyƒA•\Œ»‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·B", debugWithLineData.debugData );
+        if ( parts[1] != u8":" ) errorSStream( "ãƒšã‚¢è¡¨ç¾ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™ã€‚", debugWithLineData.debugData );
 
         if ( parts[0].find( u8"$" ) != std::string::npos ) tag = TagWithData::Tag::VAR;
         else tag = TagWithData::Tag::FUN;
@@ -131,18 +125,18 @@ namespace User
         switch ( tag )
         {
         case User::TagWithData::Tag::VAR:
-            if ( 3U != parts.size( ) ) errorSStream( "•Ï”‚ÌÀ‘Ì‚Íˆê‚Â‚Å‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB", debugWithLineData.debugData );
-            if ( !isValue( parts[2] ) ) errorSStream( "•Ï”éŒ¾‚É‘Î‚·‚é”š‚ª•s³‚È’l‚Å‚·B", debugWithLineData.debugData );
+            if ( 3U != parts.size( ) ) errorSStream( "å¤‰æ•°ã®å®Ÿä½“ã¯ä¸€ã¤ã§ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚", debugWithLineData.debugData );
+            if ( !isValue( parts[2] ) ) errorSStream( "å¤‰æ•°å®£è¨€ã«å¯¾ã™ã‚‹æ•°å­—ãŒä¸æ­£ãªå€¤ã§ã™ã€‚", debugWithLineData.debugData );
             break;
         case User::TagWithData::Tag::FUN:
             if ( 3U < parts.size( ) )
             {
-                if ( parts[3] != u8"(" ) errorSStream( "ŠÖ”‚Ìˆø”\•¶‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B", debugWithLineData.debugData );
-                if ( parts.back( ) != u8")" ) errorSStream( "ŠÖ”‚Ìˆø”ƒŠƒXƒg‚ÌÅŒã‚É \")\" ‚ª‚ ‚è‚Ü‚¹‚ñB", debugWithLineData.debugData );
+                if ( parts[3] != u8"(" ) errorSStream( "é–¢æ•°ã®å¼•æ•°æ§‹æ–‡ãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚", debugWithLineData.debugData );
+                if ( parts.back( ) != u8")" ) errorSStream( "é–¢æ•°ã®å¼•æ•°ãƒªã‚¹ãƒˆã®æœ€å¾Œã« \")\" ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", debugWithLineData.debugData );
 
                 for ( size_t i = 5; i < parts.size( ) - 1; i += 2 )
                 {
-                    if ( parts[i] != u8"," ) errorSStream( "ŠÖ”‚Ìˆø”ƒŠƒXƒg‚ª³í‚Å‚Í‚ ‚è‚Ü‚¹‚ñB", debugWithLineData.debugData );
+                    if ( parts[i] != u8"," ) errorSStream( "é–¢æ•°ã®å¼•æ•°ãƒªã‚¹ãƒˆãŒæ­£å¸¸ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚", debugWithLineData.debugData );
                 }
             }
             break;

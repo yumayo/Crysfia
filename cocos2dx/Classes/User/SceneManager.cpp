@@ -1,22 +1,29 @@
 #include "SceneManager.h"
 #include "LayerBase.h"
 
-// scenarioに使われる変数のサイズなどの初期化。
 #include "Novel/OptionalValues.h"
 
-// ユーマヨが管理するシーンを作成します。
 #include "Novel/SceneNovel.h"
-#include "IslandMap/SceneIslandMap.h"
 #include "CiryMap/SceneCityMap.h"
 
-// 小松さんが管理するシーンを作成します。
 #include "Breeding/SceneBreeding.h"
 #include "Title/SceneTitle.h"
 
-// 石橋くんが管理するシーンを作成します。
 #include "Ishibashi/Scene_ishibashi.h"
 
-// 畠山くんが管理するシーンを作成します。
+#include "SceneManager.h"
+#include "LayerBase.h"
+
+#include "Novel/OptionalValues.h"
+
+#include "Novel/SceneNovel.h"
+#include "CiryMap/SceneCityMap.h"
+
+#include "Breeding/SceneBreeding.h"
+#include "Title/SceneTitle.h"
+
+#include "Ishibashi/Scene_ishibashi.h"
+
 #include "Diary/SceneDiary.h"
 
 USING_NS_CC;
@@ -26,23 +33,19 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-        createIslandMap( );
+        createCityMap( );
     }
     void SceneManager::createTitle( )
     {
         create<SceneTitle>( );
     }
-    void SceneManager::createNovel( std::string const& novelPath )
+    void SceneManager::createNovel( std::string const& scenario, std::function<void( )> const& saveCallFunc )
     {
-        create<SceneNovel>( novelPath );
+        create<SceneNovel>( scenario, saveCallFunc );
     }
-    void SceneManager::createIslandMap( )
+    void SceneManager::createCityMap( )
     {
-        create<SceneIslandMap>( );
-    }
-    void SceneManager::createCityMap( std::string const& backgroundPath )
-    {
-        create<SceneCityMap>( backgroundPath );
+        create<SceneCityMap>( );
     }
     void SceneManager::createBreeding( )
     {

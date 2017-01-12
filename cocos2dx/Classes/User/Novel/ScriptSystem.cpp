@@ -1,4 +1,4 @@
-#include "ScriptSystem.h"
+ï»¿#include "ScriptSystem.h"
 
 #include "ScriptStaticData.h"
 #include "OptionalValues.h"
@@ -14,6 +14,7 @@
 #include "Live2dLayer.h"
 #include "ItemLayer.h"
 #include "VoiceLayer.h"
+#include "FlickFunctionLayer.h"
 
 #include "ScriptHuman.h"
 #include "ScriptBackground.h"
@@ -49,9 +50,13 @@ namespace User
         REGIST_FUNC( ScriptSystem, name );
         REGIST_FUNC( ScriptSystem, human );
         REGIST_FUNC( ScriptSystem, background );
+        REGIST_FUNC( ScriptSystem, heartup );
+        REGIST_FUNC( ScriptSystem, heartdown );
         REGIST_FUNC( ScriptSystem, still );
         REGIST_FUNC( ScriptSystem, live2d );
         REGIST_FUNC( ScriptSystem, voice );
+        REGIST_FUNC( ScriptSystem, noveldisable );
+        REGIST_FUNC( ScriptSystem, novelenable );
         REGIST_FUNC( ScriptSystem, novelon );
         REGIST_FUNC( ScriptSystem, noveloff );
         REGIST_FUNC( ScriptSystem, novelswitch );
@@ -80,6 +85,7 @@ namespace User
         live2dLayer = systemLayer->getLayer<Live2dLayer>( );
         itemLayer = systemLayer->getLayer<ItemLayer>( );
         voiceLayer = systemLayer->getLayer<ItemLayer>( );
+        flickFunctionLayer = systemLayer->getLayer<FlickFunctionLayer>( );
     }
     SCRIPT( ScriptSystem::l )
     {
@@ -87,30 +93,35 @@ namespace User
     }
     SCRIPT( ScriptSystem::select )
     {
-        l( args );
+        l( { } );
 
         auto novel = dynamic_cast<NovelLayer*>( novelLayer );
+        novel->stop( );
         novel->systemStop.on( );
 
         auto origin = Director::getInstance( )->getVisibleOrigin( );
         auto visibleSize = Director::getInstance( )->getVisibleSize( );
-
 
         Vector<MenuItem*> buttons;
         for ( size_t i = 0; i < args.size( ); ++i )
         {
             auto menuitem = MenuItemImage::create( u8"res/texture/system/select.base.png", u8"res/texture/system/select.select.png", [ = ] ( Ref* p )
             {
+                if ( auto flick = dynamic_cast<FlickFunctionLayer*>( flickFunctionLayer ) )
+                {
+                    flick->end( );
+                }
+
                 novel->select( args[i] );
-                novel->click( );
+                novel->next( );
             } );
 
-            auto scale = 1.0F / Director::getInstance( )->getContentScaleFactor( );
-            menuitem->setScale( Lib::fitWidth( menuitem, 500 * scale ) );
+            auto scale = Director::getInstance( )->getContentScaleFactor( );
+            menuitem->setScale( Lib::fitWidth( menuitem, visibleSize.width * 0.9 ) );
             auto label = Label::createWithTTF( args[i], OptionalValues::fontName, OptionalValues::fontSize );
             label->setColor( Color3B( 39, 39, 39 ) );
             label->setPosition( menuitem->getContentSize( ) * 0.5 );
-            label->setScale( 1.0 / Lib::fitWidth( menuitem, 500 * scale ) );
+            label->setScale( 1.0 / Lib::fitWidth( menuitem, visibleSize.width * 0.9 ) );
             menuitem->addChild( label );
             buttons.pushBack( menuitem );
         }
@@ -137,6 +148,16 @@ namespace User
         default:
             break;
         }
+    }
+    SCRIPT( ScriptSystem::noveldisable )
+    {
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->noveldisable( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->noveldisable( );
+    }
+    SCRIPT( ScriptSystem::novelenable )
+    {
+        if ( auto ptr = dynamic_cast<NameLayer*>( nameLayer ) ) ptr->novelenable( );
+        if ( auto ptr = dynamic_cast<NovelLayer*>( novelLayer ) ) ptr->novelenable( );
     }
     SCRIPT( ScriptSystem::novelon )
     {
@@ -167,11 +188,43 @@ namespace User
         {
             ptr->make( args[0] );
         }
+        l( { } );
     }
     SCRIPT( ScriptSystem::autosave )
     {
-        utils::captureScreen( [ ] ( bool succeed, const std::string &filePath ) { }, "screenshot.autosave.png" );
+        utils::captureScreen( [ ] ( bool succeed, const std::string &filePath ) { }, "autosave.png" );
         stop( { u8"0.016F" } );
+    }
+
+    SCRIPT( ScriptSystem::heartup )
+    {
+        switch ( args.size( ) )
+        {
+        case 1:
+        {
+
+            auto heart = HeartGauge::create( )->make( );
+            heart->scriptUpAction( args[0] );
+            heartLayer->addChild( heart );
+        }
+        default:
+            break;
+        }
+    }
+
+    SCRIPT( ScriptSystem::heartdown )
+    {
+        switch ( args.size( ) )
+        {
+        case 1:
+        {
+            auto heart = HeartGauge::create( )->make( );
+            heart->scriptDownAction( args[0] );
+            heartLayer->addChild( heart );
+        }
+        default:
+            break;
+        }
     }
 
     SCRIPT( ScriptSystem::name )
@@ -180,10 +233,20 @@ namespace User
         {
         case 1:
         {
+            std::vector<std::string> names = { u8"åå‰", u8"n" };
+
             std::string variable = args[0];
             std::string humanName = variable;
-            auto pos = variable.find( u8"–¼‘O" );
-            if ( pos != std::string::npos ) humanName = variable.substr( pos + std::string( u8"–¼‘O" ).size( ) );
+
+            for ( auto& name : names )
+            {
+                auto pos = variable.find( name );
+                if ( pos != std::string::npos )
+                {
+                    humanName = variable.substr( pos + std::string( name ).size( ) );
+                    break;
+                }
+            }
 
             REGIST_VARIABLE( variable, new ScriptName( nameLayer, humanName, u8"F910MinchoW3.otf" ) );
         }
@@ -215,13 +278,13 @@ namespace User
         case 1:
         {
             auto audio = AudioManager::getInstance( );
-            audio->playBgm( args[0] );
+            audio->playBgm( u8"res/bgm/" + args[0] + u8".mp3" );
         }
         break;
         case 2:
         {
             auto audio = AudioManager::getInstance( );
-            audio->playBgm( args[0], StringUtil::string_value<bool>( args[1] ) );
+            audio->playBgm( u8"res/bgm/" + args[0] + u8".mp3", 0.0F, StringUtil::string_value<bool>( args[1] ) );
         }
         break;
         default:
@@ -235,7 +298,7 @@ namespace User
         case 1:
         {
             auto audio = AudioManager::getInstance( );
-            audio->playSe( args[0] );
+            audio->playSe( u8"res/se/" + args[0] + u8".mp3" );
         }
         break;
         default:

@@ -25,12 +25,6 @@
     <Filter Include="src\User\CityMap">
       <UniqueIdentifier>{33bda6f5-6a3c-4d9b-8325-9193a08d2a11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\User\IslandMap">
-      <UniqueIdentifier>{a0a4d727-d50e-41a3-a4fb-a9a644348145}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\User\Title">
-      <UniqueIdentifier>{b7fa4f3a-df70-4b00-82a3-072b5487863a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\User\TouchiEvent">
       <UniqueIdentifier>{69a70ced-98ef-4e5c-8434-fb78997061a6}</UniqueIdentifier>
     </Filter>
@@ -40,20 +34,23 @@
     <Filter Include="src\User\Live2d">
       <UniqueIdentifier>{02a43562-b573-4160-8a74-72187f9d3386}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\User\ishibashi">
-      <UniqueIdentifier>{56fd8090-a36b-4c7e-9cb7-2bd76c9b2651}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\User\Diary">
       <UniqueIdentifier>{547d4680-e421-43c7-a00a-b3cd3850c051}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\User\System">
       <UniqueIdentifier>{3e129644-97b0-4177-82b7-15154879f80a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource\Scenario">
-      <UniqueIdentifier>{6cd43fdb-48ea-438d-83f9-71b0060832cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="live2d">
       <UniqueIdentifier>{f4114573-fdac-47a6-94c8-29cbf1332d32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\LayerSave">
+      <UniqueIdentifier>{f5927665-b9fb-473d-8d2a-3fc22bb026e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\Ishibashi">
+      <UniqueIdentifier>{56fd8090-a36b-4c7e-9cb7-2bd76c9b2651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\User\Title">
+      <UniqueIdentifier>{b7fa4f3a-df70-4b00-82a3-072b5487863a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,16 +85,10 @@
       <Filter>src\User\Diary</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Ishibashi\Layer_ishibashi.cpp">
-      <Filter>src\User\ishibashi</Filter>
+      <Filter>src\User\Ishibashi</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Ishibashi\Scene_ishibashi.cpp">
-      <Filter>src\User\ishibashi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\IslandMap\LayerIsland.cpp">
-      <Filter>src\User\IslandMap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\User\IslandMap\SceneIslandMap.cpp">
-      <Filter>src\User\IslandMap</Filter>
+      <Filter>src\User\Ishibashi</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\User\Live2d\LAppLive2DManager.cpp">
       <Filter>src\User\Live2d</Filter>
@@ -318,6 +309,15 @@
     <ClCompile Include="..\live2d\framework\Live2DFramework.cpp">
       <Filter>live2d</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\LayerSave\LayerSave.cpp">
+      <Filter>src\User\LayerSave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\LayerNovelView.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\LayerMessageBox.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -351,16 +351,10 @@
       <Filter>src\User\Diary</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Ishibashi\Layer_ishibashi.h">
-      <Filter>src\User\ishibashi</Filter>
+      <Filter>src\User\Ishibashi</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Ishibashi\Scene_ishibashi.h">
-      <Filter>src\User\ishibashi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\IslandMap\LayerIsland.h">
-      <Filter>src\User\IslandMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\User\IslandMap\SceneIslandMap.h">
-      <Filter>src\User\IslandMap</Filter>
+      <Filter>src\User\Ishibashi</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Live2d\AppMacros.h">
       <Filter>src\User\Live2d</Filter>
@@ -608,63 +602,19 @@
     <ClInclude Include="..\live2d\framework\Live2DFramework.h">
       <Filter>live2d</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\User\LayerSave\LayerSave.h">
+      <Filter>src\User\LayerSave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\LayerNovelView.h">
+      <Filter>src\User\CityMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\LayerMessageBox.h">
+      <Filter>src\User\CityMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Resources\res\scenario\scenario.1.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\debug.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\first.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\live2d.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\past.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.2.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.3.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.4.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.5.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario.6.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario1.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario2.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario3.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario4.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\variable.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\kuroe.live2d.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
-    <Text Include="..\Resources\res\scenario\scenario5.txt">
-      <Filter>resource\Scenario</Filter>
-    </Text>
   </ItemGroup>
 </Project>

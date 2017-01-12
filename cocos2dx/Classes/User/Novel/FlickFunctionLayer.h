@@ -1,29 +1,24 @@
-# ifndef __FlickFunctionLayer__
+ï»¿# ifndef __FlickFunctionLayer__
 # define __FlickFunctionLayer__
 
 # include "../LayerBase.h"
+# include "ui/CocosGUI.h"
 
 namespace User
 {
-    class Menu : public cocos2d::Sprite
+    class Functions : public cocos2d::ui::Layout
     {
     public:
-        CREATE_FUNC( Menu );
-        Menu( ) { }
-        ~Menu( ) { }
-        std::function<void( )> menuCallBack;
+        CREATE_ARGS_FUNC( Functions );
+    public:
+        Functions( std::vector<std::pair<std::string, std::function<void( )>>> functions );
+        int icon_size;
+        void begin( );
+        void cancel( );
+        void end( );
+        std::function<void( )> ended;
+        std::function<void( )> canceled;
     private:
-        bool onTouch = false;
-        bool prevOnTouch = false;
-    public:
-        void update( bool touch );
-        bool isHit( cocos2d::Vec2 touchPos );
-        bool isIn( );
-        bool isStay( );
-        bool isOut( );
-    public:
-        static float circleRadius;
-        static int maxMenuNumber;
     };
 
     class FlickFunctionLayer : public LayerBase
@@ -34,100 +29,30 @@ namespace User
         ~FlickFunctionLayer( );
         bool init( ) override;
         void setup( ) override;
-        void update( float delta ) override;
+        void end( );
     private:
-        void began( cocos2d::Touch* touch );
-        void moved( cocos2d::Touch* touch );
-        void ended( cocos2d::Touch* touch );
         void createFlickCircle( );
     private:
         /**
-         *  ƒƒ“ƒOƒ^ƒbƒv‚È‚çutruev
-         *  ‚»‚¤‚Å‚È‚¢‚È‚çuflasev
-         */
-        bool isLongTap( ) { return isTap && isSuccessLongTap && ( longTapShiftTime <= holdTapTime ); }
-
-        /**
-         *  ƒƒ“ƒOƒ^ƒbƒv‚Åƒtƒ@ƒ“ƒNƒVƒ‡ƒ“‚ğŒÄ‚Ño‚µ‚Ä‚¢‚é‚Æ‚«‚Éutruev‚É‚È‚è‚Ü‚·B
-         *  •\¦‚â”ñ•\¦‚ÉØ‚è‘Ö‚í‚é‚Æ‚«‚Ìƒ‚[ƒVƒ‡ƒ“’†‚Æ•\¦‚³‚ê‚Ä‚¢‚È‚¢‚Æ‚«‚Íufalsev‚É‚È‚è‚Ü‚·B
-         *  ƒˆ‚É‹@”\‚ğg‚¦‚é‚Æ‚«‚Ì‚İutruev‚É‚È‚è‚Ü‚·B
-         */
-        bool isFunction = false;
-
-        /**
-         *  ƒ^ƒbƒv‚µ‚Ä‚¢‚éŠÔ‚Íutruev‚É‚È‚è‚Ü‚·B
-         */
-        bool isTap = false;
-
-        /**
-         *  ƒƒ“ƒOƒ^ƒbƒv‚ª¬Œ÷‚µ‚½‚çutruev‚É‚È‚è‚Ü‚·B
-         */
-        bool isSuccessLongTap = false;
-
-        /**
-         *  ƒ^ƒbƒv‚µ‚Ä‚¢‚éŠÔ‚ğ•Û‘¶‚µ‚Ü‚·B
-         */
-        float holdTapTime = 0.0F;
-
-        /**
-         *  ƒƒ“ƒOƒ^ƒbƒv‚ÉˆÚs‚·‚é‚Ü‚Å‚ÌŠÔ‚Å‚·B
-         *  < holdTapTime > ‚ª‚±‚ÌŠÔˆÈã‚Åƒƒ“ƒOƒ^ƒbƒvˆµ‚¢‚É‚È‚è‚Ü‚·B
-         */
-        const float longTapShiftTime = 0.4F;
-
-        /**
-         *  ƒƒ“ƒOƒ^ƒbƒv‚Æ‚İ‚È‚·‚©‚Ì‹——£‚Å‚·B
-         *  Å‰‚Éƒ^ƒbƒv‚µ‚½ˆÊ’u‚©‚ç‚±‚Ì‹——£‚æ‚è‚à‰“‚­‚É—£‚ê‚é‚Æƒƒ“ƒOƒ^ƒbƒv‚Å‚Í‚È‚­‚È‚è‚Ü‚·B
-         */
-        const float longTapShiftLength = 50.0F;
-
-        /**
-         *  ƒ^ƒbƒv‚µ‚½uŠÔ‚ÌêŠ‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
-         */
-        cocos2d::Vec2 tapBeganPosition;
-
-        /**
-         *  ÅŒã‚ÉG‚Á‚½êŠ‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
-         *  ƒ^ƒbƒv‚µ‚Ä‚¢‚éŠÔ‚ÉêŠ‚Ì•ÏX‚ª‚ ‚Á‚½ê‡‚Í‚»‚Ì’l‚É•Ï‚í‚è‚Ü‚·B
-         */
-        cocos2d::Vec2 tapLastPosition;
-
-        /**
-         *  ’†‰›‚ÌƒT[ƒNƒ‹‚Ìƒ|ƒCƒ“ƒ^‚ğ•Û‘¶‚µ‚Ä‚¨‚«‚Ü‚·B
-         */
-        cocos2d::Node* circle = nullptr;
-
-        /**
-         *  ƒƒjƒ…[‚Ü‚Å‚Ì‹——£‚Å‚·B
-         */
-        const float menuLength = 100.0F;
-
-        /**
-         *  ƒƒjƒ…[‚Ì”¼Œa‚Å‚·B
-         */
-        const float menuCircleRadius = 80.0F;
-
-        /**
-         *  ƒƒjƒ…[‚Ì”‚Å‚·B
-         */
-        const int numberMenu = 4;
-
-        /**
-         *  NovelƒŒƒCƒ„[‚ğ•Û‘¶‚µ‚Ü‚·B
-         *  ƒƒjƒ…[‚ğo‚µ‚½‚çANovelƒŒƒCƒ„[‚Ìƒ^ƒbƒ`ƒCƒxƒ“ƒg‚ğ–³Œø‚É‚·‚é‚½‚ß‚Å‚·B
+         *  Novelãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ä¿å­˜ã—ã¾ã™ã€‚
+         *  ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’å‡ºã—ãŸã‚‰ã€Novelãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¿ãƒƒãƒã‚¤ãƒ™ãƒ³ãƒˆã‚’ç„¡åŠ¹ã«ã™ã‚‹ãŸã‚ã§ã™ã€‚
          */
         cocos2d::Layer* novelLayer = nullptr;
 
         /**
-         *  ƒoƒbƒOƒƒOƒŒƒCƒ„[‚ğ•Û‘¶‚µ‚Ü‚·B
-         *  ƒT[ƒNƒ‹‚Ì‹@”\‚Æ‚µ‚Äg‚¤‚½‚ß‚Å‚·B
+         *  ãƒãƒƒã‚°ãƒ­ã‚°ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ä¿å­˜ã—ã¾ã™ã€‚
+         *  ã‚µãƒ¼ã‚¯ãƒ«ã®æ©Ÿèƒ½ã¨ã—ã¦ä½¿ã†ãŸã‚ã§ã™ã€‚
          */
-        cocos2d::Layer* baglogLayer = nullptr;
+        cocos2d::Layer* backlogLayer = nullptr;
 
         /**
-         *  ƒƒjƒ…[‚Ì‹@”\‚ğ’Ç‰Á‚µ‚Ü‚·B
+         * ãƒãƒ¼ãƒ ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ä¿å­˜ã—ã¾ã™ã€‚
+         * ãƒãƒ™ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®éè¡¨ç¤ºçŠ¶æ…‹ã®æ©Ÿèƒ½ã‚’æ‰±ã†ãŸã‚ã§ã™ã€‚
          */
-        void addMenu( std::string name, std::function<void( )> const& lambda );
+        cocos2d::Layer* nameLayer = nullptr;
+
+
+        Functions* functions = nullptr;
     };
 }
 

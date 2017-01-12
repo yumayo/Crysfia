@@ -1,4 +1,4 @@
-# ifndef __FGManager__
+﻿# ifndef __FGManager__
 # define __FGManager__
 
 # include "cocos2d.h"
@@ -12,7 +12,7 @@ namespace User
         FGManager( );
         ~FGManager( );
 
-		void fading();
+		void fading(float _totalTime);
 
     private:
 

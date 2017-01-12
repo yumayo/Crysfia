@@ -1,4 +1,4 @@
-#include "LayerTy.h"
+﻿#include "LayerTy.h"
 
 USING_NS_CC;
 

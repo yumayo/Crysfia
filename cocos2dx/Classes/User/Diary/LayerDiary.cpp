@@ -1,4 +1,4 @@
-#include "LayerDiary.h"
+ï»¿#include "LayerDiary.h"
 
 #include "../SceneManager.h"
 
@@ -22,16 +22,16 @@ namespace User
 			return false;
 		}
 
-		// ‰æ–ÊƒTƒCƒY‚ğæ“¾
+		// ç”»é¢ã‚µã‚¤ã‚ºã‚’å–å¾—
 		Size winSize = Director::getInstance()->getVisibleSize();
 
-		// ƒoƒbƒNƒOƒ‰ƒ“ƒhƒJƒ‰[
+		// ãƒãƒƒã‚¯ã‚°ãƒ©ãƒ³ãƒ‰ã‚«ãƒ©ãƒ¼
 		auto background = LayerColor::create(Color4B::BLACK, winSize.width, winSize.height);
 
-		// ƒoƒbƒNƒOƒ‰ƒ“ƒhƒJƒ‰[‘æ2ˆø”‚Í•\¦‡
+		// ãƒãƒƒã‚¯ã‚°ãƒ©ãƒ³ãƒ‰ã‚«ãƒ©ãƒ¼ç¬¬2å¼•æ•°ã¯è¡¨ç¤ºé †
 		this->addChild(background, 0);
 
-		// ƒŠƒXƒgƒrƒ…[‚Ìì¬
+		// ãƒªã‚¹ãƒˆãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 		Size visibleSize = Director::getInstance()->getVisibleSize();
 		Vec2 origin = Director::getInstance()->getVisibleSize();
 
@@ -43,7 +43,7 @@ namespace User
 		listView->setTag(0);
 		this->addChild(listView);
 
-		// ƒ{ƒ^ƒ“‚Ì¶¬
+		// ãƒœã‚¿ãƒ³ã®ç”Ÿæˆ
 		for (int i = 0; i < 6; ++i)
 		{
 			auto node = ui::Layout::create();
@@ -62,11 +62,11 @@ namespace User
 			listView->addChild(node);
 		}
 
-		// “ú‹L‚ğŠJ‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©
+		// æ—¥è¨˜ã‚’é–‹ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹
 		flagDiary = false;
 
 
-		// –ß‚éƒ{ƒ^ƒ“‚Ì¶¬
+		// æˆ»ã‚‹ãƒœã‚¿ãƒ³ã®ç”Ÿæˆ
 		{
 			auto scale = Director::getInstance()->getContentScaleFactor();
 
@@ -87,7 +87,7 @@ namespace User
 		return true;
 	}
 
-	// ƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`‚µ‚½‚Æ‚«‚Ì”½‰
+	// ãƒœã‚¿ãƒ³ã‚’ã‚¿ãƒƒãƒã—ãŸã¨ãã®åå¿œ
 	void LayerDiary::touchEvent(Ref *pSender, ui::Widget::TouchEventType type) {
 
 		if (type == ui::Widget::TouchEventType::BEGAN) {
@@ -105,7 +105,7 @@ namespace User
 					//log("%d", c->getTag());
 					if (pSender == c) {
 						selectDiary(c->getName());
-						log("%s", c->getName());
+						log("%s", c->getName().c_str());
 					}
 				}
 			}
@@ -138,7 +138,7 @@ namespace User
 		}
 	}
 
-	// ƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`‚³‚ê‚½‚ç‚±‚ê‚Å‰æ‘œ‚ğ•`‰æ
+	// ãƒœã‚¿ãƒ³ã‚’ã‚¿ãƒƒãƒã•ã‚ŒãŸã‚‰ã“ã‚Œã§ç”»åƒã‚’æç”»
 	void LayerDiary::selectDiary(std::string _name) {
 
 		auto sprite = Sprite::create(StringUtils::format("res/texture/home/%s.png", _name.c_str() ));

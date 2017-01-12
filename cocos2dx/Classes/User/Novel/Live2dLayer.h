@@ -1,4 +1,4 @@
-# ifndef __Live2dLayer__
+﻿# ifndef __Live2dLayer__
 # define __Live2dLayer__
 
 # include "../LayerBase.h"
