@@ -68,9 +68,6 @@ namespace User
         LayerCityMark::pasteMap( map, data );
 
         map->paste( this, position.x, position.y );
-
-        // これもマップの方で設定するので用済みです。
-        //setScale( getScale( ) * 0.5F );
     }
 
 
@@ -270,7 +267,14 @@ namespace User
 
         setIslandName( );
 
-        jsonRead( );
+        if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
+        {
+            jsonRead( );
+        }
+        else
+        {
+            json_read_game_clear( );
+        }
 
         /**
          *  画面上部のメニュー
@@ -321,6 +325,7 @@ namespace User
          */
         {
             auto board = Sprite::create( u8"res/texture/system/board.png" );
+            board->setName( u8"under_board" );
             auto boardPixel = board->getContentSize( ) / scale;
             auto boardScale = Lib::fitWidth( board, vs.width );
             board->setScale( boardScale, boardScale );
@@ -336,26 +341,36 @@ namespace User
                 button->setPosition( Vec2( 10, 10 ) * scale );
             }
 
-            if ( auto button = createTimeNextButton( ) )
+            if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
             {
-                addChild( button );
-                button->setPosition( Vec2( board->getContentSize( ).width * board->getScale( ), board->getContentSize( ).height * board->getScale( ) ) );
-            }
+                if ( auto button = createTimeNextButton( ) )
+                {
+                    button->setName( u8"time_button" );
+                    //button->setOpacity( 0 );
+                    //button->runAction( FadeIn::create( 0.3F ) );
+                    button->setPosition( Vec2( board->getContentSize( ).width * board->getScale( ), board->getContentSize( ).height * board->getScale( ) ) );
+                    addChild( button );
+                }
 
-            if ( auto label = createLabel( UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" ) ) )
-            {
-                addChild( label );
-                label->setPosition( Vec2( 0, board->getContentSize( ).height * board->getScale( ) ) );
+                if ( auto label = createLabel( UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" ) ) )
+                {
+                    //label->setOpacity( 0 );
+                    //label->runAction( FadeIn::create( 0.3F ) );
+                    label->setPosition( Vec2( 0, board->getContentSize( ).height * board->getScale( ) ) );
+                    addChild( label );
+                }
             }
         }
 
         if ( !mark_ptr_stack.empty( ) )
         {
-            addChild( LayerMessageBox::create( u8"期限を過ぎたシナリオがあります。", [ this ] { animation_start( ); read_check( ); } ) );
+            animation_start( );
+            addChild( LayerMessageBox::create( u8"期限を過ぎたシナリオがあります。", [ this ] { read_check( ); } ) );
         }
         else if ( !mark_stack.empty( ) )
         {
-            addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { animation_start( ); event_recovery( ); } ) );
+            animation_start( );
+            addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { event_recovery( ); } ) );
         }
         else
         {
@@ -508,6 +523,76 @@ namespace User
             }
         }
     }
+    void User::LayerCity::json_read_game_clear( )
+    {
+        save_name = u8"autosave.json";
+        Json::Reader reader;
+        if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
+        {
+            map = CityMap::create( );
+            map->setName( u8"CityMap" );
+            addChild( map );
+            for ( auto& island : root )
+            {
+                // 強制イベントを読み込みます。
+                for ( auto& value : island[u8"point.force"] )
+                {
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+                    temp.event = ScenarioPointData::Event::force;
+                    bool temp_visit = temp.visit;
+                    temp.visit = false;
+                    auto mark = MainMark::create( );
+                    mark->pasteMap( map, temp );
+                    temp.visit = temp_visit;
+                    mark->setButtonEndCallBack( [ temp ]
+                    {
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( temp, [ ] { } ) );
+                    } );
+                }
+                // メインシナリオを読み込んで貼り付けていきます。
+                for ( auto& value : island[u8"point.main"] )
+                {
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+                    temp.event = ScenarioPointData::Event::main;
+                    bool temp_visit = temp.visit;
+                    temp.visit = false;
+                    auto mark = MainMark::create( );
+                    mark->pasteMap( map, temp );
+                    temp.visit = temp_visit;
+                    mark->setButtonEndCallBack( [ temp ]
+                    {
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( temp, [ ] { } ) );
+                    } );
+                }
+                // サブシナリオを読み込んで貼り付けていきます。
+                for ( auto& value : island[u8"point.sub"] )
+                {
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+                    temp.event = ScenarioPointData::Event::sub;
+                    bool temp_visit = temp.visit;
+                    temp.visit = false;
+                    auto mark = SubMark::create( );
+                    mark->pasteMap( map, temp );
+                    temp.visit = temp_visit;
+                    mark->setButtonEndCallBack( [ temp ]
+                    {
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( temp, [ ] { } ) );
+                    } );
+                }
+            }
+        }
+
+        if ( UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) &&
+             !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリアダイアログ" ) )
+        {
+            addChild( LayerMessageBox::create( u8"ゲームクリアおめでとうございます！", [ this ] {
+                addChild( LayerMessageBox::create( u8"全てのシナリオが開放されました。", [ ] {
+                    UserDefault::getInstance( )->setBoolForKey( u8"ゲームクリアダイアログ", true ); } ) ); } ) );
+        }
+    }
     void LayerCity::time_next( )
     {
         Lib::next_day( );
@@ -584,8 +669,6 @@ namespace User
         button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
         {
             if ( type != ui::Widget::TouchEventType::ENDED ) return;
-
-            if ( is_animation ) return;
 
             time_next( );
         } );
@@ -806,6 +889,10 @@ namespace User
         {
             p->set_disable( );
         }
+        if ( auto p = dynamic_cast<ui::Button*>( getChildByName( u8"time_button" ) ) )
+        {
+            p->setEnabled( false );
+        }
     }
     void User::LayerCity::animation_end( )
     {
@@ -815,6 +902,10 @@ namespace User
         if ( auto p = dynamic_cast<CityMap*>( getChildByName( u8"CityMap" ) ) )
         {
             p->set_enable( );
+        }
+        if ( auto p = dynamic_cast<ui::Button*>( getChildByName( u8"time_button" ) ) )
+        {
+            p->setEnabled( true );
         }
     }
     void LayerCity::stack_mark_pos( Json::Value & value )

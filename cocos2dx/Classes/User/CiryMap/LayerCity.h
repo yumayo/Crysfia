@@ -168,6 +168,7 @@ namespace User
         bool init( ) override;
         void setup( ) override;
         void jsonRead( );
+        void json_read_game_clear( );
         void time_next( );
         cocos2d::Label* createLabel( std::string const& title );
         cocos2d::ui::Button* createBackButton( );

@@ -71,6 +71,7 @@ namespace User
         void click( );
         void next( );
         TextChunkManager& getTextChunkManager( ) { return textChunkManager; }
+        std::function<void( )> next_scene;
 
         /**
          * 最後にクリックしたときの画面を保存しておきます。

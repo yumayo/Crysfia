@@ -31,6 +31,10 @@
 #include "../../Lib/Utilitys.h"
 #include "../../Lib/AudioManager.h"
 
+#include "../SceneManager.h"
+
+#include "../System/DataSettings.h"
+
 USING_NS_CC;
 
 namespace User
@@ -63,6 +67,9 @@ namespace User
         REGIST_FUNC( ScriptSystem, item );
         REGIST_FUNC( ScriptSystem, autosave );
         REGIST_FUNC( ScriptSystem, heartif );
+        REGIST_FUNC( ScriptSystem, totitle );
+        REGIST_FUNC( ScriptSystem, gameclear );
+        REGIST_FUNC( ScriptSystem, remove );
     }
     ScriptSystem::~ScriptSystem( )
     {
@@ -268,6 +275,24 @@ namespace User
                 }
             }
         }
+    }
+
+    SCRIPT( ScriptSystem::totitle )
+    {
+        if ( auto p = dynamic_cast<NovelLayer*>( novelLayer ) )
+        {
+            p->next_scene = [ ] { SceneManager::createTitle( ); };
+        }
+    }
+
+    SCRIPT( ScriptSystem::remove )
+    {
+        restart( );
+    }
+
+    SCRIPT( ScriptSystem::gameclear )
+    {
+        UserDefault::getInstance( )->setBoolForKey( u8"ゲームクリア", true );
     }
 
     SCRIPT( ScriptSystem::name )

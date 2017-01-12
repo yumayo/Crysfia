@@ -1,6 +1,10 @@
 //シナリオ9(最終章、アイクラ島）
 //スクリプト一覧
 
+// $をつけると変数宣言できる。
+@$ノーマルエンド好感度:100  // 以下
+@$グッドエンド好感度:530000 // 以下
+
 @sys:name(名前アレン)
 @sys:name(名前クロエ)
 @sys:background(hアイクラ島)
@@ -554,13 +558,29 @@ aikura.1:play(43)
 @crysfia:out
 @sys:noveloff
 @h白背景:out
-@sys:stop(1)
 //ここまで
 //このあと親愛度が100%以上ならグッドエンドへ、100%以下ならノーマルエンドに分岐します
-@sys:heartif(100, ノーマルエンド, 530000, グッドエンド)
+
+// ここから下を自分が作成。
+@sys:stop(1)
+
+// 新しく、heartifを追加。
+// 100以下がノーマルエンド
+// 530000以下がグッドエンド
+// 処理は左から順にされる。
+
+
+@sys:heartif($ノーマルエンド好感度, ノーマルエンド, $グッドエンド好感度, グッドエンド)
+
+// ノーマルエンド
 @sys:beginland(ノーマルエンド)
 @sys:import(ノーマルエンド)
-@sys:endland
+@sys:endland()
+
+// グッドエンド
 @sys:beginland(グッドエンド)
 @sys:import(グッドエンド)
-@sys:endland
+@sys:endland()
+
+@sys:gameclear()
+@sys:totitle()

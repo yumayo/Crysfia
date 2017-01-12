@@ -16,6 +16,7 @@
 
 #include "../System/DataSettings.h"
 
+
 USING_NS_CC;
 
 namespace User
@@ -335,17 +336,9 @@ namespace User
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
-                addChild( createDialog( u8"データを消しますか？", [ ]
+                addChild( createDialog( u8"最初から始めますか？\n保存したデータは残ります。", [ ]
                 {
-                    {
-                        userDefaultForceSetup( );
-
-                        UserDefault::getInstance( )->flush( );
-                    }
-                    {
-                        auto data = FileUtils::getInstance( )->getDataFromFile( u8"res/data/autosave.json" );
-                        writeDataUserLocal( data, u8"autosave.json" );
-                    }
+                    restart( );
                     SceneManager::createTitle( );
                 }, [ ]
                 {
