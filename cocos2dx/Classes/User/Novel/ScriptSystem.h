@@ -31,6 +31,7 @@ namespace User
         SCRIPT( heartdown );
         SCRIPT( heartif );
         SCRIPT( totitle );
+        SCRIPT( tobreeding );
         SCRIPT( remove );
         SCRIPT( gameclear );
     public: // 変数の登録に使います。

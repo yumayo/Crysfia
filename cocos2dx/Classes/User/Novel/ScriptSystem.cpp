@@ -68,6 +68,7 @@ namespace User
         REGIST_FUNC( ScriptSystem, autosave );
         REGIST_FUNC( ScriptSystem, heartif );
         REGIST_FUNC( ScriptSystem, totitle );
+        REGIST_FUNC( ScriptSystem, tobreeding );
         REGIST_FUNC( ScriptSystem, gameclear );
         REGIST_FUNC( ScriptSystem, remove );
     }
@@ -282,6 +283,13 @@ namespace User
         if ( auto p = dynamic_cast<NovelLayer*>( novelLayer ) )
         {
             p->next_scene = [ ] { SceneManager::createTitle( ); };
+        }
+    }
+    SCRIPT( ScriptSystem::tobreeding )
+    {
+        if ( auto p = dynamic_cast<NovelLayer*>( novelLayer ) )
+        {
+            p->next_scene = [ ] { SceneManager::createBreeding( ); };
         }
     }
 
