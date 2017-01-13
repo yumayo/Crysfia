@@ -66,7 +66,7 @@ namespace User
     }
     void TextChunkManager::gotoNext( )
     {
-        textChunk.emplace_back( );
+        textChunk.emplace_back( this );
         work = &textChunk.back( );
     }
 }

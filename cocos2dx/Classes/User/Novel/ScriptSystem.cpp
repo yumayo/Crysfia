@@ -31,6 +31,10 @@
 #include "../../Lib/Utilitys.h"
 #include "../../Lib/AudioManager.h"
 
+#include "../SceneManager.h"
+
+#include "../System/DataSettings.h"
+
 USING_NS_CC;
 
 namespace User
@@ -62,6 +66,11 @@ namespace User
         REGIST_FUNC( ScriptSystem, novelswitch );
         REGIST_FUNC( ScriptSystem, item );
         REGIST_FUNC( ScriptSystem, autosave );
+        REGIST_FUNC( ScriptSystem, heartif );
+        REGIST_FUNC( ScriptSystem, totitle );
+        REGIST_FUNC( ScriptSystem, tobreeding );
+        REGIST_FUNC( ScriptSystem, gameclear );
+        REGIST_FUNC( ScriptSystem, remove );
     }
     ScriptSystem::~ScriptSystem( )
     {
@@ -227,6 +236,73 @@ namespace User
         }
     }
 
+    SCRIPT( ScriptSystem::heartif )
+    {
+        // 引数が偶数の時のみ動作します。
+        if ( ( args.size( ) & 0x1 ) == 0 )
+        {
+            // 奇数部分の数字が異常な値だったら例外を飛ばします。
+            for ( int i = 0; i < args.size( ); i += 2 )
+            {
+                try
+                {
+                    StringUtil::string_value<int>( args[i] );
+                }
+                catch ( ... )
+                {
+                    throw( "heartifの引数が不正です。" );
+                }
+            }
+
+            int heart = UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" );
+            for ( int i = 0; i < args.size( ); i += 2 )
+            {
+                int value = StringUtil::string_value<int>( args[i] );
+                if ( heart <= value ) // 40 <= 50 ok -> return
+                {
+                    std::string next = args[i + 1];
+
+                    auto novel = dynamic_cast<NovelLayer*>( novelLayer );
+                    novel->stop( );
+                    novel->systemStop.on( );
+
+                    if ( auto flick = dynamic_cast<FlickFunctionLayer*>( flickFunctionLayer ) )
+                    {
+                        flick->end( );
+                    }
+                    novel->select( next );
+                    novel->next( );
+                    return;
+                }
+            }
+        }
+    }
+
+    SCRIPT( ScriptSystem::totitle )
+    {
+        if ( auto p = dynamic_cast<NovelLayer*>( novelLayer ) )
+        {
+            p->next_scene = [ ] { SceneManager::createTitle( ); };
+        }
+    }
+    SCRIPT( ScriptSystem::tobreeding )
+    {
+        if ( auto p = dynamic_cast<NovelLayer*>( novelLayer ) )
+        {
+            p->next_scene = [ ] { SceneManager::createBreeding( ); };
+        }
+    }
+
+    SCRIPT( ScriptSystem::remove )
+    {
+        restart( );
+    }
+
+    SCRIPT( ScriptSystem::gameclear )
+    {
+        UserDefault::getInstance( )->setBoolForKey( u8"ゲームクリア", true );
+    }
+
     SCRIPT( ScriptSystem::name )
     {
         switch ( args.size( ) )
@@ -344,7 +420,16 @@ namespace User
         {
         case 1:
         {
+            auto name = UserDefault::getInstance( )->getStringForKey( u8"現在の服" );
             auto model = args[0];
+            if ( name == u8"セーラー服" )
+            {
+                model += u8"_s";
+            }
+            else
+            {
+                model += u8"_d";
+            }
             auto dir = u8"res/live2d/" + model + u8"/";
             REGIST_VARIABLE( args[0], new ScriptLive2d( live2dLayer, model, dir ) );
         }

@@ -1,5 +1,6 @@
 ﻿#include "TextChunk.h"
 
+#include "TextChunkManager.h"
 #include "ScriptStaticData.h"
 #include "ScriptSystem.h"
 
@@ -8,8 +9,9 @@
 
 namespace User
 {
-    TextChunk::TextChunk( )
+    TextChunk::TextChunk( TextChunkManager * manager )
         : novelIndex( ScriptSystem::novelIndex )
+        , manager( manager )
     {
         novelIndex = 0;
     }
@@ -55,7 +57,7 @@ namespace User
     void TextChunk::pushVariable( )
     {
         auto data = scriptAnalysis.getVariableScript( );
-        variableScriptData.insert( std::make_pair( data.variable, data.currentStatus ) );
+        manager->variableScriptData.insert( std::make_pair( data.variable, data.currentStatus ) );
     }
     void TextChunk::pushFunction( )
     {
@@ -65,8 +67,8 @@ namespace User
         {
             if ( arg.find( u8"$" ) != std::string::npos )
             {
-                auto itr = variableScriptData.find( arg );
-                if ( itr != variableScriptData.cend( ) ) arg = itr->second;
+                auto itr = manager->variableScriptData.find( arg );
+                if ( itr != manager->variableScriptData.cend( ) ) arg = itr->second;
                 else errorSStream( "指定した変数が存在しません。", scriptAnalysis.getTagWithData( ).debugData );
             }
         }

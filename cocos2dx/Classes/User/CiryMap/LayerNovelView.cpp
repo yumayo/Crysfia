@@ -51,7 +51,10 @@ namespace User
             if ( isNext ) return true;
 
             // 強制イベントは無効に出来ない。
-            if ( scenario.event == ScenarioPointData::Event::force ) return true;
+            if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
+            {
+                if ( scenario.event == ScenarioPointData::Event::force ) return true;
+            }
 
             enumerateChildren( "//.*", [ fadeTime ] ( cocos2d::Node* child )
             {
@@ -67,7 +70,7 @@ namespace User
         Director::getInstance( )->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, this );
 
         // ボードはど真ん中に設置。
-        auto next_stage = Sprite::create( u8"res/texture/system/next.stage2.png" );
+        auto next_stage = Sprite::create( u8"res/texture/system/next.stage.png" );
         next_stage->setPosition( vo + vs * 0.5 );
         next_stage->setScale( scale );
         addChild( next_stage );
@@ -75,7 +78,18 @@ namespace User
         int dead_line = scenario.get_dead_line( );
         bool stay = scenario.is_stay( );
         std::string stay_day;
-        if ( dead_line == 0 && stay )
+        if ( UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
+        {
+            if ( scenario.visit )
+            {
+                stay_day = u8"既読";
+            }
+            else
+            {
+                stay_day = u8"未読";
+            }
+        }
+        else if ( dead_line == 0 && stay )
         {
             // 当日 最終日
             stay_day = u8"最後の日";
