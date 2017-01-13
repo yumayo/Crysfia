@@ -1,6 +1,8 @@
 ﻿#include "LayerCleaning.h"
 #include "SceneBreeding.h"
 #include "LayerManager.h"
+#include "audio/include/AudioEngine.h"
+#include "Lib/AudioManager.h"
 USING_NS_CC;
 
 namespace User
@@ -20,8 +22,8 @@ namespace User
 		UserDefault::getInstance()->setIntegerForKey(u8"汚れ度",255);
 		cleanDegrees = UserDefault::getInstance()->getIntegerForKey(u8"汚れ度");
 
-		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"画面をタップで¥n お掃除開始！") :
-			Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"きれいだよ(=ﾟωﾟ)ﾉ");
+		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"画面をタップで\n お掃除開始！") :
+										Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"きれいだよ(=ﾟωﾟ)ﾉ");
 
 		bottle->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.5f));
 		bottle->setScale(0.5f);
@@ -191,6 +193,8 @@ namespace User
 		this->addChild(_layer);
 		Label* _label = Label::create();
 		setInfoLayer(_layer, _label, u8"じょうずにできました！", 36);
+		
+		AudioManager::getInstance()->playSe("res/voice/osewa/13.mp3");
 	}
 
 }
