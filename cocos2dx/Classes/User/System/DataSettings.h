@@ -22,6 +22,7 @@ namespace User
     void writeUserLocal( std::string const& data, std::string const& name, std::string const& directory );
     void writeDataUserLocal( cocos2d::Data const& data, std::string const& name );
     void writeDataUserLocal( cocos2d::Data const& data, std::string const& name, std::string const& directory );
+    void restart( );
 }
 
 # endif // __DataSettings__

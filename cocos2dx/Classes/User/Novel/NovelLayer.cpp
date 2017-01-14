@@ -42,30 +42,9 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        this->scheduleUpdate( );
+        next_scene = [ ] {SceneManager::createCityMap( ); };
 
-        auto keyEvent = EventListenerKeyboard::create( );
-        keyEvent->onKeyPressed = [ this ] ( EventKeyboard::KeyCode code, Event* event )
-        {
-            if ( code == EventKeyboard::KeyCode::KEY_F5 )
-            {
-                textChunkManager.make( novelPath );
-            }
-            if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
-            {
-                // 左側のCTRLキーが押されたら高速読み込みを開始する。
-                readProceed.on( );
-            }
-        };
-        keyEvent->onKeyReleased = [ this ] ( EventKeyboard::KeyCode code, Event* event )
-        {
-            if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
-            {
-                // 左側のCTRLが離されたら高速読み込みを停止する。
-                readProceed.off( );
-            }
-        };
-        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
+        this->scheduleUpdate( );
 
         auto touch = EventListenerTouchOneByOne::create( );
         touch->onTouchBegan = [ this ] ( Touch* touch, Event* event )
@@ -151,9 +130,13 @@ namespace User
                     // ここで、オートセーブデータを書き込みます。
                     if ( saveCallFunc )saveCallFunc( );
 
-                    Lib::next_day( );
+                    if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
+                    {
+                        Lib::next_day( );
+                    }
 
-                    SceneManager::createCityMap( );
+                    // 絶対関数の中に次のシーンを入れます。
+                    next_scene( );
                 } ), RemoveSelf::create( ), nullptr ) );
                 Director::getInstance( )->getRunningScene( )->addChild( sprite );
             }

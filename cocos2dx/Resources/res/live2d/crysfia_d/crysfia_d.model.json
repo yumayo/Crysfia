@@ -1,9 +1,9 @@
 {
   "type": "Live2D Model Setting",
-  "name": "crysfia",
-  "model": "crysfia.moc",
+  "name": "crysfia_d",
+  "model": "crysfia_d.moc",
   "textures": [
-    "crysfia.2048/texture_00.png"
+    "crysfia_d.2048/texture_00.png"
   ],
   "physics": "haru.physics.json",
   "expressions": [

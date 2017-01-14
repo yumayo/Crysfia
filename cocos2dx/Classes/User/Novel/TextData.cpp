@@ -51,8 +51,7 @@ namespace User
             if ( work->parentPointer )
             {
                 work = work->parentPointer;
-                ret = work->data.front( );
-                work->data.pop_front( );
+                ret = getLineMoved( );
             }
         }
         else
@@ -206,7 +205,7 @@ namespace User
         if ( args.size( ) != 1 ) throw( "importのファイルは一つでないといけません。" );
 
         TextData textData;
-        textData.makeData( args[0] );
+        textData.makeData( args[0] + u8".ymy" );
         work->data.insert( work->data.cend( ), textData.work->data.cbegin( ), textData.work->data.cend( ) );
         work->children.insert( textData.work->children.cbegin( ), textData.work->children.cend( ) );
     }

@@ -248,4 +248,11 @@ namespace User
             fileUtil->writeDataToFile( data, path + directory + name );
         }
     }
+    void restart( )
+    {
+        userDefaultForceSetup( );
+        UserDefault::getInstance( )->flush( );
+        auto data = FileUtils::getInstance( )->getDataFromFile( u8"res/data/autosave.json" );
+        writeDataUserLocal( data, u8"autosave.json" );
+    }
 }

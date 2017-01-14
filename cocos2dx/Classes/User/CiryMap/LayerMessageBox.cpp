@@ -33,7 +33,7 @@ namespace User
                                            u8"res/fonts/HGRGE.TTC",
                                            64 );
         label->setTextColor( Color4B( 29, 29, 29, 255 ) );
-        label->setScale( Lib::fitHeight( label, 128 * scale ) );
+        label->setScale( Lib::fitWidth( label, sprite->getContentSize( ).width * 0.9 ) );
         label->setPosition( sprite->getContentSize( ) * 0.5 );
         sprite->addChild( label );
 
