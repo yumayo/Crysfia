@@ -129,7 +129,8 @@ namespace User
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
-                buttonAudio( ".../button70.mp3", audio_volume );
+                //buttonAudio( "sound/button70.mp3", audio_volume );
+				rand = random(0, 2);
 
                 switch ( change )
                 {
@@ -139,11 +140,13 @@ namespace User
                     this->removeChildByName( "delite" );
 					loveMetor();
                     reside = false;
+					greet(meal_se[rand]);
                     break;
                 case dressClothes:
                     //着替え用アクション
 					dressAnimetion(now_dress, next_dress);
 					dressChange();
+					greet(dress_se[rand]);
                     break;
                 default:
                     break;
@@ -167,7 +170,7 @@ namespace User
         if ( !doc.HasParseError( ) )
         {
             const rapidjson::Value& buttonsData = doc["button_texture"];
-            for ( int k = 0; k < 5; k++ )
+            for ( int k = 0; k < 4; k++ )
             {
                 food_button.push_back( buttonsData[k]["texture"].GetString( ) );
             }
@@ -197,6 +200,24 @@ namespace User
 			for (int k = 0; k < 5; k++)
 			{
 				clear.push_back(buttonsData[k]["clear"].GetString());
+			}
+		}
+
+		if (!doc.HasParseError())
+		{
+			const rapidjson::Value& buttonsData = doc["meal_SE"];
+			for (int k = 0; k < 3; k++)
+			{
+				meal_se.push_back(buttonsData[k]["meal"].GetString());
+			}
+		}
+
+		if (!doc.HasParseError())
+		{
+			const rapidjson::Value& buttonsData = doc["dress_SE"];
+			for (int k = 0; k < 3; k++)
+			{
+				dress_se.push_back(buttonsData[k]["dress"].GetString());
 			}
 		}
 
@@ -377,7 +398,7 @@ namespace User
 					if (food_gain[text_number] == true) {
 						if (reside == true)
 						{
-							buttonAudio(".../button70.mp3", audio_volume);
+							buttonAudio("sound/button70.mp3", audio_volume);
 							love_degrees = text_number;
 
 							animation_num = text_number;
@@ -395,7 +416,7 @@ namespace User
 					if (dress_gain[text_number] == true) {
 						if (reside == true)
 						{
-							buttonAudio(".../button70.mp3", audio_volume);
+							buttonAudio("sound/button70.mp3", audio_volume);
 
 							//着替える動作を入れる
 							eraseFoodText();
@@ -422,17 +443,9 @@ namespace User
         addChild( button );
     }
 
-    void Layer_meal::heart( )
-    {
-        auto spirit = Sprite::create( "res/texture/heart.png" );
-        spirit->setPosition( Vec2( 110, 1100 ) );
-        spirit->setScale( 0.8 );
-        addChild( spirit );
-    }
-
     void Layer_meal::buttonAudio( std::string audio_name, int volume )
     {
-        int id = experimental::AudioEngine::play2d( "res/sound/SE" + audio_name );
+        int id = experimental::AudioEngine::play2d( "res/" + audio_name );
         experimental::AudioEngine::setVolume( id, volume );
     }
 
@@ -522,16 +535,16 @@ namespace User
     {
         auto item = UserDefault::getInstance();
 
-        food_gain.push_back(item->getBoolForKey("角砂糖"));
+		food_gain.push_back(true);//角砂糖用
         food_gain.push_back(item->getBoolForKey("花"));
         food_gain.push_back(item->getBoolForKey("果物"));
-        food_gain.push_back(item->getBoolForKey("コンペイトウ"));
+        food_gain.push_back(item->getBoolForKey("金平糖"));
         food_gain.push_back(item->getBoolForKey("宝石"));
-        dress_gain.push_back(item->getBoolForKey("服A"));
-        dress_gain.push_back(item->getBoolForKey("服B"));
-        dress_gain.push_back(item->getBoolForKey("服C"));
-        dress_gain.push_back(item->getBoolForKey("服D"));
-        dress_gain.push_back(item->getBoolForKey("服E"));
+        dress_gain.push_back(item->getBoolForKey("ワンピース"));
+        dress_gain.push_back(item->getBoolForKey("ドレス"));
+        dress_gain.push_back(item->getBoolForKey("着ぐるみ"));
+        dress_gain.push_back(item->getBoolForKey("シスター服"));
+        dress_gain.push_back(item->getBoolForKey("セーラー服"));
     }
 
 	void Layer_meal::dressChange()
@@ -548,5 +561,10 @@ namespace User
 		love_gauge = love->getIntegerForKey("親愛度");
 		love_gauge += love_degrees;
 		love->setIntegerForKey("親愛度", love_gauge);
+	}
+
+	void Layer_meal::greet(std::string voice)
+	{
+		buttonAudio(voice, audio_volume);
 	}
 }

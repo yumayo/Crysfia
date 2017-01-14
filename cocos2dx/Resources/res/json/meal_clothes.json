@@ -1,18 +1,18 @@
 {
   "button_texture": [
     { "texture": "角砂糖.png" },
-    { "texture": "すずらん.png" },
-    { "texture": "ブルーベリー.png" },
+    { "texture": "花.png" },
+    { "texture": "果物.png" },
     { "texture": "金平糖.png" },
-    { "texture": "シトリン宝石.png" }
+    { "texture": "宝石.png" }
   ],
 
   "dress_texture": [
-    { "clothes": "dress_icon/ワンピース.png" },
-    { "clothes": "dress_icon/ドレス.png" },
-    { "clothes": "dress_icon/着ぐるみ.png" },
-    { "clothes": "dress_icon/修道服.png" },
-    { "clothes": "dress_icon/セーラー服.png" }
+    { "clothes": "ワンピース.png" },
+    { "clothes": "ドレス.png" },
+    { "clothes": "着ぐるみ.png" },
+    { "clothes": "シスター服.png" },
+    { "clothes": "セーラー服.png" }
   ],
 
   "princess_texture": [
@@ -29,5 +29,17 @@
     { "clear": "item/dress_setup/クロエ短髪.png" },
     { "clear": "item/dress_setup/クロエ素体.png" },
     { "clear": "item/dress_setup/クロエセーラー.png" }
+  ],
+
+  "meal_SE": [
+    { "meal": "voice/osewa/05.mp3" },
+    { "meal": "voice/osewa/06.mp3" },
+    { "meal": "voice/osewa/07.mp3" },
+  ],
+
+  "dress_SE": [
+    { "dress": "voice/osewa/08.mp3" },
+    { "dress": "voice/osewa/09.mp3" },
+    { "dress": "voice/osewa/10.mp3" },
   ]
 }

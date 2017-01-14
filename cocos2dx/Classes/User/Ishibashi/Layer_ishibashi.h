@@ -33,8 +33,6 @@ namespace User
 
         void normalButton( int text_number, std::string button_photo, int normalButtonTag );//ボタン汎用用
 
-        void heart( );//好感度表示(仮)
-
         void buttonAudio( std::string audio_name, int volume );//効果音読み込み用 volume 0.0~1.0
 
         void mealDressVolume();//音量調節用
@@ -53,6 +51,8 @@ namespace User
 
 		void decoration();//装飾用
 
+		void greet(std::string voice);//クロエの反応用
+
     public:
         bool exist;//食べ物画像用
         bool reside;//決定の有無用
@@ -64,6 +64,8 @@ namespace User
         int audio_volume = 1.0f;
         int animation_num = 0;//アニメーション番号
         cocos2d::Sprite * food;//アニメーション用画像
+		int rand;//クロエ反応ランダム用
+		
 
         enum situation
         {
@@ -83,6 +85,11 @@ namespace User
         //衣装の有無
         std::vector<bool> dress_gain;//falseで未取得
 
+		//SE(食事)
+		std::vector<std::string> meal_se;
+		//SE(着替え)
+		std::vector<std::string> dress_se;
+
         //衣装解説
         std::vector<std::string> dress_commentary
         {
@@ -95,29 +102,28 @@ namespace User
 
 		std::vector<std::string> dress_text2
 		{
-			"四角い形のお砂糖。",
-			"白くて小さいお花。",
-			"甘酸っぱい果物。",
-			"カラフルでかわいい形をしたお砂糖。",
-			"クリスフィアが食べられる特別な食べ物。",
+			"クロエに与えられた最初の服。",
+			"薄緑色の優雅なドレス。",
+			"ウサギを模した着ぐるみ。",
+			"シスター服をクリスフィア用に改造したもの。",
+			"海軍で着用していた服を改造したもの。",
 		};
 
 		std::vector<std::string> dress_text3
 		{
-			"食べ物としては少し物足りないかも。",
-			"香りが強くいい匂いがする。",
-			"ジャムにしてもおいしい。",
-			"とてもかわいらしい。",
-			"不思議と元気があふれてくる。",
+			"シースルーの白いワンピース。"
+			"ワンポイントの花が可愛らしい。",
+			"お祭りで似たぬいぐるみが売っている。",
+			"クロエの願いがこもっている。",
+			"中学生っぽい雰囲気がする。",
 		};
 
         //食べ物解説
         std::vector<std::string> food_commentary
         {
-            "角砂糖",
             "スズラン",
             "ブルーベリー",
-            "こんぺいとう",
+            "金平糖",
             "シトリン宝石",
         };
 
@@ -133,6 +139,7 @@ namespace User
 		std::vector<std::string> food_text3
 		{
 			"食べ物としては少し物足りないかも。",
+			"白くて小さいお花。",
 			"香りが強くいい匂いがする。",
 			"ジャムにしてもおいしい。",
 			"とてもかわいらしい。",
