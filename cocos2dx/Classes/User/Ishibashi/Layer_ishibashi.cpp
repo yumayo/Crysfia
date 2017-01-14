@@ -115,7 +115,7 @@ namespace User
 
         //ボタンに表示する文字
         // テキスト
-        button->setTitleText( "決定" );
+        button->setTitleText( u8"決定" );
         // フォント
         button->setTitleFontName( "Arial" );
         // フォントサイズ
@@ -170,7 +170,7 @@ namespace User
         if ( !doc.HasParseError( ) )
         {
             const rapidjson::Value& buttonsData = doc["button_texture"];
-            for ( int k = 0; k < 4; k++ )
+            for ( int k = 0; k < 5; k++ )
             {
                 food_button.push_back( buttonsData[k]["texture"].GetString( ) );
             }
@@ -222,7 +222,7 @@ namespace User
 		}
 
 		now = UserDefault::getInstance();
-		now_dress = now->getIntegerForKey("現在の服");
+		now_dress = now->getIntegerForKey(u8"現在の服");
 
 		auto sprite = Sprite::create();
 		sprite->setTextureRect(Rect(0, 0, 150, 900));
@@ -362,6 +362,9 @@ namespace User
 		dress->runAction(fade2);
 
 		character(fashion_show[dress_num], clear[dress_num]);
+
+		removeChildByName("fashion");
+		removeChildByName("changeCostume");
 	}
 
     void Layer_meal::normalButton( int text_number, std::string button_photo, int normalButtonTag )
@@ -430,8 +433,8 @@ namespace User
 					}
 
 					
-					removeChildByName("fashion");
-					removeChildByName("changeCostume");
+					/*removeChildByName("fashion");
+					removeChildByName("changeCostume");*/
 
                     break;
                 default:
@@ -453,7 +456,7 @@ namespace User
     {
 		auto volume = UserDefault::getInstance();
 
-        audio_volume = volume->getFloatForKey("se");
+        audio_volume = volume->getFloatForKey(u8"se");
     }
 
     void Layer_meal::mealTutorial( )
@@ -536,20 +539,20 @@ namespace User
         auto item = UserDefault::getInstance();
 
 		food_gain.push_back(true);//角砂糖用
-        food_gain.push_back(item->getBoolForKey("花"));
-        food_gain.push_back(item->getBoolForKey("果物"));
-        food_gain.push_back(item->getBoolForKey("金平糖"));
-        food_gain.push_back(item->getBoolForKey("宝石"));
-        dress_gain.push_back(item->getBoolForKey("ワンピース"));
-        dress_gain.push_back(item->getBoolForKey("ドレス"));
-        dress_gain.push_back(item->getBoolForKey("着ぐるみ"));
-        dress_gain.push_back(item->getBoolForKey("シスター服"));
-        dress_gain.push_back(item->getBoolForKey("セーラー服"));
+        food_gain.push_back(item->getBoolForKey(u8"花"));
+        food_gain.push_back(item->getBoolForKey(u8"果物"));
+        food_gain.push_back(item->getBoolForKey(u8"金平糖"));
+        food_gain.push_back(item->getBoolForKey(u8"宝石"));
+        dress_gain.push_back(item->getBoolForKey(u8"ワンピース"));
+        dress_gain.push_back(item->getBoolForKey(u8"ドレス"));
+        dress_gain.push_back(item->getBoolForKey(u8"着ぐるみ"));
+        dress_gain.push_back(item->getBoolForKey(u8"シスター服"));
+        dress_gain.push_back(item->getBoolForKey(u8"セーラー服"));
     }
 
 	void Layer_meal::dressChange()
 	{
-		now->setIntegerForKey("現在の服", next_dress);
+		now->setIntegerForKey(u8"現在の服", next_dress);
 	}
 
 	//未確認
@@ -558,9 +561,9 @@ namespace User
 		int love_gauge;
 
 		auto love = UserDefault::getInstance();
-		love_gauge = love->getIntegerForKey("親愛度");
+		love_gauge = love->getIntegerForKey(u8"親愛度");
 		love_gauge += love_degrees;
-		love->setIntegerForKey("親愛度", love_gauge);
+		love->setIntegerForKey(u8"親愛度", love_gauge);
 	}
 
 	void Layer_meal::greet(std::string voice)
