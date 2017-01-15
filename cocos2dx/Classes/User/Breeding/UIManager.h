@@ -39,6 +39,7 @@ namespace User
 		std::vector<cocos2d::ui::Slider*> sliderBers;
 		std::vector<cocos2d::Label*>	  optionLabels;
 
+		void buttonEnable();
 		void touchEventOfMainMenu(Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 		void touchEventOfSubMenu(Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 

@@ -1,7 +1,6 @@
 ﻿#include "LayerCleaning.h"
 #include "SceneBreeding.h"
 #include "LayerManager.h"
-#include "audio/include/AudioEngine.h"
 #include "Lib/AudioManager.h"
 USING_NS_CC;
 
@@ -18,8 +17,7 @@ namespace User
 		cleanDegrees(UserDefault::getInstance()->getIntegerForKey(u8"汚れ度")),
 		listener(EventListenerTouchOneByOne::create())
 	{
-
-		UserDefault::getInstance()->setIntegerForKey(u8"汚れ度",255);
+		//UserDefault::getInstance()->setIntegerForKey(u8"汚れ度",255);
 		cleanDegrees = UserDefault::getInstance()->getIntegerForKey(u8"汚れ度");
 
 		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"画面をタップで\n お掃除開始！") :
@@ -43,8 +41,10 @@ namespace User
 		clippingNode->addChild(mask, 20);
 		this->addChild(clippingNode, 20);
 
-		buttons.push_back(ui::Button::create("res/Image/WindowBase/WinBase_101.png"));
-		buttons[0]->setScale(0.7f);
+		buttons.push_back(ui::Button::create("res/texture/system/backbutton.png",
+											 "res/texture/system/backbutton.select.png",
+											 "res/texture/system/backbutton.png" ));
+
 		buttons[0]->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.05f));
 		this->addChild(buttons[0], 30);
 
@@ -65,15 +65,13 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
-		auto background = Sprite::create("res/texture/home/cleaning_bg.jpg");
+		auto background = Sprite::create(u8"res/texture/home/h船室.png");
 		background->setPosition(winSize / 2);
-		background->setScale(4.f);
+		background->setScale(0.5f);
 		this->addChild(background);
 
 		uiTouchProcess();
 		setInfoLayer();
-
-		log(u8"bottleTextureの透過度=[%d]", bottleTexture->getOpacity());
 
 		listener->onTouchBegan = [=](Touch* touch, Event* event) { return true; };
 		listener->onTouchEnded = [this](Touch* touch, Event* event) {
@@ -107,8 +105,7 @@ namespace User
 			//差分X、Yを足した値の絶対値をとりその値を５０分の１にした値にに制限をかける。
 			//この値を使ってマスクの透過度から引いていく
 			int creanVal = clampf((abs(delta.x + delta.y) * 0.05), 0, 2);
-			log(u8"透過度=[%d]", creanVal);
-
+		
 			//ざっくりとしたあたり判定に使うための矩形を用意
 			auto rect = Rect(bottleTexture->getPosition().x - bottleTexture->getContentSize().width / 2,
 				bottleTexture->getPosition().y - bottleTexture->getContentSize().width / 2,
@@ -193,7 +190,6 @@ namespace User
 		this->addChild(_layer);
 		Label* _label = Label::create();
 		setInfoLayer(_layer, _label, u8"じょうずにできました！", 36);
-		
 		AudioManager::getInstance()->playSe("res/voice/osewa/13.mp3");
 	}
 
