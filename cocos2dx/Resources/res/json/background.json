@@ -3,7 +3,7 @@
   [
     {
       "name": "メインページ",
-      "res": "res/texture/novel/背景商店街.png",
+      "res": "res/texture/title/background.png",
       "alpha": 255,
       "scale": 1,
       "pos": {

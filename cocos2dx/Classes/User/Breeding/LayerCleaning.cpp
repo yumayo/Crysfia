@@ -1,7 +1,6 @@
 ﻿#include "LayerCleaning.h"
 #include "SceneBreeding.h"
 #include "LayerManager.h"
-#include "audio/include/AudioEngine.h"
 #include "Lib/AudioManager.h"
 USING_NS_CC;
 
@@ -73,8 +72,6 @@ namespace User
 		uiTouchProcess();
 		setInfoLayer();
 
-		log(u8"bottleTextureの透過度=[%d]", bottleTexture->getOpacity());
-
 		listener->onTouchBegan = [=](Touch* touch, Event* event) { return true; };
 		listener->onTouchEnded = [this](Touch* touch, Event* event) {
 			if (cleanDegrees != 0)canCleaning = true;
@@ -107,8 +104,7 @@ namespace User
 			//差分X、Yを足した値の絶対値をとりその値を５０分の１にした値にに制限をかける。
 			//この値を使ってマスクの透過度から引いていく
 			int creanVal = clampf((abs(delta.x + delta.y) * 0.05), 0, 2);
-			log(u8"透過度=[%d]", creanVal);
-
+		
 			//ざっくりとしたあたり判定に使うための矩形を用意
 			auto rect = Rect(bottleTexture->getPosition().x - bottleTexture->getContentSize().width / 2,
 				bottleTexture->getPosition().y - bottleTexture->getContentSize().width / 2,
@@ -193,7 +189,6 @@ namespace User
 		this->addChild(_layer);
 		Label* _label = Label::create();
 		setInfoLayer(_layer, _label, u8"じょうずにできました！", 36);
-		
 		AudioManager::getInstance()->playSe("res/voice/osewa/13.mp3");
 	}
 

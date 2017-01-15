@@ -1,7 +1,6 @@
 {
   "Button": 
   [
-
     {
       "name": "戻る",
       "res": {
@@ -18,8 +17,8 @@
     {
       "name": "食事",
       "res":{
-        "pull": "res/texture/system/食事.png",
-        "push": "res/texture/system/食事_押した時.png"
+        "pull": "res/texture/system/食事_off.png",
+        "push": "res/texture/system/食事_on.png"
       },
       "pos": 
       {
@@ -31,8 +30,8 @@
     {
       "name": "着替え",
       "res": {
-        "pull": "res/texture/system/着替え.png",
-        "push": "res/texture/system/着替え_押した時.png"
+        "pull": "res/texture/system/着替え_off.png",
+        "push": "res/texture/system/着替え_on.png"
       },
       "pos": 
       {
@@ -44,8 +43,8 @@
     {
       "name": "掃除",
       "res": {
-        "pull": "res/texture/system/掃除.png",
-        "push": "res/texture/system/掃除_押した時.png"
+        "pull": "res/texture/system/掃除_off.png",
+        "push": "res/texture/system/掃除_on.png"
       },
       "pos": 
       {

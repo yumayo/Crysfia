@@ -65,7 +65,7 @@ namespace User
 
 		//jsonファイルの読み込み
 		auto fileUtils = FileUtils::getInstance();
-		auto path = fileUtils->getStringFromFile(u8"res/json/mainMenuUI.json");
+		auto path = fileUtils->getStringFromFile("res/json/mainMenuUI.json");
 		rapidjson::Document doc;
 
 		//jsonファイルをパース
@@ -76,7 +76,9 @@ namespace User
 			const rapidjson::Value& buttonsData = doc["Button"];
 			for (rapidjson::SizeType i = 0; i < buttonsData.Size(); i++)
 			{
-				menuButtons.push_back(ui::Button::create(buttonsData[i]["res"]["pull"].GetString(), buttonsData[i]["res"]["push"].GetString(), buttonsData[i]["res"]["pull"].GetString()));
+				menuButtons.push_back(ui::Button::create(buttonsData[i]["res"]["pull"].GetString(),
+														 buttonsData[i]["res"]["push"].GetString(),
+														 buttonsData[i]["res"]["pull"].GetString() ));
 				menuButtons[i]->setTitleFontSize(42);
 				menuButtons[i]->setTitleColor(Color3B::WHITE);
 
@@ -123,7 +125,9 @@ namespace User
 			const rapidjson::Value& buttonsData = doc["Button"];
 			for (rapidjson::SizeType i = (int)SubButtonType::BACK; i < buttonsData.Size(); i++)
 			{
-				subButtons.push_back(ui::Button::create( buttonsData[i]["res"]["pull"].GetString(), buttonsData[i]["res"]["push"].GetString(), buttonsData[i]["res"]["pull"].GetString()) );
+				subButtons.push_back(ui::Button::create( buttonsData[i]["res"]["pull"].GetString(),
+														 buttonsData[i]["res"]["push"].GetString(),
+														 buttonsData[i]["res"]["pull"].GetString()) );
 				subButtons[i]->setTitleFontSize(42);
 				subButtons[i]->setTitleColor(Color3B::WHITE);
 
@@ -139,40 +143,47 @@ namespace User
 		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::BREEDING_MENU);
 	}
 
+	void UIManager::buttonEnable()
+	{
+		for (auto& it : menuButtons) {
+			it->runAction(Sequence::create(CallFunc::create([=] {it->setEnabled(false); }),
+				DelayTime::create(4),
+				CallFunc::create([=] {it->setEnabled(true); }),
+				nullptr));
+		}
+	}
+
 	//各メニューボタンの処理
 	void UIManager::touchEventOfMainMenu(Ref * pSender, ui::Widget::TouchEventType type)
 	{
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN: break;
+		case ui::Widget::TouchEventType::CANCELED: break;
 		case ui::Widget::TouchEventType::ENDED:
 
 			if (pSender == menuButtons[(int)ButtonType::STORY]) {
+				buttonEnable();
 				SceneManager::createCityMap();
 				break;
 			}
 			if (pSender == menuButtons[(int)ButtonType::BREEDING]) {
+				buttonEnable();
 				changeToSubWindow();
 				break;
 			}
 			if (pSender == menuButtons[(int)ButtonType::OPTION]) {
+				buttonEnable();
 				setOptionWindow();
 				break;
 			}
 			if (pSender == menuButtons[(int)ButtonType::DIARY]) {
+				buttonEnable();
 				changeToDiaryWindow();
 				break;
 			}
-
 		default:
 			break;
-		}
-
-		for (auto& it : menuButtons) {
-			it->runAction(Sequence::create(CallFunc::create([=] {it->setEnabled(false); }),
-				DelayTime::create(4),
-				CallFunc::create([=] {it->setEnabled(true); }),
-				nullptr));
 		}
 
 	}
@@ -186,18 +197,22 @@ namespace User
 		case ui::Widget::TouchEventType::CANCELED: break;
 		case ui::Widget::TouchEventType::ENDED:
 			if (pSender == subButtons[(int)SubButtonType::BACK]) {
+				buttonEnable();
 				changeToMainWindow();
 				break;
 			}
 			if (pSender == subButtons[(int)SubButtonType::MEAL]) {
+				buttonEnable();
 				changeToBreeding(0);
 				break;
 			}
 			if (pSender == subButtons[(int)SubButtonType::CLOTHES]) {
+				buttonEnable();
 				changeToBreeding(1);
 				break;
 			}
 			if (pSender == subButtons[(int)SubButtonType::CLEANING]) {
+				buttonEnable();
 				changeToCreaning();
 				break;
 			}
@@ -270,8 +285,9 @@ namespace User
 			CallFunc::create([=] {
 			p->removeChildByTag((int)tabLayer::CHARACTER);
 			p->removeChildByTag((int)tabLayer::UI_MANAGER);
+			p->removeChildByTag((int)tabLayer::HEARTGAUGE);
 			p->addChild(Layer_meal::create(_menuId), 0, (int)tabLayer::CLEANING); }),
-			nullptr));
+			nullptr) );
 	}
 
 	//レイヤーを入れ替える関数です。現在はNodeの指定しかできないです
