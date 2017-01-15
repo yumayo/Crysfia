@@ -17,7 +17,7 @@ namespace User
 
 	LayerManager::~LayerManager()
 	{
-
+		UserDefault::getInstance()->setIntegerForKey("PreviousDay",UserDefault::getInstance()->getIntegerForKey(u8"日") );
 	}
 
 	bool LayerManager::init()

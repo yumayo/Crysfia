@@ -29,7 +29,8 @@ namespace User
 		menuButtons(std::vector<ui::Button*>()),
 		subButtons(std::vector<ui::Button*>()),
 		sliderBers(std::vector<ui::Slider*>()),
-		optionLabels(std::vector<Label*>())
+		optionLabels(std::vector<Label*>()),
+		audioManager(AudioManager::getInstance())
 	{
 		bgManager = BGManager::create();
 	}
@@ -162,6 +163,8 @@ namespace User
 		case ui::Widget::TouchEventType::CANCELED: break;
 		case ui::Widget::TouchEventType::ENDED:
 
+			audioManager->playSe("res/sound/SE/click.mp3");
+
 			if (pSender == menuButtons[(int)ButtonType::STORY]) {
 				buttonEnable();
 				SceneManager::createCityMap();
@@ -196,6 +199,9 @@ namespace User
 		case ui::Widget::TouchEventType::BEGAN: break;
 		case ui::Widget::TouchEventType::CANCELED: break;
 		case ui::Widget::TouchEventType::ENDED:
+			
+			audioManager->playSe("res/sound/SE/click.mp3");
+			
 			if (pSender == subButtons[(int)SubButtonType::BACK]) {
 				buttonEnable();
 				changeToMainWindow();
@@ -267,11 +273,19 @@ namespace User
 	//‘|œ‰æ–Ê‚ÌƒŒƒCƒ„[‚É“\‚è‘Ö‚¦
 	void UIManager::changeToCreaning()
 	{
+		float fadeTime(3);
 		auto p = this->getParent();
-		p->removeChildByTag((int)tabLayer::CHARACTER);
-		p->removeChildByTag((int)tabLayer::UI_MANAGER);
-		p->removeChildByTag((int)tabLayer::BACKGROUND);
-		p->addChild(LayerCleaning::create(), 0, (int)tabLayer::CLEANING);
+		auto f = (FGManager*)p->getChildByTag((int)tabLayer::FOREGROUND);
+
+		this->runAction(Sequence::create(CallFunc::create([=] {f->fading(fadeTime); }),
+			DelayTime::create(fadeTime / 2),
+			CallFunc::create([this] {
+			auto p = this->getParent();
+			p->removeChildByTag((int)tabLayer::CHARACTER);
+			p->removeChildByTag((int)tabLayer::UI_MANAGER);
+			p->removeChildByTag((int)tabLayer::BACKGROUND);
+			p->addChild(LayerCleaning::create(), 0, (int)tabLayer::CLEANING);}),
+			nullptr));
 	}
 
 	//H–‰æ–Ê‹y‚Ñ’…‘Ö‚¦‰æ–Ê‚ÖˆÚ“®----------------------------------------------------------------------

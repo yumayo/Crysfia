@@ -1,7 +1,5 @@
 ﻿#include "TitleManager.h"
 #include "../SceneManager.h"
-#include "audio/include/AudioEngine.h"
-
 #include "SceneTitle.h"
 USING_NS_CC;
 using namespace experimental;
@@ -11,18 +9,11 @@ namespace User
 	TitleManager::TitleManager() :
 		uiLabel(Label::createWithSystemFont("TAP TO SCREEN", "Arial", 50)),
 		fadeSprite(nullptr),
-		vol(1.f),
 		isGameStarted(false),
 		isTap(false),
-		audioManager(AudioManager::getInstance())/*,
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-		titleBgm(AudioEngine::play2d("res/sound/BGM/title.mp3"))
-#else
-		titleBgm(AudioEngine::play2d("res/sound/BGM/title.wav"))
-#endif*/
+		audioManager(AudioManager::getInstance())
 	{
-		audioManager->playBgm("res/sound/BGM/title.mp3", true);
-		audioManager->setBgmVolume(1);
+		
 	}
 
 	TitleManager::~TitleManager() {}
@@ -31,8 +22,7 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
-		audioManager->playBgm("res/sound/BGM/title.mp3", true);
-		audioManager->setBgmVolume(3);
+		audioManager->playBgm("res/sound/BGM/title.mp3");
 
 		createTitleWindow();
 		createTapUI();
@@ -53,9 +43,7 @@ namespace User
 
 			if (!isTap) 
 			{	
-				AudioEngine::play2d("res/sound/SE/title_se.mp3");
-				//audioManager->playSe("res/sound/SE/title_se.mp3");
-				//audioManager->setSeVolume(4);
+				audioManager->playSe("res/sound/SE/title_se.mp3");
 				isTap = true;
 			}
 
@@ -69,8 +57,7 @@ namespace User
 	{
 		if (isGameStarted)
 		{
-			vol = vol >= 0 ? vol -= 0.01f : isGameStarted = false;
-			audioManager->setBgmVolume(vol);
+			audioManager->stopBgm(1.0F);
 		}
 	}
 
