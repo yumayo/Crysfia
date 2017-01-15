@@ -34,7 +34,12 @@ namespace User
 
         loadData( );
         mealDressVolume();
-        Menu( );
+		auto back_board = Sprite::create(u8"res/texture/item/h船室.png");
+		back_board->setPosition(Vec2(/*610,440*/ 360,640));
+		back_board->setScale(0.5);
+		this->addChild(back_board);
+
+        Menu();
         eatText( );
         character(fashion_show[now_dress], clear[now_dress]);
         //mealTutorial( );
