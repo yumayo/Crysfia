@@ -25,10 +25,14 @@ namespace User
 
 		int num[15];
     private:		
-		cocos2d::ui::ListView *listView;
-		std::vector<std::string> name;
+		
 		bool flagDiary;
+		int diaryNum;
 
+		std::vector<std::string> name;
+
+		void setBackground(std::string _filePath);
+		void setButtons(int _buttonCount);
     };
 }
 

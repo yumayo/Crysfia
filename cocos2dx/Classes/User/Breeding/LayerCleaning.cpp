@@ -17,8 +17,7 @@ namespace User
 		cleanDegrees(UserDefault::getInstance()->getIntegerForKey(u8"汚れ度")),
 		listener(EventListenerTouchOneByOne::create())
 	{
-
-		UserDefault::getInstance()->setIntegerForKey(u8"汚れ度",255);
+		//UserDefault::getInstance()->setIntegerForKey(u8"汚れ度",255);
 		cleanDegrees = UserDefault::getInstance()->getIntegerForKey(u8"汚れ度");
 
 		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"画面をタップで\n お掃除開始！") :
@@ -42,8 +41,10 @@ namespace User
 		clippingNode->addChild(mask, 20);
 		this->addChild(clippingNode, 20);
 
-		buttons.push_back(ui::Button::create("res/Image/WindowBase/WinBase_101.png"));
-		buttons[0]->setScale(0.7f);
+		buttons.push_back(ui::Button::create("res/texture/system/backbutton.png",
+											 "res/texture/system/backbutton.select.png",
+											 "res/texture/system/backbutton.png" ));
+
 		buttons[0]->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.05f));
 		this->addChild(buttons[0], 30);
 
@@ -64,9 +65,9 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
-		auto background = Sprite::create("res/texture/home/cleaning_bg.jpg");
+		auto background = Sprite::create(u8"res/texture/home/h船室.png");
 		background->setPosition(winSize / 2);
-		background->setScale(4.f);
+		background->setScale(0.5f);
 		this->addChild(background);
 
 		uiTouchProcess();
