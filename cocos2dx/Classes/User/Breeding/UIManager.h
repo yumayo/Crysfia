@@ -1,10 +1,12 @@
 ﻿# ifndef __UIManager__
 # define __UIManager__
 
-# include "cocos2d.h"
-#include "../LayerBase.h"
+#include "cocos2d.h"
 #include "BGManager.h"
 #include "ui/CocosGUI.h"
+#include "Lib/AudioManager.h"
+
+#include "../LayerBase.h"
 #include "../Breeding/VariousStatus.h"
 
 namespace User
@@ -28,7 +30,9 @@ namespace User
 	
 	private:
 
-		BGManager* bgManager;
+		BGManager*		bgManager;
+		AudioManager*	audioManager;
+
 		cocos2d::ui::ListView*	menuWindow;
 		cocos2d::ui::ListView*	optionWindow;
 		cocos2d::ui::Button*	swicthWindow;

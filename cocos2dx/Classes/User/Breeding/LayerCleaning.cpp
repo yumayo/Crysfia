@@ -13,7 +13,6 @@ namespace User
 		bottleTexture(Sprite::create("res/texture/home/dirt.png")),
 		mask(Sprite::create()),
 		clippingNode(ClippingNode::create()),
-		canCleaning(false),
 		cleanDegrees(UserDefault::getInstance()->getIntegerForKey(u8"汚れ度")),
 		listener(EventListenerTouchOneByOne::create())
 	{
@@ -49,11 +48,25 @@ namespace User
 		this->addChild(buttons[0], 30);
 
 		listener->setSwallowTouches(true);
+
+		canCleaning = cleanDegrees > 0 ? true : false;
+
+		int previousDay = UserDefault::getInstance()->getIntegerForKey("PreviousDay");
+		int currentDay = UserDefault::getInstance()->getIntegerForKey(u8"日");
+
+		if ( (currentDay - previousDay) == 1) {
+			cleanDegrees = (cleanDegrees + 127);
+		}
+		else if ((currentDay - previousDay) == 2)
+		{
+			cleanDegrees = 255;
+		}
 	}
 
 	LayerCleaning::~LayerCleaning()
 	{
-
+		UserDefault::getInstance()->setIntegerForKey(u8"汚れ度", cleanDegrees);
+		log(u8"掃除終了時の汚れ=[%d]",cleanDegrees);
 	}
 
 	void LayerCleaning::update(float dt)
@@ -75,7 +88,8 @@ namespace User
 
 		listener->onTouchBegan = [=](Touch* touch, Event* event) { return true; };
 		listener->onTouchEnded = [this](Touch* touch, Event* event) {
-			if (cleanDegrees != 0)canCleaning = true;
+
+			//if (cleanDegrees != 0)canCleaning = true;
 			if (canCleaning)
 			{
 				thisLocationTouchProcess();
@@ -144,6 +158,9 @@ namespace User
 		//メニュー画面へ戻る
 		buttons[0]->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::ENDED) {
+
+				AudioManager::getInstance()->playSe("res/sound/SE/click.mp3");
+
 				auto p = (LayerManager*)this->getParent();
 				p->changeToSubMenuLayer();
 			}
@@ -191,6 +208,7 @@ namespace User
 		Label* _label = Label::create();
 		setInfoLayer(_layer, _label, u8"じょうずにできました！", 36);
 		AudioManager::getInstance()->playSe("res/voice/osewa/13.mp3");
+		cleanDegrees = bottleTexture->getOpacity();
 	}
 
 }
