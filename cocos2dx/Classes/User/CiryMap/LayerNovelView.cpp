@@ -3,6 +3,7 @@
 
 #include "../SceneManager.h"
 #include "../../Lib/Utilitys.h"
+#include "../../Lib/AudioManager.h"
 
 USING_NS_CC;
 
@@ -187,7 +188,7 @@ namespace User
                                         MoveTo::create( ( title_label->getContentSize( ).width - title_size.width * _scale ) * 0.01, Vec2( -slide, title_label_translate_y ) ),
                                         DelayTime::create( 2.5F ),
                                         MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, title_label_translate_y ) ),
-                                        CallFunc::create( [ title_label, title_label_translate_y ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 
+                                        CallFunc::create( [ title_label, title_label_translate_y ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width,
                                                                                                                                      title_label_translate_y ) ); } ),
                                         MoveTo::create( 0.3F, Vec2( 0, title_label_translate_y ) ),
                                         nullptr );
@@ -204,14 +205,28 @@ namespace User
         if ( auto okButton = ui::Button::create( u8"res/texture/system/ok.button.png",
                                                  u8"res/texture/system/ok.button.select.png" ) )
         {
-            okButton->setAnchorPoint( Vec2( 0.0F, 0.0F ) );
-            okButton->setPosition( vo + Vec2( 454, 230 - 213 ) * _scale );
+            okButton->setAnchorPoint( Vec2( 0.5F, 0.5F ) );
+            okButton->setPosition( vo + Vec2( 454, 230 - 213 ) * _scale + okButton->getContentSize( ) * 0.5 );
+            okButton->runAction( RepeatForever::create( Sequence::create( EaseSineOut::create( ScaleTo::create( 0.75F, 1.1F ) ), EaseSineIn::create( ScaleTo::create( 0.75F, 1.0F ) ), nullptr ) ) );
             okButton->addTouchEventListener( [ this, okButton, scenario, saveCallFunc ] ( Ref* ref, ui::Widget::TouchEventType type )
             {
+                if ( type == ui::Widget::TouchEventType::BEGAN )
+                {
+                    okButton->setScale( 1.0F );
+                    okButton->stopAllActions( );
+                }
+
+                if ( type == ui::Widget::TouchEventType::CANCELED )
+                {
+                    okButton->runAction( RepeatForever::create( Sequence::create( EaseSineOut::create( ScaleTo::create( 0.75F, 1.1F ) ), EaseSineIn::create( ScaleTo::create( 0.75F, 1.0F ) ), nullptr ) ) );
+                }
+
                 if ( type != ui::Widget::TouchEventType::ENDED ) return;
 
                 // 二度押せないように。
                 if ( isNext ) return;
+
+                AudioManager::getInstance( )->playSe( u8"res/sound/scenario_start.mp3" );
 
                 runAction( CallFunc::create( [ this, okButton, scenario, saveCallFunc ]
                 {

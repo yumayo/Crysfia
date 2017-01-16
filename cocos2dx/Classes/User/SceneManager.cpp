@@ -33,7 +33,7 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-        createCityMap( );
+        createTitle( );
     }
     void SceneManager::createTitle( )
     {

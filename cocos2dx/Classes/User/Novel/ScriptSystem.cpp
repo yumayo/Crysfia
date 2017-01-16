@@ -420,16 +420,18 @@ namespace User
         {
         case 1:
         {
-            auto name = UserDefault::getInstance( )->getStringForKey( u8"現在の服" );
+            auto index = UserDefault::getInstance( )->getIntegerForKey( u8"現在の服" );
             auto model = args[0];
-            if ( name == u8"セーラー服" )
+
+            std::vector<std::string> names = 
             {
-                model += u8"_s";
-            }
-            else
-            {
-                model += u8"_d";
-            }
+                u8"_d",//u8"ワンピース"
+                u8"_d",//u8"ドレス",
+                u8"_d",//u8"着ぐるみ",
+                u8"_d",//u8"シスター服",
+                u8"_s",//u8"セーラー服"
+            };
+            model += names[index];
             auto dir = u8"res/live2d/" + model + u8"/";
             REGIST_VARIABLE( args[0], new ScriptLive2d( live2dLayer, model, dir ) );
         }

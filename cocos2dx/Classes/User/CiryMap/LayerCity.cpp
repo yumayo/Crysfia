@@ -23,6 +23,8 @@
 
 #include "LayerMessageBox.h"
 
+#include "LayerTutorialBox.h"
+
 USING_NS_CC;
 
 namespace User
@@ -341,6 +343,8 @@ namespace User
                 button->setScale( Lib::fitHeight( button, height * scale ) );
                 button->setPosition( Vec2( 10, 10 ) * scale );
             }
+
+            Action( );
 
             if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
             {
@@ -937,6 +941,8 @@ namespace User
             auto delay = DelayTime::create( 0.1F );
             auto spawn = CallFunc::create( [ this ]
             {
+                AudioManager::getInstance( )->playSe( u8"res/sound/button_spawn.mp3" );
+
                 if ( mark_stack.top( ) ) mark_stack.top( )( );
             } );
             int x = mark_pos_stack.top( ).x;
@@ -994,7 +1000,12 @@ namespace User
         else
         {
             auto delay = DelayTime::create( 0.1F );
-            auto check = CallFunc::create( [ this ] { if ( mark_ptr_stack.top( ) ) mark_ptr_stack.top( )( ); } );
+            auto check = CallFunc::create( [ this ] 
+            {
+                AudioManager::getInstance( )->playSe( u8"res/sound/button_read_not.mp3" );
+
+                if ( mark_ptr_stack.top( ) ) mark_ptr_stack.top( )( );
+            } );
             int x = mark_ptr_pos_stack.top( ).x;
             int y = mark_ptr_pos_stack.top( ).y;
             auto move = map->move_action( x, y );

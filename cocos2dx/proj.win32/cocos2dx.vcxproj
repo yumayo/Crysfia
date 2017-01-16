@@ -163,6 +163,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\CiryMap\LayerMessageBox.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\LayerNovelView.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\LayerOption.cpp" />
+    <ClCompile Include="..\Classes\User\CiryMap\LayerTutorialBox.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp" />
     <ClCompile Include="..\Classes\User\Diary\LayerDiary.cpp" />
     <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp" />
@@ -256,6 +257,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\CiryMap\LayerMessageBox.h" />
     <ClInclude Include="..\Classes\User\CiryMap\LayerNovelView.h" />
     <ClInclude Include="..\Classes\User\CiryMap\LayerOption.h" />
+    <ClInclude Include="..\Classes\User\CiryMap\LayerTutorialBox.h" />
     <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h" />
     <ClInclude Include="..\Classes\User\Diary\LayerDiary.h" />
     <ClInclude Include="..\Classes\User\Diary\SceneDiary.h" />
