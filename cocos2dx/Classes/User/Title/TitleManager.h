@@ -22,10 +22,8 @@ namespace User
 		
 		bool isTap;
 		bool isGameStarted;
-		float vol;
 
 		AudioManager* audioManager;
-
 		cocos2d::Sprite* fadeSprite;
 		cocos2d::Label*  uiLabel;
 		cocos2d::Action* normalAction();

@@ -14,7 +14,6 @@ namespace User
         ~LayerDiary( );
 
 		bool init()override;
-		void selectDiary(std::string _name);
 		void touchEvent(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
 		std::vector<cocos2d::ui::Button*> menuButton;
 
@@ -25,10 +24,16 @@ namespace User
 
 		int num[15];
     private:		
-		cocos2d::ui::ListView *listView;
-		std::vector<std::string> name;
+		
 		bool flagDiary;
+		int diaryNum;
 
+		std::vector<std::string> name;
+
+		void selectDiary(std::string _name, Node* _tagetNode);
+		void setBackground(std::string _filePath);
+		void setBackButton(std::string _filePath, cocos2d::Vec2 _pos);
+		void setButtons(int _buttonCount);
     };
 }
 

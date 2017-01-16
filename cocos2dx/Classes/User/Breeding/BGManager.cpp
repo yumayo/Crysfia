@@ -1,7 +1,7 @@
 ﻿#include "BGManager.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
-#include "audio/include/AudioEngine.h"
+#include "AudioEngine.h"
 USING_NS_CC;
 using namespace experimental;
 
@@ -9,23 +9,15 @@ namespace User
 {
 	BGManager::BGManager() :
 		winSize(Director::getInstance()->getVisibleSize()),
-		backgrounds(std::vector<Sprite*>()),
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-		homeBgm(AudioEngine::play2d("res/sound/BGM/home.mp3"))
-#else
-		homeBgm(AudioEngine::play2d("res/sound/BGM/home.wav"))
-#endif
+		backgrounds(std::vector<Sprite*>())
 	{
-		
-	}
 
-	BGManager::~BGManager()
-	{
-		AudioEngine::stop(homeBgm);
 	}
 
 	bool BGManager::init()
-	{		
+	{
+		scheduleOnce([](float delta) {AudioManager::getInstance()->playBgm("res/sound/BGM/home.mp3"); }, 0.0F, u8"bgm_delay_BGMManager");
+
 		//jsonファイルの読み込み
 		auto fileUtils = FileUtils::getInstance();
 		auto path = fileUtils->getStringFromFile("res/json/background.json");
@@ -47,8 +39,6 @@ namespace User
 				this->addChild(backgrounds[i], -i, i);
 			}
 		}
-
-
 		return true;
 	}
 

@@ -13,14 +13,15 @@ enum class zOder {
 
 enum class tabLayer
 {
-	BACKGROUND = 0,
+	LAYER_MANAGER = -1,
+	BACKGROUND,
 	CHARACTER,
 	UI_MANAGER,
 	BREEDING,
 	CLEANING,
 	FOREGROUND,
-	LAYER_MANAGER = -1,
 	DIARY,
+	HEARTGAUGE,
 
 	MAX
 };
