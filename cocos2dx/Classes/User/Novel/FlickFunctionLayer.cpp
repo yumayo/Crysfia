@@ -167,7 +167,14 @@ namespace User
         } ) );
         args.emplace_back( std::make_pair( "skip", [ this ]
         {
-            novelLayer->resume( );
+            if ( auto layer = dynamic_cast<NovelLayer*>( novelLayer ) )
+            {
+                layer->skip( );
+                scheduleOnce( [ this ] ( float delay )
+                {
+                    novelLayer->resume( );
+                }, 0.0F, typeid( this ).name( ) );
+            }
         } ) );
         args.emplace_back( std::make_pair( "log", [ this ]
         {
