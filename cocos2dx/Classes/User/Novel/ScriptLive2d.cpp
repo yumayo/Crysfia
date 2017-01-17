@@ -1,4 +1,4 @@
-#include "ScriptLive2d.h"
+ï»¿#include "ScriptLive2d.h"
 
 #include "../Live2d/LAppView.h"
 #include "../Live2d/LAppLive2DManager.h"
@@ -17,11 +17,11 @@ namespace User
         REGIST_FUNC( ScriptLive2d, in );
         REGIST_FUNC( ScriptLive2d, out );
 
-        REGIST_FUNC_NAME( ScriptLive2d, normal, u8"•’Ê" );
-        REGIST_FUNC_NAME( ScriptLive2d, rejoice, u8"Šì‚Ô" );
-        REGIST_FUNC_NAME( ScriptLive2d, sorrow, u8"‹ƒ‚­" );
-        REGIST_FUNC_NAME( ScriptLive2d, getSurprise, u8"‹Á‚­" );
-        REGIST_FUNC_NAME( ScriptLive2d, getAngry, u8"“{‚é" );
+        REGIST_FUNC_NAME( ScriptLive2d, normal, u8"æ™®é€š" );
+        REGIST_FUNC_NAME( ScriptLive2d, rejoice, u8"å–œã¶" );
+        REGIST_FUNC_NAME( ScriptLive2d, sorrow, u8"æ³£ã" );
+        REGIST_FUNC_NAME( ScriptLive2d, getSurprise, u8"é©šã" );
+        REGIST_FUNC_NAME( ScriptLive2d, getAngry, u8"æ€’ã‚‹" );
 
         REGIST_FUNC( ScriptLive2d, touchon );
         REGIST_FUNC( ScriptLive2d, touchoff );
@@ -49,31 +49,31 @@ namespace User
     SCRIPT( ScriptLive2d::normal )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"•’Ê" );
+        manager->setExpression( u8"æ™®é€š" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 7 );
     }
     SCRIPT( ScriptLive2d::rejoice )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"ƒjƒRƒjƒR" );
+        manager->setExpression( u8"ãƒ‹ã‚³ãƒ‹ã‚³" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 8 );
     }
     SCRIPT( ScriptLive2d::sorrow )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"‚µ‚å‚ñ‚Ú‚è" );
+        manager->setExpression( u8"ã—ã‚‡ã‚“ã¼ã‚Š" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 5 );
     }
     SCRIPT( ScriptLive2d::getSurprise )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"‹Á‚­" );
+        manager->setExpression( u8"é©šã" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 0 );
     }
     SCRIPT( ScriptLive2d::getAngry )
     {
         auto manager = LAppLive2DManager::getInstance( );
-        manager->setExpression( u8"“{‚é" );
+        manager->setExpression( u8"æ€’ã‚‹" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 4 );
     }
     SCRIPT( ScriptLive2d::touchon )
@@ -84,14 +84,4 @@ namespace User
     {
         node->pause( );
     }
-
-    //0 ‚Ñ‚Á‚­‚è
-    //1 ‚È‚ñ‚Å‚·‚©H
-    //2 G‚è‚½‚¢‚ñ‚Å‚·‚©H
-    //3 ‚±‚ñ‚É‚¿‚Í
-    //4 ‚Á‚Ó[‚ñ
-    //5 ‚¾‚ß‚¾‚±‚¢‚Â
-    //6 ‚Ç‚¤‚µ‚æ‚¤‚©‚È
-    //7 Ž„‚Å‚¢‚¢‚Ì‚©‚µ‚ç
-    //8 Žè‚ð‘g‚ñ‚ÅƒjƒRƒjƒR
 }

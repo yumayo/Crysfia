@@ -1,4 +1,4 @@
-# ifndef __TextChunkManager__
+﻿# ifndef __TextChunkManager__
 # define __TextChunkManager__
 
 # include "cocos2d.h"
@@ -17,11 +17,12 @@ namespace User
         TextChunkManager( );
         ~TextChunkManager( );
     public:
+        bool isNovelFinished( );
         void make( std::string const& novelPath );
         void select( std::string const& selectName );
         void textRead( );
         NovelData const& getNovelData( );
-        std::vector<TextChunk> const& getTextChunk();
+        std::vector<TextChunk> const& getTextChunk( );
         void updateDelay( float delta );
         void setDelayTime( double delay );
         void gotoNext( );
@@ -33,6 +34,10 @@ namespace User
         double delayTime = 0.0F;
         TextData textData;
         TextScriptReader textReader;
+
+        // 変数データはマネージャーが持ちます。
+        VariableScriptData variableScriptData;
+        friend class TextChunk;
         std::vector<TextChunk> textChunk;
         TextChunk* work;
     };

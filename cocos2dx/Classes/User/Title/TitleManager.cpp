@@ -1,7 +1,5 @@
-#include "TitleManager.h"
+﻿#include "TitleManager.h"
 #include "../SceneManager.h"
-#include "audio/include/AudioEngine.h"
-
 #include "SceneTitle.h"
 USING_NS_CC;
 using namespace experimental;
@@ -11,17 +9,11 @@ namespace User
 	TitleManager::TitleManager() :
 		uiLabel(Label::createWithSystemFont("TAP TO SCREEN", "Arial", 50)),
 		fadeSprite(nullptr),
-		vol(1.f),
 		isGameStarted(false),
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-		titleBgm(AudioEngine::play2d("res/sound/BGM/title.mp3"))
-#else
-		titleBgm(AudioEngine::play2d("res/sound/BGM/title.wav"))
-#endif
+		isTap(false),
+		audioManager(AudioManager::getInstance())
 	{
-		AudioEngine::setLoop(titleBgm, true);
-		AudioEngine::setVolume(titleBgm, vol);
+		
 	}
 
 	TitleManager::~TitleManager() {}
@@ -30,6 +22,8 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
+        scheduleOnce( [ this ] ( float delta ) { audioManager->playBgm( "res/sound/BGM/title.mp3" ); }, 0.0F, u8"bgm_delay_TitleManager" );
+
 		createTitleWindow();
 		createTapUI();
 		createFadeSprite();
@@ -37,15 +31,22 @@ namespace User
 
 		auto listener = EventListenerTouchOneByOne::create();
 		listener->setSwallowTouches(true);
-		
+
 		listener->onTouchBegan = [=](Touch* touch, Event* event) {
 			return true;
 		};
 
-		listener->onTouchEnded = [=](Touch* touch, Event* event) {
+		listener->onTouchEnded = [this](Touch* touch, Event* event) {
 			isGameStarted = true;
 			uiLabel->runAction(afterAction());
 			fadeSprite->runAction(fadeAction(1.f, 2.0f));
+
+			if (!isTap) 
+			{	
+				audioManager->playSe("res/sound/SE/title_se.mp3");
+				isTap = true;
+			}
+
 		};
 		this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
@@ -56,8 +57,7 @@ namespace User
 	{
 		if (isGameStarted)
 		{
-			vol = vol >= 0 ? vol-=0.01f : isGameStarted = false, titleBgm = NULL;
-			AudioEngine::setVolume(titleBgm, vol);
+			audioManager->stopBgm(1.0F);
 		}
 	}
 
@@ -65,17 +65,14 @@ namespace User
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
 
-		auto backGround = Sprite::create("res/texture/novel/背景娯楽の島.png");
-		backGround->setPosition(winSize / 2);
-		this->addChild(backGround);
+		auto bacground = Sprite::create(u8"res/texture/title/background.png");
+		bacground->setPosition(winSize / 2);
+		bacground->setScale(0.75f);
+		this->addChild(bacground);
 
-		int bgm(AudioEngine::play2d("res/sound/BGM/title.wav"));
-
-		auto titleLabel = Label::createWithSystemFont("C r y s f i a", "Arial", 150);
-		titleLabel->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.7f));
-		titleLabel->setColor(Color3B::WHITE);
-		titleLabel->enableShadow(Color4B::BLACK);
-		this->addChild(titleLabel);
+		auto logo = Sprite::create(u8"res/texture/title/logo_3.png");
+		logo->setPosition(Vec2(winSize.width / 2, winSize.height * 0.7f));
+		this->addChild(logo);
 	}
 
 	//"TAP TO SCREEN"(仮)のUIを描画

@@ -1,6 +1,7 @@
+ï»¿#include <fstream>
 #include "LayerDiary.h"
-
 #include "../SceneManager.h"
+#include "Lib/AudioManager.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -8,173 +9,150 @@ using namespace std;
 
 namespace User
 {
-    LayerDiary::LayerDiary( )
-    {
-        
-    }
-    LayerDiary::~LayerDiary( )
-    {
-		
-    }
+	LayerDiary::LayerDiary()
+	{
+#if _DEBUG
+		diaryNum = 7;
+#else
+		diaryNum = UserDefault::getInstance()->getIntegerForKey(u8"æ—¥") <= 7 ?
+			UserDefault::getInstance()->getIntegerForKey(u8"æ—¥") - 1 : 7;
+#endif
+	}
+	LayerDiary::~LayerDiary()
+	{
+
+	}
 
 	bool LayerDiary::init() {
-		if (!Layer::init()) {
-			return false;
-		}
 
+		if (!Layer::init()) { return false; }
 
-		// ‰æ–ÊƒTƒCƒY‚ğæ“¾
+		// ç”»é¢ã‚µã‚¤ã‚ºã‚’å–å¾—
 		Size winSize = Director::getInstance()->getVisibleSize();
-
-		// ƒoƒbƒNƒOƒ‰ƒ“ƒhƒJƒ‰[
-		auto background = LayerColor::create(Color4B::BLACK, winSize.width, winSize.height);
-
-		// ƒoƒbƒNƒOƒ‰ƒ“ƒhƒJƒ‰[‘æ2ˆø”‚Í•\¦‡
-		this->addChild(background, 0);
-
-		// ƒQ[ƒ€ƒXƒ^[ƒgƒ{ƒ^ƒ“
-		createGameStartButton();
-
-
-		// ƒŠƒXƒgƒrƒ…[‚Ìì¬
-		Size visibleSize = Director::getInstance()->getVisibleSize();
-		Vec2 origin = Director::getInstance()->getVisibleSize();
-		
-		auto listView = cocos2d::ui::ListView::create();
-		listView->setContentSize(Size(250, 500));
-		listView->setPosition((visibleSize - listView->getContentSize()) / 2);
-		listView->setDirection(ui::ScrollView::Direction::VERTICAL);
-		listView->setBounceEnabled(true);
-		this->addChild(listView);
-		
-		// 30‚Â‚ÌƒRƒ“ƒeƒ“ƒc‚ğì¬
-		for (int i = 0; i <= 30; i++) {
-			// ƒŒƒCƒAƒEƒg‚É•\¦‚·‚éƒ{ƒ^ƒ“‚ğì¬
-			
-			menuButtons.push_back(ui::Button::create("res/image/WindowBase/WinBase_8.png", "res/image/WindowBase/WinBase_9.png"));
-			menuButtons[i]->setScale9Enabled(true);
-			menuButtons[i]->setContentSize(Size(240, 60));
-			menuButtons[i]->setPosition(menuButtons[i]->getContentSize() / 2);
-			menuButtons[i]->setTitleFontSize(20);
-			menuButtons[i]->setTitleText(StringUtils::format("Button No: %d", i));
-
-			menuButtons[i]->addTouchEventListener([=](Ref* pSender, ui::Button::TouchEventType type) {
-			
-				switch (type)
-				{
-				case cocos2d::ui::Widget::TouchEventType::BEGAN:
-					if (pSender == menuButtons[i]) {
-						selectDiary(i + 1);
-					}
-					break;
-				case cocos2d::ui::Widget::TouchEventType::MOVED:
-					break;
-				case cocos2d::ui::Widget::TouchEventType::ENDED:
-					break;
-				case cocos2d::ui::Widget::TouchEventType::CANCELED:
-					break;
-				default:
-					break;
-				}
-			});
-
-			//menuButtons[i]->setScale(0.5);
-			// x,yÀ•W‚ği * ‚Æ‚©‚µ‚Ä’²®‚·‚é
-			//menuButtons[i]->setPosition(Vec2(250, 800 - (150 * i)));
-			//this->addChild(menuButtons[i]);
-
-			// ƒŒƒCƒAƒEƒg‚ğì¬
-			auto layout = ui::Layout::create();
-			layout->setContentSize(menuButtons[i]->getContentSize());
-			layout->addChild(menuButtons[i],1,i);
-			listView->addChild(layout);
-
-
-			//menuButtons[i]->addTouchEventListener(CC_CALLBACK_2(touchEvent, this));
-			Sprite* bgsprite = Sprite::create("res/Image/bg.jpg");
-			bgsprite->setContentSize(winSize);
-			bgsprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-			this->addChild(bgsprite);
-		}
-
-		//listView->addEventListener(CC_CALLBACK_2(LayerDiary::touchEvent, this));
-
-        {
-            auto visibleSize = Director::getInstance( )->getVisibleSize( );
-            auto origin = Director::getInstance( )->getVisibleOrigin( );
-
-            auto button = ui::Button::create( u8"res/texture/system/backbutton.png" );
-            this->addChild( button );
-
-            auto tar = Size( 128, 128 );
-            auto con = button->getContentSize( );
-            auto sca = tar.height / con.height;
-            button->setScale( sca, sca );
-            button->setPosition( origin + tar / 2.0 );
-            button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
-            {
-                if ( type == ui::Widget::TouchEventType::ENDED )
-                {
-                    SceneManager::createBreeding( );
-                }
-            } );
-
-        }
+		//èƒŒæ™¯ã®è¨­å®š
+		setBackground("res/texture/diary/background.png");
+		setBackButton(u8"res/texture/diary/exit.png", Vec2(winSize.width * 0.1f, winSize.height * 0.05f));
+		setButtons(diaryNum);
 
 		return true;
 	}
 
-	void LayerDiary::createGameStartButton() {
-		// ‰æ–ÊƒTƒCƒY‚ğæ“¾
-		//auto winSize = Director::getInstance()->getVisibleSize();
-
-		//for (int i = 0; i < MenuType::MAX; i++) {
-		//	menuButtons.push_back(ui::Button::create("res/miku_off.png"));
-		//	menuButtons[i]->setScale(0.5);
-		//	// x,yÀ•W‚ği * ‚Æ‚©‚µ‚Ä’²®‚·‚é
-		//	menuButtons[i]->setPosition(Vec2(250, 800 - (150 * i)));
-		//	this->addChild(menuButtons[i]);
-
-		//}
-
-	}
-
-	void LayerDiary::selectedItemEvent(Ref* pSender, cocos2d::ui::ListView::EventType type) {
-		switch (type)
+	// ãƒœã‚¿ãƒ³ã‚’ã‚¿ãƒƒãƒã—ãŸã¨ãã®åå¿œ
+	void LayerDiary::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
+	{
+		auto winSize = Director::getInstance()->getVisibleSize();
+		if (type == ui::Widget::TouchEventType::ENDED)
 		{
-		case cocos2d::ui::ListView::EventType::ON_SELECTED_ITEM_START:
+			auto diaryTexture = Button::create("res/texture/diary/background.png", "res/texture/diary/background.png");
+			diaryTexture->setScale(0.5f);
+			diaryTexture->setPosition(winSize / 2);
+			diaryTexture->setName("diaryTexture");
+			this->addChild(diaryTexture, 2);
+
+			auto button = ui::Button::create(u8"res/texture/diary/exit.png");
+			diaryTexture->addChild(button);
+			button->setScale(2);
+			button->setPosition(Vec2(winSize.width * 0.3f, winSize.height * 0.2f));
+			button->addTouchEventListener([this,&diaryTexture](Ref* pSender, ui::Widget::TouchEventType type)
+			{
+				if (type == ui::Widget::TouchEventType::ENDED)
+				{
+					AudioManager::getInstance()->playSe("res/sound/SE/click.mp3");
+					this->removeChildByName("diaryTexture");
+				}
+			});
+
+			auto scrollView = ui::ScrollView::create();
+			scrollView->setInnerContainerSize(Size(1500, 5500));
+			scrollView->setContentSize(Size(1500,2000));
+			scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+			scrollView->setBounceEnabled(true);
+			scrollView->setPosition(Vec2(winSize.width * 0.0f, winSize.height * 0.3f ));
+			diaryTexture->addChild(scrollView);
+
+			for (int i = 0; i < diaryNum; i++)
+			{
+				auto c = this->getChildByTag(i);
+				if (pSender == c) {
+					selectDiary(c->getName(), scrollView);
+					log("%s", c->getName().c_str());
+				}
+			}
+
+		}
+	}
+
+	//æ—¥è¨˜ã®ã‚·ãƒ¼ãƒ³ã®èƒŒæ™¯ã‚’è¨­å®šã—ã¾ã™
+	//å¼•æ•°ã«ã¯èƒŒæ™¯ç”»åƒã®ç›¸å¯¾ãƒ‘ã‚¹ã‚’ã„ã‚Œã¦ãã ã•ã„
+	void LayerDiary::setBackground(std::string _filePath)
+	{
+		auto winSize = Director::getInstance()->getVisibleSize();
+		auto background = Sprite::create(_filePath);
+		background->setPosition(winSize / 2);
+		background->setScale(1080.0f / 2150.0f);
+		this->addChild(background, 0);
+	}
+
+	//æ—¥è¨˜ã®ãƒœã‚¿ãƒ³ã‚’ç”Ÿæˆã—ã¾ã™
+	//å¼•æ•°ã«ç”Ÿæˆã—ãŸã„å€‹æ•°ã‚’è¨­å®šã—ã¦ãã ã•ã„
+	void LayerDiary::setButtons(int _buttonCount)
+	{
+		auto winSize = Director::getInstance()->getVisibleSize();
+		Vec2 pos = Vec2(0, 1200);
+
+		for (int i = 0; i < _buttonCount; i++)
 		{
-			auto listView = static_cast<ui::ListView*>(pSender);
-			CCLOG("Select Item Start Index = %d", listView->getCurSelectedIndex());
-			break;
+			pos.x += winSize.width / 4;
+
+			if (i % 3 == 0) {
+				pos.x = winSize.width / 4;
+				pos.y -= 160;
+			}
+
+			auto button = Button::create(StringUtils::format("res/texture/diary/diary_%d.png", (i + 1)));
+			button->setPosition(Vec2(pos.x, pos.y));
+			button->setScale(0.8f);
+			button->setName(StringUtils::format("diary_%d", i + 1));
+			this->addChild(button, 1, i);
+
+			button->addTouchEventListener(CC_CALLBACK_2(LayerDiary::touchEvent, this));
 		}
-		case cocos2d::ui::ListView::EventType::ON_SELECTED_ITEM_END:
+	}
+
+	void LayerDiary::setBackButton(std::string _filePath, Vec2 _pos)
+	{
+		// æˆ»ã‚‹ãƒœã‚¿ãƒ³ã®ç”Ÿæˆ
+		auto button = ui::Button::create(_filePath);
+		addChild(button);
+		button->setAnchorPoint(Vec2(0, 0));
+		button->setPosition(_pos);
+		button->addTouchEventListener([this](Ref* pSender, ui::Widget::TouchEventType type)
 		{
-			auto listView = static_cast<ui::ListView*>(pSender);
-			CCLOG("Select Child End Index = %d", listView->getCurSelectedIndex());
-			break;
+			if (type == ui::Widget::TouchEventType::ENDED)
+			{
+				AudioManager::getInstance()->playSe("res/sound/SE/click.mp3");
+				SceneManager::createBreeding();
+			}
+		});
+	}
+
+	// ãƒœã‚¿ãƒ³ã‚’ã‚¿ãƒƒãƒã•ã‚ŒãŸã‚‰ã“ã‚Œã§ç”»åƒã‚’æç”»
+	void LayerDiary::selectDiary(std::string _name, Node* _tagetNode)
+	{
+		//ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰æ—¥è¨˜ã®æ–‡å­—åˆ—ã‚’å–å¾—
+		auto filePath = FileUtils::getInstance()->fullPathForFilename(StringUtils::format(u8"res/texture/diary/%s.txt", _name.c_str()));
+		std::ifstream inFile(filePath);
+		int i = 1;
+
+		//std::ifstreamã‚’ä½¿ã£ã¦ä¸€åˆ—ãšã¤æç”»
+		for (std::string line; std::getline(inFile, line);) 
+		{
+			i++;
+			auto label = Label::createWithSystemFont(line, "arial.ttf", 64);
+			label->setPosition(Vec2(Director::getInstance()->getWinSize().width , Director::getInstance()->getWinSize().height * 4.3f - (128 * i)));
+			label->setColor(Color3B::BLACK);
+			_tagetNode->addChild(label);
+			log("%s", line.c_str());
 		}
-		default:
-			break;
-		}
-
 	}
-
-	void LayerDiary::touch_feature() {
-
-	}
-
-	void LayerDiary::touchEvent(Ref * pSneder, cocos2d::ui::TouchEventType type) {
-		//menuButtons[0]->setTitleText("Touch");
-
-			
-	}
-
-	void LayerDiary::selectDiary(int num) {
-		auto sprite = Sprite::create(StringUtils::format("res/Image/WindowBase/WinBase_%d.png", num));
-		this->addChild(sprite);
-	}
-
-
-
 }

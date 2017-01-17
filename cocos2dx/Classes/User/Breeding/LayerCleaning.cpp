@@ -1,6 +1,7 @@
-#include "LayerCleaning.h"
+ï»¿#include "LayerCleaning.h"
 #include "SceneBreeding.h"
 #include "LayerManager.h"
+#include "Lib/AudioManager.h"
 USING_NS_CC;
 
 namespace User
@@ -8,26 +9,28 @@ namespace User
 	LayerCleaning::LayerCleaning() :
 		winSize(Director::getInstance()->getVisibleSize()),
 		bottle(Sprite::create("res/texture/home/bottle_1.png")),
+		clippingShape(Sprite::create("res/texture/home/bottle_mask.png")),
+		bottleTexture(Sprite::create("res/texture/home/dirt.png")),
 		mask(Sprite::create()),
 		clippingNode(ClippingNode::create()),
-		clippingShape(Sprite::create("res/texture/home/bottle_mask.png")),
-		canCleaning(false),
+		cleanDegrees(UserDefault::getInstance()->getIntegerForKey(u8"æ±šã‚Œåº¦")),
 		listener(EventListenerTouchOneByOne::create())
 	{
-		
+		//UserDefault::getInstance()->setIntegerForKey(u8"æ±šã‚Œåº¦",255);
+		cleanDegrees = UserDefault::getInstance()->getIntegerForKey(u8"æ±šã‚Œåº¦");
 
-		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"‰æ–Ê‚ğƒ^ƒbƒv‚Å\n ‚¨‘|œŠJnI") :
-			Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"‚«‚ê‚¢‚¾‚æ(=ßƒÖß)É");
+		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"ç”»é¢ã‚’ã‚¿ãƒƒãƒ—ã§\n ãŠæƒé™¤é–‹å§‹ï¼") :
+										Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"ãã‚Œã„ã ã‚ˆ(=ï¾ŸÏ‰ï¾Ÿ)ï¾‰");
 
 		bottle->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.5f));
 		bottle->setScale(0.5f);
 		this->addChild(bottle, 10);
-
-		mask->setTextureRect(Rect(0, 0, winSize.width - 50, winSize.height - 350));
+		
+		//æ±šã‚Œã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
+		bottleTexture->setOpacity(cleanDegrees);
+		mask->addChild(bottleTexture);
 		mask->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.38f));
-		mask->setColor(Color3B::BLACK);
-		mask->setOpacity(cleanDegrees);
-
+		
 		clippingShape->setScale(0.5f);
 		clippingShape->setPosition(winSize / 2);
 		clippingNode->setStencil(clippingShape);
@@ -37,15 +40,36 @@ namespace User
 		clippingNode->addChild(mask, 20);
 		this->addChild(clippingNode, 20);
 
-		buttons.push_back(ui::Button::create("res/Image/WindowBase/WinBase_101.png"));
-		buttons[0]->setScale(0.7f);
+		buttons.push_back(ui::Button::create("res/texture/system/backbutton.png",
+											 "res/texture/system/backbutton.select.png",
+											 "res/texture/system/backbutton.png" ));
+
 		buttons[0]->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.05f));
 		this->addChild(buttons[0], 30);
 
 		listener->setSwallowTouches(true);
+
+		canCleaning = cleanDegrees > 0 ? true : false;
+
+		int previousDay = UserDefault::getInstance()->getIntegerForKey("PreviousDay");
+		int currentDay = UserDefault::getInstance()->getIntegerForKey(u8"æ—¥");
+
+		if ( (currentDay - previousDay) == 1) {
+			cleanDegrees = (cleanDegrees + 127);
+		}
+		else if ((currentDay - previousDay) == 2)
+		{
+			cleanDegrees = 255;
+		}
 	}
 
 	LayerCleaning::~LayerCleaning()
+	{
+		UserDefault::getInstance()->setIntegerForKey(u8"æ±šã‚Œåº¦", cleanDegrees);
+		log(u8"æƒé™¤çµ‚äº†æ™‚ã®æ±šã‚Œ=[%d]",cleanDegrees);
+	}
+
+	void LayerCleaning::update(float dt)
 	{
 
 	}
@@ -54,15 +78,9 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
-		//UserDefault‚Å’l‚ğæ‚èo‚µ‚½‚èƒZƒbƒg‚µ‚½‚è‚·‚é
-		UserDefault* _userDef = UserDefault::getInstance();
-		_userDef->setIntegerForKey("aaa", 100);
-		auto hoge = _userDef->getIntegerForKey("aaa");
-		log(u8"“ú‚É‚¿=[%d]", hoge);
-
-		auto background = Sprite::create("res/texture/home/cleaning_bg.jpg");
+		auto background = Sprite::create(u8"res/texture/home/hèˆ¹å®¤.png");
 		background->setPosition(winSize / 2);
-		background->setScale(4.f);
+		background->setScale(0.5f);
 		this->addChild(background);
 
 		uiTouchProcess();
@@ -70,15 +88,16 @@ namespace User
 
 		listener->onTouchBegan = [=](Touch* touch, Event* event) { return true; };
 		listener->onTouchEnded = [this](Touch* touch, Event* event) {
-			if (cleanDegrees != 0)canCleaning = true;
+
+			//if (cleanDegrees != 0)canCleaning = true;
 			if (canCleaning)
 			{
 				thisLocationTouchProcess();
 				this->removeChildByTag(1);
 			}
 		};
-
 		this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
 		return true;
 	}
 
@@ -86,39 +105,39 @@ namespace User
 	{
 		
 		listener->onTouchBegan = [=](Touch* touch, Event* event) {
-			//ƒrƒ“‚Æƒ^ƒbƒ`‚µ‚½êŠ‚Ì‚ ‚½‚è”»’è‚ğ‚Æ‚é‚½‚ßƒ^ƒbƒ`‚µ‚½ˆÊ’u‚ğæ“¾
+			//ãƒ“ãƒ³ã¨ã‚¿ãƒƒãƒã—ãŸå ´æ‰€ã®ã‚ãŸã‚Šåˆ¤å®šã‚’ã¨ã‚‹ãŸã‚ã‚¿ãƒƒãƒã—ãŸä½ç½®ã‚’å–å¾—
 			touchLocation = touch->getLocation();
 			return true;
 		};
 
-		//ƒXƒƒCƒvˆ—
+		//ã‚¹ãƒ¯ã‚¤ãƒ—å‡¦ç†ï¼ˆæƒé™¤ï¼‰
 		listener->onTouchMoved = [this](Touch* touch, Event* event) {
 
-			//‚PƒtƒŒ[ƒ€‘O‚Ìƒ^ƒbƒ`ˆÊ’u‚Æ‚Ì·•ª‚ğæ“¾
+			//ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ å‰ã®ã‚¿ãƒƒãƒä½ç½®ã¨ã®å·®åˆ†ã‚’å–å¾—
 			auto delta = touch->getDelta();
 
-			//·•ªXAY‚ğ‘«‚µ‚½’l‚Ìâ‘Î’l‚ğ‚Æ‚è‚»‚Ì’l‚ğ‚T‚O•ª‚Ì‚P‚É‚µ‚½’l‚É‚É§ŒÀ‚ğ‚©‚¯‚éB
-			//‚±‚Ì’l‚ğg‚Á‚Äƒ}ƒXƒN‚Ì“§‰ß“x‚©‚çˆø‚¢‚Ä‚¢‚­
+			//å·®åˆ†Xã€Yã‚’è¶³ã—ãŸå€¤ã®çµ¶å¯¾å€¤ã‚’ã¨ã‚Šãã®å€¤ã‚’ï¼•ï¼åˆ†ã®ï¼‘ã«ã—ãŸå€¤ã«ã«åˆ¶é™ã‚’ã‹ã‘ã‚‹ã€‚
+			//ã“ã®å€¤ã‚’ä½¿ã£ã¦ãƒã‚¹ã‚¯ã®é€éåº¦ã‹ã‚‰å¼•ã„ã¦ã„ã
 			int creanVal = clampf((abs(delta.x + delta.y) * 0.05), 0, 2);
+		
+			//ã–ã£ãã‚Šã¨ã—ãŸã‚ãŸã‚Šåˆ¤å®šã«ä½¿ã†ãŸã‚ã®çŸ©å½¢ã‚’ç”¨æ„
+			auto rect = Rect(bottleTexture->getPosition().x - bottleTexture->getContentSize().width / 2,
+				bottleTexture->getPosition().y - bottleTexture->getContentSize().width / 2,
+				bottleTexture->getContentSize().width,
+				bottleTexture->getContentSize().height);
 
-			//‚´‚Á‚­‚è‚Æ‚µ‚½‚ ‚½‚è”»’è‚Ég‚¤‚½‚ß‚Ì‹éŒ`‚ğ—pˆÓ
-			auto rect = Rect(mask->getPosition().x - mask->getContentSize().width / 2,
-				mask->getPosition().y - mask->getContentSize().width / 2,
-				mask->getContentSize().width,
-				mask->getContentSize().height);
-
-			if (5 < mask->getOpacity())
+			if (5 < bottleTexture->getOpacity())
 			{
 				if (rect.containsPoint(touchLocation))
 				{
-					mask->setOpacity(mask->getOpacity() - creanVal);
+					bottleTexture->setOpacity(bottleTexture->getOpacity() - creanVal);
 				}
 			}
-			else if (mask->getOpacity() >= 0 && mask->getOpacity() <= 5)
+			else if (bottleTexture->getOpacity() >= 0 && bottleTexture->getOpacity() <= 5)
 			{
-				mask->setOpacity(0);
-				//TODO: ‘|œŠ®—¹‚Ì‰‰o‚ğ“ü‚ê‚é
-				UserDefault::getInstance()->setIntegerForKey(u8"‰˜‚ê“x", 0);
+				bottleTexture->setOpacity(0);
+				//æƒé™¤å®Œäº†ã®æ¼”å‡º
+				UserDefault::getInstance()->setIntegerForKey(u8"æ±šã‚Œåº¦", 0);
 				if (!isFinish)
 				{
 					completeDirection();
@@ -131,15 +150,17 @@ namespace User
 		listener->onTouchEnded = [=](Touch* touch, Event* event) {
 			mask->stopAllActions();
 		};
-
 	}
 
-	//‘|œƒŒƒCƒ„[“à‚Å‚ÌUIˆ—
+	//æƒé™¤ãƒ¬ã‚¤ãƒ¤ãƒ¼å†…ã§ã®UIå‡¦ç†
 	void LayerCleaning::uiTouchProcess()
 	{
-		//ƒƒjƒ…[‰æ–Ê‚Ö–ß‚é
+		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã¸æˆ»ã‚‹
 		buttons[0]->addTouchEventListener([=](Ref* pSender, ui::Widget::TouchEventType type) {
 			if (type == ui::Widget::TouchEventType::ENDED) {
+
+				AudioManager::getInstance()->playSe("res/sound/SE/click.mp3");
+
 				auto p = (LayerManager*)this->getParent();
 				p->changeToSubMenuLayer();
 			}
@@ -168,8 +189,8 @@ namespace User
 
 	void LayerCleaning::labelAction(float dt)
 	{
-		//ƒWƒƒƒ“ƒvƒAƒNƒVƒ‡ƒ“‚Ìİ’è
-		//ˆø”: 1.ŠÔ 2.À•W 3.‚‚³ 4.‰ñ”
+		//ã‚¸ãƒ£ãƒ³ãƒ—ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®è¨­å®š
+		//å¼•æ•°: 1.æ™‚é–“ 2.åº§æ¨™ 3.é«˜ã• 4.å›æ•°
 		for (int i = 0; i < infoLabel->getStringLength(); i++) {
 			auto oneChracter = infoLabel->getLetter(i);
 			if (oneChracter) {
@@ -179,13 +200,15 @@ namespace User
 		}
 	}
 
-	//‘|œŠ®—¹‚Ì
+	//æƒé™¤å®Œäº†ã®
 	void LayerCleaning::completeDirection()
 	{
 		auto _layer = Layer::create();
 		this->addChild(_layer);
 		Label* _label = Label::create();
-		setInfoLayer(_layer, _label, u8"‚¶‚å‚¤‚¸‚É‚Å‚«‚Ü‚µ‚½I", 36);
+		setInfoLayer(_layer, _label, u8"ã˜ã‚‡ã†ãšã«ã§ãã¾ã—ãŸï¼", 36);
+		AudioManager::getInstance()->playSe("res/voice/osewa/13.mp3");
+		cleanDegrees = bottleTexture->getOpacity();
 	}
 
 }

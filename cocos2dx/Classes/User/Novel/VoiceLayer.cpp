@@ -1,4 +1,4 @@
-#include "VoiceLayer.h"
+﻿#include "VoiceLayer.h"
 
 USING_NS_CC;
 

@@ -1,62 +1,94 @@
-# ifndef __LayerCity__
+ï»¿# ifndef __LayerCity__
 # define __LayerCity__
 
 # include "../LayerBase.h"
 
 # include "ui/CocosGUI.h"
 
-#include "../../Lib/Json/json.h"
+#include "../../Lib/json.h"
 
 namespace User
 {
     struct ScenarioPointData
     {
-        /**
-         *  ƒf[ƒ^‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·B
-         *  \‘¢‚É•K—v‚Èƒf[ƒ^‚ğˆê‚Âˆê‚Â‹l‚ß‚Ü‚·B
-         */
-        void initData( bool visit, cocos2d::Vec2 const& position, std::string const& scenario )
+        void initScenarioPointData( Json::Value const& root );
+
+        bool is_stay( ) const;
+
+        int get_dead_line( ) const;
+
+        void initScenarioPointData( ScenarioPointData const& data )
         {
-            this->visit = visit;
-            this->position = position;
-            this->scenario = scenario;
+            *this = data;
         }
 
         /**
-         *  ƒf[ƒ^‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·B
-         *  ƒRƒs[‚ğæ‚Á‚Ä‚»‚Ì‚Ü‚Ü‘ã“ü‚µ‚Ü‚·B
+         * ã©ã†ã„ã†ã‚¤ãƒ™ãƒ³ãƒˆãªã®ã‹
          */
-        void initData( ScenarioPointData const& scenario ) { *this = scenario; }
+        enum Event
+        {
+            none,
+            force,
+            main,
+            sub
+        };
+        Event event = none;
 
         /**
-         *  ‚·‚Å‚É“Ç‚ñ‚¾ƒVƒiƒŠƒI‚È‚Ì‚©‚Ç‚¤‚©B
-         *  @true   “Ç‚ñ‚Å‚¢‚½‚ç
-         *  @false  –¢“Ç‚È‚ç
+         *  ã™ã§ã«èª­ã‚“ã ã‚·ãƒŠãƒªã‚ªãªã®ã‹ã©ã†ã‹ã€‚
+         *  @true   èª­ã‚“ã§ã„ãŸã‚‰
+         *  @false  æœªèª­ãªã‚‰
          */
-        bool visit;
+        bool visit = false;
 
         /**
-         *  ƒ}ƒbƒv‰æ‘œ’†‚Ì•\¦ˆÊ’uB
+         * ãƒãƒƒãƒ—ã«é…ç½®ã•ã‚ŒãŸã‹ã‚’ä¿å­˜ã—ã¾ã™ã€‚
+         * @true    é…ç½®ã•ã‚Œã¦ã„ãŸã‚‰
+         * @false   é…ç½®ã•ã‚Œã¦ã„ãªã„ãªã‚‰
+         */
+        bool spawn = false;
+
+        bool read_not = false;
+
+        int day_begin = -1;
+
+        int day_end = -1;
+
+        enum class Times
+        {
+            none,
+            morning,
+            daytime,
+            night,
+        };
+        bool morning = true;
+        bool daytime = true;
+        bool night = true;
+
+        /**
+         *  ãƒãƒƒãƒ—ç”»åƒä¸­ã®è¡¨ç¤ºä½ç½®ã€‚
          */
         cocos2d::Vec2 position;
 
         /**
-         *  “Ç‚İ‚ŞƒVƒiƒŠƒIƒtƒ@ƒCƒ‹‚ÌƒpƒXB
+         *  èª­ã¿è¾¼ã‚€ã‚·ãƒŠãƒªã‚ªãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã€‚
          */
         std::string scenario;
 
         /**
-         *  ‚±‚Ìƒmƒxƒ‹‚Ìƒ^ƒCƒgƒ‹B
+         *  ã“ã®ãƒãƒ™ãƒ«ã®ã‚¿ã‚¤ãƒˆãƒ«ã€‚
          */
         std::string title;
     };
+
+    class CityMap;
 
     class LayerCityMark : protected ScenarioPointData, public cocos2d::ui::Button
     {
     public:
         void setButtonEndCallBack( std::function<void( )>const& callback );
     protected:
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
         std::function<void( )> buttonEnd;
     };
 
@@ -64,36 +96,43 @@ namespace User
     {
     public:
         CREATE_FUNC( MainMark );
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
     };
 
     class SubMark : public LayerCityMark
     {
     public:
         CREATE_FUNC( SubMark );
-        void pasteMap( cocos2d::Sprite* map, ScenarioPointData const& data );
+        void pasteMap( CityMap* map, ScenarioPointData const& data );
     };
 
     class Calendar : public cocos2d::ui::Layout
     {
     public:
         CREATE_FUNC( Calendar );
-        Calendar* make( );
+        bool init( );
     private:
         /**
-         *  ƒJƒŒƒ“ƒ_[‚É•\¦‚·‚é“ú‚É‚¿B
+         *  ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã«è¡¨ç¤ºã™ã‚‹æ—¥ã«ã¡ã€‚
          */
         int day;
     };
 
-    class CityMap : public cocos2d::Sprite
+    class CityMap : public cocos2d::Layer
     {
     public:
-        CREATE_FUNC( CityMap );
-        CityMap* make( std::string const& backgroundfile );
+        CREATE_ARGS_INIT_FUNC( CityMap );
+        bool init( );
+        void paste( cocos2d::ui::Button* icon, int const x, int const y );
+        void paste( MainMark* icon, int const x, int const y );
+        void paste( SubMark* icon, int const x, int const y );
+        cocos2d::MoveTo* move_action( int const x, int const y );
+        void set_position( int const x, int const y );
+        void set_enable( );
+        void set_disable( );
     private:
         /**
-         *  ¡‚ÌŠÔB
+         *  ä»Šã®æ™‚é–“ã€‚
          */
         enum Times
         {
@@ -104,30 +143,45 @@ namespace User
         Times times;
 
         /**
-         *  ƒ}ƒbƒv‚ğ‰¡‚ÉƒXƒ‰ƒCƒh‚·‚é‚Æ‚«‚Ég‚¢‚Ü‚·B
+         *  ãƒãƒƒãƒ—ã‚’æ¨ªã«ã‚¹ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã¨ãã«ä½¿ã„ã¾ã™ã€‚
          */
         cocos2d::Vec2 translate;
+
+        cocos2d::Size honeycomb_size;
+        cocos2d::Vec2 start_position;
+        cocos2d::Size map_size;
+
+        cocos2d::Sprite* map;
+
+        cocos2d::Layer* move_layer;
+
+        bool is_move = false;
+
+        cocos2d::EventListenerTouchOneByOne* event = nullptr;
     };
 
     class LayerCity : public LayerBase
     {
     public:
-        CREATE_ARGS_FUNC( LayerCity );
-        LayerCity( std::string const& path );
+        CREATE_ARGS_INIT_FUNC( LayerCity );
         ~LayerCity( );
         bool init( ) override;
         void setup( ) override;
         void jsonRead( );
+        void json_read_game_clear( );
+        void time_next( );
+        cocos2d::Label* createLabel( std::string const& title );
         cocos2d::ui::Button* createBackButton( );
         cocos2d::ui::Button* createOptionButton( );
+        cocos2d::ui::Button* createTimeNextButton( );
     private:
         /**
-         *  jsonƒf[ƒ^‚Ö‚ÌƒpƒX‚ğ•Û‘¶‚µ‚Ü‚·B
+         *  ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã®åå‰ã‚’ä¿å­˜ã—ã¾ã™ã€‚
          */
-        std::string path;
+        std::string save_name;
 
         /**
-         * Ÿ‚Ìs“®–Ú“I‚ğ•\¦‚·‚é‚½‚ß‚Ìƒf[ƒ^B
+         * æ¬¡ã®è¡Œå‹•ç›®çš„ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚ã®ãƒ‡ãƒ¼ã‚¿ã€‚
          */
         std::map<std::string, cocos2d::Data> data;
 
@@ -135,6 +189,34 @@ namespace User
          *
          */
         Json::Value root;
+
+        bool force_event = false;
+
+        void setIslandName( );
+
+        LayerCityMark* set_force_mark( Json::Value& value );
+        LayerCityMark* set_main_mark( Json::Value& value );
+        LayerCityMark* set_sub_mark( Json::Value& value );
+
+        CityMap* map = nullptr;
+
+        bool is_animation = true;
+        void animation_start( );
+        void animation_end( );
+
+        // æ–°ã—ãç”Ÿã¾ã‚Œã¦ãã‚‹ã‚·ãƒŠãƒªã‚ªã®ãƒã‚§ãƒƒã‚¯ã€‚
+        std::stack<std::function<void( )>> mark_stack;
+        std::stack<cocos2d::Vec2> mark_pos_stack;
+        void stack_mark_pos( Json::Value& value );
+        void event_recovery( );
+        void event_recovery_skip( );
+
+        // æœŸé™ã‚’éãã¦èª­ã‚ãªããªã‚‹ã‚·ãƒŠãƒªã‚ªã®ãƒã‚§ãƒƒã‚¯ã€‚
+        std::stack<std::function<void( )>> mark_ptr_stack;
+        std::stack<cocos2d::Vec2> mark_ptr_pos_stack;
+        void stack_mark_ptr_pos( Json::Value& value );
+        void read_check( );
+        void read_check_skip( );
     };
 }
 

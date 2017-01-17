@@ -1,0 +1,12 @@
+{
+  "BGM": {
+    "city": "res/bgm/nikki.2.mp3",
+    "故郷": [ "res/bgm/kokyou.mp3", 16.0, 108.8 ]
+  },
+  "SE": {
+
+  },
+  "VOICE": {
+    "sample.voice": "res/voice/system/13.mp3"
+  }
+}

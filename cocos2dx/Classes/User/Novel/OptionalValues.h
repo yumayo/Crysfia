@@ -1,4 +1,4 @@
-# ifndef __OptionalValues__
+﻿# ifndef __OptionalValues__
 # define __OptionalValues__
 
 # include "cocos2d.h"
@@ -17,7 +17,10 @@ namespace User
         static cocos2d::Vec2 stringViewSize;
         static cocos2d::Vec2 messageViewSize;
         static float readOutSpeed;
+        static float maxReadOutSpeed;
         static std::string fontName;
+        static cocos2d::Color4B fontColor;
+        static cocos2d::Color4B fontShadowColor;
     };
 }
 

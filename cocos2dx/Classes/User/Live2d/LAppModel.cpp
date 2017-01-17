@@ -1,4 +1,4 @@
-/**
+﻿/**
  *
  *  You can modify and use this source freely
  *  only for the development of application related Live2D.
@@ -257,7 +257,7 @@ void LAppModel::update( )
     // リップシンクの設定
     if ( lipSync )
     {
-        float value = 0;// リアルタイムでリップシンクを行う場合、システムから音量を取得して0～1の範囲で入力してください。
+        float value = 0;// リアルタイムでリップシンクを行う場合、システムから音量を取得して0〜1の範囲で入力してください。
         live2DModel->setParamFloat( PARAM_MOUTH_OPEN_Y, value, 0.8f );
     }
 
@@ -277,7 +277,7 @@ int LAppModel::startMotion( std::string group, int no, int priority )
     }
     else if ( !mainMotionMgr->reserveMotion( priority ) )
     {
-        if ( LAppDefine::DEBUG_LOG )log( "can't start motion.\n" );
+        if ( LAppDefine::DEBUG_LOG )log( "can't start motion.¥n" );
         return -1;
     }
 

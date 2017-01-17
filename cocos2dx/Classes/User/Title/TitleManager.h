@@ -1,7 +1,8 @@
-# ifndef __TitleManager__
+﻿# ifndef __TitleManager__
 # define __TitleManager__
 
 #include "../LayerBase.h"
+#include "Lib/AudioManager.h"
 
 namespace User
 {
@@ -19,10 +20,10 @@ namespace User
 		void createFadeSprite();
 		void update(float dt);
 		
-		int titleBgm;
-		float vol;
+		bool isTap;
 		bool isGameStarted;
 
+		AudioManager* audioManager;
 		cocos2d::Sprite* fadeSprite;
 		cocos2d::Label*  uiLabel;
 		cocos2d::Action* normalAction();

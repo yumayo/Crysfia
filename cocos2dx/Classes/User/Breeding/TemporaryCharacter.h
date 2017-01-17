@@ -1,28 +1,14 @@
-# ifndef __TemporaryCharacter__
-# define __TemporaryCharacter__
+ï»¿#pragma once
 
-# include "cocos2d.h"
 #include "../LayerBase.h"
-//ƒLƒƒƒ‰ƒNƒ^[‰¼’u‚«—pƒŒƒCƒ„[
+
 namespace User
 {
     class TemporaryCharacter : public LayerBase
     {
     public:
-
-		CREATE_FUNC(TemporaryCharacter);
-        TemporaryCharacter( );
-        ~TemporaryCharacter( );
-
+        CREATE_FUNC( TemporaryCharacter );
+        bool init( );
     private:
-
-		bool init();
-
-		cocos2d::Size winSize;
-		cocos2d::Sprite* character;
-		cocos2d::Sprite* bottle;
-
     };
 }
-
-# endif // __TemporaryCharacter__

@@ -1,4 +1,4 @@
-#include "SceneDiary.h"
+﻿#include "SceneDiary.h"
 
 USING_NS_CC;
 

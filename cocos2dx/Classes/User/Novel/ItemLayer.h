@@ -1,4 +1,4 @@
-# ifndef __ItemLayer__
+﻿# ifndef __ItemLayer__
 # define __ItemLayer__
 
 # include "../LayerBase.h"

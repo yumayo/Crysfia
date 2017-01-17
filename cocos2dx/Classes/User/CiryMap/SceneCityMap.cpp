@@ -1,16 +1,20 @@
-#include "SceneCityMap.h"
+﻿#include "SceneCityMap.h"
 
 #include "LayerCity.h"
+
+#include "../../Lib/AudioManager.h"
 
 USING_NS_CC;
 
 namespace User
 {
-    cocos2d::Scene* SceneCityMap::create( std::string const & tag )
+    cocos2d::Scene* SceneCityMap::create( )
     {
         auto scene = Scene::create( );
 
-        scene->addChild( createLayer<LayerCity>( tag ) );
+        AudioManager::getInstance( )->readAudioListFile( "res/data/audio.json" );
+
+        scene->addChild( createLayer<LayerCity>( ) );
 
         return scene;
     }

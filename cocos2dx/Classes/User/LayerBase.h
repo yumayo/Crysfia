@@ -1,29 +1,52 @@
-# ifndef __LayerBase__
+﻿# ifndef __LayerBase__
 # define __LayerBase__
 
 # include "cocos2d.h"
 
 # include <string>
 
-// �ϒ��z��ɑΉ�����create�֐������܂��B
-// ���g��CREATE_FUNC�Ɠ����ł��B
-#define CREATE_ARGS_FUNC(__TYPE__) \
-template <class... Args> \
-static __TYPE__* create(Args... args) \
-{ \
-    __TYPE__ *pRet = new(std::nothrow) __TYPE__(args...); \
-    if (pRet && pRet->init()) \
-    { \
-        pRet->autorelease(); \
-        return pRet; \
-    } \
-    else \
-    { \
-        delete pRet; \
-        pRet = nullptr; \
-        return nullptr; \
-    } \
+// 可変長配列に対応したcreate関数を作ります。
+// 中身はCREATE_FUNCと同じです。
+#define CREATE_ARGS_FUNC(__TYPE__)\
+template <class... Args>\
+static __TYPE__* create(Args... args)\
+{\
+  __TYPE__ *pRet = new(std::nothrow) __TYPE__(args...);\
+    if (pRet && pRet->init())\
+    {\
+        pRet->autorelease();\
+        return pRet;\
+    }\
+    else\
+    {\
+        delete pRet;\
+        pRet = nullptr;\
+        return nullptr;\
+    }\
 }
+
+// 可変長配列に対応したcreate関数を作ります。
+// デフォルトコンストラクタを利用し、init関数で引数を処理します。
+// 中身はCREATE_FUNCと同じです。
+#define CREATE_ARGS_INIT_FUNC(__TYPE__)\
+template <class... Args>\
+static __TYPE__* create(Args... args)\
+{\
+  __TYPE__ *pRet = new(std::nothrow) __TYPE__();\
+    if (pRet && pRet->init(args...))\
+    {\
+        pRet->autorelease();\
+        return pRet;\
+    }\
+    else\
+    {\
+        delete pRet;\
+        pRet = nullptr;\
+        return nullptr;\
+    }\
+}
+
+#define LAMBDA_TOUCH cocos2d::Ref* ref, cocos2d::ui::Widget::TouchEventType type
 
 namespace User
 {
@@ -32,11 +55,11 @@ namespace User
     public:
         LayerBase( );
         virtual ~LayerBase( );
-        // init�֐��̌�ɌĂ΂�܂��B
-        // setup����getLayer���g����悤�ɂȂ�܂��B
+        // init関数の後に呼ばれます。
+        // setupからgetLayerが使えるようになります。
         virtual void setup( );
     public:
-        // ���̊֐��ŃV�[���ɒǉ�����Ă���S�Ẵ��C���[�ɃA�N�Z�X�ł��܂��B
+        // この関数でシーンに追加されている全てのレイヤーにアクセスできます。
         template<class LayerClass>
         LayerClass* getLayer( );
     };

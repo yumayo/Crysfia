@@ -1,18 +1,20 @@
-# ifndef __UIManager__
+﻿# ifndef __UIManager__
 # define __UIManager__
 
-# include "cocos2d.h"
-#include "../LayerBase.h"
+#include "cocos2d.h"
 #include "BGManager.h"
 #include "ui/CocosGUI.h"
-#include "User/Breeding/VariousStatus.h"
+#include "Lib/AudioManager.h"
+
+#include "../LayerBase.h"
+#include "../Breeding/VariousStatus.h"
 
 namespace User
 {
 	class UIManager : public LayerBase
 	{
 	private:
-
+		
 		bool isOpen;
 		bool init();
 		
@@ -27,7 +29,10 @@ namespace User
 		~UIManager();
 	
 	private:
-		BGManager* bgManager;
+
+		BGManager*		bgManager;
+		AudioManager*	audioManager;
+
 		cocos2d::ui::ListView*	menuWindow;
 		cocos2d::ui::ListView*	optionWindow;
 		cocos2d::ui::Button*	swicthWindow;
@@ -38,6 +43,7 @@ namespace User
 		std::vector<cocos2d::ui::Slider*> sliderBers;
 		std::vector<cocos2d::Label*>	  optionLabels;
 
+		void buttonEnable();
 		void touchEventOfMainMenu(Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 		void touchEventOfSubMenu(Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 
@@ -50,13 +56,8 @@ namespace User
 
 		void createMainMenuWindow();
 		void createSubMenuWindow();
-		void createDiaryWindow();
 		void setOptionWindow();
 	};
 }
 
 # endif // __UIControl__
-
-
-
-

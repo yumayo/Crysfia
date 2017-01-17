@@ -1,4 +1,4 @@
-# ifndef __TextChunk__
+﻿# ifndef __TextChunk__
 # define __TextChunk__
 
 # include "TextTypes.hpp"
@@ -6,10 +6,11 @@
 
 namespace User
 {
+    class TextChunkManager;
     class TextChunk
     {
     public:
-        TextChunk( );
+        TextChunk( TextChunkManager* manager );
         ~TextChunk( );
     public:
         void insertScript( TagWithData const& tagWithData );
@@ -20,8 +21,8 @@ namespace User
         void pushFunction( );
         void pushNovel( );
     private:
+        TextChunkManager* manager;
         FunctionScriptData functionScriptData;
-        VariableScriptData variableScriptData;
         NovelData novelData;
         size_t& novelIndex;
     private:

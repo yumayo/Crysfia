@@ -1,4 +1,4 @@
-#include "TextString.h"
+ï»¿#include "TextString.h"
 
 #include "TextTypes.hpp"
 #include "OptionalValues.h"
@@ -21,29 +21,29 @@ namespace User
     }
     void TextString::actionAndCallfuncStart( std::function<void( )> const & actionCallfunc )
     {
-         // —áŠOˆ—
-         // ‹ós‚¾‚Á‚½ê‡•¶Žš—ñŽ©‘Ì‚ª‚È‚¢‚½‚ß‚»‚ÌŽŸ‚Ìs‚ª‘¶Ý‚µ‚Ä‚¢‚Ä‚àAƒR[ƒ‹ƒoƒbƒNŒÄ‚Ño‚µ‚ª‚Å‚«‚¸•\Ž¦‚Å‚«‚È‚¢‚½‚ßB
+         // ä¾‹å¤–å‡¦ç†
+         // ç©ºè¡Œã ã£ãŸå ´åˆæ–‡å­—åˆ—è‡ªä½“ãŒãªã„ãŸã‚ãã®æ¬¡ã®è¡ŒãŒå­˜åœ¨ã—ã¦ã„ã¦ã‚‚ã€ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‘¼ã³å‡ºã—ãŒã§ããšè¡¨ç¤ºã§ããªã„ãŸã‚ã€‚
         if ( text == u8"" )
         {
             actionCallfunc( );
             return;
         }
 
-        // •¶Žš”(ÅŒã‚Ì•¶Žš‚ðŠÜ‚Ü‚È‚¢)
+        // æ–‡å­—æ•°(æœ€å¾Œã®æ–‡å­—ã‚’å«ã¾ãªã„)
         int stringIndex = label->getStringLength( ) - 1;
 
-        // ÅŒã‚Ì•¶ŽšˆÈŠO‚Í’Êí‚Ìˆ—B
+        // æœ€å¾Œã®æ–‡å­—ä»¥å¤–ã¯é€šå¸¸ã®å‡¦ç†ã€‚
         setActionStart( stringIndex );
 
-        // ˆê”ÔÅŒã‚Ì•¶Žš‚¾‚¯“Á•Êˆ—
-        // ŽŸ‚Ì•¶Žš—ñ‚ÌƒAƒNƒVƒ‡ƒ“‚ðÅŒã‚Ì•¶Žš‚ª•\Ž¦‚³‚ê‚½Œã‚ÉŽn‚ß‚Ü‚·B
+        // ä¸€ç•ªæœ€å¾Œã®æ–‡å­—ã ã‘ç‰¹åˆ¥å‡¦ç†
+        // æ¬¡ã®æ–‡å­—åˆ—ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’æœ€å¾Œã®æ–‡å­—ãŒè¡¨ç¤ºã•ã‚ŒãŸå¾Œã«å§‹ã‚ã¾ã™ã€‚
         auto oneString = label->getLetter( stringIndex );
         if ( oneString )
         {
             oneString->runAction( Sequence::create( DelayTime::create( OptionalValues::readOutSpeed * stringIndex ),
                                                     FadeIn::create( OptionalValues::readOutSpeed ),
                                                     CallFunc::create( [ = ] { actionCallfunc( ); } ),
-                                                    nullptr ) )->setTag( stringIndex ); // action‚É‚Í‰½•¶Žš–Ú‚©‚Ìî•ñ‚ð“ü‚ê‚Ä‚¨‚«‚Ü‚·B
+                                                    nullptr ) )->setTag( stringIndex ); // actionã«ã¯ä½•æ–‡å­—ç›®ã‹ã®æƒ…å ±ã‚’å…¥ã‚Œã¦ãŠãã¾ã™ã€‚
         }
     }
     void TextString::actionStop( )
@@ -70,7 +70,8 @@ namespace User
     {
         this->text = text;
         label = Label::createWithTTF( text, OptionalValues::fontName, OptionalValues::fontSize );
-        label->setTextColor( Color4B( 39, 39, 39, 255 ) );
+        label->enableShadow( OptionalValues::fontShadowColor, Size( 2, -2 ), 2 );
+        label->setTextColor( OptionalValues::fontColor );
         label->setTag( (int)Tag::Novel );
         for ( int i = 0; i < label->getStringLength( ); i++ )
         {
@@ -79,10 +80,11 @@ namespace User
         }
 
         auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
+        auto win_size = Director::getInstance( )->getWinSize( );
         auto contentWidth = label->getContentSize( ).width;
-        if ( visibleWidth * 0.9 <= contentWidth )
+        if ( visibleWidth * ( 614.0F / 720 ) <= contentWidth )
         {
-            label->setScaleX( ( visibleWidth * 0.9 ) / contentWidth );
+            label->setScaleX( ( visibleWidth * ( 614.0F / 720 ) ) / contentWidth );
         }
     }
     void TextString::setDrawPosition( cocos2d::Vec2 position )
@@ -90,10 +92,10 @@ namespace User
         float width;
         auto visibleWidth = Director::getInstance( )->getVisibleSize( ).width;
         auto contentSize = label->getContentSize( );
-        if ( visibleWidth * 0.9 <= contentSize.width ) width = visibleWidth * 0.9 * 0.5;
+        if ( visibleWidth * ( 614.0F / 720 ) <= contentSize.width ) width = visibleWidth * ( 614.0F / 720 )  * 0.5;
         else width = contentSize.width * 0.5;
 
-        label->setPosition( position + Vec2( width, -contentSize.height ) );
+        label->setPosition( position + Vec2( width, 0 ) );
     }
     void TextString::setActionStart( size_t stringLength )
     {

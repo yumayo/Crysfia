@@ -1,4 +1,4 @@
-# ifndef __LayerCleaning__
+﻿# ifndef __LayerCleaning__
 # define __LayerCleaning__
 
 # include "cocos2d.h"
@@ -14,6 +14,7 @@ namespace User
 		CREATE_FUNC(LayerCleaning);
 		LayerCleaning();
 		~LayerCleaning();
+		void update(float dt);
 
 		bool isFinish = false;
 	private:
@@ -33,10 +34,13 @@ namespace User
 
 		cocos2d::Size			winSize;
 		cocos2d::Vec2			touchLocation;
+
 		cocos2d::Sprite*		bottle;
 		cocos2d::Sprite*		mask;
-		cocos2d::ClippingNode*	clippingNode;
 		cocos2d::Sprite*		clippingShape;
+		cocos2d::Sprite*		bottleTexture;
+
+		cocos2d::ClippingNode*	clippingNode;
 		cocos2d::Label*			infoLabel;
 		cocos2d::Sequence*		testAction;
 

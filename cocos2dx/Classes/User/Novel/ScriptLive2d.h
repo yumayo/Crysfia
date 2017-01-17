@@ -1,4 +1,4 @@
-# ifndef __ScriptLive2d__
+ï»¿# ifndef __ScriptLive2d__
 # define __ScriptLive2d__
 
 # include "cocos2d.h"
@@ -16,14 +16,14 @@ namespace User
         SCRIPT( in );
         SCRIPT( out );
     public:
-        // •\î‚ÉŠÖ‚í‚éƒXƒNƒŠƒvƒg‚Å‚·B
+        // è¡¨æƒ…ã«é–¢ã‚ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆã§ã™ã€‚
         SCRIPT( normal );
         SCRIPT( rejoice );
         SCRIPT( sorrow );
         SCRIPT( getSurprise );
         SCRIPT( getAngry );
-        SCRIPT( ^–Ê–Ú‚ÈŠç );
-        SCRIPT( ”Y‚ñ‚Å‚éŠç );
+        SCRIPT( çœŸé¢ç›®ãªé¡” );
+        SCRIPT( æ‚©ã‚“ã§ã‚‹é¡” );
     public:
         SCRIPT( touchon );
         SCRIPT( touchoff );

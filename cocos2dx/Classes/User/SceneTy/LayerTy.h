@@ -1,4 +1,4 @@
-# ifndef __LayerTy__
+﻿# ifndef __LayerTy__
 # define __LayerTy__
 
 # include "../LayerBase.h"
