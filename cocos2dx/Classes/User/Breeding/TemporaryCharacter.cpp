@@ -34,7 +34,7 @@ namespace User
         LAppLive2DManager::releaseInstance( );
         auto manager = LAppLive2DManager::getInstance( );
         manager->createModel( dir, model + u8".model.json" );
-        
+
         auto live2d = LAppView::createDrawNode( );
         addChild( live2d );
 
@@ -101,8 +101,18 @@ namespace User
                 auto p = RandomHelper::random_int( 1, 6 );
                 std::string name = u8"awa" + StringUtils::toString( p ) + u8".png";
                 auto bubble = Sprite::create( u8"res/texture/home/" + name );
-                bubble->setPosition( Vec2( RandomHelper::random_real( -vs.width*0.5F, vs.width * 0.5F ), -vs.height * 0.5 - bubble->getContentSize( ).height ) );
-                bubble->runAction( Sequence::create( MoveBy::create( RandomHelper::random_real( 2.0F, 3.0F ), Vec2( 0, vs.height + bubble->getContentSize( ).height * 2 ) ), RemoveSelf::create( ), nullptr ) );
+
+                auto x = RandomHelper::random_real( -vs.width*0.5F, vs.width * 0.5F );
+                auto y = -vs.height * 0.5 - bubble->getContentSize( ).height;
+                auto tar_y = vs.height + bubble->getContentSize( ).height * 2;
+                bubble->setPosition( Vec2( x, y ) );
+                bubble->setOpacity( 128 );
+
+                auto time = RandomHelper::random_real( 3.0F, 6.0F );
+                auto wave = Spawn::create( ActionFloat::create( time, 0.0F, 30.0F, [ bubble, x ] ( float val ) { bubble->setPosition( sin( val ) * 20 + x, bubble->getPosition( ).y ); } ),
+                               ActionFloat::create( time, y, tar_y, [ bubble ] ( float val ) { bubble->setPosition( bubble->getPosition( ).x, val ); } ),
+                               nullptr );
+                bubble->runAction( Sequence::create( wave, RemoveSelf::create( ), nullptr ) );
                 clipping->addChild( bubble );
             } );
 
