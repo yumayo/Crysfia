@@ -34,7 +34,7 @@ namespace User
         LAppLive2DManager::releaseInstance( );
         auto manager = LAppLive2DManager::getInstance( );
         manager->createModel( dir, model + u8".model.json" );
-
+        
         auto live2d = LAppView::createDrawNode( );
         addChild( live2d );
 
@@ -90,7 +90,7 @@ namespace User
             clipping->setAlphaThreshold( 0.0 );
 
             // マスク画像を用意します。
-            if ( auto mask = Sprite::create( "res/texture/home/bottle_water_mask.png" ) )
+            if ( auto mask = Sprite::create( "res/texture/home/bottle_mask.png" ) )
             {
                 clipping->setStencil( mask );
             }
