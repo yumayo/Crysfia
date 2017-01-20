@@ -194,7 +194,6 @@ namespace User
 
         void setIslandName( );
 
-
         LayerCityMark* set_force_mark( Json::Value& value );
         LayerCityMark* set_main_mark( Json::Value& value );
         LayerCityMark* set_sub_mark( Json::Value& value );

@@ -1,13 +1,12 @@
-#include "LayerMessageBox.h"
+#include "LayerTutorialBox.h"
 
 #include "../../Lib/Utilitys.h"
-#include "../../Lib/AudioManager.h"
 
 USING_NS_CC;
 
 namespace User
 {
-    bool LayerMessageBox::init( std::string const & message, std::function<void( )> const & ok )
+    bool LayerTutorialBox::init( std::string const & title, std::function<void( )> const & ok )
     {
         if ( !LayerColor::init( ) ) return false;
 
@@ -25,15 +24,15 @@ namespace User
         // フェードイン
         runAction( FadeTo::create( fade_time, 196 ) );
 
-        auto sprite = Sprite::create( u8"res/texture/system/message.box.png" );
+        auto sprite = Sprite::create( u8"res/texture/system/tutorial.box.png" );
         sprite->setPosition( vo + vs * 0.5 );
         sprite->setScale( Lib::fitWidth( sprite, vs.width * 0.9 ) );
         addChild( sprite );
 
-        auto label = Label::createWithTTF( message,
+        auto label = Label::createWithTTF( title,
                                            u8"res/fonts/HGRGE.TTC",
                                            64 );
-        label->setTextColor( Color4B( 29, 29, 29, 255 ) );
+        label->setTextColor( Color4B( 240, 240, 240, 255 ) );
         label->setScale( Lib::fitWidth( label, sprite->getContentSize( ).width * 0.9 ) );
         label->setPosition( sprite->getContentSize( ) * 0.5 );
         sprite->addChild( label );

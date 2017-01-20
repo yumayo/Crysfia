@@ -12,6 +12,10 @@ namespace User
     {
 
     }
+    bool TextChunkManager::isNovelFinished( )
+    {
+        return work->isReadFinished( );
+    }
     void TextChunkManager::make( std::string const & novelPath )
     {
         textData.makeData( novelPath );

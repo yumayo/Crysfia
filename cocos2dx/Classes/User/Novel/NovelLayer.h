@@ -63,6 +63,7 @@ namespace User
         void stop( );
         void restart( );
     public:
+        void skip( );
         void addAuto( );
         void select( std::string const& name );
         void setDelayTime( double delayTime ) { textChunkManager.setDelayTime( delayTime ); }
