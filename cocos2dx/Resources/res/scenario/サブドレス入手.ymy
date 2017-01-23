@@ -1,0 +1,74 @@
+//ラシャス島2日目ドレス入手
+//内容は使い回しです
+
+@sys:name(名前クロエ)
+@sys:name(名前お婆さん)
+@sys:background(hクリスフィア専門店)
+@sys:bgm(bサブ1)
+@sys:live2d(crysfia)
+@crysfia:touchoff
+//@crysfia:in
+//@crysfia:out
+//@sys:novelon
+//@sys:noveloff
+//@sys:stop(1)
+//@sys:l
+//@sys:item(ドレス)
+
+//ここから
+
+@hクリスフィア専門店:fadein(1)
+@bサブ2:in
+@sys:stop(1)
+@sys:novelon
+
+@名前お婆さん:in
+「うーん……困ったね」@sys:l
+
+@crysfia:in
+
+@名前クロエ:in
+「お婆さんどうしたの？」@sys:l
+@名前お婆さん:in
+「おや。クロエちゃんとアレン君かい、いらっ
+  しゃい」@sys:l
+@名前クロエ:in
+「困ってたみたいだけど、どうかしたの？」@sys:l
+@名前お婆さん:in
+「実はね、今日クロエちゃん達が乗ってる船
+  から荷物を受け取りに行こうと思ってたんだ
+　けどね」
+「今朝、お爺さんが腰をやっちまってね。荷
+  物を取りに行けないんだよ」@sys:l
+@名前クロエ:in
+「ねえアレン。お婆さん困ってるみたいだか
+  ら助けてあげようよ」@sys:l
+@名前お婆さん:in
+「いいのかい？ありがとうね。荷車は外にあ
+  るから使っておくれ」@sys:l
+
+@crysfia:out
+@sys:noveloff
+@hクリスフィア専門店:fadeout(1)
+@sys:stop(1)
+@hクリスフィア専門店:fadein(1)
+@sys:stop(1)
+@crysfia:喜ぶ
+@sys:novelon
+
+@名前クロエ:in
+「ただいまー！帰ったよ、お婆さん」@sys:l
+@名前お婆さん:in
+「ありがとうね、ほんとに助かったよ」@sys:l
+「お礼って程のものじゃあ無いけど、クロエちゃ
+  んに洋服を作ったから、受け取っておくれ」@sys:l
+@名前クロエ:in
+「やったー！ありがとうお婆さん！」@sys:l
+@sys:item(ドレス)
+
+@crysfia:out
+@sys:noveloff
+@hクリスフィア専門店:fadeout(1)
+@bサブ1:fadeout(1)
+
+//ここまで

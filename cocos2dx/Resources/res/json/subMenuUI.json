@@ -1,0 +1,57 @@
+{
+  "Button": 
+  [
+    {
+      "name": "戻る",
+      "res": {
+        "pull": "res/texture/system/backbutton.png",
+        "push": "res/texture/system/backbutton.select.png"
+      },
+      "pos": 
+      {
+        "x":0.15,
+        "y": 0.48
+      }
+    },
+
+    {
+      "name": "食事",
+      "res":{
+        "pull": "res/texture/system/食事_off.png",
+        "push": "res/texture/system/食事_on.png"
+      },
+      "pos": 
+      {
+        "x":0.38,
+        "y": 0.48
+      }
+    },
+
+    {
+      "name": "着替え",
+      "res": {
+        "pull": "res/texture/system/着替え_off.png",
+        "push": "res/texture/system/着替え_on.png"
+      },
+      "pos": 
+      {
+        "x":0.61,
+        "y": 0.48
+      }
+    },
+
+    {
+      "name": "掃除",
+      "res": {
+        "pull": "res/texture/system/掃除_off.png",
+        "push": "res/texture/system/掃除_on.png"
+      },
+      "pos": 
+      {
+        "x":0.85,
+        "y": 0.48
+      }
+    }
+  ]
+
+}

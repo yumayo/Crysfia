@@ -1,4 +1,4 @@
-# ifndef __FrameLayer__
+﻿# ifndef __FrameLayer__
 # define __FrameLayer__
 
 # include "cocos2d.h"

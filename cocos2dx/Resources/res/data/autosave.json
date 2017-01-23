@@ -1,0 +1,346 @@
+{
+  "無名の島": {
+    "point.main": [
+    ],
+    "point.sub": [
+    ],
+    "point.force": [
+      {
+        "position": [ 19, 20 ],
+        "day": [ 100 ],
+        "scenario": "無名のスクリプト.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ]
+  },
+  "旅立ちの島": {
+    "point.main": [
+    ],
+    "point.sub": [
+    ],
+    "point.force": [
+      {
+        "position": [ 3, 11 ],
+        "day": [ 1 ],
+        "scenario": "シナリオ2.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "毎日を死んだように過ごしていた青年、アレン。そんな彼の前に、一人の少女が現れる"
+      },
+      {
+        "position": [ 3, 12 ],
+        "day": [ 1 ],
+        "scenario": "シナリオ1.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "ようこそ、クリスフィアが住む世界へ！"
+      }
+    ]
+  },
+  "ラシャス島": {
+    "point.main": [
+      {
+        "position": [ 4, 4 ],
+        "day": [ 1 ],
+        "scenario": "シナリオ3.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "ラシャス島に上陸した二人。街を歩いていると、ピエロの恰好をした少年からビラをもらい、大道芸を見物することに"
+      },
+      {
+        "position": [ 7, 5 ],
+        "day": [ 5 ],
+        "scenario": "シナリオ5.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "初めての遊園地に大はしゃぎのクロエ。様々な乗り物を満喫するのだった"
+      }
+    ],
+    "point.sub": [
+      {
+        "position": [ 4, 3 ],
+        "day": [ 1, 2 ],
+        "scenario": "サブ1.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "いつも同じ服ばかり着ているクロエ。アレンに新しい洋服をねだってみるが……？"
+      },
+      {
+        "position": [ 3, 4 ],
+        "day": [ 1, 3 ],
+        "scenario": "サブ2.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "別のクリスフィアを見かけたクロエ。自分とはあまりに異なる性格に、戸惑いを覚えるのだった"
+      },
+      {
+        "position": [ 5, 5 ],
+        "day": [ 2, 4 ],
+        "scenario": "サブ3.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "アレンに家族のことを尋ねるクロエ。すると彼は、家族との思い出を語り始めるのだった"
+      },
+      {
+        "position": [ 6, 5 ],
+        "day": [ 2, 4 ],
+        "scenario": "サブ4.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "アレンが読んでいる本が気になるクロエ。その本の内容とは……？"
+      },
+      {
+        "position": [ 7, 4 ],
+        "day": [ 4, 6 ],
+        "scenario": "サブ5.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "空き地で見つけたサッカーボールでリフティングを始めたアレン。その中々の腕前に感心するクロエだった"
+      },
+      {
+        "position": [ 8, 5 ],
+        "day": [ 6, 8 ],
+        "scenario": "サブ6.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "以前、ギターを嗜んでいたアレン。彼が演奏するギターの音色に合わせ、二人で歌うことに"
+      },
+      {
+        "position": [ 7, 6 ],
+        "day": [ 7, 8 ],
+        "scenario": "サブ7(ラシャス).ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "クロエの食事法に疑問を抱いたクロエ。その驚きの食べ方とは……？"
+      },
+      {
+        "position": [ 7, 8 ],
+        "day": [ 8 ],
+        "scenario": "サブ8(ラシャス).ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "絵描きの男性に似顔絵を描いてもらうことになった二人。その出来栄えは……？"
+      },
+      {
+        "position": [ 4, 5 ],
+        "day": [ 8 ],
+        "scenario": "サブシスター服入手.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "シスター服入手"
+      },
+      {
+        "position": [ 4, 6 ],
+        "day": [ 6 ],
+        "scenario": "サブセーラー服入手.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "セーラー服入手"
+      },
+      {
+        "position": [ 5, 4 ],
+        "day": [ 2 ],
+        "scenario": "サブドレス入手.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "ドレス入手"
+      },
+      {
+        "position": [ 6, 4 ],
+        "day": [ 3 ],
+        "scenario": "サブ果物入手.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "果物入手"
+      },
+      {
+        "position": [ 5, 6 ],
+        "day": [ 1 ],
+        "scenario": "サブ花入手.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "花入手"
+      },
+      {
+        "position": [ 6, 7 ],
+        "day": [ 5 ],
+        "scenario": "サブ金平糖入手.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "金平糖入手"
+      },
+      {
+        "position": [ 8, 4 ],
+        "day": [ 4 ],
+        "scenario": "サブ着ぐるみ入手.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "着ぐるみ入手"
+      },
+      {
+        "position": [ 8, 6 ],
+        "day": [ 7 ],
+        "scenario": "サブ宝石入手.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "宝石入手"
+      }
+    ],
+    "point.force": [
+      {
+        "position": [ 6, 6 ],
+        "day": [ 3 ],
+        "morning": true,
+        "daytime": false,
+        "night": false,
+        "scenario": "シナリオ4.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "大規模なお祭りが始まったラシャス島。クロエにせがまれ、アレンは射的に挑戦するが……？"
+      },
+      {
+        "position": [ 7, 7 ],
+        "day": [ 7 ],
+        "morning": false,
+        "daytime": false,
+        "night": true,
+        "scenario": "シナリオ6.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "花火を楽しみにしていたクロエ。しかし、迷子探しに協力することになってしまい……？"
+      }
+    ]
+  },
+  "ヒャルキシ島": {
+    "position": [ 12, 4 ],
+    "point.main": [
+      {
+        "position": [ 11, 3 ],
+        "day": [ 9 ],
+        "scenario": "シナリオ7.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "ヒャルキシ島に上陸した二人。物寂しい街中を歩いて行くうちにたどり着いた場所は墓地だった"
+      },
+      {
+        "position": [ 12, 5 ],
+        "day": [ 11 ],
+        "scenario": "シナリオ8.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "ヒャルキシ島に上陸した二人。物寂しい街中を歩いて行くうちにたどり着いた場所は墓地だった"
+      }
+    ],
+    "point.sub": [
+      {
+        "position": [ 11, 4 ],
+        "day": [ 9 ],
+        "scenario": "サブ7(ヒャルキシ).ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "クロエの食事法に疑問を抱いたクロエ。その驚きの食べ方とは……？"
+      },
+      {
+        "position": [ 12, 3 ],
+        "day": [ 9, 10 ],
+        "scenario": "サブ8(ヒャルキシ).ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "絵描きの男性に似顔絵を描いてもらうことになった二人。その出来栄えは……？"
+      },
+      {
+        "position": [ 12, 4 ],
+        "day": [ 9, 10 ],
+        "scenario": "サブ9.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "商売がうまくいっていない店主に出会った二人。その日一日、売り子として店を手伝うことに"
+      },
+      {
+        "position": [ 13, 5 ],
+        "day": [ 10, 12 ],
+        "scenario": "サブ10.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "道端で出会った大きな犬。その犬は、震災で飼い主を亡くした野良犬だった"
+      },
+      {
+        "position": [ 11, 6 ],
+        "day": [ 10, 12 ],
+        "scenario": "サブ11.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "道端で可愛らしい花を見つけたクロエ。アレンは彼女に、その花の花言葉を教えてあげるのだった"
+      },
+      {
+        "position": [ 12, 6 ],
+        "day": [ 11, 12 ],
+        "scenario": "サブ12.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "雨のため、屋内で過ごすしかない二人。そんな時、アレンが作り出した物とは……？"
+      },
+      {
+        "position": [ 13, 6 ],
+        "day": [ 12 ],
+        "scenario": "サブ13.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "友人への手紙を書いていたアレン。やけに楽しそうな様子の彼が気になるクロエだが……？"
+      }
+    ],
+    "point.force": [
+    ]
+  },
+  "アイクラ島": {
+    "point.main": [
+    ],
+    "point.sub": [
+    ],
+    "point.force": [
+      {
+        "position": [ 12, 11 ],
+        "day": [ 13 ],
+        "scenario": "シナリオ9.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "title": "遂にクリスフィアの故郷に辿り着いた二人。しかし、クロエの最期の時が刻々と迫ってきていた"
+      }
+    ]
+  }
+}

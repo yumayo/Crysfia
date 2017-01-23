@@ -1,0 +1,39 @@
+{
+  "backgrounds": 
+  [
+    {
+      "name": "メインページ",
+      "res": "res/texture/novel/背景噴水広場.png",
+      "alpha": 255,
+      "scale": 0.5,
+      "pos": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "name": "育成",
+      "res": "res/texture/home/h船室.png",
+      "alpha": 0,
+      "scale": 0.5,
+      "pos": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+
+    {
+      "name": "日記メニュー",
+      "res": "res/texture/home/background_diary.png",
+      "alpha": 0,
+      "scale": 2,
+      "pos": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+
+  ]
+
+
+}
