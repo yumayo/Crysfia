@@ -1,4 +1,4 @@
-#include "LayerMessageBox.h"
+ï»¿#include "LayerMessageBox.h"
 
 #include "../../Lib/Utilitys.h"
 #include "../../Lib/AudioManager.h"
@@ -17,12 +17,12 @@ namespace User
         auto _scale = 1.0F / scale;
         auto const fade_time = 0.2F;
 
-        // F‚Í•F
+        // è‰²ã¯é»’è‰²
         setColor( Color3B::BLACK );
 
-        // ‰Šúó‘Ô‚Å‚ÍƒŒƒCƒ„[‚Í“§–¾B
+        // åˆæœŸçŠ¶æ…‹ã§ã¯ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¯é€æ˜Žã€‚
         setOpacity( 0 );
-        // ƒtƒF[ƒhƒCƒ“
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
         runAction( FadeTo::create( fade_time, 196 ) );
 
         auto sprite = Sprite::create( u8"res/texture/system/message.box.png" );
@@ -59,7 +59,7 @@ namespace User
         };
         Director::getInstance( )->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, this );
 
-        // ‘S‚Ä‚ÌŽqƒm[ƒh‚ðƒtƒF[ƒhƒCƒ“‚·‚éB
+        // å…¨ã¦ã®å­ãƒŽãƒ¼ãƒ‰ã‚’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã™ã‚‹ã€‚
         enumerateChildren( "//.*", [ fade_time ] ( cocos2d::Node* child )
         {
             child->setOpacity( 0 );

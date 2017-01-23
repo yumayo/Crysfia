@@ -17,44 +17,8 @@ namespace User
         auto scale = Director::getInstance( )->getContentScaleFactor( );
         auto _scale = 1.0F / scale;
 
-        // ここからマスクの処理を書きます。
-        if ( auto clipping = ClippingNode::create( ) )
-        {
-            // クリッピングノードはゲージの子供とします。
-            addChild( clipping, 0 );
-            // ただしそのときに、原点を合わせるため以下の数値を代入しておきます。
-            clipping->setPosition( vo + vs * 0.5F );
-            clipping->setScale( scale );
 
-            // 実際に書き込むのは色のある部分です。
-            clipping->setInverted( false );
-            // 透明部分をマスクします。
-            clipping->setAlphaThreshold( 0.0 );
-
-            // マスク画像を用意します。
-            if ( auto mask = Sprite::create( "res/texture/home/bottle_mask.png" ) )
-            {
-                clipping->setStencil( mask );
-            }
-
-            // 塗りつぶすイメージを用意します。
-            if ( auto background = Sprite::create( u8"res/texture/home/water.png" ) )
-            {
-                // なぜがグリッドがうまくいかない
-                auto wave = Waves3D::create( 10, Size( 9, 16 ), 18, 15 );
-                auto grid = NodeGrid::create( );
-                grid->addChild( background );
-                grid->runAction( RepeatForever::create( wave ) );
-
-                // 仕方がないので、そのままaddします。
-                clipping->addChild( background );
-
-                background->setOpacity( 64 );
-            }
-        }
-
-
-        scheduleOnce( [ this ] ( float y ) 
+        scheduleOnce( [ this ] ( float y )
         {
             auto index = UserDefault::getInstance( )->getIntegerForKey( u8"現在の服" );
             std::string model = u8"crysfia";
@@ -76,9 +40,44 @@ namespace User
             manager->createModel( dir, model + u8".model.json" );
 
             auto live2d = LAppView::createDrawNode( );
-            addChild( live2d, 1 );
-        }, 0.0F, u8"fia_delay");
-        
+            addChild( live2d, 0 );
+        }, 0.0F, u8"fia_delay" );
+
+        // ここからマスクの処理を書きます。
+        if ( auto clipping = ClippingNode::create( ) )
+        {
+            // クリッピングノードはゲージの子供とします。
+            addChild( clipping, 1 );
+            // ただしそのときに、原点を合わせるため以下の数値を代入しておきます。
+            clipping->setPosition( vo + vs * 0.5F );
+            clipping->setScale( scale );
+
+            // 実際に書き込むのは色のある部分です。
+            clipping->setInverted( false );
+            // 透明部分をマスクします。
+            clipping->setAlphaThreshold( 0.0 );
+
+            // マスク画像を用意します。
+            if ( auto mask = Sprite::create( u8"res/texture/home/bottle_mask.png" ) )
+            {
+                clipping->setStencil( mask );
+            }
+
+            // 塗りつぶすイメージを用意します。
+            if ( auto background = Sprite::create( u8"res/texture/home/water.png" ) )
+            {
+                // なぜがグリッドがうまくいかない
+                //auto wave = Waves3D::create( 10, Size( 9, 16 ), 18, 15 );
+                //auto grid = NodeGrid::create( );
+                //grid->addChild( background );
+                //grid->runAction( RepeatForever::create( wave ) );
+
+                // 仕方がないので、そのままaddします。
+                clipping->addChild( background );
+
+                background->setOpacity( 64 );
+            }
+        }
 
         if ( auto clipping = ClippingNode::create( ) )
         {
@@ -94,7 +93,7 @@ namespace User
             clipping->setAlphaThreshold( 0.0 );
 
             // マスク画像を用意します。
-            if ( auto mask = Sprite::create( "res/texture/home/bottle_mask.png" ) )
+            if ( auto mask = Sprite::create( u8"res/texture/home/bottle_mask.png" ) )
             {
                 clipping->setStencil( mask );
             }

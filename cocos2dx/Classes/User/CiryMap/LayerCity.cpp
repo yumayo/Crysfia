@@ -79,11 +79,11 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         setPosition( vo + vs );
 
-        const std::string dir = u8"res/texture/days/";
+        const std::string dir = u8"res/texture/diary/";
 
         day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
 
-        std::string path = dir + u8"calendar(" + StringUtils::toString( day ) + u8").png";
+        std::string path = dir + u8"diary_" + StringUtils::toString( day ) + u8".png";
         if ( auto calendar = Sprite::create( path ) )
         {
             addChild( calendar );
@@ -322,6 +322,7 @@ namespace User
                 board->addChild( heart );
             }
         }
+
 
         /**
          *  画面下部のメニュー

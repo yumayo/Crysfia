@@ -93,7 +93,7 @@ namespace User
         else if ( dead_line == 0 && stay )
         {
             // 当日 最終日
-            stay_day = u8"最後の日";
+            stay_day = u8"今日まで";
         }
         else
         {

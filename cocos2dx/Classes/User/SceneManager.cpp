@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+﻿#include "SceneManager.h"
 #include "LayerBase.h"
 
 #include "Novel/OptionalValues.h"

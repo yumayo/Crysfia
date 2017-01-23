@@ -1,4 +1,4 @@
-
+ï»¿
 #include "UIManager.h"
 #include "BGManager.h"
 #include "FGManager.h"
@@ -53,7 +53,7 @@ namespace User
 		layout->setPosition(Vec2(pos.x * 0, pos.y * 0.f));
 		layout->setContentSize(Size(winSize.x,210));
 
-		//ƒƒjƒ…[‚Ì”wŒi
+		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®èƒŒæ™¯
 		auto menuImage = ui::Scale9Sprite::create("res/texture/system/select.base.png",
 			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
 				960 / CC_CONTENT_SCALE_FACTOR(), 200 / CC_CONTENT_SCALE_FACTOR()),
@@ -64,12 +64,12 @@ namespace User
 		layout->addChild(menuImage);
 		Vec2 menuLayout = layout->getContentSize();
 
-		//jsonƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 		auto fileUtils = FileUtils::getInstance();
 		auto path = fileUtils->getStringFromFile("res/json/mainMenuUI.json");
 		rapidjson::Document doc;
 
-		//jsonƒtƒ@ƒCƒ‹‚ğƒp[ƒX
+		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‘ãƒ¼ã‚¹
 		doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
 
 		if (!doc.HasParseError())
@@ -95,14 +95,14 @@ namespace User
 		this->addChild(layout, (int)zOder::MENU, (int)tabMenu::MAIN_MENU);
 	}
 
-	//ˆç¬ƒƒjƒ…[‚Ìˆ—
+	//è‚²æˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‡¦ç†
 	void UIManager::createSubMenuWindow()
 	{
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x, pos.y * 0));
 		layout->setContentSize(Size(winSize.x, 210));
 
-		//ƒƒjƒ…[‚Ì”wŒi
+		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®èƒŒæ™¯
 		auto menuImage = ui::Scale9Sprite::create("res/texture/system/select.base.png",
 			Rect(0 / CC_CONTENT_SCALE_FACTOR(), 0 / CC_CONTENT_SCALE_FACTOR(),
 				960 / CC_CONTENT_SCALE_FACTOR(), 200 / CC_CONTENT_SCALE_FACTOR()),
@@ -113,12 +113,12 @@ namespace User
 		layout->addChild(menuImage);
 		Vec2 menuLayout = layout->getContentSize();
 
-		//jsonƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 		auto fileUtils = FileUtils::getInstance();
 		auto path = fileUtils->getStringFromFile("res/json/subMenuUI.json");
 		rapidjson::Document doc;
 
-		//jsonƒtƒ@ƒCƒ‹‚ğƒp[ƒX
+		//jsonãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‘ãƒ¼ã‚¹
 		doc.Parse<rapidjson::kParseDefaultFlags>(path.c_str());
 
 		if (!doc.HasParseError())
@@ -154,7 +154,7 @@ namespace User
 		}
 	}
 
-	//Šeƒƒjƒ…[ƒ{ƒ^ƒ“‚Ìˆ—
+	//å„ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ã®å‡¦ç†
 	void UIManager::touchEventOfMainMenu(Ref * pSender, ui::Widget::TouchEventType type)
 	{
 		switch (type)
@@ -191,7 +191,7 @@ namespace User
 
 	}
 
-	//ˆç¬ƒƒjƒ…[‚Ìƒ{ƒ^ƒ“ˆ—
+	//è‚²æˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ãƒœã‚¿ãƒ³å‡¦ç†
 	void UIManager::touchEventOfSubMenu(Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
 	{
 		switch (type)
@@ -227,20 +227,20 @@ namespace User
 		}
 	}
 
-	//ˆç¬ƒƒjƒ…[‚©‚çƒƒCƒ“ƒƒjƒ…[‚Ö–ß‚·ŠÖ”‚Å‚·
+	//è‚²æˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¸æˆ»ã™é–¢æ•°ã§ã™
 	void UIManager::changeToMainWindow()
 	{
 		auto m = this->getChildByTag((int)tabMenu::MAIN_MENU);
 		auto s = this->getChildByTag((int)tabMenu::BREEDING_MENU);
 		swapWindow(s, m);
 
-		//Œ»İ‚ÌƒV[ƒ“‚ğæ“¾‚µAƒV[ƒ“‚©‚çaddChild‚³‚ê‚Ä‚¢‚éBGManager‚ÉƒAƒNƒZƒX‚µ‚ÄŠÖ”‚ğŒÄ‚Ño‚·B
+		//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚’å–å¾—ã—ã€ã‚·ãƒ¼ãƒ³ã‹ã‚‰addChildã•ã‚Œã¦ã„ã‚‹BGManagerã«ã‚¢ã‚¯ã‚»ã‚¹ã—ã¦é–¢æ•°ã‚’å‘¼ã³å‡ºã™ã€‚
 		auto p = this->getParent();
 		auto c = (BGManager*)p->getChildByTag((int)tabLayer::BACKGROUND);
 		c->changeBackGround((int)tabMenu::MAIN_MENU, (int)tabMenu::BREEDING_MENU);
 	}
 
-	//ƒƒCƒ“ƒƒjƒ…[‚©‚çƒTƒuƒƒjƒ…[‚Ö•ÏX‚·‚éŠÖ”‚Å‚·
+	//ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ã‚µãƒ–ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¸å¤‰æ›´ã™ã‚‹é–¢æ•°ã§ã™
 	void UIManager::changeToSubWindow()
 	{
 		auto m = this->getChildByTag((int)tabMenu::MAIN_MENU);
@@ -252,7 +252,7 @@ namespace User
 		c->changeBackGround((int)tabMenu::BREEDING_MENU, (int)tabMenu::MAIN_MENU);
 	}
 
-	//“ú‹L‰æ–Ê‚ÖˆÚ“®
+	//æ—¥è¨˜ç”»é¢ã¸ç§»å‹•
 	void UIManager::changeToDiaryWindow()
 	{
 		float fadeTime(3);
@@ -270,7 +270,7 @@ namespace User
 			nullptr));
 	}
 
-	//‘|œ‰æ–Ê‚ÌƒŒƒCƒ„[‚É“\‚è‘Ö‚¦
+	//æƒé™¤ç”»é¢ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è²¼ã‚Šæ›¿ãˆ
 	void UIManager::changeToCreaning()
 	{
 		float fadeTime(3);
@@ -288,7 +288,7 @@ namespace User
 			nullptr));
 	}
 
-	//H–‰æ–Ê‹y‚Ñ’…‘Ö‚¦‰æ–Ê‚ÖˆÚ“®----------------------------------------------------------------------
+	//é£Ÿäº‹ç”»é¢åŠã³ç€æ›¿ãˆç”»é¢ã¸ç§»å‹•----------------------------------------------------------------------
 	void UIManager::changeToBreeding(int _menuId)
 	{
 		float fadeTime(2);
@@ -304,8 +304,8 @@ namespace User
 			nullptr) );
 	}
 
-	//ƒŒƒCƒ„[‚ğ“ü‚ê‘Ö‚¦‚éŠÖ”‚Å‚·BŒ»İ‚ÍNode‚Ìw’è‚µ‚©‚Å‚«‚È‚¢‚Å‚·
-	//TODO:Posw’èAˆÚ“®ŠÔ‚Ìw’èA’x‰„ŠÔ‚Ìw’è‚ğ‚Å‚«‚é‚æ‚¤‚É‚·‚éB
+	//ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å…¥ã‚Œæ›¿ãˆã‚‹é–¢æ•°ã§ã™ã€‚ç¾åœ¨ã¯Nodeã®æŒ‡å®šã—ã‹ã§ããªã„ã§ã™
+	//TODO:PosæŒ‡å®šã€ç§»å‹•æ™‚é–“ã®æŒ‡å®šã€é…å»¶æ™‚é–“ã®æŒ‡å®šã‚’ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
 	void UIManager::swapWindow(Node * moveOutObj, Node * moveInObj)
 	{
 		auto size = Director::getInstance()->getVisibleSize();
@@ -317,8 +317,8 @@ namespace User
 		moveInObj->runAction(Sequence::create(delay, moveIn, nullptr));
 	}
 
-	//ƒIƒvƒVƒ‡ƒ“ƒEƒBƒ“ƒhƒE‚Ì¶¬
-	//TODO:Posw’èASizew’èA‰æ‘œw’è‚ğ‚Å‚«‚é‚æ‚¤‚É‚·‚éB
+	//ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”Ÿæˆ
+	//TODO:PosæŒ‡å®šã€SizeæŒ‡å®šã€ç”»åƒæŒ‡å®šã‚’ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
 	void UIManager::setOptionWindow()
 	{
 		float fadeTime(2);
