@@ -17,32 +17,11 @@ namespace User
         auto scale = Director::getInstance( )->getContentScaleFactor( );
         auto _scale = 1.0F / scale;
 
-        auto index = UserDefault::getInstance( )->getIntegerForKey( u8"現在の服" );
-        std::string model = u8"crysfia";
-
-        std::vector<std::string> names =
-        {
-            u8"_d",//u8"ワンピース"
-            u8"_d",//u8"ドレス",
-            u8"_d",//u8"着ぐるみ",
-            u8"_d",//u8"シスター服",
-            u8"_s",//u8"セーラー服"
-        };
-        model += names[index];
-        auto dir = u8"res/live2d/" + model + u8"/";
-
-        LAppLive2DManager::releaseInstance( );
-        auto manager = LAppLive2DManager::getInstance( );
-        manager->createModel( dir, model + u8".model.json" );
-
-        auto live2d = LAppView::createDrawNode( );
-        addChild( live2d );
-
         // ここからマスクの処理を書きます。
         if ( auto clipping = ClippingNode::create( ) )
         {
             // クリッピングノードはゲージの子供とします。
-            addChild( clipping );
+            addChild( clipping, 0 );
             // ただしそのときに、原点を合わせるため以下の数値を代入しておきます。
             clipping->setPosition( vo + vs * 0.5F );
             clipping->setScale( scale );
@@ -72,14 +51,39 @@ namespace User
 
                 background->setOpacity( 64 );
             }
-
-
         }
+
+
+        scheduleOnce( [ this ] ( float y ) 
+        {
+            auto index = UserDefault::getInstance( )->getIntegerForKey( u8"現在の服" );
+            std::string model = u8"crysfia";
+
+            std::vector<std::string> names =
+            {
+                u8"_d",//u8"ワンピース"
+                u8"_d",//u8"ドレス",
+                u8"_d",//u8"着ぐるみ",
+                u8"_d",//u8"シスター服",
+                u8"_s",//u8"セーラー服"
+            };
+            model += names[index];
+            auto dir = u8"res/live2d/" + model + u8"/";
+
+            auto manager = LAppLive2DManager::getInstance( );
+
+
+            manager->createModel( dir, model + u8".model.json" );
+
+            auto live2d = LAppView::createDrawNode( );
+            addChild( live2d, 1 );
+        }, 0.0F, u8"fia_delay");
+        
 
         if ( auto clipping = ClippingNode::create( ) )
         {
             // クリッピングノードはゲージの子供とします。
-            addChild( clipping );
+            addChild( clipping, 2 );
             // ただしそのときに、原点を合わせるため以下の数値を代入しておきます。
             clipping->setPosition( vo + vs * 0.5F );
             clipping->setScale( scale );
@@ -110,21 +114,21 @@ namespace User
 
                 auto time = RandomHelper::random_real( 3.0F, 6.0F );
                 auto wave = Spawn::create( ActionFloat::create( time, 0.0F, 30.0F, [ bubble, x ] ( float val ) { bubble->setPosition( sin( val ) * 20 + x, bubble->getPosition( ).y ); } ),
-                               ActionFloat::create( time, y, tar_y, [ bubble ] ( float val ) { bubble->setPosition( bubble->getPosition( ).x, val ); } ),
-                               nullptr );
+                                           ActionFloat::create( time, y, tar_y, [ bubble ] ( float val ) { bubble->setPosition( bubble->getPosition( ).x, val ); } ),
+                                           nullptr );
                 bubble->runAction( Sequence::create( wave, RemoveSelf::create( ), nullptr ) );
                 clipping->addChild( bubble );
             } );
 
             auto spawner = Node::create( );
-            addChild( spawner );
+            addChild( spawner, 3 );
             spawner->runAction( RepeatForever::create( Sequence::create( spawn_bubble, DelayTime::create( 2.0F ), nullptr ) ) );
         }
 
         auto bottle = Sprite::create( u8"res/texture/home/bottle_1.png" );
         bottle->setPosition( vo + vs * 0.5F );
         bottle->setScale( scale );
-        addChild( bottle );
+        addChild( bottle, 4 );
 
         return true;
     }
