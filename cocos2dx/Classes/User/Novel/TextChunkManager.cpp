@@ -43,11 +43,16 @@ namespace User
             }
         }
     }
+    DebugWithLineData const & TextChunkManager::getDebugData( )
+    {
+        return debugData;
+    }
     bool TextChunkManager::textPartyRead( )
     {
         if ( !work->isReadFinished( ) && !textData.isEmpty( ) )
         {
             work->insertScript( textReader.createTagWithData( textData.getLineMoved( ) ) );
+            debugData = textReader.getDebugData( );
             return true;
         }
         return false;

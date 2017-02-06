@@ -28,6 +28,7 @@ namespace User
         void gotoNext( );
         std::function<void( )> novelEndCallBack = nullptr;
         std::function<void( )> readEndCallBack = nullptr;
+        DebugWithLineData const & getDebugData( );
     private:
         bool textPartyRead( );
     private:
@@ -40,6 +41,8 @@ namespace User
         friend class TextChunk;
         std::vector<TextChunk> textChunk;
         TextChunk* work;
+
+        DebugWithLineData debugData;
     };
 }
 

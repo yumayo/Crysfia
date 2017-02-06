@@ -152,7 +152,7 @@ namespace User
             novel->setDelayTime( 1.0 );
             break;
         case 1:
-            novel->setDelayTime( std::stod( args[0] ) );
+            novel->setDelayTime( StringUtil::string_value<double>( args[0] ) );
             break;
         default:
             break;

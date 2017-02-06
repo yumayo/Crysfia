@@ -22,8 +22,8 @@ namespace User
         SCRIPT( sorrow );
         SCRIPT( getSurprise );
         SCRIPT( getAngry );
-        SCRIPT( 真面目な顔 );
-        SCRIPT( 悩んでる顔 );
+        SCRIPT( seriousFace );
+        SCRIPT( worriedFace );
     public:
         SCRIPT( touchon );
         SCRIPT( touchoff );
