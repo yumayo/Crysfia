@@ -22,7 +22,7 @@ namespace User
 	{
 		if (!Layer::init()) { return false; }
 
-		audioManager->playBgm("res/sound/BGM/title.mp3");
+        scheduleOnce( [ this ] ( float delta ) { audioManager->playBgm( "res/sound/BGM/title.mp3" ); }, 0.0F, u8"bgm_delay_TitleManager" );
 
 		createTitleWindow();
 		createTapUI();

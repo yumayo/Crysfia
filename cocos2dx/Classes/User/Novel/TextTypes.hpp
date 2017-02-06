@@ -1,4 +1,4 @@
-# ifndef __TextTypes__
+﻿# ifndef __TextTypes__
 # define __TextTypes__
 
 # include <array>

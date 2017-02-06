@@ -29,7 +29,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "毎日を死んだように過ごしていた青年、アレン。そんな彼の前に、一人の少女が現れる"
       },
       {
         "position": [ 3, 12 ],
@@ -51,7 +51,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "ラシャス島に上陸した二人。街を歩いていると、ピエロの恰好をした少年からビラをもらい、大道芸を見物することに"
       },
       {
         "position": [ 7, 5 ],
@@ -60,7 +60,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "初めての遊園地に大はしゃぎのクロエ。様々な乗り物を満喫するのだった"
       }
     ],
     "point.sub": [
@@ -71,7 +71,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "いつも同じ服ばかり着ているクロエ。アレンに新しい洋服をねだってみるが……？"
       },
       {
         "position": [ 3, 4 ],
@@ -80,7 +80,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "別のクリスフィアを見かけたクロエ。自分とはあまりに異なる性格に、戸惑いを覚えるのだった"
       },
       {
         "position": [ 5, 5 ],
@@ -89,7 +89,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "アレンに家族のことを尋ねるクロエ。すると彼は、家族との思い出を語り始めるのだった"
       },
       {
         "position": [ 6, 5 ],
@@ -98,7 +98,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "アレンが読んでいる本が気になるクロエ。その本の内容とは……？"
       },
       {
         "position": [ 7, 4 ],
@@ -107,7 +107,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "空き地で見つけたサッカーボールでリフティングを始めたアレン。その中々の腕前に感心するクロエだった"
       },
       {
         "position": [ 8, 5 ],
@@ -116,7 +116,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "以前、ギターを嗜んでいたアレン。彼が演奏するギターの音色に合わせ、二人で歌うことに"
       },
       {
         "position": [ 7, 6 ],
@@ -125,7 +125,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "クロエの食事法に疑問を抱いたクロエ。その驚きの食べ方とは……？"
       },
       {
         "position": [ 7, 8 ],
@@ -134,7 +134,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "絵描きの男性に似顔絵を描いてもらうことになった二人。その出来栄えは……？"
       },
       {
         "position": [ 4, 5 ],
@@ -143,7 +143,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "シスター服入手"
       },
       {
         "position": [ 4, 6 ],
@@ -152,7 +152,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "セーラー服入手"
       },
       {
         "position": [ 5, 4 ],
@@ -161,7 +161,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "ドレス入手"
       },
       {
         "position": [ 6, 4 ],
@@ -170,7 +170,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "果物入手"
       },
       {
         "position": [ 5, 6 ],
@@ -179,7 +179,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "花入手"
       },
       {
         "position": [ 6, 7 ],
@@ -188,7 +188,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "金平糖入手"
       },
       {
         "position": [ 8, 4 ],
@@ -197,7 +197,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "着ぐるみ入手"
       },
       {
         "position": [ 8, 6 ],
@@ -206,7 +206,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "宝石入手"
       }
     ],
     "point.force": [
@@ -220,7 +220,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "大規模なお祭りが始まったラシャス島。クロエにせがまれ、アレンは射的に挑戦するが……？"
       },
       {
         "position": [ 7, 7 ],
@@ -232,7 +232,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "花火を楽しみにしていたクロエ。しかし、迷子探しに協力することになってしまい……？"
       }
     ]
   },
@@ -246,7 +246,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "ヒャルキシ島に上陸した二人。物寂しい街中を歩いて行くうちにたどり着いた場所は墓地だった"
       },
       {
         "position": [ 12, 5 ],
@@ -255,7 +255,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "ヒャルキシ島に上陸した二人。物寂しい街中を歩いて行くうちにたどり着いた場所は墓地だった"
       }
     ],
     "point.sub": [
@@ -266,7 +266,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "クロエの食事法に疑問を抱いたクロエ。その驚きの食べ方とは……？"
       },
       {
         "position": [ 12, 3 ],
@@ -275,7 +275,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "絵描きの男性に似顔絵を描いてもらうことになった二人。その出来栄えは……？"
       },
       {
         "position": [ 12, 4 ],
@@ -284,7 +284,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "商売がうまくいっていない店主に出会った二人。その日一日、売り子として店を手伝うことに"
       },
       {
         "position": [ 13, 5 ],
@@ -293,7 +293,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "道端で出会った大きな犬。その犬は、震災で飼い主を亡くした野良犬だった"
       },
       {
         "position": [ 11, 6 ],
@@ -302,7 +302,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "道端で可愛らしい花を見つけたクロエ。アレンは彼女に、その花の花言葉を教えてあげるのだった"
       },
       {
         "position": [ 12, 6 ],
@@ -311,7 +311,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "雨のため、屋内で過ごすしかない二人。そんな時、アレンが作り出した物とは……？"
       },
       {
         "position": [ 13, 6 ],
@@ -320,7 +320,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "友人への手紙を書いていたアレン。やけに楽しそうな様子の彼が気になるクロエだが……？"
       }
     ],
     "point.force": [
@@ -339,7 +339,7 @@
         "visit": false,
         "spawn": false,
         "read_not": false,
-        "title": "ようこそ、クリスフィアが住む世界へ！"
+        "title": "遂にクリスフィアの故郷に辿り着いた二人。しかし、クロエの最期の時が刻々と迫ってきていた"
       }
     ]
   }

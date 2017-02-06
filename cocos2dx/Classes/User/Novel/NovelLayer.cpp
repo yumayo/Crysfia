@@ -203,6 +203,25 @@ namespace User
     {
         resume( );
     }
+    void NovelLayer::skip( )
+    {
+        while ( !systemStop || !textChunkManager.isNovelFinished( ) )
+        {
+            if ( textLabels.getIsReadOuted( ) )
+            {
+                novelWindow->removeChildByName( u8"novelReadedAnimation" );
+                // テキストの中身を消します。
+                textClear( );
+            }
+            else
+            {
+                auto action = Director::getInstance( )->getActionManager( );
+                action->update( 10.0F );
+                textActionStop( );
+            }
+            textChunkManager.textRead( );
+        }
+    }
     void NovelLayer::addAuto( )
     {
         if ( automode )
