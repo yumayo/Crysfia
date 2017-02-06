@@ -16,6 +16,8 @@
 
 #include "../../Lib/AudioManager.h"
 
+#include "SystemLayer.h"
+
 USING_NS_CC;
 
 namespace User
@@ -220,6 +222,7 @@ namespace User
                 textActionStop( );
             }
             textChunkManager.textRead( );
+            debugData = textChunkManager.getDebugData( );
         }
     }
     void NovelLayer::addAuto( )
@@ -280,6 +283,19 @@ namespace User
                                origin +
                                Vec2( ( visibleSize.width - OptionalValues::stringViewSize.x ) * 0.5F,
                                      297 / mul / scale ) );
+    }
+    cocos2d::Label * NovelLayer::createLabel( std::string const & title )
+    {
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
+
+        auto font = Label::createWithTTF( title,
+                                          u8"res/fonts/HGRGE.TTC",
+                                          64 );
+
+        font->setScale( Lib::fitHeight( font, 64 * scale ) );
+        font->setTextColor( Color4B( 39, 39, 39, 255 ) );
+        return font;
     }
     void NovelLayer::readingProceedUpdate( )
     {
@@ -342,6 +358,41 @@ namespace User
         if ( systemRead )
         {
             textChunkManager.textRead( );
+            debugData = textChunkManager.getDebugData( );
+            if ( auto layer = getLayer<SystemLayer>( ) )
+            {
+                auto size = Director::getInstance( )->getVisibleSize( );
+                auto scale = Director::getInstance( )->getContentScaleFactor( );
+                auto _scale = 1.0F / scale;
+
+                layer->removeChildByName( u8"debug_rect" );
+                if ( auto sprite = Sprite::create( ) )
+                {
+                    sprite->setName( u8"debug_rect" );
+                    sprite->setTextureRect( Rect( 0, 0, size.width, 64 * scale ) );
+                    sprite->setPosition( Vec2( 0, 0 ) );
+                    sprite->setAnchorPoint( Vec2( 0, 0 ) );
+                    layer->addChild( sprite );
+                }
+
+                layer->removeChildByName( u8"debug_file" );
+                if ( auto label = createLabel( debugData.debugData.fileName ) )
+                {
+                    label->setName( u8"debug_file" );
+                    label->setAnchorPoint( Vec2( 0, 0 ) );
+                    label->setPosition( Vec2( 0, 0 ) );
+                    layer->addChild( label );
+                }
+
+                layer->removeChildByName( u8"debug_line" );
+                if ( auto label = createLabel( StringUtils::toString( debugData.debugData.lineNumber ) ) )
+                {
+                    label->setName( u8"debug_line" );
+                    label->setAnchorPoint( Vec2( 1, 0 ) );
+                    label->setPosition( Vec2( size.width, 0 ) );
+                    layer->addChild( label );
+                }
+            }
         }
     }
     // テキストのアニメーションが終わっていない場合

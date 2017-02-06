@@ -21,15 +21,15 @@ namespace User
         static void createIshibashi( );
     private:
         static void childrenCallSetup( cocos2d::Scene* scene );
-        template <class Ty>
+        template <typename Ty>
         static void create( );
-        template <class Ty, class... Args>
+        template <typename Ty, typename... Args>
         static void create( Args... args );
-        template <class Ty, class TyTranstion, class ...TyTranstionArgs>
+        template <typename Ty, typename TyTranstion, typename ...TyTranstionArgs>
         static void create( TyTranstionArgs... tyTranstionArgs );
     };
 
-    template<class Ty>
+    template<typename Ty>
     inline void SceneManager::create( )
     {
         auto scene = Ty::create( );
@@ -38,7 +38,7 @@ namespace User
 
         cocos2d::Director::getInstance( )->replaceScene( scene );
     }
-    template<class Ty, class... Args>
+    template<typename Ty, typename... Args>
     inline void SceneManager::create( Args... args )
     {
         auto scene = Ty::create( args... );
@@ -47,7 +47,7 @@ namespace User
 
         cocos2d::Director::getInstance( )->replaceScene( scene );
     }
-    template<class Ty, class TyTranstion, class ...TyTranstionArgs>
+    template<typename Ty, typename TyTranstion, typename ...TyTranstionArgs>
     inline void SceneManager::create( TyTranstionArgs... tyTranstionArgs )
     {
         Ty base;

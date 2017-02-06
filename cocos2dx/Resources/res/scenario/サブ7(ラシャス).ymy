@@ -1,9 +1,9 @@
 //配置場所
-//７日目、８日目
+//9日目
 
 @sys:name(名前アレン)
 @sys:name(名前クロエ)
-@sys:background(h娯楽の島)
+@sys:background(hヒャルキシ島)
 @sys:bgm(bサブ2)
 @sys:live2d(crysfia)
 @crysfia:touchoff
@@ -16,7 +16,7 @@
 
 //ここから
 
-@h商店街:fadein(1)
+@hヒャルキシ島:fadein(1)
 @bサブ2:in
 @crysfia:in
 @sys:stop(1)
@@ -44,14 +44,14 @@
 @名前アレン:in
 「ファ！？」@sys:l
 「いやあれって固いとかそういうレベルじゃ
-  ないよ…。本当にかじって食べてるの？」
+  ないよ…。本当にかじって食べてるの？」@sys:l
 @名前クロエ:in
 「ほんとだよー。ねえ、ちょっと人差し指向け
   てよ」@sys:l
 @名前アレン:in
 「え？いいけど」@sys:l
 @名前クロエ:in
-「あ～ん…」
+「あ～ん…」@sys:l
 @名前アレン:in
 「ちょ、待って！なんか怖い！ホントだったら
   冗談じゃすまないから！」@sys:l
@@ -60,7 +60,7 @@
 
 @crysfia:out
 @sys:noveloff
-@h娯楽の島:fadeout(1)
+@hヒャルキシ島:fadeout(1)
 @bサブ2:fadeout(1)
 
 //ここまで

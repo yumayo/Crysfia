@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\User\CiryMap\LayerOption.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\LayerTutorialBox.cpp" />
     <ClCompile Include="..\Classes\User\CiryMap\SceneCityMap.cpp" />
+    <ClCompile Include="..\Classes\User\CiryMap\SlideBar.cpp" />
     <ClCompile Include="..\Classes\User\Diary\LayerDiary.cpp" />
     <ClCompile Include="..\Classes\User\Diary\SceneDiary.cpp" />
     <ClCompile Include="..\Classes\User\Ishibashi\Layer_ishibashi.cpp" />
@@ -259,6 +260,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\CiryMap\LayerOption.h" />
     <ClInclude Include="..\Classes\User\CiryMap\LayerTutorialBox.h" />
     <ClInclude Include="..\Classes\User\CiryMap\SceneCityMap.h" />
+    <ClInclude Include="..\Classes\User\CiryMap\SlideBar.h" />
     <ClInclude Include="..\Classes\User\Diary\LayerDiary.h" />
     <ClInclude Include="..\Classes\User\Diary\SceneDiary.h" />
     <ClInclude Include="..\Classes\User\Ishibashi\Layer_ishibashi.h" />

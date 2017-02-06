@@ -321,6 +321,9 @@
     <ClCompile Include="..\Classes\User\CiryMap\LayerTutorialBox.cpp">
       <Filter>src\User\CityMap</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\CiryMap\SlideBar.cpp">
+      <Filter>src\User\CityMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -615,6 +618,9 @@
       <Filter>src\User\CityMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\CiryMap\LayerTutorialBox.h">
+      <Filter>src\User\CityMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\CiryMap\SlideBar.h">
       <Filter>src\User\CityMap</Filter>
     </ClInclude>
   </ItemGroup>

@@ -337,6 +337,7 @@
 @sys:noveloff
 @b切ない:fadeout(1)
 @h墓:fadeout(1)
+@sys:endland
 //ここまで
 
 //-------------------------------------------------
@@ -395,4 +396,5 @@
 は無かった。@sys:l
 
 @sys:noveloff
+@sys:endland
 //ここまで

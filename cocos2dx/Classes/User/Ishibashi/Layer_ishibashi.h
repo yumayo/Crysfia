@@ -4,6 +4,7 @@
 # include "../LayerBase.h"
 
 # include "ui/CocosGUI.h"
+#include "../Novel/ScriptHeart.h"
 
 namespace User
 {
@@ -65,6 +66,8 @@ namespace User
         int animation_num = 0;//アニメーション番号
         cocos2d::Sprite * food;//アニメーション用画像
 		int rand;//クロエ反応ランダム用
+
+        HeartGauge * heart;
 		
 
         enum situation

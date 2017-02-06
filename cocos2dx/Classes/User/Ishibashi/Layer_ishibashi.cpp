@@ -2,7 +2,6 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 #include "audio/include/AudioEngine.h"
-#include "../Novel/ScriptHeart.h"
 
 #include "../SceneManager.h"
 
@@ -62,7 +61,7 @@ namespace User
             } );
         }
 
-		auto heart = HeartGauge::create()->make();
+		heart = HeartGauge::create()->make();
 		if (heart)
 		{
 
@@ -130,7 +129,7 @@ namespace User
         button->setName( "delite" );
 
         //決定ボタン内容
-        button->addTouchEventListener( [ this ] ( Ref* button, ui::Widget::TouchEventType type )
+        button->addTouchEventListener( [ this, button ] ( Ref* ref, ui::Widget::TouchEventType type )
         {
             if ( type == ui::Widget::TouchEventType::ENDED )
             {
@@ -140,11 +139,12 @@ namespace User
                 switch ( change )
                 {
                 case meal:
+                    button->setEnabled( false );
                     //食事用アクション（暫定）
                     animation( animation_num );
                     this->removeChildByName( "delite" );
 					loveMetor();
-                    reside = false;
+                    //reside = false;
 					greet(meal_se[rand]);
                     break;
                 case dressClothes:
@@ -156,6 +156,8 @@ namespace User
                 default:
                     break;
                 }
+
+                
             }
         } );
 
@@ -571,12 +573,14 @@ namespace User
 	//未確認
 	void Layer_meal::loveMetor()
 	{
-		int love_gauge;
+		//int love_gauge;
 
-		auto love = UserDefault::getInstance();
-		love_gauge = love->getIntegerForKey(u8"親愛度");
-		love_gauge += love_degrees;
-		love->setIntegerForKey(u8"親愛度", love_gauge);
+		//auto love = UserDefault::getInstance();
+		//love_gauge = love->getIntegerForKey(u8"親愛度");
+		//love_gauge += love_degrees;
+		//love->setIntegerForKey(u8"親愛度", love_gauge);
+
+        heart->up( 10 );
 	}
 
 	void Layer_meal::greet(std::string voice)

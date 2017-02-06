@@ -21,14 +21,6 @@ USING_NS_CC;
 
 namespace User
 {
-    LayerOption::LayerOption( )
-    {
-
-    }
-    LayerOption::~LayerOption( )
-    {
-
-    }
     bool LayerOption::init( )
     {
         if ( !Layer::init( ) ) return false;
@@ -532,18 +524,5 @@ namespace User
         addChild( slider );
 
         setContentSize( Size( translate, slider->getContentSize( ).height ) );
-    }
-    SlideBar::SlideBar( float t )
-        : SlideBar( )
-    {
-        slider->setPercent( t * 100 );
-    }
-    SlideBar::SlideBar( std::string key )
-        : SlideBar( )
-    {
-        this->key = key;
-
-        auto value = UserDefault::getInstance( )->getFloatForKey( key.c_str( ) );
-        slider->setPercent( value * 100.0F );
     }
 }

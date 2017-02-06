@@ -5,6 +5,7 @@
 #include <functional>
 #include <algorithm>
 #include <sstream>
+#include "StringUtil.h"
 
 namespace User
 {
@@ -18,6 +19,10 @@ namespace User
         else makeNovelData( );
 
         return getCleanedData( );
+    }
+    DebugWithLineData const & TextScriptReader::getDebugData( )
+    {
+        return debugWithLineData;
     }
     void TextScriptReader::makeNovelData( )
     {
@@ -106,7 +111,7 @@ namespace User
         auto isValue = [ & ] ( std::string const& string )
         {
             double value;
-            try { value = std::stod( string ); }
+            try { value = StringUtil::string_value<double>( string ); }
             catch ( ... ) { return false; }
             return true;
         };
@@ -152,9 +157,9 @@ namespace User
     }
     void TextScriptReader::cleanUp( )
     {
-        debugWithLineData.lineData.clear( );
+        /*debugWithLineData.lineData.clear( );
         debugWithLineData.debugData.fileName.clear( );
-        debugWithLineData.debugData.lineNumber = 0;
+        debugWithLineData.debugData.lineNumber = 0;*/
 
         tagWithData.tag = TagWithData::Tag::NIL;
         tagWithData.debugData.fileName.clear( );

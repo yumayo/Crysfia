@@ -109,6 +109,9 @@ namespace User
          *  ノベルを表示をする画像を保存します。
          */
         cocos2d::Sprite* novelWindow = nullptr;
+
+        DebugWithLineData debugData;
+        cocos2d::Label* createLabel( std::string const& title );
     };
 }
 
