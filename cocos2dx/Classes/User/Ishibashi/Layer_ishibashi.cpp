@@ -384,10 +384,18 @@ namespace User
         switch ( change )
         {
         case meal:
-			if (food_gain[text_number] == false) w = 150;
+			if (food_gain[text_number] == false)
+			{
+				w = 150;
+				button->setEnabled(false);
+			}
             break;
         case dressClothes:
-            if ( dress_gain[text_number] == false ) w = 180;
+			if (dress_gain[text_number] == false)
+			{
+				w = 180;
+				button->setEnabled(false);
+			}
             break;
         default:
             break;
