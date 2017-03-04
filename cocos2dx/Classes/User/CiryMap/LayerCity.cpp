@@ -345,8 +345,6 @@ namespace User
                 button->setPosition( Vec2( 10, 10 ) * scale );
             }
 
-            Action( );
-
             if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
             {
                 if ( auto button = createTimeNextButton( ) )
@@ -423,10 +421,24 @@ namespace User
                     // それらは、アニメーションさせて登場させます。
                     if ( !temp.visit && !temp.spawn && temp.is_stay( ) )
                     {
-                        mark_stack.push( [ this, &value ] ( ) {
-                            value[u8"spawn"] = true; set_force_mark( value ); } );
-                        stack_mark_pos( value );
-                        continue;
+                        // バッドエンド行き
+                        if ( temp.heart != -1 )
+                        {
+                            if ( UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" ) < temp.heart )
+                            {
+                                mark_stack.push( [ this, &value ] ( ) {
+                                    value[u8"spawn"] = true; set_force_mark( value ); } );
+                                stack_mark_pos( value );
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            mark_stack.push( [ this, &value ] ( ) {
+                                value[u8"spawn"] = true; set_force_mark( value ); } );
+                            stack_mark_pos( value );
+                            continue;
+                        }
                     }
                     // スポーンしていたのに、訪れることの出来なかったらシナリオにはバツマークを付けます。
                     if ( !temp.visit && temp.spawn && !temp.is_stay( ) && !temp.read_not )
@@ -731,6 +743,7 @@ namespace User
         position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
                                   root[u8"position"][1].asInt( ) );
         title = root[u8"title"].asString( );
+        heart = root[u8"heart"].asInt( );
 
         auto& day = root[u8"day"];
         switch ( day.size( ) )

@@ -25,6 +25,9 @@
       {
         "position": [ 3, 11 ],
         "day": [ 1 ],
+        "morning": false,
+        "daytime": true,
+        "night": false,
         "scenario": "シナリオ2.ymy",
         "visit": false,
         "spawn": false,
@@ -34,6 +37,9 @@
       {
         "position": [ 3, 12 ],
         "day": [ 1 ],
+        "morning": true,
+        "daytime": false,
+        "night": false,
         "scenario": "シナリオ1.ymy",
         "visit": false,
         "spawn": false,
@@ -324,6 +330,16 @@
       }
     ],
     "point.force": [
+      {
+        "position": [ 13, 4 ],
+        "day": [ 9 ],
+        "scenario": "バッドエンド.ymy",
+        "visit": false,
+        "spawn": false,
+        "read_not": false,
+        "heart": 50,
+        "title": "クロエが見つからない。そんなの信じられない。"
+      }
     ]
   },
   "アイクラ島": {

@@ -167,19 +167,11 @@ namespace User
     }
     void NovelLayer::on( )
     {
-        enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
-        {
-            node->runAction( FadeIn::create( 0.3F ) );
-            return false;
-        } );
+        novelenable( );
     }
     void NovelLayer::off( )
     {
-        enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
-        {
-            node->runAction( FadeOut::create( 0.3F ) );
-            return false;
-        } );
+        noveldisable( );
     }
     void NovelLayer::novelenable( )
     {
@@ -359,40 +351,42 @@ namespace User
         {
             textChunkManager.textRead( );
             debugData = textChunkManager.getDebugData( );
-            if ( auto layer = getLayer<SystemLayer>( ) )
-            {
-                auto size = Director::getInstance( )->getVisibleSize( );
-                auto scale = Director::getInstance( )->getContentScaleFactor( );
-                auto _scale = 1.0F / scale;
 
-                layer->removeChildByName( u8"debug_rect" );
-                if ( auto sprite = Sprite::create( ) )
-                {
-                    sprite->setName( u8"debug_rect" );
-                    sprite->setTextureRect( Rect( 0, 0, size.width, 64 * scale ) );
-                    sprite->setPosition( Vec2( 0, 0 ) );
-                    sprite->setAnchorPoint( Vec2( 0, 0 ) );
-                    layer->addChild( sprite );
-                }
+            // デバッグ用のデータを表示
+            //if ( auto layer = getLayer<SystemLayer>( ) )
+            //{
+            //    auto size = Director::getInstance( )->getVisibleSize( );
+            //    auto scale = Director::getInstance( )->getContentScaleFactor( );
+            //    auto _scale = 1.0F / scale;
 
-                layer->removeChildByName( u8"debug_file" );
-                if ( auto label = createLabel( debugData.debugData.fileName ) )
-                {
-                    label->setName( u8"debug_file" );
-                    label->setAnchorPoint( Vec2( 0, 0 ) );
-                    label->setPosition( Vec2( 0, 0 ) );
-                    layer->addChild( label );
-                }
+            //    layer->removeChildByName( u8"debug_rect" );
+            //    if ( auto sprite = Sprite::create( ) )
+            //    {
+            //        sprite->setName( u8"debug_rect" );
+            //        sprite->setTextureRect( Rect( 0, 0, size.width, 64 * scale ) );
+            //        sprite->setPosition( Vec2( 0, 0 ) );
+            //        sprite->setAnchorPoint( Vec2( 0, 0 ) );
+            //        layer->addChild( sprite );
+            //    }
 
-                layer->removeChildByName( u8"debug_line" );
-                if ( auto label = createLabel( StringUtils::toString( debugData.debugData.lineNumber ) ) )
-                {
-                    label->setName( u8"debug_line" );
-                    label->setAnchorPoint( Vec2( 1, 0 ) );
-                    label->setPosition( Vec2( size.width, 0 ) );
-                    layer->addChild( label );
-                }
-            }
+            //    layer->removeChildByName( u8"debug_file" );
+            //    if ( auto label = createLabel( debugData.debugData.fileName ) )
+            //    {
+            //        label->setName( u8"debug_file" );
+            //        label->setAnchorPoint( Vec2( 0, 0 ) );
+            //        label->setPosition( Vec2( 0, 0 ) );
+            //        layer->addChild( label );
+            //    }
+
+            //    layer->removeChildByName( u8"debug_line" );
+            //    if ( auto label = createLabel( StringUtils::toString( debugData.debugData.lineNumber ) ) )
+            //    {
+            //        label->setName( u8"debug_line" );
+            //        label->setAnchorPoint( Vec2( 1, 0 ) );
+            //        label->setPosition( Vec2( size.width, 0 ) );
+            //        layer->addChild( label );
+            //    }
+            //}
         }
     }
     // テキストのアニメーションが終わっていない場合
