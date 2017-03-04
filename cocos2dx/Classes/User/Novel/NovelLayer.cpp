@@ -167,11 +167,11 @@ namespace User
     }
     void NovelLayer::on( )
     {
-        novelenable( );
+        this->setVisible( true );
     }
     void NovelLayer::off( )
     {
-        noveldisable( );
+        this->setVisible( false );
     }
     void NovelLayer::novelenable( )
     {

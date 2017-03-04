@@ -743,7 +743,15 @@ namespace User
         position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
                                   root[u8"position"][1].asInt( ) );
         title = root[u8"title"].asString( );
-        heart = root[u8"heart"].asInt( );
+        if ( root[u8"heart"].isNull( ) )
+        {
+            heart = -1;
+        }
+        else
+        {
+            heart = root[u8"heart"].asInt( );
+        }
+        
 
         auto& day = root[u8"day"];
         switch ( day.size( ) )
