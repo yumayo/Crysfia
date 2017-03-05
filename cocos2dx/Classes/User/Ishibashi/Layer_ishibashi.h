@@ -54,6 +54,9 @@ namespace User
 
 		void greet(std::string voice);//クロエの反応用
 
+		void dayChecker();//日付確認用
+		void dayChanger();//日付変更用
+
     public:
         bool exist;//食べ物画像用
         bool reside;//決定の有無用
@@ -66,6 +69,8 @@ namespace User
         int animation_num = 0;//アニメーション番号
         cocos2d::Sprite * food;//アニメーション用画像
 		int rand;//クロエ反応ランダム用
+		int day;//今日
+		int check;//食べたか確認用
 
         HeartGauge * heart;
 		

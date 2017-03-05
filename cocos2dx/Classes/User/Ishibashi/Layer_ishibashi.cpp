@@ -32,6 +32,7 @@ namespace User
         reside = true;
 
         loadData( );
+		dayChecker();
         mealDressVolume();
 		auto back_board = Sprite::create(u8"res/texture/item/h船室.png");
 		back_board->setPosition(Vec2(/*610,440*/ 360,640));
@@ -127,6 +128,7 @@ namespace User
         // フォントカラー
         button->setTitleColor( Color3B::BLACK );
         button->setName( "delite" );
+		if(day == check) button->setEnabled(false);
 
         //決定ボタン内容
         button->addTouchEventListener( [ this, button ] ( Ref* ref, ui::Widget::TouchEventType type )
@@ -139,13 +141,15 @@ namespace User
                 switch ( change )
                 {
                 case meal:
-                    button->setEnabled( false );
                     //食事用アクション（暫定）
-                    animation( animation_num );
-                    this->removeChildByName( "delite" );
-					loveMetor();
-                    //reside = false;
-					greet(meal_se[rand]);
+						animation(animation_num);
+						//this->removeChildByName("delite");
+						check += 1;
+						dayChanger();
+						loveMetor();
+						//reside = false;
+						greet(meal_se[rand]);
+					
                     break;
                 case dressClothes:
                     //着替え用アクション
@@ -256,7 +260,7 @@ namespace User
     {
         auto text = Label::createWithSystemFont( commentary, "Arial", size );
         text->setPosition( Point( 400 - x * 48, 210 + y) );
-        text->setColor( ccc3( 255, 0, 0 ) );
+        text->setColor( ccc3( 0, 0, 0 ) );
         text->setName( "commentary_text" );
         this->addChild( text );
     }
@@ -586,5 +590,17 @@ namespace User
 	void Layer_meal::greet(std::string voice)
 	{
 		buttonAudio(voice, audio_volume);
+	}
+
+	void Layer_meal::dayChecker()
+	{
+		auto days = UserDefault::getInstance();
+		day = days->getIntegerForKey(u8"日");
+		check = days->getIntegerForKey(u8"エサの日");
+	}
+
+	void Layer_meal::dayChanger()
+	{
+		now->setIntegerForKey(u8"エサの日", check);
 	}
 }
