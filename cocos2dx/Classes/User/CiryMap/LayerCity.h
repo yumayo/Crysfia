@@ -50,6 +50,8 @@ namespace User
 
         bool read_not = false;
 
+        int heart = -1;
+
         int day_begin = -1;
 
         int day_end = -1;

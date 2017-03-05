@@ -70,6 +70,7 @@ namespace User
         REGIST_FUNC( ScriptSystem, totitle );
         REGIST_FUNC( ScriptSystem, tobreeding );
         REGIST_FUNC( ScriptSystem, gameclear );
+        REGIST_FUNC( ScriptSystem, gameover );
         REGIST_FUNC( ScriptSystem, remove );
     }
     ScriptSystem::~ScriptSystem( )
@@ -301,6 +302,29 @@ namespace User
     SCRIPT( ScriptSystem::gameclear )
     {
         UserDefault::getInstance( )->setBoolForKey( u8"ゲームクリア", true );
+    }
+
+    SCRIPT( ScriptSystem::gameover )
+    {
+        // UserDefault.xmlを上書きする。
+        {
+            INIReader reader;
+            iniDataRead( reader, u8"res/data/saveLayout.ini" );
+            User::setUserDefault( reader );
+        }
+        // autosave.jsonを上書きする。
+        {
+            Json::Value root;
+            Json::Reader reader;
+            if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( u8"res/data/autosave.json" ), root ) )
+            {
+                Json::StyledWriter writer;
+                auto saveString = writer.write( root );
+                writeUserLocal( saveString, u8"autosave.json" );
+            }
+        }
+
+        SceneManager::createTitle( );
     }
 
     SCRIPT( ScriptSystem::name )
