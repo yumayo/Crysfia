@@ -5,6 +5,8 @@
 
 #include "../SceneManager.h"
 
+#include "../../Lib/Utilitys.h"
+
 USING_NS_CC;
 
 namespace User
@@ -51,7 +53,7 @@ namespace User
 
             auto button = ui::Button::create( "res/texture/system/backbutton.png" );
             addChild( button );
-            button->setScale( 0.5, 0.5 );
+            button->setScale( Lib::fitHeight( button, 128 * scale ) );
             button->setAnchorPoint( Vec2( 0, 0 ) );
             button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
             {
@@ -128,7 +130,15 @@ namespace User
         // フォントカラー
         button->setTitleColor( Color3B::BLACK );
         button->setName( "delite" );
-		if(day == check) button->setEnabled(false);
+
+        switch ( change )
+        {
+        case meal:
+            if ( day == check ) button->setEnabled( false );
+            break;
+        default:
+            break;
+        }
 
         //決定ボタン内容
         button->addTouchEventListener( [ this, button ] ( Ref* ref, ui::Widget::TouchEventType type )
@@ -144,7 +154,8 @@ namespace User
                     //食事用アクション（暫定）
 						animation(animation_num);
 						//this->removeChildByName("delite");
-						check += 1;
+						check = day;
+                        if ( day == check ) button->setEnabled( false );
 						dayChanger();
 						loveMetor();
 						//reside = false;
