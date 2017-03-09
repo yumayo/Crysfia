@@ -96,6 +96,8 @@ namespace User
 
     bool CityMap::init( )
     {
+        scheduleUpdate( );
+
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
@@ -180,6 +182,23 @@ namespace User
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, move_layer );
 
         return true;
+    }
+
+    void CityMap::update( float delta )
+    {
+        auto visibleSize = Director::getInstance( )->getVisibleSize( );
+
+        auto texS_2 = ( getContentSize( ) ) / 2;
+        auto winS_2 = visibleSize / 2;
+        auto clearance = texS_2 - winS_2;
+
+        auto movedPos = getPosition( ) - translate;
+        if ( clearance.width * -1 <= clearance.width &&
+             clearance.height * -1 <= clearance.height )
+        {
+            movedPos.clamp( clearance * -1, clearance );
+            setPosition( movedPos + translate );
+        }
     }
 
     void CityMap::paste( cocos2d::ui::Button * icon, int const x, int const y )

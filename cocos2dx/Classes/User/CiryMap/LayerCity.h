@@ -125,6 +125,7 @@ namespace User
     public:
         CREATE_ARGS_INIT_FUNC( CityMap );
         bool init( );
+        void update( float delta ) override;
         void paste( cocos2d::ui::Button* icon, int const x, int const y );
         void paste( MainMark* icon, int const x, int const y );
         void paste( SubMark* icon, int const x, int const y );
