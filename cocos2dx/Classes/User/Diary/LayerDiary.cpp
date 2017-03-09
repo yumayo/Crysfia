@@ -11,12 +11,8 @@ namespace User
 {
 	LayerDiary::LayerDiary()
 	{
-#if _DEBUG
-		diaryNum = 7;
-#else
 		diaryNum = UserDefault::getInstance()->getIntegerForKey(u8"日") <= 7 ?
 			UserDefault::getInstance()->getIntegerForKey(u8"日") - 1 : 7;
-#endif
 	}
 	LayerDiary::~LayerDiary()
 	{

@@ -15,7 +15,7 @@
 //@sys:stop(1)
 //@sys:l
 
-@hヒャルキシ島:fadein(1)
+@h墓:fadein(1)
 @bシリアス:in
 @sys:stop(1)
 @sys:novelon
@@ -29,7 +29,7 @@
 @名前クロエ:in
 「わんこわんこ！おっきいね！」@sys:l
 @名前わんこ:in
-「ワンッ」
+「ワンッ」@sys:l
 @名前アレン:in
 「ちょ、いきなり飛びついてくるなって」@sys:l
 

@@ -3,7 +3,7 @@
 
 @sys:name(名前アレン)
 @sys:name(名前クロエ)
-@sys:background(hヒャルキシ島)
+@sys:background(h娯楽の島)
 @sys:bgm(bサブ2)
 @sys:live2d(crysfia)
 @crysfia:touchoff
@@ -16,7 +16,7 @@
 
 //ここから
 
-@hヒャルキシ島:fadein(1)
+@h娯楽の島:fadein(1)
 @bサブ2:in
 @crysfia:in
 @sys:stop(1)
@@ -60,7 +60,7 @@
 
 @crysfia:out
 @sys:noveloff
-@hヒャルキシ島:fadeout(1)
+@h娯楽の島:fadeout(1)
 @bサブ2:fadeout(1)
 
 //ここまで

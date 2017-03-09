@@ -3,7 +3,7 @@
 
 @sys:name(名前アレン)
 @sys:name(名前クロエ)
-@sys:background(h教会内部内部)
+@sys:background(h教会内部)
 @sys:bgm(b手紙)
 @sys:live2d(crysfia)
 @crysfia:touchoff
@@ -89,4 +89,3 @@
 @b手紙:fadeout(1)
 
 //ここまで
-
