@@ -2,6 +2,7 @@
 #include "../SceneManager.h"
 #include "Lib/AudioManager.h"
 #include "Lib/Utilitys.h"
+#include "DiaryDefines.h"
 
 USING_NS_CC;
 
@@ -33,12 +34,12 @@ bool DiaryLabelTitle::init( std::string title )
 
     auto p = ui::ImageView::create( "res/texture/diary/line.png" );
     p->setScale( Lib::fitWidth( p, vs.width * 0.9 ) );
-    setContentSize( p->getContentSize( ) * p->getScale( ) + Size( 0, 32 / 2 * scale ) );
+    setContentSize( p->getContentSize( ) * p->getScale( ) + Size( 0, 16 * scale ) );
     p->setAnchorPoint( Vec2( 0.5F, 0.5F ) );
     p->setPosition( getContentSize( ) * 0.5F );
     addChild( p );
 
-    auto l = ui::Text::create( title, "res/fonts/F910MinchoW3.otf", 80 * scale );
+    auto l = ui::Text::create( title, FONT_NAME, TITLE_FONT_SIZE * scale );
     l->setTextColor( Color4B( 0, 0, 0, 255 ) );
     l->setPosition( Vec2( getContentSize( ).width * 0.5F, getContentSize( ).height * 0.75F ) );
     addChild( l );

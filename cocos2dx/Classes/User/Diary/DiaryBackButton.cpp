@@ -7,6 +7,21 @@ USING_NS_CC;
 
 namespace User
 {
+DiaryBackButton* DiaryBackButton::create( )
+{
+    DiaryBackButton *pRet = new( std::nothrow ) DiaryBackButton( );
+    if ( pRet && pRet->init( ) )
+    {
+        pRet->autorelease( );
+        return pRet;
+    }
+    else
+    {
+        delete pRet;
+        pRet = nullptr;
+        return nullptr;
+    }
+}
 bool DiaryBackButton::init( )
 {
     if ( !ui::Button::init( "res/texture/diary/exit.png", "res/texture/diary/exit_select.png" ) ) return false;

@@ -2,6 +2,7 @@
 #include "../SceneManager.h"
 #include "Lib/AudioManager.h"
 #include "Lib/Utilitys.h"
+#include "DiaryDefines.h"
 
 USING_NS_CC;
 
@@ -32,15 +33,21 @@ bool DiaryLabel::init( std::string title )
     auto _scale = 1.0F / scale;
 
     auto p = ui::ImageView::create( "res/texture/diary/line.png" );
-    p->setScale( Lib::fitWidth( p, vs.width * 0.9 ) );
-    setContentSize( p->getContentSize( ) * p->getScale( ) + Size( 0, 32 / 2 * scale ) );
+    p->setScale( Lib::fitWidth( p, vs.width * 0.8 ) );
+    setContentSize( p->getContentSize( ) * p->getScale( ) + Size( 0, 16 * scale ) );
     p->setAnchorPoint( Vec2( 0.5F, 0.5F ) );
     p->setPosition( getContentSize( ) * 0.5F );
     addChild( p );
 
-    auto l = ui::Text::create( title, "res/fonts/F910MinchoW3.otf", 36 * scale );
+    auto l = ui::Text::create( title, FONT_NAME, FONT_SIZE * scale );
+    if ( vs.width * 0.8 - FONT_SIZE * scale < l->getContentSize( ).width )
+    {
+        l->setScaleX( Lib::fitWidth( l, vs.width * 0.8 - FONT_SIZE * scale ) );
+    }
+
     l->setTextColor( Color4B( 0, 0, 0, 255 ) );
-    l->setPosition( getContentSize( ) * 0.5F );
+    l->setAnchorPoint( Vec2( 0, 0.5F ) );
+    l->setPosition( Vec2( FONT_SIZE / 2 * scale, getContentSize( ).height * 0.5F ) );
     addChild( l );
 
     return true;

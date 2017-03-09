@@ -311,7 +311,7 @@ namespace User
                 {
                     ptr->jsonRead( );
                 }
-                removeFromParentAndCleanup( true );
+                SceneManager::createBreeding( );
             }
         } );
         return button;

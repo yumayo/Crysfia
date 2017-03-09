@@ -8,7 +8,7 @@ namespace User
 class DiaryBackButton : public cocos2d::ui::Button
 {
 public:
-    CREATE_FUNC( DiaryBackButton );
+    static DiaryBackButton* create( );
     bool init( );
 };
 }

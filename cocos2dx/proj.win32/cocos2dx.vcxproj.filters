@@ -357,6 +357,9 @@
     <ClCompile Include="..\Classes\User\Diary\DiaryLabelData.cpp">
       <Filter>src\User\Diary</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryDefines.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -687,6 +690,9 @@
       <Filter>src\User\Diary</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\User\Diary\DiaryLabelData.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryDefines.h">
       <Filter>src\User\Diary</Filter>
     </ClInclude>
   </ItemGroup>

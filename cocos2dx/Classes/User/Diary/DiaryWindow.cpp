@@ -3,6 +3,7 @@
 #include "Lib/AudioManager.h"
 #include "Lib/Utilitys.h"
 #include "DiaryLabelLayout.h"
+#include "DiaryDefines.h"
 
 USING_NS_CC;
 
@@ -55,7 +56,7 @@ bool DiaryWindow::init( DiaryLabelData const& data )
     title = title.substr( title.find( u8"「" ) + std::string( u8"「" ).size( ) );
     title = title.substr( 0, title.find( u8"」" ) );
 
-    auto l = ui::Text::create( title, "res/fonts/F910MinchoW3.otf", 64 * scale );
+    auto l = ui::Text::create( title, FONT_NAME, TITLE_FONT_SIZE * scale );
     l->setPosition( getContentSize( ) * 0.5F );
     addChild( l );
 
