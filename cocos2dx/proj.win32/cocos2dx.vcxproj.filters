@@ -324,6 +324,39 @@
     <ClCompile Include="..\Classes\User\CiryMap\SlideBar.cpp">
       <Filter>src\User\CityMap</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryBackButton.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryBackground.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryTitle.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryWindow.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryList.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryLabel.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryLabelList.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryLabelTitle.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryLabelLayout.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryLabelBackButton.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\User\Diary\DiaryLabelData.cpp">
+      <Filter>src\User\Diary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -622,6 +655,39 @@
     </ClInclude>
     <ClInclude Include="..\Classes\User\CiryMap\SlideBar.h">
       <Filter>src\User\CityMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryBackButton.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryBackground.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryTitle.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryWindow.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryList.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryLabel.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryLabelList.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryLabelTitle.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryLabelLayout.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryLabelBackButton.h">
+      <Filter>src\User\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\User\Diary\DiaryLabelData.h">
+      <Filter>src\User\Diary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
