@@ -135,6 +135,7 @@ namespace User
 				subButtons.push_back(ui::Button::create( buttonsData[i]["res"]["pull"].GetString(),
 														 buttonsData[i]["res"]["push"].GetString(),
 														 buttonsData[i]["res"]["pull"].GetString()) );
+				subButtons[i]->setScale( Lib::fitWidth(subButtons[i], 120) );
 				subButtons[i]->setTitleFontSize(42);
 				subButtons[i]->setTitleColor(Color3B::WHITE);
 
