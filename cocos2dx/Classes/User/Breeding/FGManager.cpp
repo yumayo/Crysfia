@@ -37,9 +37,9 @@ namespace User
 		auto clipping = ClippingNode::create();
 		auto color = LayerColor::create(Color4B::BLACK);
 		auto back = Sprite::create("res/texture/home/background_diary.png");
-		back->setScale( Lib::fitWidth( back, winSize.width * 3.5f ) );
-		back->setContentSize(Director::getInstance()->getWinSize());
-		back->setPosition( Vec2( Director::getInstance()->getWinSize().width / 2, Director::getInstance()->getWinSize().height / 1.8 ) );
+		
+		back->setScale( Lib::fitHeight( back, winSize.height ) );
+		back->setPosition( Vec2( Director::getInstance()->getWinSize().width / 2, Director::getInstance()->getWinSize().height / 2 ) );
 
 		clipping->addChild(back);
 		clipping->setStencil(mask);
