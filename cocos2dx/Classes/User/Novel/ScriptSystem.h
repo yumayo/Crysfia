@@ -41,6 +41,7 @@ namespace User
         SCRIPT( background );
         SCRIPT( bgm );
         SCRIPT( se );
+        SCRIPT( stopallse );
         SCRIPT( human );
         SCRIPT( still );
         SCRIPT( heart );

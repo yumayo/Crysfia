@@ -5,7 +5,7 @@
 @sys:name(名前クロエ)
 @sys:background(hヒャルキシ島)
 @sys:bgm(bシリアス)
-@sys:se(s雨)
+@sys:se(s雨, true)
 @sys:live2d(crysfia)
 @crysfia:touchoff
 //@crysfia:in
@@ -19,7 +19,6 @@
 
 @hヒャルキシ島:fadein(1)
 @bシリアス:in
-@s雨:in(loop)
 @sys:stop(1)
 @sys:novelon
 @crysfia:in
@@ -92,6 +91,5 @@
 @sys:noveloff
 @hヒャルキシ島:fadeout(1)
 @bシリアス:fadeout(1)
-@s雨:out
 
 //ここまで

@@ -71,6 +71,7 @@ namespace User
 		int rand;//クロエ反応ランダム用
 		int day;//今日
 		int check;//食べたか確認用
+        int love_number = 10;
 
         HeartGauge * heart;
 		
@@ -97,6 +98,11 @@ namespace User
 		std::vector<std::string> meal_se;
 		//SE(着替え)
 		std::vector<std::string> dress_se;
+
+        std::vector<int> love_numbers
+        {
+            10, 12, 14, 16, 18
+        };
 
         //衣装解説
         std::vector<std::string> dress_commentary

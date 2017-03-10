@@ -435,6 +435,7 @@ namespace User
 							love_degrees = text_number;
 
 							animation_num = text_number;
+                            love_number = text_number;
 
 							eraseFoodText();
 							eraseFoodText();
@@ -595,7 +596,7 @@ namespace User
 		//love_gauge += love_degrees;
 		//love->setIntegerForKey(u8"親愛度", love_gauge);
 
-        heart->up( 10 );
+        heart->up( love_numbers[love_number] );
 	}
 
 	void Layer_meal::greet(std::string voice)
