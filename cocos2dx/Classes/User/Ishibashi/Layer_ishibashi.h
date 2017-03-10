@@ -71,7 +71,7 @@ namespace User
 		int rand;//クロエ反応ランダム用
 		int day;//今日
 		int check;//食べたか確認用
-		int love_number = 10;//親愛度蓄積識別用
+		int love_number = 1;//親愛度蓄積識別用
 
         HeartGauge * heart;
 		
