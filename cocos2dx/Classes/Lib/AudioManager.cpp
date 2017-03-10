@@ -28,6 +28,11 @@ AudioManager::AudioManager( )
     , _stopBgmReleaseFlg( true )
     , _voiceVolume( 0.0F )
 {
+	_bgmVolume = UserDefault::getInstance()->getFloatForKey(u8"bgm");
+	_seVolume = UserDefault::getInstance()->getFloatForKey(u8"se");
+	_voiceVolume = UserDefault::getInstance()->getFloatForKey(u8"voice");
+
+	
     // チャンク配列の初期化
     for ( int i = 0; i < sizeof( _chunk ) / sizeof( _chunk[0] ); i++ ) {
         _chunk[i] = AudioEngine::INVALID_AUDIO_ID;
