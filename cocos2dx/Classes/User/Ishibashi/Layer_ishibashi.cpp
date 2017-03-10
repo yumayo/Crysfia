@@ -43,7 +43,7 @@ namespace User
         eatText( );
         character(fashion_show[now_dress], clear[now_dress]);
         //mealTutorial( );
-		decoration();
+		//decoration();
         //heart();
 
         {
@@ -128,7 +128,11 @@ namespace User
         // フォントカラー
         button->setTitleColor( Color3B::BLACK );
         button->setName( "delite" );
-		if(day == check) button->setEnabled(false);
+
+		//追加
+		if (change == meal) {
+			if (day == check) button->setEnabled(false);
+		}
 
         //決定ボタン内容
         button->addTouchEventListener( [ this, button ] ( Ref* ref, ui::Widget::TouchEventType type )
@@ -149,6 +153,7 @@ namespace User
 						loveMetor();
 						//reside = false;
 						greet(meal_se[rand]);
+						button->setEnabled(false);
 					
                     break;
                 case dressClothes:
@@ -229,6 +234,15 @@ namespace User
 			for (int k = 0; k < 3; k++)
 			{
 				dress_se.push_back(buttonsData[k]["dress"].GetString());
+			}
+		}
+
+		if (!doc.HasParseError())
+		{
+			const rapidjson::Value& buttonsData = doc["dear_degree"];
+			for (int k = 0; k < 5; k++)
+			{
+				love_numbers.push_back(buttonsData[k]["love"].GetInt());
 			}
 		}
 
@@ -424,6 +438,7 @@ namespace User
 							love_degrees = text_number;
 
 							animation_num = text_number;
+							love_number = text_number;
 
 							eraseFoodText();
 							eraseFoodText();
@@ -583,8 +598,8 @@ namespace User
 		//love_gauge = love->getIntegerForKey(u8"親愛度");
 		//love_gauge += love_degrees;
 		//love->setIntegerForKey(u8"親愛度", love_gauge);
-
-        heart->up( 10 );
+		//10,12,14,16,18
+        heart->up( love_numbers[love_number] );
 	}
 
 	void Layer_meal::greet(std::string voice)
