@@ -8,10 +8,8 @@
 #include "LAppModel.h"
 
 
-//Live2D Application
 #include "LAppDefine.h"
 
-//utils
 #include "ModelSettingJson.h"
 
 #include "SimpleAudioEngine.h"
@@ -28,8 +26,6 @@ USING_NS_CC;
 LAppModel::LAppModel( )
     :L2DBaseModel( ), modelSetting( nullptr )
 {
-    // モーションの開始時と終了時のログを出すことができます
-    //mainMotionMgr->setMotionDebugMode(true);
 
     if ( LAppDefine::DEBUG_LOG )
     {
@@ -76,7 +72,6 @@ void LAppModel::init( ModelSetting* setting )
 
     modelSetting = setting;
 
-    //Live2D Model
     if ( strcmp( modelSetting->getModelFile( ).c_str( ), "" ) != 0 )
     {
         string path = modelSetting->getModelFile( );
@@ -94,7 +89,6 @@ void LAppModel::init( ModelSetting* setting )
         }
     }
 
-    //Expression
     if ( modelSetting->getExpressionNum( ) > 0 )
     {
         int len = modelSetting->getExpressionNum( );
@@ -107,7 +101,6 @@ void LAppModel::init( ModelSetting* setting )
         }
     }
 
-    //Physics
     if ( !modelSetting->getPhysicsFile( ).empty( ) )
     {
         string path = modelSetting->getPhysicsFile( );
@@ -115,7 +108,6 @@ void LAppModel::init( ModelSetting* setting )
         loadPhysics( path.c_str( ) );
     }
 
-    //Pose
     if ( !modelSetting->getPoseFile( ).empty( ) )
     {
         string path = modelSetting->getPoseFile( );
@@ -123,7 +115,6 @@ void LAppModel::init( ModelSetting* setting )
         loadPose( path.c_str( ) );
     }
 
-    //Layout
     map<string, float> layout;
     modelSetting->getLayout( layout );
     modelMatrix->setupLayout( layout );
@@ -164,7 +155,6 @@ void LAppModel::preloadMotionGroup( std::string group )
     {
         std::stringstream ss;
 
-        //ex) idle_0
         ss << group << "_" << i;
 
         string name = ss.str( );
@@ -211,57 +201,47 @@ void LAppModel::update( )
     dragX = dragMgr->getX( );
     dragY = dragMgr->getY( );
 
-    //-----------------------------------------------------------------
-    live2DModel->loadParam( );// 前回セーブされた状態をロード
+    live2DModel->loadParam( );
     if ( mainMotionMgr->isFinished( ) )
     {
-        // モーションの再生がない場合、待機モーションの中からランダムで再生する
         startRandomMotion( MOTION_GROUP_IDLE, PRIORITY_IDLE );
     }
     else
     {
         mainMotionMgr->updateParam( live2DModel );
     }
-    live2DModel->saveParam( );// 状態を保存
-    //-----------------------------------------------------------------
+    live2DModel->saveParam( );
 
 
-    if ( expressionMgr != nullptr )expressionMgr->updateParam( live2DModel );// 表情でパラメータ更新（相対変化）
+    if ( expressionMgr != nullptr )expressionMgr->updateParam( live2DModel );
 
-    //ドラッグによる変化
-    //ドラッグによる顔の向きの調整
-    live2DModel->addToParamFloat( PARAM_ANGLE_X, dragX * 30 );// -30から30の値を加える
+    live2DModel->addToParamFloat( PARAM_ANGLE_X, dragX * 30 );
     live2DModel->addToParamFloat( PARAM_ANGLE_Y, dragY * 30 );
     live2DModel->addToParamFloat( PARAM_ANGLE_Z, ( dragX * dragY ) * -30 );
 
-    //ドラッグによる体の向きの調整
-    live2DModel->addToParamFloat( PARAM_BODY_ANGLE_X, dragX * 10 );// -10から10の値を加える
+    live2DModel->addToParamFloat( PARAM_BODY_ANGLE_X, dragX * 10 );
 
-    //ドラッグによる目の向きの調整
-    live2DModel->addToParamFloat( PARAM_EYE_BALL_X, dragX );// -1から1の値を加える
+    live2DModel->addToParamFloat( PARAM_EYE_BALL_X, dragX );
     live2DModel->addToParamFloat( PARAM_EYE_BALL_Y, dragY );
 
-    // 呼吸など
     long timeMSec = UtSystem::getUserTimeMSec( ) - startTimeMSec;
-    double t = ( timeMSec / 1000.0 ) * 2 * 3.14159;//2*Pi*t
+    double t = ( timeMSec / 1000.0 ) * 2 * 3.14159;
 
-    live2DModel->addToParamFloat( PARAM_ANGLE_X, (float)( 15 * sin( t / 6.5345 ) ), 0.5f );// -15 ~ +15 まで周期的に加算。周期は他とずらす。
+    live2DModel->addToParamFloat( PARAM_ANGLE_X, (float)( 15 * sin( t / 6.5345 ) ), 0.5f );
     live2DModel->addToParamFloat( PARAM_ANGLE_Y, (float)( 8 * sin( t / 3.5345 ) ), 0.5f );
     live2DModel->addToParamFloat( PARAM_ANGLE_Z, (float)( 10 * sin( t / 5.5345 ) ), 0.5f );
     live2DModel->addToParamFloat( PARAM_BODY_ANGLE_X, (float)( 4 * sin( t / 15.5345 ) ), 0.5f );
-    live2DModel->setParamFloat( PARAM_BREATH, (float)( 0.5f + 0.5f * sin( t / 3.2345 ) ), 1 );// 0~1 まで周期的に設定。モーションを上書き。
+    live2DModel->setParamFloat( PARAM_BREATH, (float)( 0.5f + 0.5f * sin( t / 3.2345 ) ), 1 );
 
 
-    if ( physics != nullptr )physics->updateParam( live2DModel );// 物理演算でパラメータ更新
+    if ( physics != nullptr )physics->updateParam( live2DModel );
 
-    // リップシンクの設定
     if ( lipSync )
     {
-        float value = 0;// リアルタイムでリップシンクを行う場合、システムから音量を取得して0〜1の範囲で入力してください。
+        float value = 0;
         live2DModel->setParamFloat( PARAM_MOUTH_OPEN_Y, value, 0.8f );
     }
 
-    // ポーズの設定
     if ( pose != nullptr )pose->updateParam( live2DModel );
 
     live2DModel->update( );
@@ -277,14 +257,13 @@ int LAppModel::startMotion( std::string group, int no, int priority )
     }
     else if ( !mainMotionMgr->reserveMotion( priority ) )
     {
-        if ( LAppDefine::DEBUG_LOG )log( "can't start motion.¥n" );
+        if ( LAppDefine::DEBUG_LOG )log( "can't start motion.\n" );
         return -1;
     }
 
     std::string fileName = modelSetting->getMotionFile( group, no );
     std::stringstream ss;
 
-    //ex) idle_0
     ss << group << "_" << no;
 
     string name = ss.str( );
@@ -296,7 +275,7 @@ int LAppModel::startMotion( std::string group, int no, int priority )
         path = modelHomeDir + path;
         motion = loadMotion( nullptr, path.c_str( ) );
 
-        autoDelete = true;// 終了時にメモリから削除
+        autoDelete = true;
     }
 
     motion->setFadeIn( modelSetting->getMotionFadeIn( group, no ) );
@@ -304,7 +283,6 @@ int LAppModel::startMotion( std::string group, int no, int priority )
 
     if ( LAppDefine::DEBUG_LOG )log( "start motion ( %s : %d )", group.c_str( ), no );
 
-    //voice
     std::string voice = modelSetting->getMotionSound( group, no );
     if ( !voice.empty( ) )
     {
@@ -348,27 +326,20 @@ void LAppModel::draw( live2d::framework::L2DMatrix44& matrix )
 }
 
 
-/*
- * 当たり判定との簡易テスト。
- * 指定IDの頂点リストからそれらを含む最大の矩形を計算し、点がそこに含まれるか判定
- *
- */
 bool LAppModel::hitTest( std::string pid, float testX, float testY )
 {
-    if ( alpha < 1 )return false;// 透明時は当たり判定なし。
+    if ( alpha < 1 )return false;
     int len = modelSetting->getHitAreasNum( );
 
-    // 全ての当たり判定と総当りで判断します。
     for ( int i = 0; i < len; i++ )
     {
-        // ヒット判定の名前と一致するところと
         if ( modelSetting->getHitAreaName( i ) == pid )
         {
             std::string drawID = modelSetting->getHitAreaID( i );
             return hitTestSimple( drawID.c_str( ), testX, testY );
         }
     }
-    return false;// 存在しない場合はfalse
+    return false;
 }
 
 

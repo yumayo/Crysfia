@@ -9,6 +9,7 @@ namespace User
     {
     public:
         TagWithData createTagWithData( DebugWithLineData const& debugWithLineData );
+        DebugWithLineData const& getDebugData( );
     private:
         void makeNovelData( );
     private:

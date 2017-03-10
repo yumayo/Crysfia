@@ -1,0 +1,62 @@
+{
+  "main.1.txt": {
+    "visit": "シナリオ1.ymy"
+  },
+  "main.2.txt": {
+    "visit": "シナリオ3.ymy"
+  },
+  "main.3.txt": {
+    "visit": "シナリオ4.ymy"
+  },
+  "main.4.txt": {
+    "visit": "シナリオ5.ymy"
+  },
+  "main.5.txt": {
+    "visit": "シナリオ6.ymy"
+  },
+  "main.6.txt": {
+    "visit": "シナリオ7.ymy"
+  },
+  "main.7.txt": {
+    "visit": "シナリオ8.ymy"
+  },
+  "sub.1.txt": {
+    "visit": "サブ1.ymy"
+  },
+  "sub.2.txt": {
+    "visit": "サブ2.ymy"
+  },
+  "sub.3.txt": {
+    "visit": "サブ3.ymy"
+  },
+  "sub.4.txt": {
+    "visit": "サブ4.ymy"
+  },
+  "sub.5.txt": {
+    "visit": "サブ5.ymy"
+  },
+  "sub.6.txt": {
+    "visit": "サブ6.ymy"
+  },
+  "sub.7.txt": {
+    "visit": "サブ7(ラシャス).ymy"
+  },
+  "sub.8.txt": {
+    "visit": "サブ8(ラシャス).ymy"
+  },
+  "sub.9.txt": {
+    "visit": "サブ9.ymy"
+  },
+  "sub.10.txt": {
+    "visit": "サブ10.ymy"
+  },
+  "sub.11.txt": {
+    "visit": "サブ11.ymy"
+  },
+  "sub.12.txt": {
+    "visit": "サブ12.ymy"
+  },
+  "sub.13.txt": {
+    "visit": "サブ13.ymy"
+  }
+}

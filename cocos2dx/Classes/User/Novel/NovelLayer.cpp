@@ -16,6 +16,8 @@
 
 #include "../../Lib/AudioManager.h"
 
+#include "SystemLayer.h"
+
 USING_NS_CC;
 
 namespace User
@@ -42,30 +44,9 @@ namespace User
     {
         if ( !Layer::init( ) ) return false;
 
-        this->scheduleUpdate( );
+        next_scene = [ ] {SceneManager::createCityMap( ); };
 
-        auto keyEvent = EventListenerKeyboard::create( );
-        keyEvent->onKeyPressed = [ this ] ( EventKeyboard::KeyCode code, Event* event )
-        {
-            if ( code == EventKeyboard::KeyCode::KEY_F5 )
-            {
-                textChunkManager.make( novelPath );
-            }
-            if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
-            {
-                // 左側のCTRLキーが押されたら高速読み込みを開始する。
-                readProceed.on( );
-            }
-        };
-        keyEvent->onKeyReleased = [ this ] ( EventKeyboard::KeyCode code, Event* event )
-        {
-            if ( code == EventKeyboard::KeyCode::KEY_LEFT_CTRL )
-            {
-                // 左側のCTRLが離されたら高速読み込みを停止する。
-                readProceed.off( );
-            }
-        };
-        this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( keyEvent, this );
+        this->scheduleUpdate( );
 
         auto touch = EventListenerTouchOneByOne::create( );
         touch->onTouchBegan = [ this ] ( Touch* touch, Event* event )
@@ -151,9 +132,13 @@ namespace User
                     // ここで、オートセーブデータを書き込みます。
                     if ( saveCallFunc )saveCallFunc( );
 
-                    Lib::next_day( );
+                    if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
+                    {
+                        Lib::next_day( );
+                    }
 
-                    SceneManager::createCityMap( );
+                    // 絶対関数の中に次のシーンを入れます。
+                    next_scene( );
                 } ), RemoveSelf::create( ), nullptr ) );
                 Director::getInstance( )->getRunningScene( )->addChild( sprite );
             }
@@ -182,19 +167,11 @@ namespace User
     }
     void NovelLayer::on( )
     {
-        enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
-        {
-            node->runAction( FadeIn::create( 0.3F ) );
-            return false;
-        } );
+        this->setVisible( true );
     }
     void NovelLayer::off( )
     {
-        enumerateChildren( "//.*", [ ] ( cocos2d::Node* node )
-        {
-            node->runAction( FadeOut::create( 0.3F ) );
-            return false;
-        } );
+        this->setVisible( false );
     }
     void NovelLayer::novelenable( )
     {
@@ -219,6 +196,26 @@ namespace User
     void NovelLayer::restart( )
     {
         resume( );
+    }
+    void NovelLayer::skip( )
+    {
+        while ( !systemStop || !textChunkManager.isNovelFinished( ) )
+        {
+            if ( textLabels.getIsReadOuted( ) )
+            {
+                novelWindow->removeChildByName( u8"novelReadedAnimation" );
+                // テキストの中身を消します。
+                textClear( );
+            }
+            else
+            {
+                auto action = Director::getInstance( )->getActionManager( );
+                action->update( 10.0F );
+                textActionStop( );
+            }
+            textChunkManager.textRead( );
+            debugData = textChunkManager.getDebugData( );
+        }
     }
     void NovelLayer::addAuto( )
     {
@@ -278,6 +275,19 @@ namespace User
                                origin +
                                Vec2( ( visibleSize.width - OptionalValues::stringViewSize.x ) * 0.5F,
                                      297 / mul / scale ) );
+    }
+    cocos2d::Label * NovelLayer::createLabel( std::string const & title )
+    {
+        auto scale = Director::getInstance( )->getContentScaleFactor( );
+        auto _scale = 1.0F / scale;
+
+        auto font = Label::createWithTTF( title,
+                                          u8"res/fonts/HGRGE.TTC",
+                                          64 );
+
+        font->setScale( Lib::fitHeight( font, 64 * scale ) );
+        font->setTextColor( Color4B( 39, 39, 39, 255 ) );
+        return font;
     }
     void NovelLayer::readingProceedUpdate( )
     {
@@ -340,6 +350,43 @@ namespace User
         if ( systemRead )
         {
             textChunkManager.textRead( );
+            debugData = textChunkManager.getDebugData( );
+
+            // デバッグ用のデータを表示
+            //if ( auto layer = getLayer<SystemLayer>( ) )
+            //{
+            //    auto size = Director::getInstance( )->getVisibleSize( );
+            //    auto scale = Director::getInstance( )->getContentScaleFactor( );
+            //    auto _scale = 1.0F / scale;
+
+            //    layer->removeChildByName( u8"debug_rect" );
+            //    if ( auto sprite = Sprite::create( ) )
+            //    {
+            //        sprite->setName( u8"debug_rect" );
+            //        sprite->setTextureRect( Rect( 0, 0, size.width, 64 * scale ) );
+            //        sprite->setPosition( Vec2( 0, 0 ) );
+            //        sprite->setAnchorPoint( Vec2( 0, 0 ) );
+            //        layer->addChild( sprite );
+            //    }
+
+            //    layer->removeChildByName( u8"debug_file" );
+            //    if ( auto label = createLabel( debugData.debugData.fileName ) )
+            //    {
+            //        label->setName( u8"debug_file" );
+            //        label->setAnchorPoint( Vec2( 0, 0 ) );
+            //        label->setPosition( Vec2( 0, 0 ) );
+            //        layer->addChild( label );
+            //    }
+
+            //    layer->removeChildByName( u8"debug_line" );
+            //    if ( auto label = createLabel( StringUtils::toString( debugData.debugData.lineNumber ) ) )
+            //    {
+            //        label->setName( u8"debug_line" );
+            //        label->setAnchorPoint( Vec2( 1, 0 ) );
+            //        label->setPosition( Vec2( size.width, 0 ) );
+            //        layer->addChild( label );
+            //    }
+            //}
         }
     }
     // テキストのアニメーションが終わっていない場合

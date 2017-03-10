@@ -23,6 +23,8 @@
 
 #include "LayerMessageBox.h"
 
+#include "LayerTutorialBox.h"
+
 USING_NS_CC;
 
 namespace User
@@ -68,9 +70,6 @@ namespace User
         LayerCityMark::pasteMap( map, data );
 
         map->paste( this, position.x, position.y );
-
-        // これもマップの方で設定するので用済みです。
-        //setScale( getScale( ) * 0.5F );
     }
 
 
@@ -80,11 +79,11 @@ namespace User
         auto vs = Director::getInstance( )->getVisibleSize( );
         setPosition( vo + vs );
 
-        const std::string dir = u8"res/texture/days/";
+        const std::string dir = u8"res/texture/diary/";
 
         day = UserDefault::getInstance( )->getIntegerForKey( u8"日" );
 
-        std::string path = dir + u8"calendar(" + StringUtils::toString( day ) + u8").png";
+        std::string path = dir + u8"diary_" + StringUtils::toString( day ) + u8".png";
         if ( auto calendar = Sprite::create( path ) )
         {
             addChild( calendar );
@@ -95,30 +94,30 @@ namespace User
         return true;
     }
 
-    bool CityMap::init( int const x, int const y )
+    bool CityMap::init( )
     {
-        honeycomb_size = Size( 95, 80.5 );
-        map_size = Size( 19, 20 );
-        start_position = Vec2( 168, 2048 - 220 );
-
-        map = Sprite::create( u8"res/texture/system/map.select.png" );
-        setContentSize( map->getContentSize( ) );
-        addChild( map );
+        scheduleUpdate( );
 
         auto vs = Director::getInstance( )->getVisibleSize( );
         auto vo = Director::getInstance( )->getVisibleOrigin( );
         auto scale = Director::getInstance( )->getContentScaleFactor( );
         auto _scale = 1.0F / scale;
 
+        honeycomb_size = Size( 95, 80.5 );
+        map_size = Size( 19, 20 );
+        start_position = Vec2( 168, 2048 - 220 );
+
+        map = Sprite::create( u8"res/texture/system/map.select.png" );
+        map->setScale( scale );
+        setContentSize( map->getContentSize( ) * map->getScale( ) );
+        addChild( map );
+
         translate = vo + vs * 0.5;
 
-        Vec2 const slide = ( y & 1 ) == 0 ? Vec2( ) : Vec2( honeycomb_size.width * 0.5F, 0 );
+        setPosition( UserDefault::getInstance( )->getFloatForKey( u8"マップx" ),
+                     UserDefault::getInstance( )->getFloatForKey( u8"マップy" ) );
 
-        Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
-        setPosition( Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
-                     Vec2( -move.x, move.y ) * _scale );
-
-        auto move_layer = Layer::create( );
+        move_layer = Layer::create( );
         addChild( move_layer );
         event = EventListenerTouchOneByOne::create( );
         event->onTouchBegan = [ this ] ( Touch* touch, Event* e )
@@ -176,10 +175,30 @@ namespace User
         {
             event->setSwallowTouches( false );
             is_move = false;
+
+            UserDefault::getInstance( )->setFloatForKey( u8"マップx", getPosition( ).x );
+            UserDefault::getInstance( )->setFloatForKey( u8"マップy", getPosition( ).y );
         };
         this->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, move_layer );
 
         return true;
+    }
+
+    void CityMap::update( float delta )
+    {
+        auto visibleSize = Director::getInstance( )->getVisibleSize( );
+
+        auto texS_2 = ( getContentSize( ) ) / 2;
+        auto winS_2 = visibleSize / 2;
+        auto clearance = texS_2 - winS_2;
+
+        auto movedPos = getPosition( ) - translate;
+        if ( clearance.width * -1 <= clearance.width &&
+             clearance.height * -1 <= clearance.height )
+        {
+            movedPos.clamp( clearance * -1, clearance );
+            setPosition( movedPos + translate );
+        }
     }
 
     void CityMap::paste( cocos2d::ui::Button * icon, int const x, int const y )
@@ -221,7 +240,7 @@ namespace User
 
         Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
         Vec2 pos = Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
-            Vec2( -move.x, move.y ) * _scale;
+            Vec2( -move.x, move.y );
         return  MoveTo::create( 0.3F, pos );
     }
 
@@ -235,14 +254,25 @@ namespace User
 
         Vec2 move = Vec2( start_position.x, 2048 - start_position.y ) + Vec2( x * honeycomb_size.width, y * honeycomb_size.height ) + slide;
         Vec2 pos = Vec2( vs ) * 0.5 + Vec2( getContentSize( ).width * 0.5, -getContentSize( ).height * 0.5 ) +
-            Vec2( -move.x, move.y ) * _scale;
+            Vec2( -move.x, move.y );
         setPosition( pos );
+    }
+
+    void CityMap::set_disable( )
+    {
+        this->getEventDispatcher( )->pauseEventListenersForTarget( move_layer );
+    }
+
+    void CityMap::set_enable( )
+    {
+        this->getEventDispatcher( )->resumeEventListenersForTarget( move_layer );
+        UserDefault::getInstance( )->setFloatForKey( u8"マップx", getPosition( ).x );
+        UserDefault::getInstance( )->setFloatForKey( u8"マップy", getPosition( ).y );
     }
 
     LayerCity::~LayerCity( )
     {
         AudioManager::getInstance( )->stopBgm( 1.5F );
-        setIslandPos( );
     }
     bool LayerCity::init( )
     {
@@ -259,7 +289,14 @@ namespace User
 
         setIslandName( );
 
-        jsonRead( );
+        if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
+        {
+            jsonRead( );
+        }
+        else
+        {
+            json_read_game_clear( );
+        }
 
         /**
          *  画面上部のメニュー
@@ -305,11 +342,13 @@ namespace User
             }
         }
 
+
         /**
          *  画面下部のメニュー
          */
         {
             auto board = Sprite::create( u8"res/texture/system/board.png" );
+            board->setName( u8"under_board" );
             auto boardPixel = board->getContentSize( ) / scale;
             auto boardScale = Lib::fitWidth( board, vs.width );
             board->setScale( boardScale, boardScale );
@@ -325,30 +364,42 @@ namespace User
                 button->setPosition( Vec2( 10, 10 ) * scale );
             }
 
-            if ( auto button = createTimeNextButton( ) )
+            if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
             {
-                addChild( button );
-                button->setPosition( Vec2( board->getContentSize( ).width * board->getScale( ), board->getContentSize( ).height * board->getScale( ) ) );
-            }
+                if ( auto button = createTimeNextButton( ) )
+                {
+                    button->setName( u8"time_button" );
+                    button->setScale( scale );
+                    //button->setOpacity( 0 );
+                    //button->runAction( FadeIn::create( 0.3F ) );
+                    button->setPosition( Vec2( board->getContentSize( ).width * board->getScale( ), board->getContentSize( ).height * board->getScale( ) ) );
+                    addChild( button );
+                }
 
-            if ( auto label = createLabel( UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" ) ) )
-            {
-                addChild( label );
-                label->setPosition( Vec2( 0, board->getContentSize( ).height * board->getScale( ) ) );
+                //if ( auto label = createLabel( UserDefault::getInstance( )->getStringForKey( u8"滞在中の島" ) ) )
+                //{
+                //    //label->setOpacity( 0 );
+                //    //label->runAction( FadeIn::create( 0.3F ) );
+                //    label->setScale( scale );
+                //    label->setPosition( Vec2( 0, board->getContentSize( ).height * board->getScale( ) ) );
+                //    addChild( label );
+                //}
             }
         }
 
         if ( !mark_ptr_stack.empty( ) )
         {
-            addChild( LayerMessageBox::create( u8"期限を過ぎたシナリオがあります。", [ this ] { is_animation = true; read_check( ); } ) );
+            animation_start( );
+            addChild( LayerMessageBox::create( u8"期限を過ぎたシナリオがあります。", [ this ] { read_check( ); } ) );
         }
         else if ( !mark_stack.empty( ) )
         {
-            addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { is_animation = true; event_recovery( ); } ) );
+            animation_start( );
+            addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { event_recovery( ); } ) );
         }
         else
         {
-            is_animation = false;
+            animation_end( );
         }
 
         return true;
@@ -372,9 +423,8 @@ namespace User
         Json::Reader reader;
         if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
         {
-            map_x = UserDefault::getInstance( )->getIntegerForKey( u8"マップx" );
-            map_y = UserDefault::getInstance( )->getIntegerForKey( u8"マップy" );
-            map = CityMap::create( map_x, map_y );
+            map = CityMap::create( );
+            map->setName( u8"CityMap" );
             addChild( map );
             for ( auto& island : root )
             {
@@ -390,10 +440,24 @@ namespace User
                     // それらは、アニメーションさせて登場させます。
                     if ( !temp.visit && !temp.spawn && temp.is_stay( ) )
                     {
-                        mark_stack.push( [ this, &value ] ( ) {
-                            value[u8"spawn"] = true; set_force_mark( value ); } );
-                        stack_mark_pos( value );
-                        continue;
+                        // バッドエンド行き
+                        if ( temp.heart != -1 )
+                        {
+                            if ( UserDefault::getInstance( )->getIntegerForKey( u8"親愛度" ) < temp.heart )
+                            {
+                                mark_stack.push( [ this, &value ] ( ) {
+                                    value[u8"spawn"] = true; set_force_mark( value ); } );
+                                stack_mark_pos( value );
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            mark_stack.push( [ this, &value ] ( ) {
+                                value[u8"spawn"] = true; set_force_mark( value ); } );
+                            stack_mark_pos( value );
+                            continue;
+                        }
                     }
                     // スポーンしていたのに、訪れることの出来なかったらシナリオにはバツマークを付けます。
                     if ( !temp.visit && temp.spawn && !temp.is_stay( ) && !temp.read_not )
@@ -498,6 +562,76 @@ namespace User
             }
         }
     }
+    void User::LayerCity::json_read_game_clear( )
+    {
+        save_name = u8"autosave.json";
+        Json::Reader reader;
+        if ( reader.parse( FileUtils::getInstance( )->getStringFromFile( getLocalReadPath( save_name, u8"res/data/" ) ), root ) )
+        {
+            map = CityMap::create( );
+            map->setName( u8"CityMap" );
+            addChild( map );
+            for ( auto& island : root )
+            {
+                // 強制イベントを読み込みます。
+                for ( auto& value : island[u8"point.force"] )
+                {
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+                    temp.event = ScenarioPointData::Event::force;
+                    bool temp_visit = temp.visit;
+                    temp.visit = false;
+                    auto mark = MainMark::create( );
+                    mark->pasteMap( map, temp );
+                    temp.visit = temp_visit;
+                    mark->setButtonEndCallBack( [ temp ]
+                    {
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( temp, [ ] { } ) );
+                    } );
+                }
+                // メインシナリオを読み込んで貼り付けていきます。
+                for ( auto& value : island[u8"point.main"] )
+                {
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+                    temp.event = ScenarioPointData::Event::main;
+                    bool temp_visit = temp.visit;
+                    temp.visit = false;
+                    auto mark = MainMark::create( );
+                    mark->pasteMap( map, temp );
+                    temp.visit = temp_visit;
+                    mark->setButtonEndCallBack( [ temp ]
+                    {
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( temp, [ ] { } ) );
+                    } );
+                }
+                // サブシナリオを読み込んで貼り付けていきます。
+                for ( auto& value : island[u8"point.sub"] )
+                {
+                    ScenarioPointData temp;
+                    temp.initScenarioPointData( value );
+                    temp.event = ScenarioPointData::Event::sub;
+                    bool temp_visit = temp.visit;
+                    temp.visit = false;
+                    auto mark = SubMark::create( );
+                    mark->pasteMap( map, temp );
+                    temp.visit = temp_visit;
+                    mark->setButtonEndCallBack( [ temp ]
+                    {
+                        Director::getInstance( )->getRunningScene( )->addChild( LayerNovelView::create( temp, [ ] { } ) );
+                    } );
+                }
+            }
+        }
+
+        if ( UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) &&
+             !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリアダイアログ" ) )
+        {
+            addChild( LayerMessageBox::create( u8"ゲームクリアおめでとうございます！", [ this ] {
+                addChild( LayerMessageBox::create( u8"全てのシナリオが開放されました。", [ ] {
+                    UserDefault::getInstance( )->setBoolForKey( u8"ゲームクリアダイアログ", true ); } ) ); } ) );
+        }
+    }
     void LayerCity::time_next( )
     {
         Lib::next_day( );
@@ -506,7 +640,6 @@ namespace User
         writeUserLocal( writer.write( root ), save_name );
 
         removeAllChildrenWithCleanup( true );
-        setIslandPos( );
         init( );
     }
     cocos2d::Label * LayerCity::createLabel( std::string const& title )
@@ -576,8 +709,6 @@ namespace User
         {
             if ( type != ui::Widget::TouchEventType::ENDED ) return;
 
-            if ( is_animation ) return;
-
             time_next( );
         } );
         return button;
@@ -621,11 +752,6 @@ namespace User
             UserDefault::getInstance( )->setStringForKey( u8"滞在中の島", u8"アイクラ島" );
         }
     }
-    void LayerCity::setIslandPos( )
-    {
-        UserDefault::getInstance( )->setIntegerForKey( u8"マップx", map_x );
-        UserDefault::getInstance( )->setIntegerForKey( u8"マップy", map_y );
-    }
 
     void User::ScenarioPointData::initScenarioPointData( Json::Value const & root )
     {
@@ -636,6 +762,15 @@ namespace User
         position = cocos2d::Vec2( root[u8"position"][0].asInt( ),
                                   root[u8"position"][1].asInt( ) );
         title = root[u8"title"].asString( );
+        if ( root[u8"heart"].isNull( ) )
+        {
+            heart = -1;
+        }
+        else
+        {
+            heart = root[u8"heart"].asInt( );
+        }
+        
 
         auto& day = root[u8"day"];
         switch ( day.size( ) )
@@ -795,6 +930,32 @@ namespace User
 
         return mark;
     }
+    void User::LayerCity::animation_start( )
+    {
+        is_animation = true;
+        if ( auto p = dynamic_cast<CityMap*>( getChildByName( u8"CityMap" ) ) )
+        {
+            p->set_disable( );
+        }
+        if ( auto p = dynamic_cast<ui::Button*>( getChildByName( u8"time_button" ) ) )
+        {
+            p->setEnabled( false );
+        }
+    }
+    void User::LayerCity::animation_end( )
+    {
+        is_animation = false;
+        Json::StyledWriter writer;
+        writeUserLocal( writer.write( root ), save_name );
+        if ( auto p = dynamic_cast<CityMap*>( getChildByName( u8"CityMap" ) ) )
+        {
+            p->set_enable( );
+        }
+        if ( auto p = dynamic_cast<ui::Button*>( getChildByName( u8"time_button" ) ) )
+        {
+            p->setEnabled( true );
+        }
+    }
     void LayerCity::stack_mark_pos( Json::Value & value )
     {
         auto& position = value[u8"position"];
@@ -813,17 +974,21 @@ namespace User
     void LayerCity::event_recovery( )
     {
         if ( mark_stack.empty( ) || force_event )
-            is_animation = false;
+        {
+            animation_end( );
+        }
         else
         {
             auto delay = DelayTime::create( 0.1F );
             auto spawn = CallFunc::create( [ this ]
             {
+                AudioManager::getInstance( )->playSe( u8"res/sound/button_spawn.mp3" );
+
                 if ( mark_stack.top( ) ) mark_stack.top( )( );
             } );
-            map_x = mark_pos_stack.top( ).x;
-            map_y = mark_pos_stack.top( ).y;
-            auto move = map->move_action( map_x, map_y );
+            int x = mark_pos_stack.top( ).x;
+            int y = mark_pos_stack.top( ).y;
+            auto move = map->move_action( x, y );
             auto pop = CallFunc::create( [ this ]
             {
                 mark_stack.pop( );
@@ -841,16 +1006,16 @@ namespace User
         {
             // delay
             // move
-            map_x = mark_pos_stack.top( ).x;
-            map_y = mark_pos_stack.top( ).y;
-            map->set_position( map_x, map_y );
+            int x = mark_pos_stack.top( ).x;
+            int y = mark_pos_stack.top( ).y;
+            map->set_position( x, y );
             // spawn
             if ( mark_stack.top( ) ) mark_stack.top( )( );
             // pop
             mark_stack.pop( );
             mark_pos_stack.pop( );
         }
-        is_animation = false;
+        animation_end( );
     }
     void LayerCity::stack_mark_ptr_pos( Json::Value & value )
     {
@@ -876,10 +1041,15 @@ namespace User
         else
         {
             auto delay = DelayTime::create( 0.1F );
-            auto check = CallFunc::create( [ this ] { if ( mark_ptr_stack.top( ) ) mark_ptr_stack.top( )( ); } );
-            map_x = mark_ptr_pos_stack.top( ).x;
-            map_y = mark_ptr_pos_stack.top( ).y;
-            auto move = map->move_action( map_x, map_y );
+            auto check = CallFunc::create( [ this ] 
+            {
+                AudioManager::getInstance( )->playSe( u8"res/sound/button_read_not.mp3" );
+
+                if ( mark_ptr_stack.top( ) ) mark_ptr_stack.top( )( );
+            } );
+            int x = mark_ptr_pos_stack.top( ).x;
+            int y = mark_ptr_pos_stack.top( ).y;
+            auto move = map->move_action( x, y );
             auto pop = CallFunc::create( [ this ]
             {
                 mark_ptr_stack.pop( );
@@ -898,14 +1068,15 @@ namespace User
         {
             // delay
             // move
-            map_x = mark_ptr_pos_stack.top( ).x;
-            map_y = mark_ptr_pos_stack.top( ).y;
-            map->set_position( map_x, map_y );
+            int x = mark_ptr_pos_stack.top( ).x;
+            int y = mark_ptr_pos_stack.top( ).y;
+            map->set_position( x, y );
             // check
             if ( mark_ptr_stack.top( ) ) mark_ptr_stack.top( )( );
             // pop
             mark_ptr_stack.pop( );
             mark_ptr_pos_stack.pop( );
         }
+        addChild( LayerMessageBox::create( u8"新しくシナリオが読めます！", [ this ] { event_recovery( ); } ) );
     }
 }

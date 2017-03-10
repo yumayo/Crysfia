@@ -5,7 +5,7 @@
 @sys:background(h研究室内部)
 @sys:background(h廃棄コンテナ)
 @sys:bgm(b悲しみ)
-@sys:se(sガラスの破砕音）
+@sys:se(sガラスの破砕音)
 @sys:still(stゲームオーバー)
 //@sys:stop(1)
 //@sys:novelon
@@ -83,9 +83,11 @@
 @sys:noveloff
 @stゲームオーバー:fadein(1)
 @sys:l
-@stゲームオーバー:out
 @b悲しい:out
 @sガラスの破砕音:in
+
+@sys:gameover
+
 //クリックするとガラスの砕ける音と一緒にゲームオーバー画面が閉じる、という演出にしたいです
 
 //ここまで

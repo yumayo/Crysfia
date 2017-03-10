@@ -248,4 +248,34 @@ namespace User
             fileUtil->writeDataToFile( data, path + directory + name );
         }
     }
+    void restart( )
+    {
+        userDefaultForceSetup( );
+        UserDefault::getInstance( )->flush( );
+        auto data = FileUtils::getInstance( )->getDataFromFile( u8"res/data/autosave.json" );
+        writeDataUserLocal( data, u8"autosave.json" );
+    }
+    std::string getDiary( int const & day )
+    {
+        std::string ret;
+
+        std::vector<std::vector<std::string>> path =
+        {
+            { u8"main.3", u8"sub.1", u8"sub.2" },
+            { u8"sub.1", u8"sub.2", u8"sub.3" },
+            { u8"main.4", u8"sub.2", u8"sub.3" },
+            { u8"sub.3", u8"sub.4", u8"sub.5" },
+            { u8"main.5", u8"sub.4", u8"sub.5" },
+            { u8"sub.4", u8"sub.5", u8"sub.6" },
+            { u8"main.6", u8"sub.6", u8"sub.7" },
+            { u8"sub.5", u8"sub.6", u8"sub.7" },
+            { u8"main.7", u8"sub.8", u8"sub.9", u8"sub.10" },
+            { u8"sub.8", u8"sub.9", u8"sub.10", u8"sub.11" },
+            { u8"main.8", u8"sub.9", u8"sub.11", u8"sub.12" },
+            { u8"sub.10", u8"sub.11", u8"sub.12", u8"sub.13" },
+            { u8"main.9" }
+        };
+
+        return ret;
+    }
 }

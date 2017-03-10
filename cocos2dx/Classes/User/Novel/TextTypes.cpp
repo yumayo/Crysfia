@@ -26,7 +26,7 @@ namespace User
         std::stringstream stream;
         stream << "[エラー内容 : " + error + "]" << std::endl;
         stream << "[ファイル名 : " + debugData.fileName + "]" << std::endl;
-        stream << "[行番号 : " + std::to_string( debugData.lineNumber ) + "]" << std::endl;
+        stream << "[行番号 : " << debugData.lineNumber << "]" << std::endl;
         throw( stream.str( ) );
     }
 }

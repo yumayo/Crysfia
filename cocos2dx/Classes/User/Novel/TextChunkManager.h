@@ -22,20 +22,27 @@ namespace User
         void select( std::string const& selectName );
         void textRead( );
         NovelData const& getNovelData( );
-        std::vector<TextChunk> const& getTextChunk();
+        std::vector<TextChunk> const& getTextChunk( );
         void updateDelay( float delta );
         void setDelayTime( double delay );
         void gotoNext( );
         std::function<void( )> novelEndCallBack = nullptr;
         std::function<void( )> readEndCallBack = nullptr;
+        DebugWithLineData const & getDebugData( );
     private:
         bool textPartyRead( );
     private:
         double delayTime = 0.0F;
         TextData textData;
         TextScriptReader textReader;
+
+        // 変数データはマネージャーが持ちます。
+        VariableScriptData variableScriptData;
+        friend class TextChunk;
         std::vector<TextChunk> textChunk;
         TextChunk* work;
+
+        DebugWithLineData debugData;
     };
 }
 

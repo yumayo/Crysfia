@@ -4,8 +4,8 @@
 @sys:name(名前アレン)
 @sys:name(名前クロエ)
 @sys:background(hヒャルキシ島)
-@sys:backgroundh(h教会外観)
-@sys:backgroundh(h教会内部)
+@sys:background(h教会外観)
+@sys:background(h教会内部)
 @sys:bgm(bシリアス)
 @sys:bgm(b切ない)
 @sys:se(s扉の開閉音）

@@ -3,7 +3,7 @@
 
 @sys:name(名前アレン)
 @sys:name(名前クロエ)
-@sys:name(名前絵描きおじさん)
+@sys:name(絵描きおじさん)
 @sys:background(h噴水広場)
 @sys:bgm(bサブ2)
 @sys:live2d(crysfia)
@@ -17,7 +17,7 @@
 
 //ここから
 
-@hヒャルキシ島:fadein(1)
+@h噴水広場:fadein(1)
 @bサブ2:in
 @sys:stop(1)
 @crysfia:in

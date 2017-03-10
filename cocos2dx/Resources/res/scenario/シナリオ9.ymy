@@ -27,7 +27,7 @@
 @crysfia:in
 @bお祭りのあと:in
 
-aikura.1:play(01)
+@aikura.1:play(01)
 @名前クロエ:in
 「あ、ねぇアレン！あの島がアイクラ島？」@sys:l
 @名前アレン:in
@@ -191,10 +191,10 @@ aikura.1:play(01)
 @名前クロエ:in
 「いってらっしゃーい」@sys:l
 
+@bお祭りのあと:out
 @crysfia:out
 @sys:noveloff
 @h湖:fadeout(1)
-@bお祭りのあと:fadeout(1)
 @sys:stop(1)
 @hアイクラ島:fadein(1)
 @sys:novelon
@@ -224,7 +224,7 @@ aikura.1:play(01)
 「……クロエ？」@sys:l
 @名前アレン:out
 なんだか、様子がおかしい。@sys:l
-いっこうに僕の声に反応する気配がない上に、
+一向に僕の声に反応する気配がない上に、
 クロエの身体はぴくりとも動いていないのだ。@sys:l
 @名前アレン:in
 「まさかっ……」@sys:l
@@ -240,9 +240,10 @@ aikura.1:play(01)
 @crysfia:in
 @crysfia:悲しむ
 
+@名前アレン:in
 「クロエ……！よかった……！」@sys:l
 
-@b故郷:fadein(1)
+@b故郷:in
 @aikura.1:play(15)
 @crysfia:力無く笑う
 
@@ -262,7 +263,7 @@ aikura.1:play(01)
   ん集まった？」@sys:l
 @名前アレン:in
 「え？あぁ、集まったよ。それと、島の中に
-  危険な動物はいなそうだったから、明日は一
+  危険な動物はいなさそうだったから、明日は一
   緒に島の中を見て回ろう」
 
 @aikura.1:play(17)
@@ -272,7 +273,7 @@ aikura.1:play(01)
 @名前アレン:in
 「……クロエ？」@sys:l
 @名前アレン:out
-さっきから、クロエの様子がおかしい。
+さっきから、クロエの様子がおかしい。@sys:l
 歯切れの悪い物言いといい、湖の中で意識を
 失っていたことといい、普段の彼女からは考
 えられないことだ。
@@ -537,9 +538,10 @@ aikura.1:play(43)
 
 @b故郷:fadeout(1)
 @sys:noveloff
-@crysfia:fadeout(5)
+@crysfia:fadeout(1)
 @h白背景:fadein(5)
 //笑顔のクロエと背景が徐々に白くかき消えてくイメージにしたいです
+
 @sys:stop(5)
 @sys:novelon
 ……………………………………………………

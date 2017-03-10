@@ -12,6 +12,10 @@ namespace User
     {
 
     }
+    bool TextChunkManager::isNovelFinished( )
+    {
+        return work->isReadFinished( );
+    }
     void TextChunkManager::make( std::string const & novelPath )
     {
         textData.makeData( novelPath );
@@ -39,11 +43,16 @@ namespace User
             }
         }
     }
+    DebugWithLineData const & TextChunkManager::getDebugData( )
+    {
+        return debugData;
+    }
     bool TextChunkManager::textPartyRead( )
     {
         if ( !work->isReadFinished( ) && !textData.isEmpty( ) )
         {
             work->insertScript( textReader.createTagWithData( textData.getLineMoved( ) ) );
+            debugData = textReader.getDebugData( );
             return true;
         }
         return false;
@@ -66,7 +75,7 @@ namespace User
     }
     void TextChunkManager::gotoNext( )
     {
-        textChunk.emplace_back( );
+        textChunk.emplace_back( this );
         work = &textChunk.back( );
     }
 }

@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+﻿#include "SceneManager.h"
 #include "LayerBase.h"
 
 #include "Novel/OptionalValues.h"
@@ -33,7 +33,7 @@ namespace User
     void SceneManager::createSystemAppDelegateStart( )
     {
         OptionalValues::setup( );
-        createCityMap( );
+        createBreeding( );
     }
     void SceneManager::createTitle( )
     {

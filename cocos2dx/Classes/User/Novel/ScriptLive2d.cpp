@@ -76,6 +76,18 @@ namespace User
         manager->setExpression( u8"怒る" );
         manager->setMotion( MOTION_GROUP_TAP_BODY, 4 );
     }
+    SCRIPT( ScriptLive2d::seriousFace )
+    {
+        auto manager = LAppLive2DManager::getInstance( );
+        manager->setExpression( u8"真剣" );
+        manager->setMotion( MOTION_GROUP_TAP_BODY, 4 );
+    }
+    SCRIPT( ScriptLive2d::worriedFace )
+    {
+        auto manager = LAppLive2DManager::getInstance( );
+        manager->setExpression( u8"悩む" );
+        manager->setMotion( MOTION_GROUP_TAP_BODY, 4 );
+    }
     SCRIPT( ScriptLive2d::touchon )
     {
         node->resume( );

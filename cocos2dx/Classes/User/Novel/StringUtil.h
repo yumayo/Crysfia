@@ -3,6 +3,7 @@
 
 # include <string>
 # include <sstream>
+# include "cocos2d.h"
 
 namespace User
 {

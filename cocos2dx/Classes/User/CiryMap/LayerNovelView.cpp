@@ -3,6 +3,7 @@
 
 #include "../SceneManager.h"
 #include "../../Lib/Utilitys.h"
+#include "../../Lib/AudioManager.h"
 
 USING_NS_CC;
 
@@ -51,7 +52,10 @@ namespace User
             if ( isNext ) return true;
 
             // 強制イベントは無効に出来ない。
-            if ( scenario.event == ScenarioPointData::Event::force ) return true;
+            if ( !UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
+            {
+                if ( scenario.event == ScenarioPointData::Event::force ) return true;
+            }
 
             enumerateChildren( "//.*", [ fadeTime ] ( cocos2d::Node* child )
             {
@@ -67,7 +71,7 @@ namespace User
         Director::getInstance( )->getEventDispatcher( )->addEventListenerWithSceneGraphPriority( event, this );
 
         // ボードはど真ん中に設置。
-        auto next_stage = Sprite::create( u8"res/texture/system/next.stage2.png" );
+        auto next_stage = Sprite::create( u8"res/texture/system/next.stage.png" );
         next_stage->setPosition( vo + vs * 0.5 );
         next_stage->setScale( scale );
         addChild( next_stage );
@@ -75,10 +79,21 @@ namespace User
         int dead_line = scenario.get_dead_line( );
         bool stay = scenario.is_stay( );
         std::string stay_day;
-        if ( dead_line == 0 && stay )
+        if ( UserDefault::getInstance( )->getBoolForKey( u8"ゲームクリア" ) )
+        {
+            if ( scenario.visit )
+            {
+                stay_day = u8"既読";
+            }
+            else
+            {
+                stay_day = u8"未読";
+            }
+        }
+        else if ( dead_line == 0 && stay )
         {
             // 当日 最終日
-            stay_day = u8"最後の日";
+            stay_day = u8"今日まで";
         }
         else
         {
@@ -173,7 +188,7 @@ namespace User
                                         MoveTo::create( ( title_label->getContentSize( ).width - title_size.width * _scale ) * 0.01, Vec2( -slide, title_label_translate_y ) ),
                                         DelayTime::create( 2.5F ),
                                         MoveTo::create( 0.3F, Vec2( -title_label->getContentSize( ).width, title_label_translate_y ) ),
-                                        CallFunc::create( [ title_label, title_label_translate_y ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width, 
+                                        CallFunc::create( [ title_label, title_label_translate_y ] { title_label->setPosition( Vec2( title_label->getContentSize( ).width,
                                                                                                                                      title_label_translate_y ) ); } ),
                                         MoveTo::create( 0.3F, Vec2( 0, title_label_translate_y ) ),
                                         nullptr );
@@ -190,14 +205,28 @@ namespace User
         if ( auto okButton = ui::Button::create( u8"res/texture/system/ok.button.png",
                                                  u8"res/texture/system/ok.button.select.png" ) )
         {
-            okButton->setAnchorPoint( Vec2( 0.0F, 0.0F ) );
-            okButton->setPosition( vo + Vec2( 454, 230 - 213 ) * _scale );
+            okButton->setAnchorPoint( Vec2( 0.5F, 0.5F ) );
+            okButton->setPosition( vo + Vec2( 454, 230 - 213 ) * _scale + okButton->getContentSize( ) * 0.5 );
+            okButton->runAction( RepeatForever::create( Sequence::create( EaseSineOut::create( ScaleTo::create( 0.75F, 1.1F ) ), EaseSineIn::create( ScaleTo::create( 0.75F, 1.0F ) ), nullptr ) ) );
             okButton->addTouchEventListener( [ this, okButton, scenario, saveCallFunc ] ( Ref* ref, ui::Widget::TouchEventType type )
             {
+                if ( type == ui::Widget::TouchEventType::BEGAN )
+                {
+                    okButton->setScale( 1.0F );
+                    okButton->stopAllActions( );
+                }
+
+                if ( type == ui::Widget::TouchEventType::CANCELED )
+                {
+                    okButton->runAction( RepeatForever::create( Sequence::create( EaseSineOut::create( ScaleTo::create( 0.75F, 1.1F ) ), EaseSineIn::create( ScaleTo::create( 0.75F, 1.0F ) ), nullptr ) ) );
+                }
+
                 if ( type != ui::Widget::TouchEventType::ENDED ) return;
 
                 // 二度押せないように。
                 if ( isNext ) return;
+
+                AudioManager::getInstance( )->playSe( u8"res/sound/scenario_start.mp3" );
 
                 runAction( CallFunc::create( [ this, okButton, scenario, saveCallFunc ]
                 {

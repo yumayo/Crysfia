@@ -63,6 +63,7 @@ namespace User
         void stop( );
         void restart( );
     public:
+        void skip( );
         void addAuto( );
         void select( std::string const& name );
         void setDelayTime( double delayTime ) { textChunkManager.setDelayTime( delayTime ); }
@@ -71,6 +72,7 @@ namespace User
         void click( );
         void next( );
         TextChunkManager& getTextChunkManager( ) { return textChunkManager; }
+        std::function<void( )> next_scene;
 
         /**
          * 最後にクリックしたときの画面を保存しておきます。
@@ -107,6 +109,9 @@ namespace User
          *  ノベルを表示をする画像を保存します。
          */
         cocos2d::Sprite* novelWindow = nullptr;
+
+        DebugWithLineData debugData;
+        cocos2d::Label* createLabel( std::string const& title );
     };
 }
 
