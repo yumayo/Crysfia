@@ -51,6 +51,7 @@ namespace User
         REGIST_FUNC( ScriptSystem, heart );
         REGIST_FUNC( ScriptSystem, bgm );
         REGIST_FUNC( ScriptSystem, se );
+        REGIST_FUNC( ScriptSystem, stopallse );
         REGIST_FUNC( ScriptSystem, name );
         REGIST_FUNC( ScriptSystem, human );
         REGIST_FUNC( ScriptSystem, background );
@@ -401,9 +402,20 @@ namespace User
             audio->playSe( u8"res/se/" + args[0] + u8".mp3" );
         }
         break;
+        case 2:
+        {
+            auto audio = AudioManager::getInstance( );
+            audio->playSe( u8"res/se/" + args[0] + u8".mp3", StringUtil::string_value<bool>( args[1] ) );
+        }
+        break;
         default:
             break;
         }
+    }
+    SCRIPT( ScriptSystem::stopallse )
+    {
+        auto audio = AudioManager::getInstance( );
+        audio->stopAllSe( );
     }
     SCRIPT( ScriptSystem::human )
     {

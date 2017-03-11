@@ -47,12 +47,13 @@ namespace User
 		decoration();
         //heart();
 
+        // ユーマヨの作った戻りボタン。/////////////////////
         {
             auto scale = Director::getInstance( )->getContentScaleFactor( );
 
             auto button = ui::Button::create( "res/texture/system/backbutton.png" );
             addChild( button );
-            button->setScale( 0.5, 0.5 );
+            button->setScale( Lib::fitWidth(button, 96 * scale ) );
             button->setAnchorPoint( Vec2( 0, 0 ) );
             button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
             {
