@@ -8,8 +8,8 @@ namespace User
     class SceneTitle : public SceneBase
     {
     public:
-        SceneTitle( );
-        ~SceneTitle( );
+		SceneTitle() {}
+		~SceneTitle() {}
         static cocos2d::Scene* create( );
     };
 }

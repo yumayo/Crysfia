@@ -1,17 +1,18 @@
 ﻿#include "FGManager.h"
+#include "../../Lib/Utilitys.h"
 
 USING_NS_CC;
 
 namespace User
 {
     FGManager::FGManager( ):
-		winSize(Director::getInstance()->getVisibleSize()),
+		winSize(Director::getInstance()->getWinSize()),
 		mask(Sprite::create("res/texture/novel/mask.png")),
 		isFadeIn(true),
 		isFadeOut(false)
     {
-		mask->setPosition(winSize / 2);
-		mask->setScale(0.8f);
+		mask->setPosition( Director::getInstance()->getWinSize() / 2 );
+		
     }
 
     FGManager::~FGManager( )
@@ -36,12 +37,15 @@ namespace User
 		auto clipping = ClippingNode::create();
 		auto color = LayerColor::create(Color4B::BLACK);
 		auto back = Sprite::create("res/texture/home/background_diary.png");
-		back->setPosition(winSize/2);
-		back->setScale(1.2);
+		
+		back->setScale( Lib::fitHeight( back, winSize.height ) );
+		back->setPosition( Vec2( Director::getInstance()->getWinSize().width / 2, Director::getInstance()->getWinSize().height / 2 ) );
+
 		clipping->addChild(back);
 		clipping->setStencil(mask);
 		clipping->setInverted(true);
 		clipping->setAlphaThreshold(0.0f);		
+
 		addChild(clipping);
 
 		return true;
