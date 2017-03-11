@@ -335,7 +335,7 @@ namespace User
         this->addChild( kuroe );
 
 		auto dress = Sprite::create("res/texture/item/dress_setup/" + chara_texture);
-		dress->setScale(0.3);
+		dress->setScale(0.4);
 		dress->setName("costume");
 		dress->setOpacity(0);
 		dress->setPosition(Vec2(285, 700));
