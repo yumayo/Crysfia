@@ -16,8 +16,9 @@ namespace User
 		cleanDegrees(UserDefault::getInstance()->getIntegerForKey(u8"汚れ度")),
 		listener(EventListenerTouchOneByOne::create())
 	{
-		//UserDefault::getInstance()->setIntegerForKey(u8"汚れ度",255);
 		cleanDegrees = UserDefault::getInstance()->getIntegerForKey(u8"汚れ度");
+
+		log(u8"現在の汚れ度=[%d]", cleanDegrees);
 
 		infoLabel = cleanDegrees != 0 ? Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"画面をタップで\n お掃除開始！") :
 										Label::createWithTTF(TTFConfig("res/fonts/meiryo.ttc", 36), u8"きれいだよ(=ﾟωﾟ)ﾉ");
@@ -51,22 +52,18 @@ namespace User
 
 		canCleaning = cleanDegrees > 0 ? true : false;
 
-		int previousDay = UserDefault::getInstance()->getIntegerForKey("PreviousDay");
-		int currentDay = UserDefault::getInstance()->getIntegerForKey(u8"日");
-
-		if ( (currentDay - previousDay) == 1) {
-			cleanDegrees = (cleanDegrees + 127);
+		int previousTime = UserDefault::getInstance()->getIntegerForKey("PreviousTime");
+		int currentTime = UserDefault::getInstance()->getIntegerForKey(u8"今の時刻=[%d]", UserDefault::getInstance()->getIntegerForKey(u8"時刻"));
+	
+		if (currentTime != previousTime) {
+			UserDefault::getInstance()->setIntegerForKey(u8"汚れ度", 85 * abs(currentTime - previousTime));
 		}
-		else if ((currentDay - previousDay) == 2)
-		{
-			cleanDegrees = 255;
-		}
+		
 	}
 
 	LayerCleaning::~LayerCleaning()
 	{
-		UserDefault::getInstance()->setIntegerForKey(u8"汚れ度", cleanDegrees);
-		log(u8"掃除終了時の汚れ=[%d]",cleanDegrees);
+		UserDefault::getInstance()->setIntegerForKey("previousTime", UserDefault::getInstance()->getIntegerForKey(u8"時刻"));
 	}
 
 	void LayerCleaning::update(float dt)

@@ -378,7 +378,7 @@ namespace User
         menuImage->setPosition( vo + vs * 0.5 );
         layout->addChild( menuImage );
 
-        auto label = Label::createWithTTF( str, u8"res/fonts/HGRGE.TTC", 48 * scale );
+        auto label = Label::createWithTTF( str, u8"res/fonts/HGRGE.TTC", 48 * (1.0F / scale) );
         label->setPosition( content_size * 0.5 );
         menuImage->addChild( label );
 

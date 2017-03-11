@@ -2,13 +2,14 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 #include "AudioEngine.h"
+#include "../../Lib/Utilitys.h"
 USING_NS_CC;
 using namespace experimental;
 
 namespace User
 {
 	BGManager::BGManager() :
-		winSize(Director::getInstance()->getVisibleSize()),
+		winSize(Director::getInstance()->getWinSize()),
 		backgrounds(std::vector<Sprite*>())
 	{
 
@@ -34,7 +35,7 @@ namespace User
 				float x = backgroundData[i]["pos"]["x"].GetDouble();
 				float y = backgroundData[i]["pos"]["y"].GetDouble();
 				backgrounds[i]->setPosition(winSize / 2);
-				backgrounds[i]->setScale(backgroundData[i]["scale"].GetDouble());
+				backgrounds[i]->setScale( Lib::fitHeight( backgrounds[i], winSize.height ) );
 				backgrounds[i]->setOpacity(backgroundData[i]["alpha"].GetInt());
 				this->addChild(backgrounds[i], -i, i);
 			}

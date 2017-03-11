@@ -1,13 +1,15 @@
 ﻿#include "TitleManager.h"
 #include "../SceneManager.h"
 #include "SceneTitle.h"
+#include "../Diary/DiaryDefines.h"
+#include "../../Lib/Utilitys.h"
 USING_NS_CC;
 using namespace experimental;
 
 namespace User
 {
 	TitleManager::TitleManager() :
-		uiLabel(Label::createWithSystemFont("TAP TO SCREEN", "Arial", 50)),
+		uiLabel(Label::createWithSystemFont("TAP TO SCREEN", FONT_NAME, 50)),
 		fadeSprite(nullptr),
 		isGameStarted(false),
 		isTap(false),
@@ -63,15 +65,16 @@ namespace User
 
 	void TitleManager::createTitleWindow()
 	{
-		auto winSize = Director::getInstance()->getVisibleSize();
+		auto winSize = Director::getInstance()->getWinSize();
 
-		auto bacground = Sprite::create(u8"res/texture/title/background.png");
-		bacground->setPosition(winSize / 2);
-		bacground->setScale(0.75f);
-		this->addChild(bacground);
+		auto background = Sprite::create(u8"res/texture/title/background.png");
+		background->setPosition(winSize / 2);
+		background->setScale( Lib::fitHeight( background, winSize.height ) );
+		this->addChild(background);
 
 		auto logo = Sprite::create(u8"res/texture/title/logo_3.png");
 		logo->setPosition(Vec2(winSize.width / 2, winSize.height * 0.7f));
+		logo->setScale(Lib::fitWidth(background, winSize.width * 1.25f ));
 		this->addChild(logo);
 	}
 
@@ -80,6 +83,7 @@ namespace User
 	{
 		auto winSize = Director::getInstance()->getVisibleSize();
 		uiLabel->setPosition(Vec2(winSize.width * 0.5f, winSize.height * 0.55f));
+		uiLabel->setScale( Lib::fitWidth( uiLabel, winSize.width / 2 ) );
 		uiLabel->enableShadow(Color4B::BLACK, Size(4, -4));
 		this->addChild(uiLabel);
 		uiLabel->runAction(normalAction());

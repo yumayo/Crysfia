@@ -14,6 +14,8 @@
 #include "../CiryMap/LayerOption.h"
 #include "LayerManager.h"
 
+#include "../../Lib/Utilitys.h"
+
 USING_NS_CC;
 
 namespace User
@@ -49,6 +51,9 @@ namespace User
 
 	void UIManager::createMainMenuWindow()
 	{
+		auto contentScale = Director::getInstance()->getContentScaleFactor();
+		auto visibleSize = Director::getInstance()->getVisibleSize();
+
 		auto layout = ui::Layout::create();
 		layout->setPosition(Vec2(pos.x * 0, pos.y * 0.f));
 		layout->setContentSize(Size(winSize.x,210));
@@ -87,6 +92,7 @@ namespace User
 				float y = buttonsData[i]["pos"]["y"].GetDouble();
 
 				menuButtons[i]->setPosition(Vec2(menuLayout.x * x, menuLayout.y * y));
+				menuButtons[i]->setScale( Lib::fitWidth( menuButtons[i], 120 ) );
 				layout->addChild(menuButtons[i], 1, i);
 
 				menuButtons[i]->addTouchEventListener(CC_CALLBACK_2(UIManager::touchEventOfMainMenu, this));
@@ -129,6 +135,7 @@ namespace User
 				subButtons.push_back(ui::Button::create( buttonsData[i]["res"]["pull"].GetString(),
 														 buttonsData[i]["res"]["push"].GetString(),
 														 buttonsData[i]["res"]["pull"].GetString()) );
+				subButtons[i]->setScale( Lib::fitWidth(subButtons[i], 120) );
 				subButtons[i]->setTitleFontSize(42);
 				subButtons[i]->setTitleColor(Color3B::WHITE);
 
