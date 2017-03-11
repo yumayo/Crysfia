@@ -44,7 +44,7 @@ namespace User
         eatText( );
         character(fashion_show[now_dress], clear[now_dress]);
         //mealTutorial( );
-		//decoration();
+		decoration();
         //heart();
 
         // ユーマヨの作った戻りボタン。/////////////////////
@@ -95,7 +95,7 @@ namespace User
     {
 
 		auto board = Sprite::create();
-		board->setTextureRect(Rect( 0, 0, 590, 200));
+		board->setTextureRect(Rect( 0, 0, 585, 200));
 		board->setColor(Color3B::WHITE);
 		board->setPosition(Point(365, 225));
 		this->addChild(board);
@@ -255,9 +255,9 @@ namespace User
 		now_dress = now->getIntegerForKey(u8"現在の服");
 
 		auto sprite = Sprite::create();
-		sprite->setTextureRect(Rect(0, 0, 150, 850));
+		sprite->setTextureRect(Rect(0, 0, 150, 840));
 		sprite->setColor(Color3B::WHITE);
-		sprite->setPosition(Point(600, 850));
+		sprite->setPosition(Point(600, 845));
 		this->addChild(sprite);
 
         switch ( change )
@@ -552,24 +552,26 @@ namespace User
 		auto left_line = Sprite::create("res/texture/item/b_ornament_100_0M.png");
 		//left_line->setTextureRect(Rect(0, 0, 10, 900));
 		left_line->setRotation(90);
-		left_line->setPosition(Point(500, 800));
+		left_line->setPosition(Point(525, 835));
+		left_line->setScale(1.4);
 		this->addChild(left_line);
 
 		auto right_line = Sprite::create("res/texture/item/b_ornament_100_0M.png");
 		//right_line->setTextureRect(Rect(0, 0, 10, 900));
 		right_line->setRotation(270);
-		right_line->setPosition(Point(700, 800));
+		right_line->setPosition(Point(675, 850));
+		right_line->setScale(1.4);
 		this->addChild(right_line);
 
 		auto top_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
 		//top_line->setTextureRect(Rect(0, 0, 210, 10));
 		top_line->setRotation(180);
-		top_line->setPosition(600, 1250);
+		top_line->setPosition(600, 1260);
 		this->addChild(top_line);
 
 		auto under_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
 		//under_line->setTextureRect(Rect(0, 0, 210, 10));
-		under_line->setPosition(600, 350);
+		under_line->setPosition(610, 425);
 		this->addChild(under_line);
 	}
 
