@@ -34,20 +34,20 @@ bool DiaryLabel::init( std::string title )
 
     auto p = ui::ImageView::create( "res/texture/diary/line.png" );
     p->setScale( Lib::fitWidth( p, vs.width * 0.8 ) );
-    setContentSize( p->getContentSize( ) * p->getScale( ) + Size( 0, 16 * scale ) );
+    setContentSize( p->getContentSize( ) * p->getScale( ) + Size( 0, 16.0F * _scale ) );
     p->setAnchorPoint( Vec2( 0.5F, 0.5F ) );
     p->setPosition( getContentSize( ) * 0.5F );
     addChild( p );
 
-    auto l = ui::Text::create( title, FONT_NAME, FONT_SIZE * scale );
-    if ( vs.width * 0.8 - FONT_SIZE * scale < l->getContentSize( ).width )
+    auto l = ui::Text::create( title, FONT_NAME, FONT_SIZE * _scale );
+    if ( vs.width * 0.8 - FONT_SIZE * _scale < l->getContentSize( ).width )
     {
-        l->setScaleX( Lib::fitWidth( l, vs.width * 0.8 - FONT_SIZE * scale ) );
+        l->setScaleX( Lib::fitWidth( l, vs.width * 0.8 - FONT_SIZE * _scale ) );
     }
 
     l->setTextColor( Color4B( 0, 0, 0, 255 ) );
     l->setAnchorPoint( Vec2( 0, 0.5F ) );
-    l->setPosition( Vec2( FONT_SIZE / 2 * scale, getContentSize( ).height * 0.5F ) );
+    l->setPosition( Vec2( FONT_SIZE / 2 * _scale, getContentSize( ).height * 0.5F + FONT_SIZE * 0.2F * _scale ) );
     addChild( l );
 
     return true;

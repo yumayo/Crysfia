@@ -8,8 +8,8 @@
 @sys:background(h教会内部)
 @sys:bgm(bシリアス)
 @sys:bgm(b切ない)
-@sys:se(s扉の開閉音）
-@sys:se(s雨）
+@sys:se(s扉の開閉音)
+@sys:se(s雨)
 @sys:voice(hyarukisi.2)
 //@hyarukisi.2:play(01)
 //@crysfia:in
@@ -95,7 +95,7 @@
 「うん！」@sys:l
 @名前クロエ:out
 
-@s扉の開閉音
+@s扉の開閉音:in
 @h教会内部:fadein(1)
 @sys:stop(1)
 

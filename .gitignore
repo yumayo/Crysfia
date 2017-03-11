@@ -6,4 +6,15 @@ cocos2dx/cocos2d/
 cocos2dx/live2d/
 cocos2dx/proj.android/
 cocos2dx/proj.ios_mac/
-cocos2dx/proj.win32/
+
+cocos2dx/proj.win32/*
+!cocos2dx/proj.win32/res/
+!cocos2dx/proj.win32/build-cfg.json
+!cocos2dx/proj.win32/cocos2dx.sln
+!cocos2dx/proj.win32/cocos2dx.vcproj
+!cocos2dx/proj.win32/cocos2dx.vcproj.filters
+!cocos2dx/proj.win32/cocos2dx.vcproj.user
+!cocos2dx/proj.win32/game.rc
+!cocos2dx/proj.win32/main.cpp
+!cocos2dx/proj.win32/main.h
+!cocos2dx/proj.win32/resource.h

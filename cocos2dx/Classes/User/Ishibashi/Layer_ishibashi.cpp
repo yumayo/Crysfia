@@ -4,7 +4,6 @@
 #include "audio/include/AudioEngine.h"
 
 #include "../SceneManager.h"
-
 #include "../../Lib/Utilitys.h"
 
 USING_NS_CC;
@@ -38,7 +37,7 @@ namespace User
         mealDressVolume();
 		auto back_board = Sprite::create(u8"res/texture/item/h船室.png");
 		back_board->setPosition(Vec2(/*610,440*/ 360,640));
-		back_board->setScale(0.5);
+		back_board->setScale(Lib::fitHeight(back_board,Director::getInstance()->getVisibleSize().height));
 		this->addChild(back_board);
 
         Menu();
@@ -48,12 +47,13 @@ namespace User
 		decoration();
         //heart();
 
+        // ユーマヨの作った戻りボタン。/////////////////////
         {
             auto scale = Director::getInstance( )->getContentScaleFactor( );
 
             auto button = ui::Button::create( "res/texture/system/backbutton.png" );
             addChild( button );
-            button->setScale( Lib::fitHeight( button, 128 * scale ) );
+            button->setScale( Lib::fitWidth(button, 96 * scale ) );
             button->setAnchorPoint( Vec2( 0, 0 ) );
             button->addTouchEventListener( [ this ] ( Ref* pSender, ui::Widget::TouchEventType type )
             {
@@ -95,7 +95,7 @@ namespace User
     {
 
 		auto board = Sprite::create();
-		board->setTextureRect(Rect( 0, 0, 640, 200));
+		board->setTextureRect(Rect( 0, 0, 585, 200));
 		board->setColor(Color3B::WHITE);
 		board->setPosition(Point(365, 225));
 		this->addChild(board);
@@ -104,6 +104,7 @@ namespace User
         //sprite->setTextureRect( Rect( 0, 0, 600, 200 ) );
         //sprite->setColor( Color3B::WHITE );
         //sprite->setName( "Text" );
+		sprite->setScale(1.35);
         sprite->setPosition( Point( 365, 225 ) );
         this->addChild( sprite );
 
@@ -118,7 +119,7 @@ namespace User
         button->setTouchEnabled( true );
 
         //ボタンの位置設定
-        button->setPosition( Vec2( 600, 275 ) );
+        button->setPosition( Vec2( 600, 375/*275*/ ) );
 
         //ボタンに表示する文字
         // テキスト
@@ -130,15 +131,13 @@ namespace User
         // フォントカラー
         button->setTitleColor( Color3B::BLACK );
         button->setName( "delite" );
+		//サイズ
+		button->setScale(1.5);
 
-        switch ( change )
-        {
-        case meal:
-            if ( day == check ) button->setEnabled( false );
-            break;
-        default:
-            break;
-        }
+		//追加
+		if (change == meal) {
+			if (day == check) button->setEnabled(false);
+		}
 
         //決定ボタン内容
         button->addTouchEventListener( [ this, button ] ( Ref* ref, ui::Widget::TouchEventType type )
@@ -154,12 +153,12 @@ namespace User
                     //食事用アクション（暫定）
 						animation(animation_num);
 						//this->removeChildByName("delite");
-						check = day;
-                        if ( day == check ) button->setEnabled( false );
+						check += 1;
 						dayChanger();
 						loveMetor();
 						//reside = false;
 						greet(meal_se[rand]);
+						button->setEnabled(false);
 					
                     break;
                 case dressClothes:
@@ -243,13 +242,22 @@ namespace User
 			}
 		}
 
+		if (!doc.HasParseError())
+		{
+			const rapidjson::Value& buttonsData = doc["dear_degree"];
+			for (int k = 0; k < 5; k++)
+			{
+				love_numbers.push_back(buttonsData[k]["love"].GetInt());
+			}
+		}
+
 		now = UserDefault::getInstance();
 		now_dress = now->getIntegerForKey(u8"現在の服");
 
 		auto sprite = Sprite::create();
-		sprite->setTextureRect(Rect(0, 0, 150, 900));
+		sprite->setTextureRect(Rect(0, 0, 150, 840));
 		sprite->setColor(Color3B::WHITE);
-		sprite->setPosition(Point(600, 800));
+		sprite->setPosition(Point(600, 845));
 		this->addChild(sprite);
 
         switch ( change )
@@ -270,7 +278,7 @@ namespace User
     void Layer_meal::foodText( std::string commentary, int x, int y, int size )
     {
         auto text = Label::createWithSystemFont( commentary, "Arial", size );
-        text->setPosition( Point( 400 - x * 48, 210 + y) );
+        text->setPosition( Point( 375 - x * 48, 210 + y) );
         text->setColor( ccc3( 0, 0, 0 ) );
         text->setName( "commentary_text" );
         this->addChild( text );
@@ -320,14 +328,14 @@ namespace User
     void Layer_meal::character(std::string chara_texture, std::string puppet)
     {
         cocos2d::Sprite * kuroe = Sprite::create( "res/texture/" + puppet);
-        kuroe->setScale( 0.3 );
+        kuroe->setScale( 0.4 );
 		kuroe->setName("KUROE");
 		kuroe->setOpacity(0);
         kuroe->setPosition( Vec2( 285, 700 ) );
         this->addChild( kuroe );
 
 		auto dress = Sprite::create("res/texture/item/dress_setup/" + chara_texture);
-		dress->setScale(0.3);
+		dress->setScale(0.4);
 		dress->setName("costume");
 		dress->setOpacity(0);
 		dress->setPosition(Vec2(285, 700));
@@ -349,11 +357,11 @@ namespace User
     void Layer_meal::animation( int anime_num )
     {
         food = Sprite::create( "res/texture/item/" + food_button[anime_num] );
-        food->setPosition( Vec2( 280, 1050 ) );
-        food->setScale( 0.5 );
+        food->setPosition( Vec2( 280, 1100 ) );
+        food->setScale( 0.6 );
         this->addChild( food );
 
-        CCFiniteTimeAction* move = CCMoveTo::create( 1.0f, ccp( 280, 850 ) );
+        CCFiniteTimeAction* move = CCMoveTo::create( 1.0f, ccp( 280, 900 ) );
         food->runAction( move );
 
 		//フェード 1秒で、100%へ  
@@ -366,13 +374,13 @@ namespace User
 		eraseCharacter();
 
 		Sprite * kuroe = Sprite::create("res/texture/" + clear[my_dress]);
-		kuroe->setScale(0.3);
+		kuroe->setScale(0.4);
 		kuroe->setName("fashion");
 		kuroe->setPosition(Vec2(285, 700));
 		this->addChild(kuroe);
 
 		auto dress = Sprite::create("res/texture/item/dress_setup/" + fashion_show[my_dress]);
-		dress->setScale(0.3);
+		dress->setScale(0.4);
 		dress->setName("changeCostume");
 		dress->setPosition(Vec2(285, 700));
 		this->addChild(dress);
@@ -394,7 +402,7 @@ namespace User
         auto button = ui::Button::create( "res/texture/item/" + button_photo );//ボタン画像
 
         button->setScale9Enabled( true );
-        button->setPosition( Vec2( 600, 1150 - 180 * text_number ) );
+        button->setPosition( Vec2( 600, 1200 - 175 * text_number ) );
 
         int w = 255;
 
@@ -435,6 +443,7 @@ namespace User
 							love_degrees = text_number;
 
 							animation_num = text_number;
+							love_number = text_number;
 
 							eraseFoodText();
 							eraseFoodText();
@@ -543,24 +552,26 @@ namespace User
 		auto left_line = Sprite::create("res/texture/item/b_ornament_100_0M.png");
 		//left_line->setTextureRect(Rect(0, 0, 10, 900));
 		left_line->setRotation(90);
-		left_line->setPosition(Point(500, 800));
+		left_line->setPosition(Point(525, 835));
+		left_line->setScale(1.4);
 		this->addChild(left_line);
 
 		auto right_line = Sprite::create("res/texture/item/b_ornament_100_0M.png");
 		//right_line->setTextureRect(Rect(0, 0, 10, 900));
 		right_line->setRotation(270);
-		right_line->setPosition(Point(700, 800));
+		right_line->setPosition(Point(675, 850));
+		right_line->setScale(1.4);
 		this->addChild(right_line);
 
 		auto top_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
 		//top_line->setTextureRect(Rect(0, 0, 210, 10));
 		top_line->setRotation(180);
-		top_line->setPosition(600, 1250);
+		top_line->setPosition(600, 1260);
 		this->addChild(top_line);
 
 		auto under_line = Sprite::create("res/texture/item/b_ornament_100_0M_TU.png");
 		//under_line->setTextureRect(Rect(0, 0, 210, 10));
-		under_line->setPosition(600, 350);
+		under_line->setPosition(610, 425);
 		this->addChild(under_line);
 	}
 
@@ -594,8 +605,8 @@ namespace User
 		//love_gauge = love->getIntegerForKey(u8"親愛度");
 		//love_gauge += love_degrees;
 		//love->setIntegerForKey(u8"親愛度", love_gauge);
-
-        heart->up( 10 );
+		//10,12,14,16,18
+        heart->up( love_numbers[love_number] );
 	}
 
 	void Layer_meal::greet(std::string voice)

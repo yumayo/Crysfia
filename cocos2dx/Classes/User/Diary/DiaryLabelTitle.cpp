@@ -34,14 +34,14 @@ bool DiaryLabelTitle::init( std::string title )
 
     auto p = ui::ImageView::create( "res/texture/diary/line.png" );
     p->setScale( Lib::fitWidth( p, vs.width * 0.9 ) );
-    setContentSize( p->getContentSize( ) * p->getScale( ) + Size( 0, 16 * scale ) );
+    setContentSize( p->getContentSize( ) * p->getScale( ) + Size( 0, 16 * _scale ) );
     p->setAnchorPoint( Vec2( 0.5F, 0.5F ) );
     p->setPosition( getContentSize( ) * 0.5F );
     addChild( p );
 
-    auto l = ui::Text::create( title, FONT_NAME, TITLE_FONT_SIZE * scale );
+    auto l = ui::Text::create( title, FONT_NAME, TITLE_FONT_SIZE * _scale );
     l->setTextColor( Color4B( 0, 0, 0, 255 ) );
-    l->setPosition( Vec2( getContentSize( ).width * 0.5F, getContentSize( ).height * 0.75F ) );
+    l->setPosition( Vec2( getContentSize( ).width * 0.5F, getContentSize( ).height * 0.5F + TITLE_FONT_SIZE * 0.4F * _scale ) );
     addChild( l );
 
     setAnchorPoint( Vec2( 0.5, 0.5 ) );
