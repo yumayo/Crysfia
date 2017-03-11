@@ -9,8 +9,8 @@
 @sys:background(h墓)
 @sys:bgm(bシリアス)
 @sys:bgm(b切ない)
-@sys:voice(hyarukisi.1)
-//@hyarukisi.1:play(01)
+@sys:voice(hyarukishi.1)
+//@hyarukishi.1:play(01)
 //@crysfia:in
 //@crysfia:out
 //@sys:stop(1)
@@ -36,7 +36,7 @@
 @名前アレン:in
 「何だか寂しい島だね」@sys:l
 
-@hyarukisi.1:play(01)
+@hyarukishi.1:play(01)
 
 @名前クロエ:in
 「……うん」@sys:l
@@ -52,7 +52,7 @@
   向かうわけなんだけど……」@sys:l
 
 @crysfia:普通
-@hyarukisi.1:play(02)
+@hyarukishi.1:play(02)
 
 @名前クロエ:in
 「そっか。ここが一番アイクラ島に近いんだ
@@ -68,7 +68,7 @@
 だ。
 
 @crysfia:真剣
-@hyarukisi.1:play(03)
+@hyarukishi.1:play(03)
 
 @名前クロエ:in
 「とにかく、誰かに聞いてみようよ」@sys:l
@@ -120,7 +120,7 @@
 やはり、現在は営業していないようだ。@sys:l
 
 @crysfia:悩む
-@hyarukisi.1:play(04)
+@hyarukishi.1:play(04)
 
 @名前クロエ:in
 「やっぱり、ここも崩れちゃってるね」@sys:l
@@ -161,7 +161,7 @@
 しかし、考えが甘かったようだ。@sys:l
 
 @crysfia:普通
-@hyarukisi.1:play(05)
+@hyarukishi.1:play(05)
 
 @名前クロエ:in
 「アレン、でもまだ時間はあるよ。その店主
@@ -171,7 +171,7 @@
  に」@sys:l
 
 @crysfia:喜ぶ
-@hyarukisi.1:play(06)
+@hyarukishi.1:play(06)
 
 @名前クロエ:in
 「クロエは寛大な心の持ち主だから、そんな
@@ -179,7 +179,7 @@
 @名前アレン:in
 「はは、そうだね。流石クロエ」@sys:l
 
-@hyarukisi.1:play(07)
+@hyarukishi.1:play(07)
 
 @名前クロエ:in
 「でしょー？」@sys:l
@@ -193,7 +193,7 @@
 「宿のあてもついたし、これからどうしよう
   か」@sys:l
 
-@hyarukisi.1:play(08)
+@hyarukishi.1:play(08)
 
 @名前クロエ:in
 「島の中を見て回ろうよ」@sys:l
@@ -201,7 +201,7 @@
 「まぁ、それくらいしかやることがないよね。
   それじゃ、行こうか」@sys:l
 
-@hyarukisi.1:play(09)
+@hyarukishi.1:play(09)
 
 @名前クロエ:in
 「はーい」@sys:l
@@ -222,7 +222,7 @@
 となく時間を潰していた。@sys:l
 そんな時、クロエが何かを見つけたようだ。@sys:l
 
-@hyarukisi.1:play(10)
+@hyarukishi.1:play(10)
 
 @名前クロエ:in
 「ねぇ、アレン。あれ」@sys:l
@@ -233,7 +233,7 @@
 @sys:stop(1)
 @crysfia:in
 @crysfia:悲しむ
-@hyarukisi.1:play(11)
+@hyarukishi.1:play(11)
 
 @名前クロエ:in
 「墓地……。死んだ人達があそこで眠ってる
@@ -243,14 +243,14 @@
 
 @crysfia:真剣
 
-@hyarukisi.1:play(12)
+@hyarukishi.1:play(12)
 @名前クロエ:in
 「もっと近くに行っちゃだめ？」@sys:l
 @名前アレン:in
 「うーん……墓地の中に無闇に入るのはよく
   ないなぁ」@sys:l
 
-@hyarukisi.1:play(13)
+@hyarukishi.1:play(13)
 
 @名前クロエ:in
 「中には入らなくてもいいの。ただ、もう少
@@ -269,7 +269,7 @@
 「やっぱり、半年前の災害で亡くなった人は
 　多いみたいだね」@sys:l
 
-@hyarukisi.1:play(14)
+@hyarukishi.1:play(14)
 
 @名前クロエ:in
 「……みんな、お疲れ様でした。どうか、安
@@ -297,7 +297,7 @@
   てたよね」@sys:l
 
 @crysfia:驚く
-@hyarukisi.1:play(15)
+@hyarukishi.1:play(15)
 
 @名前クロエ:in
 「え？うん。言ったかもしれないね」@sys:l
@@ -313,7 +313,7 @@
 目を見つめていたが、やがて彼女は視線を外
 し、口を開いた。@sys:l
 
-@hyarukisi.1:play(16)
+@hyarukishi.1:play(16)
 
 @名前クロエ:in
 「変わった、かな」@sys:l
@@ -321,14 +321,14 @@
 「……それは、どうして？」@sys:l
 
 @crysfia:喜ぶ
-@hyarukisi.1:play(17)
+@hyarukishi.1:play(17)
 
 @名前クロエ:in
 「ふふ、まだ教えなーい」@sys:l
 @名前アレン:in
 「まだ？」@sys:l
 
-@hyarukisi.1:play(18)
+@hyarukishi.1:play(18)
 
 @名前クロエ:in
 「うん、まだ。そのうち教えてあげる」@sys:l
@@ -337,6 +337,7 @@
 @sys:noveloff
 @b切ない:fadeout(1)
 @h墓:fadeout(1)
+@sys:endland
 //ここまで
 
 //-------------------------------------------------
@@ -347,7 +348,7 @@
 「僕が死んだら、君は悲しんでくれる？」@sys:l
 
 @crysfia:怒る
-@hyarukisi.1:play(19)
+@hyarukishi.1:play(19)
 
 @名前クロエ:in
 「……どうして、そんなこと聞くの？」@sys:l
@@ -357,7 +358,7 @@
 @名前アレン:in
 「……ごめん」@sys:l
 
-@hyarukisi.1:play(20)
+@hyarukishi.1:play(20)
 
 @名前クロエ:in
 「アレンは、悲しんでほしいの？」@sys:l
@@ -365,7 +366,7 @@
 「……どうだろ。悲しんでほしいから、こん
   な質問したのかな」@sys:l
 
-@hyarukisi.1:play(21)
+@hyarukishi.1:play(21)
 
 @名前クロエ:in
 「アレンがクロエより先に死んだら、すごく
@@ -375,7 +376,7 @@
 「……そっか。ごめんね。変な質問して」@sys:l
 
 @crysfia:普通
-@hyarukisi.1:play(22)
+@hyarukishi.1:play(22)
 
 @名前クロエ:in
 「ううん、いいよ。暗くなってきたし、そろ
@@ -395,4 +396,5 @@
 は無かった。@sys:l
 
 @sys:noveloff
+@sys:endland
 //ここまで
