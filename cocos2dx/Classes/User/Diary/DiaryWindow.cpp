@@ -57,6 +57,10 @@ bool DiaryWindow::init( DiaryLabelData const& data )
     title = title.substr( 0, title.find( u8"」" ) );
 
     auto l = ui::Text::create( title, FONT_NAME, TITLE_FONT_SIZE * _scale );
+    if ( vs.width * 0.7 - TITLE_FONT_SIZE * _scale < l->getContentSize( ).width )
+    {
+        l->setScaleX( Lib::fitWidth( l, vs.width * 0.7 - FONT_SIZE * _scale ) );
+    }
     l->setPosition( Vec2( getContentSize( ).width * 0.5F, getContentSize( ).height * 0.5F + TITLE_FONT_SIZE * 0.2F * _scale ) );
     addChild( l );
 
