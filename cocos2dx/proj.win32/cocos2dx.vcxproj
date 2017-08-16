@@ -309,6 +309,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\User\Novel\INIReader.h" />
     <ClInclude Include="..\Classes\User\Novel\INIWriter.h" />
     <ClInclude Include="..\Classes\User\Novel\ItemLayer.h" />
+    <ClInclude Include="..\Classes\User\Novel\LayerDebugText.hpp" />
     <ClInclude Include="..\Classes\User\Novel\Live2dLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\ModalLayer.h" />
     <ClInclude Include="..\Classes\User\Novel\NameLayer.h" />

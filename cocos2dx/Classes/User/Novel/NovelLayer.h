@@ -112,6 +112,8 @@ namespace User
 
         DebugWithLineData debugData;
         cocos2d::Label* createLabel( std::string const& title );
+
+        bool debugMode = false;
     };
 }
 

@@ -695,6 +695,9 @@
     <ClInclude Include="..\Classes\User\Diary\DiaryDefines.h">
       <Filter>src\User\Diary</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\User\Novel\LayerDebugText.hpp">
+      <Filter>src\User\Novel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
