@@ -37,16 +37,16 @@ namespace User
         SCRIPT( gameover );
     public: // 変数の登録に使います。
             // 全てのクラスはシステムを経由してでないと作成できません。
-        SCRIPT( name );
-        SCRIPT( background );
-        SCRIPT( bgm );
-        SCRIPT( se );
-        SCRIPT( stopallse );
-        SCRIPT( human );
-        SCRIPT( still );
-        SCRIPT( heart );
-        SCRIPT( live2d );
-        SCRIPT( voice );
+        SCRIPT( SetName );
+        SCRIPT( SetBackground );
+        SCRIPT( SetBgm );
+        SCRIPT( SetSe );
+        SCRIPT( SetStopallse );
+        SCRIPT( SetHuman );
+        SCRIPT( SetStill );
+        SCRIPT( SetHeart );
+        SCRIPT( SetLive2d );
+        SCRIPT( SetVoice );
     public:
         cocos2d::Layer* nameLayer = nullptr;
         cocos2d::Layer* humanLayer = nullptr;
